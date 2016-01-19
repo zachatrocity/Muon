@@ -1,11 +1,17 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="muonApp">
   <head>
     <title>Muon</title>
-    <link rel="stylesheet" type="text/css" href="./resources/css/main.css" />
+    <link rel="stylesheet" type="text/css" href="./css/main.css" />
+    <script src="./js/angular.min.js"></script>
+    <script src="./js/angular-ui-router.min.js"></script>
+    <script type="text/javascript" src="./js/konami.js"></script>
+  	<script type="text/javascript" src="main.js"></script>
   </head>
   <body>
-    <h1>Hello World!</h1>
-  <script type="text/javascript" src="main.js"></script>
+    <h1>Muon</h1>
+    <div ui-view></div>
+    
+    <a ui-sref="menu">Main Menu</a></li>
   </body>
 </html>

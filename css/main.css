@@ -2,4 +2,10 @@ body {
 	background-color: #404040;
 	overflow-x: none;
 	overflow-y: none; 
+	text-align: center;
+}
+
+ul
+{
+    list-style-type: none;
 }
