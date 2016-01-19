@@ -11,6 +11,7 @@ win.on('minimize', function() {
 
 var easter_egg = new Konami(function() { alert('Konami code!')});
 
+
 var muonApp = angular.module('muonApp', ["ui.router"])
     muonApp.config(function($stateProvider, $urlRouterProvider){
       
@@ -21,41 +22,42 @@ var muonApp = angular.module('muonApp', ["ui.router"])
       	.state('menu', {
             url: "/",
             templateUrl: "views/menu.html",
-            controller: function($scope){
-	            
-	          }
+            controller: "MenuCtrl"
         })
 
         .state('newgame', {
             url: "/newgame",
             templateUrl: "views/newgame.html",
-            controller: function($scope){
-	            $scope.options = ["Novice", "Pro"];
-	          }
+            controller: "NewGameCtrl"
         })
 
         .state('network', {
             url: "/network",
-            templateUrl: "views/network.html"
+            templateUrl: "views/network.html",
+            controller: "NetworkCtrl"
         })
 
         .state('howto', {
             url: "/howto",
-            templateUrl: "views/howto.html"
+            templateUrl: "views/howto.html",
+            controller: "HowToCtrl"
         })
 
         .state('options', {
             url: "/options",
-            templateUrl: "views/options.html"
+            templateUrl: "views/options.html",
+            controller: "OptionsCtrl"
         })
 
         .state('about', {
             url: "/about",
-            templateUrl: "views/about.html"
+            templateUrl: "views/about.html",
+            controller: "AboutCtrl"
         })
 
         .state('board', {
             url: "/board",
-            templateUrl: "views/board.html"
+            templateUrl: "views/board.html",
+            controller: "BoardCtrl"
         })
     })
