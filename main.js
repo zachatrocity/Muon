@@ -11,11 +11,13 @@ win.on('minimize', function() {
 
 var easter_egg = new Konami(function() { alert('Konami code!')});
 
+var GameCore = new gameCore();
 
 var muonApp = angular.module('muonApp', ["ui.router"])
     muonApp.config(function($stateProvider, $urlRouterProvider){
       
       // For any unmatched url, send to /menu
+      //ANGULAR UI ROUTER
       $urlRouterProvider.otherwise("/")
       
       $stateProvider
@@ -59,5 +61,12 @@ var muonApp = angular.module('muonApp', ["ui.router"])
             url: "/board",
             templateUrl: "views/board.html",
             controller: "BoardCtrl"
+        })
+
+        .state('quit', {
+            url: "/quit",
+            controller: function() {
+                win.close()
+            }
         })
     })

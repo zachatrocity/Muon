@@ -1,8 +1,9 @@
+/*GENERAL CSS*/
+
 @font-face {
 	font-family: Orbitron;
 	src: url("../font/orbitron-medium.otf") format("opentype");
 }
-
 
 body {
 	background-color: #404040;
@@ -15,6 +16,9 @@ ul
 {
     list-style-type: none;
 }
+
+
+/*MAIN MENU CSS*/
 
 .logo {
 	position: fixed;
