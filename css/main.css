@@ -1,7 +1,14 @@
+@font-face {
+	font-family: Orbitron;
+	src: url("../font/orbitron-medium.otf") format("opentype");
+}
+
+
 body {
 	background-color: #404040;
 	text-align: center;
 	overflow: hidden;
+	font-family: Orbitron;
 }
 
 ul
@@ -12,6 +19,7 @@ ul
 .logo {
 	position: fixed;
 	top: 0%;
+	font-size: 4em;
 	left: 50%;
 	z-index: 100;
 }
