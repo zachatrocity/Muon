@@ -126,12 +126,13 @@ color: #FFF;
 .inGameMenu ul li ul li{
 	background: #555;
 	display: block;
-	color: #FFF;
+	color: black;
 	text-shadow: 0 -1px 0 #000;
 }
 
 .inGameMenu ul li ul li:hover {
 	background: #666;
+	color: #BDBDBD;
 }
 
 .inGameMenu ul li:hover ul{
