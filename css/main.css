@@ -17,6 +17,7 @@ body {
 	overflow: hidden;
 	font-family: Orbitron;
 	user-select: none;
+	height: 100%;
 }
 
 ul
@@ -29,6 +30,7 @@ ul
 /*MAIN MENU CSS*/
 
 .logo {
+	user-select: none !important;
 	position: fixed;
 	top: 15%;
 	font-size: 4em;
@@ -37,12 +39,27 @@ ul
 	transform: translate(-50%, -50%);
 }
 
+.menu-container{
+	height: 100%;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 .main-menu{
-	position: fixed;
-	top: 50%;
-	left: 50%;
-	transform: translate(-50%, -50%);
 	z-index: 100;
+	margin-top: 25%;
+}
+
+.main-menu-item {
+    padding: 5px;
+    height: 20px;
+    margin: 10px;
+    line-height: 20px;
+    font-weight: bold;
+    font-size: 2em;
 }
 
 a{
