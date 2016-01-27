@@ -1,5 +1,17 @@
 /*GENERAL CSS*/
 
+.node {
+  opacity: 0.9;
+}
+
+.node:hover {
+  opacity: 1;
+}
+
+.link {
+  stroke: #999;
+}
+
 @font-face {
 	font-family: Orbitron;
 	src: url("../font/orbitron-medium.otf") format("opentype");
