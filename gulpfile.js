@@ -10,12 +10,10 @@ gulp.task('package', function () {
             "main.js",
             "index.html", 
             "./views/*", 
-            "./js/*", 
-            "./images/*", 
+            "./js/*",
             "./font/*",
             "./css/*",
-            "./controllers/*",
-            "./audio/*"
+            "./controllers/*"
         ], // use the glob format
         platforms: ['win','osx'],
         version: '0.12.3'

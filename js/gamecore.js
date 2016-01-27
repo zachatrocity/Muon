@@ -1,5 +1,5 @@
-// This is the class that contains the logic of how the game is played
 var GameCore = function() {
+	this.ai = new AI();
 
 	this.openPositions = [0b00001,0b00010,0b00011,0b00100,0b00101,0b11001,0b11010,0b11011,0b11100,0b11101];
 	this.blackPlayerPositions = [0b01001,0b01010,0b01011,0b01100,0b01101];
@@ -79,11 +79,8 @@ var GameCore = function() {
 	 	}
 	}
 	this.PerformAiMove = function(player, quadFrom, nodeFrom, quadTo, nodeTo) {
-		var playerToMove = player == 1 ? playerOnePosition : playerTwoPosition
-	 	this.CalculateStateValue(player, playerToMove, quadTo, nodeTo);
-	 	//playerToMove is what makes the "physical" board state change.
-	 					//One bit representation of a place on the board
-	 	playerToMove ^= (1<<(quadFrom*5 + nodeFrom))^(1<<(quadTo*5 + nodeTo));
+		//this.ai.performMoveHvsAI(player, quadFrom, nodeFrom, quadTo, nodeTo);
+		
 	}
 	this.CalculateStateValue = function(player, playerThatMoved, quadTo, nodeTo) {
 		var quad = (playerThatMoved>>5*quadTo)&0b11111;
