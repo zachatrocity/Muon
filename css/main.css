@@ -1,16 +1,10 @@
+/*DEBUG*/
+div {
+	/*border-style: solid;
+	border-color: red;*/
+}
+
 /*GENERAL CSS*/
-
-.node {
-  opacity: 0.9;
-}
-
-.node:hover {
-  opacity: 1;
-}
-
-.link {
-  stroke: #999;
-}
 
 @font-face {
 	font-family: Orbitron;
@@ -22,11 +16,13 @@ body {
 	text-align: center;
 	overflow: hidden;
 	font-family: Orbitron;
+	user-select: none;
 }
 
 ul
 {
     list-style-type: none;
+    user-select: none;
 }
 
 
@@ -34,10 +30,11 @@ ul
 
 .logo {
 	position: fixed;
-	top: 0%;
+	top: 15%;
 	font-size: 4em;
 	left: 50%;
 	z-index: 100;
+	transform: translate(-50%, -50%);
 }
 
 .main-menu{
@@ -81,6 +78,22 @@ a:hover{
 }
 
 /*BOARD CSS*/
+
+.gameboard{
+	margin: 0 auto;
+}
+
+.node {
+  opacity: 0.9;
+}
+
+.node:hover {
+  opacity: 1;
+}
+
+.link {
+  stroke: #999;
+}
 
 .inGameMenu{
 	position: absolute;
