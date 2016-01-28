@@ -19,7 +19,7 @@ AppSupportURL={#AppURL}
 AppUpdatesURL={#AppURL}
 
 ; Make the Installer nicer and Minimalistic
-;WizardImageFile=.\installer\installer-image.bmp
+WizardImageFile=.\muon.bmp
 WindowResizable=no
 
 ; Don't ask for a install folder (it goes into \Users\Username\AppData\Roaming\Popcorn Time\, which doesn't require admin privileges)
