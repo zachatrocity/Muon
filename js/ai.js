@@ -2,11 +2,11 @@ var AI = function() {
 	var view = new display();
 	var binary = new bitManip();
 
-	var playerTwoPosition = 0b00000111110000000000 //Always the other player
-	var playerOnePosition = 0b00000000001111100000 //Always the AI
+	var p2_Position = 0b00000111110000000000 //Always the other player
+	var p1_Position = 0b00000000001111100000 //Always the AI
 
-	var playerOneFlag = true
-	var playerTwoFlag = true
+	var p1Flag = true
+	var p2Flag = true
 	var positionGenes = [10,50,30,50,40] //0,1,2,3,4
 	var geneticScalar = 1
 	var nodeConnections = [
@@ -16,25 +16,31 @@ var AI = function() {
 		[0b01110000000000000000,0b10101000100000000000,0b11011000000000000000,0b10101000000100000000,0b01110100001000010000]  //quad 3 node 0,1,2,3,4
 	];
 
+
+	this.getAvailableMoves = function (quad, node){
+		var openPositions = p2_Position^p1_Position^0xFFFFF
+		return (openPositions&((1<<(quad*5 + node))|nodeConnections[quad][node]));
+	}
+
 	//getAvailableMoves() 
 		//This returns all the open positions around the piece you are wanting to check
 		//The Input should be one bit in a bitBoard given quadrant 0-3 and piece 0-4
 		//Example: The top left most corner (1,0) quadrant 1 and peice 0
 		//returns: 0b0000000000011100000 that is (1,1) (1,2) and (1,3)
 		// this.getAvailableMoves = function (quad, node){
-		// 	var openPositions = playerTwoPosition^playerOnePosition^0xFFFFF
+		// 	var openPositions = p2_Position^p1_Position^0xFFFFF
 		// 	return (openPositions&((1<<(quad*5 + node))|nodeConnections[quad][node]));
 		// }
 
 	//getAvaiableMovesAI()
-		//board = playerTwoPosition^playerOnePosition^1048575
+		//board = p2_Position^p1_Position^1048575
 		//This is for temporary recursion positions
 	this.getOpenMoveAi = function (quad,node,openPositions){
 		return (openPositions&((1<<(quad*5 + node))|nodeConnections[quad][node]));
 	}
 
 	//getAvaiableMovesAI()
-		//board = playerTwoPosition^playerOnePosition^1048575
+		//board = p2_Position^p1_Position^1048575
 		//This is for temporary recursion positions
 	this.openPositionsAroundPeice = function(quad,node,openPositions){
 		return (openPositions&((1<<(quad*5 + node))|nodeConnections[quad][node]));
@@ -67,9 +73,9 @@ var AI = function() {
 
 	this.removeFlag = function (player){
 		if(player == 1)
-			playerOneFlag = false;
+			p1Flag = false;
 		else
-			playerTwoFlag = false;
+			p2Flag = false;
 	}
 
 	//bitBoard for the player and the quadrant number 0 to 3
@@ -114,15 +120,15 @@ var AI = function() {
 		var startPosition = (1<<(startQuad*5 + startNode))
 		var endPosition = (1<<(endQuad*5 + endNode))
 
-	 	if(startPosition&playerTwoPosition && endPosition&view.getAvailableMoves(startQuad, startNode)){
-	 		playerTwoPosition ^= startPosition^endPosition;
-	 		view.displayBoard(playerOnePosition, playerTwoPosition);
+	 	if(startPosition&p2_Position && endPosition&this.getAvailableMoves(startQuad, startNode)){
+	 		p2_Position ^= startPosition^endPosition;
+	 		view.displayBoard(p1_Position, p2_Position,p1Flag,p2Flag);
 	 		var t1 = Date.now();
 	 		this.performAiMoveABDF(1);
 	 		//IDDFSStart(1);
 	 		var t2 = Date.now();
 	 		console.log((t2-t1)/1000)
-	 		view.displayBoard(playerOnePosition, playerTwoPosition);
+	 		view.displayBoard(p1_Position, p2_Position,p1Flag,p2Flag);
 	 	}
 	 	else
 	 		console.log("invalidMove")
@@ -130,15 +136,15 @@ var AI = function() {
 
 	this.performAiMoveABDF = function(depth){
 		var max = -Infinity;
-		var tempBoard = playerOnePosition;
+		var tempBoard = p1_Position;
 		var bestMove;
 
 		for(var peice = binary.getLSB(tempBoard); tempBoard != 0; tempBoard^=peice){
-			var open = playerOnePosition^playerTwoPosition^0xFFFFF;
+			var open = p1_Position^p2_Position^0xFFFFF;
 			var openMoves = this.openPositionsAroundPeice(this.getQuad(peice), this.getNode(peice),open);
 			for(var nextSpace = binary.getLSB(openMoves); openMoves != 0; openMoves^=nextSpace){
-				var bitBoardCopy = playerOnePosition^peice^nextSpace
-				var score = this.alphaBeta(2, depth-1, max, Infinity, playerTwoPosition, bitBoardCopy, nextSpace, false)
+				var bitBoardCopy = p1_Position^peice^nextSpace
+				var score = this.alphaBeta(2, depth-1, max, Infinity, p2_Position, bitBoardCopy, nextSpace, false)
 				if(score > max){
 					max = score;
 					bestMove = nextSpace^peice;
@@ -147,24 +153,24 @@ var AI = function() {
 			}
 			peice = binary.getLSB(tempBoard);
 		}
-		playerOnePosition ^= bestMove;
-		if(playerOneFlag && !this.checkFlag(1,playerOnePosition)){
+		p1_Position ^= bestMove;
+		if(p1Flag && !this.checkFlag(1,p1_Position)){
 			this.removeFlag(1)
 		}
 	}
 
 	this.performAiMove = function (depth){
 		var max = -Infinity;
-		var tempBoard = playerOnePosition;
+		var tempBoard = p1_Position;
 		var bestMove;
 
 		var peice = binary.getLSB(tempBoard);
 		while(tempBoard != 0){
-			var openMoves = this.getOpenMoveAi(this.getQuad(peice), this.getNode(peice),playerOnePosition^playerTwoPosition^0xFFFFF);
+			var openMoves = this.getOpenMoveAi(this.getQuad(peice), this.getNode(peice),p1_Position^p2_Position^0xFFFFF);
 			var nextSpace = binary.getLSB(openMoves);
 			while( openMoves != 0){
-				var bitBoardCopy = playerOnePosition^peice^nextSpace
-				var score = this.alphaBeta(2, depth-1, max, Infinity, playerTwoPosition, bitBoardCopy, nextSpace, false)
+				var bitBoardCopy = p1_Position^peice^nextSpace
+				var score = this.alphaBeta(2, depth-1, max, Infinity, p2_Position, bitBoardCopy, nextSpace, false)
 				if(score > max){
 					max = score;
 					bestMove = nextSpace^peice;
@@ -175,8 +181,8 @@ var AI = function() {
 			tempBoard^=peice;
 			peice = binary.getLSB(tempBoard);
 		}
-		playerOnePosition ^= bestMove;
-		if(playerOneFlag && !this.checkFlag(1,playerOnePosition)){
+		p1_Position ^= bestMove;
+		if(p1Flag && !this.checkFlag(1,p1_Position)){
 			this.removeFlag(1)
 		}
 	}
@@ -215,5 +221,5 @@ var AI = function() {
 		}
 		return maximizing?alpha:beta;
 	}
-	view.displayBoard(playerOnePosition, playerTwoPosition);
+	view.displayBoard(p1_Position, p2_Position,p1Flag,p2Flag);
 }

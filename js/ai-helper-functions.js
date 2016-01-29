@@ -1,9 +1,4 @@
 var display = function(){
-	this.getAvailableMoves = function (quad, node){
-		var openPositions = playerTwoPosition^playerOnePosition^0xFFFFF
-		return (openPositions&((1<<(quad*5 + node))|nodeConnections[quad][node]));
-	}
-
 	//this.checkFlag()
 		//return false or 0 if the flag should be removed.
 	this.checkFlag = function (player,position){
@@ -82,9 +77,9 @@ var display = function(){
 }
 
 var bitManip = function(){
-//BitCount()
-	//This function returns the number of 1's in a base 2 number.
-	//n is any binary number
+	//BitCount()
+		//This function returns the number of 1's in a base 2 number.
+		//n is any binary number
 	this.BitCount = function(n) { 
 	    n = (n & 0x55555555) + ((n >> 1) & 0x55555555) ; 
 	    n = (n & 0x33333333) + ((n >> 2) & 0x33333333) ; 
@@ -94,12 +89,12 @@ var bitManip = function(){
 	    return n ; 
 	}
 
-//this.getLSB()
-	//this takes any binary number and returns the least significant bit
-	//example:
-	//	this.getLSB(0b11001011000000)
-	//	return=0b00000001000000
-	//This uses a varient of the HAKMEM algorithm
+	//this.getLSB()
+		//this takes any binary number and returns the least significant bit
+		//example:
+		//	this.getLSB(0b11001011000000)
+		//	return=0b00000001000000
+		//This uses a varient of the HAKMEM algorithm
 	this.getLSB = function (binaryNumber){
 		if(binaryNumber == 0){
 			return 0xFFFFFFF;
