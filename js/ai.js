@@ -1,4 +1,7 @@
 var AI = function() {
+	var view = new display();
+	var binary = new bitManip();
+
 	var playerTwoPosition = 0b00000111110000000000 //Always the other player
 	var playerOnePosition = 0b00000000001111100000 //Always the AI
 
@@ -18,15 +21,22 @@ var AI = function() {
 		//The Input should be one bit in a bitBoard given quadrant 0-3 and piece 0-4
 		//Example: The top left most corner (1,0) quadrant 1 and peice 0
 		//returns: 0b0000000000011100000 that is (1,1) (1,2) and (1,3)
-	this.getAvailableMoves = function (quad, node){
-		var openPositions = playerTwoPosition^playerOnePosition^0xFFFFF
+		// this.getAvailableMoves = function (quad, node){
+		// 	var openPositions = playerTwoPosition^playerOnePosition^0xFFFFF
+		// 	return (openPositions&((1<<(quad*5 + node))|nodeConnections[quad][node]));
+		// }
+
+	//getAvaiableMovesAI()
+		//board = playerTwoPosition^playerOnePosition^1048575
+		//This is for temporary recursion positions
+	this.getOpenMoveAi = function (quad,node,openPositions){
 		return (openPositions&((1<<(quad*5 + node))|nodeConnections[quad][node]));
 	}
 
 	//getAvaiableMovesAI()
 		//board = playerTwoPosition^playerOnePosition^1048575
 		//This is for temporary recursion positions
-	this.getOpenMoveAi = function (quad,node,openPositions){
+	this.openPositionsAroundPeice = function(quad,node,openPositions){
 		return (openPositions&((1<<(quad*5 + node))|nodeConnections[quad][node]));
 	}
 
@@ -46,35 +56,6 @@ var AI = function() {
 		return position&0x08421?0:(position&0x10842?1:(position&0x21084?2:(position&0x42108?3:4)))
 	}
 
-	this.color = function (quad, node){
-		if(1<<(quad*5 + node)&playerOnePosition)
-			return "W"
-		else if(1<<(quad*5 + node)&playerTwoPosition)
-			return "B"
-		else 
-			return "#"
-	}
-
-	this.displayBoard = function (){
-		if(!this.checkFlag(1,playerOnePosition))
-			this.removeFlag(1)
-		if(!this.checkFlag(2,playerTwoPosition))
-			this.removeFlag(2)
-		console.log(playerOneFlag ? "LOCKED":"")
-		console.log(""+ this.color(1,0) + "---------"+ this.color(1,1) +"---"+ this.color(0,1) +"---------"+ this.color(0,0) +"");
-		console.log("|  \\   /  |   |  \\   /  |");
-		console.log("|    "+ this.color(1,2) +"    |   |    "+ this.color(0,2) +"    |");
-		console.log("|  /   \\  |   |  /   \\  |");
-		console.log(""+ this.color(1,3) +"---------"+ this.color(1,4) +"---"+ this.color(0,4) +"---------"+ this.color(0,3) +"");
-		console.log("|         | X |         |");
-		console.log(""+ this.color(3,3) + "---------"+ this.color(3,4) +"---"+ this.color(2,4) +"---------"+ this.color(2,3) +"");
-		console.log("|  \\   /  |   |  \\   /  |");
-		console.log("|    "+ this.color(3,2) +"    |   |    "+ this.color(2,2) +"    |");
-		console.log("|  /   \\  |   |  /   \\  |");
-		console.log(""+ this.color(3,0) +"---------"+ this.color(3,1) +"---"+ this.color(2,1) +"---------"+ this.color(2,0) +"");
-		console.log("                   " + (playerTwoFlag ? "LOCKED":""))
-	}
-
 	//this.checkFlag()
 		//return false or 0 if the flag should be removed.
 	this.checkFlag = function (player,position){
@@ -91,66 +72,39 @@ var AI = function() {
 			playerTwoFlag = false;
 	}
 
-	//this.calculateStateValue()
-		//player is 1 or 2
-		//bitBoard is the bitBoard for playerOne or for playerTwo
-	this.calculateStateValue = function (player, bitBoard, endQuad, endNode){
-		var peicesInQuad = 0;
-		var quad = bitBoard & (0x1F<<(5*endQuad));
-		while(quad){
-			peicesInQuad += quad&1 ? 1:0;
-			quad >>= 1; 
-		}
-
-		var qConfig = (bitBoard>>(5*endQuad))&0x1F
-		var totalValue = 0;
-		var tempBoard = bitBoard;
-		var peice = this.getLSB(tempBoard);
-		while(tempBoard != 0){
-			var inHomeQuad = (this.checkFlag(player,bitBoard) &&  peice&(0b11111 << 5*player))
-			if( peicesInQuad == 2 && !inHomeQuad)
-				totalValue += 2*positionGenes[this.getNode(peice)]
-			else if( peicesInQuad == 1 && !inHomeQuad)
-				totalValue += 1.5*positionGenes[this.getNode(peice)]
-			else
-				totalValue += positionGenes[this.getNode(peice)]
-			tempBoard^=peice
-			peice = this.getLSB(tempBoard)
-		}
-		//return parentValue-(totalValue - grandParent)
-		return totalValue
+	//bitBoard for the player and the quadrant number 0 to 3
+	this.getQuadBits = function(bitBoard, quadrant){
+		return bitBoard & (0x1F<<(5*quadrant));
 	}
 
-	//this.getLSB()
-		//this takes any binary number and returns the least significant bit
-		//example:
-		//	this.getLSB(0b11001011000000)
-		//	return=0b00000001000000
-		//This uses a varient of the HAKMEM algorithm
-	this.getLSB = function (binaryNumber){
-		if(binaryNumber == 0){
-			return 0xFFFFFFF;
+	this.stateValue = function(bitBoard, bitBoard2, player){
+		var total = 0;
+		total += this.stolenRealEstate(bitBoard, bitBoard2);
+		total += this.Win(bitBoard, player);
+		return total;
+	}
+
+	this.stolenRealEstate = function(bitBoard, bitBoard2){
+		var stolenSpace = 0
+		for(var peice = binary.getLSB(bitBoard); bitBoard!=0; peice = binary.getLSB(bitBoard)){
+			var connections = nodeConnections[this.getQuad(peice)][this.getNode(peice)];
+			var adjacentOpponentPeices = connections&bitBoard2;
+			stolenSpace += binary.BitCount(adjacentOpponentPeices);
+			bitBoard ^= peice;
 		}
-		leastSig = 0x80000000;
-		if(binaryNumber&0xFFFF){
-			leastSig >>>= 16;
-			binaryNumber &= 0xFFFF;
+		return stolenSpace;
+	}
+
+	this.Win = function (bitBoard, player){
+		var homeFlag = this.checkFlag(player,bitBoard);
+		var i = 1;
+		debugger;
+		for(var quad = this.getQuadBits(bitBoard, i); i < 4; i++, quad = this.getQuadBits(bitBoard, i)){
+			if(!(homeFlag || i == player) && (quad == 0b11100 || quad == 0b11010 || quad == 0b11001 || quad == 0b10110 
+			|| quad == 0b10011 || quad == 0b01101 || quad == 0b01011 || quad == 0b00111))
+				return 1000;
 		}
-		if(binaryNumber&0x00FF00FF){
-			leastSig >>>= 8;
-			binaryNumber &= 0x00FF00FF
-		}
-		if(binaryNumber&0x0F0F0F0F){
-			leastSig >>>= 4;
-			binaryNumber &= 0x0F0F0F0F;
-		}
-		if(binaryNumber&0x33333333){
-			leastSig >>>= 2;
-			binaryNumber &= 0x33333333
-		}
-		if(binaryNumber&0x55555555)
-			leastSig >>>= 1;
-		return leastSig;
+		return 0;
 	}
 
 	//performMoveHvsAI() 
@@ -160,54 +114,66 @@ var AI = function() {
 		var startPosition = (1<<(startQuad*5 + startNode))
 		var endPosition = (1<<(endQuad*5 + endNode))
 
-	 	if(startPosition&playerTwoPosition && endPosition&this.getAvailableMoves(startQuad, startNode)){
+	 	if(startPosition&playerTwoPosition && endPosition&view.getAvailableMoves(startQuad, startNode)){
 	 		playerTwoPosition ^= startPosition^endPosition;
-	 		this.displayBoard();
+	 		view.displayBoard(playerOnePosition, playerTwoPosition);
 	 		var t1 = Date.now();
-	 		this.performAiMove(5);
+	 		this.performAiMoveABDF(1);
+	 		//IDDFSStart(1);
 	 		var t2 = Date.now();
 	 		console.log((t2-t1)/1000)
-	 		this.displayBoard();
+	 		view.displayBoard(playerOnePosition, playerTwoPosition);
 	 	}
 	 	else
 	 		console.log("invalidMove")
 	}
 
-	this.Win = function (bitBoard, endQuad, player){
-		var quad = bitBoard & (0x1F<<(5*endQuad));
-		var inHomeMoveP1 = (this.checkFlag(player,bitBoard) && player == 1 && endQuad == 1);
-		var inHomeMoveP2 = (this.checkFlag(player,bitBoard) && player == 2 && endQuad == 2);
-		if(!(inHomeMoveP1 || inHomeMoveP2)){
-			if(quad == 0b11100 || quad == 0b11010 || quad == 0b11001 || quad == 0b10110 || quad == 0b10011 || quad == 0b01101 || quad == 0b01011 || quad == 0b0011)
-				return true;
-		}
-		return false
-	}
-
-	this.performAiMove = function (depth){
-		var max = -0xFFFFFFF;
+	this.performAiMoveABDF = function(depth){
+		var max = -Infinity;
 		var tempBoard = playerOnePosition;
 		var bestMove;
 
-		//Loop through all the AI's first peices (We want to maximize these)
-		var peice = this.getLSB(tempBoard);
+		for(var peice = binary.getLSB(tempBoard); tempBoard != 0; tempBoard^=peice){
+			var open = playerOnePosition^playerTwoPosition^0xFFFFF;
+			var openMoves = this.openPositionsAroundPeice(this.getQuad(peice), this.getNode(peice),open);
+			for(var nextSpace = binary.getLSB(openMoves); openMoves != 0; openMoves^=nextSpace){
+				var bitBoardCopy = playerOnePosition^peice^nextSpace
+				var score = this.alphaBeta(2, depth-1, max, Infinity, playerTwoPosition, bitBoardCopy, nextSpace, false)
+				if(score > max){
+					max = score;
+					bestMove = nextSpace^peice;
+				}
+				nextSpace = binary.getLSB(openMoves);
+			}
+			peice = binary.getLSB(tempBoard);
+		}
+		playerOnePosition ^= bestMove;
+		if(playerOneFlag && !this.checkFlag(1,playerOnePosition)){
+			this.removeFlag(1)
+		}
+	}
+
+	this.performAiMove = function (depth){
+		var max = -Infinity;
+		var tempBoard = playerOnePosition;
+		var bestMove;
+
+		var peice = binary.getLSB(tempBoard);
 		while(tempBoard != 0){
 			var openMoves = this.getOpenMoveAi(this.getQuad(peice), this.getNode(peice),playerOnePosition^playerTwoPosition^0xFFFFF);
-
-			//Loop through all the places that peice can move to.
-			var nextSpace = this.getLSB(openMoves);
+			var nextSpace = binary.getLSB(openMoves);
 			while( openMoves != 0){
 				var bitBoardCopy = playerOnePosition^peice^nextSpace
-				var score = this.alphaBeta(2, depth-1, -0xFFFFFFF, 0xFFFFFFF, playerTwoPosition, bitBoardCopy, nextSpace, false)
+				var score = this.alphaBeta(2, depth-1, max, Infinity, playerTwoPosition, bitBoardCopy, nextSpace, false)
 				if(score > max){
 					max = score;
 					bestMove = nextSpace^peice;
 				}
 				openMoves^=nextSpace;
-				nextSpace = this.getLSB(openMoves);
+				nextSpace = binary.getLSB(openMoves);
 			}
 			tempBoard^=peice;
-			peice = this.getLSB(tempBoard);
+			peice = binary.getLSB(tempBoard);
 		}
 		playerOnePosition ^= bestMove;
 		if(playerOneFlag && !this.checkFlag(1,playerOnePosition)){
@@ -225,30 +191,29 @@ var AI = function() {
 		//bitBoard2-----the other players state
 		//move----------the last move that was made (a single binary peice)
 		//maximizing----if the player is maximizing then this is TRUE, else FALSE
-	this.alphaBeta = function (player, depth, a, b, bitBoard, bitBoard2, space, maximizing){
+	this.alphaBeta = function (player, depth, alpha, beta, bitBoard, bitBoard2, space, maximizing){
 		if(depth == 0){
-			return this.calculateStateValue(player^3, bitBoard2, this.getQuad(space), this.getNode(space));
+			return this.stateValue(bitBoard2, bitBoard, player^3);
 		}
 		var tempBoard = bitBoard;
-		for(var peice = this.getLSB(tempBoard); tempBoard; peice = this.getLSB(tempBoard)){
-			var openMoves = this.
-			getOpenMoveAi(this.getQuad(peice), this.getNode(peice),bitBoard^bitBoard2^0xFFFFF);
-			for(var nextSpace = this.getLSB(openMoves); openMoves; nextSpace = this.getLSB(openMoves)){
+		for(var peice = binary.getLSB(tempBoard); tempBoard != 0; peice = binary.getLSB(tempBoard)){
+			var openMoves = this.openPositionsAroundPeice(this.getQuad(peice), this.getNode(peice),bitBoard^bitBoard2^0xFFFFF);
+			for(var nextSpace = binary.getLSB(openMoves); openMoves != 0; nextSpace = binary.getLSB(openMoves)){
 				var bitBoardCopy = bitBoard^peice^nextSpace
-				score = this.Win(bitBoardCopy, this.getQuad(nextSpace), player) ? 0xFFFFFFF : this.alphaBeta(player^3, depth-1, a, b, bitBoard2, bitBoardCopy, nextSpace, !maximizing)
+				score = this.alphaBeta(player^3, depth-1, alpha, beta, bitBoard2, bitBoardCopy, nextSpace, !maximizing)
+				//Win(bitBoardCopy, getQuad(nextSpace), player) ? Infinity : 
 				if(maximizing == true){
-					if(score >= b){return b;}
-					if(score > a){a = score;}
+					if(score >= beta){return beta;}
+					if(score > alpha){alpha = score;}
 				} else {
-					if(score <= a){return a;}
-					if(score < b){b = score;}
+					if(score <= alpha){return alpha;}
+					if(score < beta){beta = score;}
 				}
 				openMoves^=nextSpace;
 			}
 			tempBoard^=peice
 		}
-		return maximizing?a:b;
+		return maximizing?alpha:beta;
 	}
-	this.displayBoard()
-
+	view.displayBoard(playerOnePosition, playerTwoPosition);
 }
