@@ -16,27 +16,44 @@ body {
 	text-align: center;
 	overflow: hidden;
 	font-family: Orbitron;
-	user-select: none;
+	-moz-user-select: none;
+	-webkit-user-select: none;
+	-ms-user-select: none;
 	height: 100%;
 }
 
 ul
 {
     list-style-type: none;
-    user-select: none;
 }
 
+a{
+	color: black;
+	text-decoration: none;
+	text-shadow: 1px 1px 1px #BDBDBD;
+}
+
+a:hover{
+	color: #BDBDBD;
+	text-shadow: 2px 2px 2px #000;
+}
+
+h1.view-heading{
+	cursor: default;
+	text-shadow: 3px 3px 3px #BDBDBD;
+}
 
 /*MAIN MENU CSS*/
 
 .logo {
-	user-select: none !important;
 	position: fixed;
 	top: 15%;
 	font-size: 4em;
 	left: 50%;
 	z-index: 100;
 	transform: translate(-50%, -50%);
+	cursor: default;
+	text-shadow: 5px 5px 5px #BDBDBD;
 }
 
 .menu-container{
@@ -60,15 +77,6 @@ ul
     line-height: 20px;
     font-weight: bold;
     font-size: 2em;
-}
-
-a{
-	color: black;
-	text-decoration: none;
-}
-
-a:hover{
-	color: #BDBDBD;
 }
 
 .homeButton{
@@ -136,6 +144,7 @@ a:hover{
 	position: relative;
 	padding: 15px 20px;
 	cursor: pointer;
+	text-shadow: 1px 1px 1px #BDBDBD;
 	-webkit-transition: all 0.2s;
 	-moz-transition: all 0.2s;
 	-o-transition: all 0.2s;
@@ -143,8 +152,8 @@ a:hover{
 }
 
 .inGameMenu ul li: hover {
-background: #555;
-color: #FFF;
+	background: #555;
+	color: #FFF;
 }
 
 .inGameMenu ul li ul {
@@ -153,7 +162,7 @@ color: #FFF;
 	bottom: 48px;
 	width: 150px;
 	left: 0;
-	-webkit-box-shadow:none;
+	-webkit-box-shadow: none;
 	-moz-box-shadow: none;
 	box-shadow: none;
 	display: none;
@@ -169,12 +178,13 @@ color: #FFF;
 	background: #555;
 	display: block;
 	color: black;
-	text-shadow: 0 -1px 0 #000;
+	text-shadow: 1px 1px 1px #BDBDBD;
 }
 
 .inGameMenu ul li ul li:hover {
 	background: #666;
 	color: #BDBDBD;
+	text-shadow: 2px 2px 2px #000;
 }
 
 .inGameMenu ul li:hover ul{
