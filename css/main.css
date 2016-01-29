@@ -40,7 +40,7 @@ a:hover{
 
 h1.view-heading{
 	cursor: default;
-	text-shadow: 3px 3px 3px #BDBDBD;
+	text-shadow: 1px 1px 1px #BDBDBD;
 }
 
 /*MAIN MENU CSS*/
@@ -53,7 +53,7 @@ h1.view-heading{
 	z-index: 100;
 	transform: translate(-50%, -50%);
 	cursor: default;
-	text-shadow: 5px 5px 5px #BDBDBD;
+	text-shadow: 3px 3px 3px #BDBDBD;
 }
 
 .menu-container{
