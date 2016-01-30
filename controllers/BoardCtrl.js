@@ -39,8 +39,10 @@ muonApp.controller('BoardCtrl', function ($scope, $stateParams) {
 	    .size([width, height])
 	    .on("tick", tick)
 	    
-	$scope.goToMainMenu = function(){
-		force.stop()
+	$scope.remove_board = function(){
+		debugger;
+		force.stop();
+		d3.select("svg").remove();
 	}
 
 	var node = svg.selectAll("circle");

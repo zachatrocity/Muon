@@ -46,6 +46,12 @@ h1.view-heading{
 /*MAIN MENU CSS*/
 
 .logo {
+	-webkit-animation: logo-glow 1.5s ease-in-out infinite alternate;
+	-moz-animation: logo-glow 1.5s ease-in-out infinite alternate;
+	animation: logo-glow 1.5s ease-in-out infinite alternate;
+	-webkit-transition: all 0.5s;
+	-moz-transition: all 0.5s;
+	transition: all 0.5s;
 	position: fixed;
 	top: 15%;
 	font-size: 4em;
@@ -53,7 +59,15 @@ h1.view-heading{
 	z-index: 100;
 	transform: translate(-50%, -50%);
 	cursor: default;
-	text-shadow: 3px 3px 3px #BDBDBD;
+}
+
+@-webkit-keyframes logo-glow {
+  from {
+    text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #fff, 0 0 20px #fff, 0 0 30px #fff, 0 0 40px #fff, 0 0 50px #fff, 0 0 60px #fff;
+  }
+  to {
+    text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #fff, 0 0 20px #fff, 0 0 30px #fff, 0 0 35px #fff, 0 0 45px #fff;
+  }
 }
 
 .menu-container{
@@ -105,7 +119,11 @@ h1.view-heading{
 /*BOARD CSS*/
 
 .gameboard{
-	margin: 0 auto;
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	z-index: 100;
+	transform: translate(-50%, -50%);
 }
 
 .node {
