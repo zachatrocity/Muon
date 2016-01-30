@@ -1,9 +1,13 @@
 var AI = function() {
 	var p2_Position = 0b00000111110000000000 //Always the other player
 	var p1_Position = 0b00000000001111100000 //Always the AI
+	// var p2_Position = 0b00000111000000000000 //Always the other player
+	// var p1_Position = 0b00000000001011000000 //Always the AI
 	var BITMASK = 0xFFFFF;
 	var p1Flag = true
 	var p2Flag = true
+	var tempP1Flag = true;
+	var tempP2Flag = true;
 
 	this.makeMoveAgainstAI = function (start, end){
 		var moveStart = convert.inputToBit(start);
@@ -13,7 +17,7 @@ var AI = function() {
 		//If the player picked a valid move then make that move and call the AI to choosee a counter move.
 	 	if(moveStart&p2_Position && moveEnd&boardAspect.openPositionsAroundPeice(moveStart,open)){
 	 		p2_Position ^= moveStart^moveEnd;
-	 		this.buildMoveTree(1);
+	 		this.buildMoveTree(8);
 	 	}
 	 	else
 	 		console.log("invalidMove")
@@ -29,14 +33,14 @@ var AI = function() {
 		var playersPeices = p1_Position; // make a copy of the AI's peices
 		var bestMove;
 		// loop through each peice on the AI board copy.
-		debugger;
 		for(var peice = bitManip.getLSB(playersPeices); playersPeices != 0; peice = bitManip.getLSB(playersPeices)){
 			var open = (p1_Position^p2_Position)^BITMASK;
 			var moveOptions = boardAspect.openPositionsAroundPeice(peice,open);
 			//loop through all the peices around that bit
 			for(var openSpace = bitManip.getLSB(moveOptions); moveOptions != 0; openSpace = bitManip.getLSB(moveOptions)){
 				var bitBoardCopy = p1_Position^peice^openSpace
-				var score = this.alphaBeta(2, depth-1, bestScoreSoFar, Infinity, p2_Position, bitBoardCopy, false)
+				var isWin = evaluation.Win(bitBoardCopy, 1, p1Flag, p2Flag);
+				var score = isWin ? 1000 : this.alphaBeta(2, depth-1, bestScoreSoFar, Infinity, p2_Position, bitBoardCopy, false)
 				if(score > bestScoreSoFar){
 					bestScoreSoFar = score;
 					bestMove = openSpace^peice;
@@ -67,16 +71,29 @@ var AI = function() {
 			var open = (bitBoard^opponentsBoard)^BITMASK;
 			var moveOptions = boardAspect.openPositionsAroundPeice(peice, open);
 			for(var openSpace = bitManip.getLSB(moveOptions); moveOptions != 0; openSpace = bitManip.getLSB(moveOptions)){
-				var bitBoardCopy = bitBoard^peice^openSpace
+				var bitBoardCopy = bitBoard^peice^openSpace;
 
-				score = this.alphaBeta(player^3, depth-1, alpha, beta, opponentsBoard, bitBoardCopy, !maximizing) 
-				if(maximizing == true){
-					if(score >= beta){return beta;}
-					if(score > alpha){alpha = score;}
-				} else {
-					if(score <= alpha){return alpha;}
-					if(score < beta){beta = score;}
+				var tf1 = tempP1Flag;
+				var tf2 = tempP2Flag;
+				if(player == 1 && tempP1Flag){
+					tempP1Flag = !evaluation.isHomeQuadEmpty(1, bitBoardCopy);
+				}else if(player == 2 && tempP2Flag){
+					tempP2Flag = !evaluation.isHomeQuadEmpty(2, bitBoardCopy);
 				}
+				var isWin = evaluation.Win(bitBoardCopy, player, tempP1Flag, tempP2Flag);
+
+				score = isWin ? 1000 : this.alphaBeta(player^3, depth-1, alpha, beta, opponentsBoard, bitBoardCopy, !maximizing) 
+				if(maximizing == true){
+					if(score > alpha){alpha = score;}
+					if(score >= beta){return beta;}
+					
+				} else {
+					if(score < beta){beta = score;}
+					if(beta <= alpha){return alpha;}
+				}
+
+				tempP1Flag = tf1;
+				tempP2Flag = tf2;
 				//remove the option that was just checked from the list
 				moveOptions^=openSpace;
 			}

@@ -159,10 +159,10 @@ var evaluation = {
 		//position is the current position that needs to be checked.
 	isHomeQuadEmpty:function(player, position){
 		var quadIsEmpty = false;
-		if(player == 1 && position&0b00000000001111100000 == 0){
+		if ( player == 1 && position&0b00000000001111100000 == 0){
 			quadIsEmpty = true;
 		} 
-		else if(player == 2 && position&0b00000111110000000000){
+		else if(player==2&& position&0b00000111110000000000 == 0){
 			quadIsEmpty = true;
 		}
 		return quadIsEmpty;
@@ -186,15 +186,17 @@ var evaluation = {
 		return stolenSpace;
 	},
 
-	Win:function(bitBoard, player){
-		var homeFlag = this.isHomeQuadEmpty(player,bitBoard);
+	Win:function(bitBoard, player, f1, f2){
+		var homeFlag = player == 1  ? f1 : f2;
 		var value = 0;
-		var i = 1;
+		var i = 0;
 		for(var quad = boardAspect.getQuadBits(bitBoard, i); i < 4; i++, quad = boardAspect.getQuadBits(bitBoard, i)){
-			if(!(homeFlag || i == player) && (quad == 0b11100 || quad == 0b11010 || quad == 0b11001 || quad == 0b10110 
-			|| quad == 0b10011 || quad == 0b01101 || quad == 0b01011 || quad == 0b00111))
+			if((!homeFlag || i != player) 
+				&&(quad == 0b11100 || quad == 0b11010 || quad == 0b11001 || quad == 0b10110 
+				|| quad == 0b10011 || quad == 0b01101 || quad == 0b01011 || quad == 0b00111)){
 				value = 1000;
+			}
 		}
 		return value;
-	}
+	},
 }
