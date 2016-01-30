@@ -51,14 +51,34 @@ var boardAspect = {
 		var quad = convert.bitToQuad(peice)
 		var node = convert.bitToNode(peice)
 		return openPositions&evaluation.nodeConnections[quad][node];
-		// 00111 01100 00000 00011
-		// 00000 00000 00000 00100
-		// 00000 00000 00000 11011
-
 	},
 }
 
 var convert = {
+	inputToBit:function(coordinate){
+		coordinate = coordinate.toUpperCase();
+		if(coordinate == "A1")     {return 0b00000000000000100000} 
+		else if(coordinate == "A2"){return 0b00000000000001000000}
+		else if(coordinate == "A3"){return 0b00000000000010000000}
+		else if(coordinate == "A4"){return 0b00000000000100000000}
+		else if(coordinate == "A5"){return 0b00000000001000000000}
+		else if(coordinate == "B1"){return 0b00000000000000000010}
+		else if(coordinate == "B2"){return 0b00000000000000000001}
+		else if(coordinate == "B3"){return 0b00000000000000000100}
+		else if(coordinate == "B4"){return 0b00000000000000010000}
+		else if(coordinate == "B5"){return 0b00000000000000001000}
+		else if(coordinate == "C1"){return 0b01000000000000000000}
+		else if(coordinate == "C2"){return 0b10000000000000000000}
+		else if(coordinate == "C3"){return 0b00100000000000000000}
+		else if(coordinate == "C4"){return 0b00001000000000000000}
+		else if(coordinate == "C5"){return 0b00010000000000000000}
+		else if(coordinate == "D1"){return 0b00000100000000000000}
+		else if(coordinate == "D2"){return 0b00000010000000000000}
+		else if(coordinate == "D3"){return 0b00000001000000000000}
+		else if(coordinate == "D4"){return 0b00000000100000000000}
+		else if(coordinate == "D5"){return 0b00000000010000000000}
+	},
+
 	//formatQuadAndNodeToBits()
 	quadNodeToBit:function(quad, node){
 		return 1<<(quad*5 + node);

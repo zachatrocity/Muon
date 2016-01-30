@@ -5,13 +5,13 @@ var AI = function() {
 	var p1Flag = true
 	var p2Flag = true
 
-	this.makeMoveAgainstAI = function (startQuad, startNode, endQuad, endNode){
-		var moveStart = convert.quadNodeToBit(startQuad,startNode);
-		var moveEnd = convert.quadNodeToBit(endQuad,endNode);
+	this.makeMoveAgainstAI = function (start, end){
+		var moveStart = convert.inputToBit(start);
+		var moveEnd = convert.inputToBit(end);
 
 		var open = p1_Position^p2_Position^BITMASK
 		//If the player picked a valid move then make that move and call the AI to choosee a counter move.
-	 	if(moveStart&p2_Position && moveEnd&boardAspect.openPositionsAroundPeice(convert.quadNodeToBit(startQuad, startNode),open)){
+	 	if(moveStart&p2_Position && moveEnd&boardAspect.openPositionsAroundPeice(moveStart,open)){
 	 		p2_Position ^= moveStart^moveEnd;
 	 		this.buildMoveTree(1);
 	 	}
