@@ -18,9 +18,9 @@ var display = {
 	},
 
 	displayBoard:function(p1, p2){
-		if(!evaluation.checkFlag(1,p1))
+		if(!evaluation.isHomeQuadEmpty(1,p1))
 			this.removeFlag(1)
-		if(!evaluation.checkFlag(2,p2))
+		if(!evaluation.isHomeQuadEmpty(2,p2))
 			this.removeFlag(2)
 		//console.log(playerOneFlag ? "LOCKED":"")
 		console.log(""+ this.color(1,0,p1, p2) + "---------"+ this.color(1,1,p1, p2) +"---"+ this.color(0,1,p1, p2) +"---------"+ this.color(0,0,p1, p2) +"");
@@ -36,67 +36,66 @@ var display = {
 		console.log(""+ this.color(3,0,p1, p2) +"---------"+ this.color(3,1,p1, p2) +"---"+ this.color(2,1,p1, p2) +"---------"+ this.color(2,0,p1, p2) +"");
 		//console.log("                   " + (playerTwoFlag ? "LOCKED":""))
 	},
-
-
-	//this.calculateStateValue()
-		//player is 1 or 2
-		//bitBoard is the bitBoard for playerOne or for playerTwo
-		// this.calculateStateValue = function (player, bitBoard, endQuad, endNode){
-		// 	var peicesInQuad = 0;
-		// 	var quad = bitBoard & (0x1F<<(5*endQuad));
-		// 	while(quad){
-		// 		peicesInQuad += quad&1 ? 1:0;
-		// 		quad >>= 1; 
-		// 	}
-
-		// 	var qConfig = (bitBoard>>(5*endQuad))&0x1F
-		// 	var totalValue = 0;
-		// 	var tempBoard = bitBoard;
-		// 	var peice = this.getLSB(tempBoard);
-		// 	while(tempBoard != 0){
-		// 		var inHomeQuad = (this.checkFlag(player,bitBoard) &&  peice&(0b11111 << 5*player))
-		// 		if( peicesInQuad == 2 && !inHomeQuad)
-		// 			totalValue += 2*positionGenes[this.getNode(peice)]
-		// 		else if( peicesInQuad == 1 && !inHomeQuad)
-		// 			totalValue += 1.5*positionGenes[this.getNode(peice)]
-		// 		else
-		// 			totalValue += positionGenes[this.getNode(peice)]
-		// 		tempBoard^=peice
-		// 		peice = this.getLSB(tempBoard)
-		// 	}
-		// 	//return parentValue-(totalValue - grandParent)
-		// 	return totalValue
-		// }
 }
 
 var boardAspect = {
-	//this.getQuad()
-		//This returns a quadrant 0-3
-		//position is a single bitBoard node
-		//position = 0b00000001000000000000 returns quadrant 2
-	getQuad: function(position){
-		return position&0x1F?0:(position&0x3E0?1:(position&0x7C00?2:3));
-	},
-
-	//this.getNode()
-		//returns a node 0-4
-		//position is a single bitBoard node
-		//position = 0b00000010000000000000 returns node 3
-	getNode: function(position){
-		return position&0x08421?0:(position&0x10842?1:(position&0x21084?2:(position&0x42108?3:4)));
-	},
-
 	//bitBoard for the player and the quadrant number 0 to 3
 	getQuadBits: function(bitBoard, quadrant){
-		return ((bitBoard>>(5*quadrant)) & 0x1F);
-
+		return bitBoard & (0x1F<<(5*quadrant));
 	},
 
 	//getAvaiableMovesAI()
 		//board = p2_Position^p1_Position^1048575
 		//This is for temporary recursion positions
-	getOpenMovesFromTempBoard:function(quad,node,openPositions){
-		return (openPositions&((1<<(quad*5 + node))|nodeConnections[quad][node]));
+	openPositionsAroundPeice:function(peice,openPositions){
+		var quad = convert.bitToQuad(peice)
+		var node = convert.bitToNode(peice)
+		return openPositions&evaluation.nodeConnections[quad][node];
+	},
+}
+
+var convert = {
+	inputToBit:function(coordinate){
+		coordinate = coordinate.toUpperCase();
+		if(coordinate == "A1")     {return 0b00000000000000100000} 
+		else if(coordinate == "A2"){return 0b00000000000001000000}
+		else if(coordinate == "A3"){return 0b00000000000010000000}
+		else if(coordinate == "A4"){return 0b00000000000100000000}
+		else if(coordinate == "A5"){return 0b00000000001000000000}
+		else if(coordinate == "B1"){return 0b00000000000000000010}
+		else if(coordinate == "B2"){return 0b00000000000000000001}
+		else if(coordinate == "B3"){return 0b00000000000000000100}
+		else if(coordinate == "B4"){return 0b00000000000000010000}
+		else if(coordinate == "B5"){return 0b00000000000000001000}
+		else if(coordinate == "C1"){return 0b01000000000000000000}
+		else if(coordinate == "C2"){return 0b10000000000000000000}
+		else if(coordinate == "C3"){return 0b00100000000000000000}
+		else if(coordinate == "C4"){return 0b00001000000000000000}
+		else if(coordinate == "C5"){return 0b00010000000000000000}
+		else if(coordinate == "D1"){return 0b00000100000000000000}
+		else if(coordinate == "D2"){return 0b00000010000000000000}
+		else if(coordinate == "D3"){return 0b00000001000000000000}
+		else if(coordinate == "D4"){return 0b00000000100000000000}
+		else if(coordinate == "D5"){return 0b00000000010000000000}
+	},
+
+	//formatQuadAndNodeToBits()
+	quadNodeToBit:function(quad, node){
+		return 1<<(quad*5 + node);
+	},
+	//bitToQuad()
+		//This returns a quadrant 0-3
+		//position is a single bitBoard node
+		//position = 0b00000001000000000000 returns quadrant 2
+	bitToQuad: function(position){
+		return position&0x1F?0:(position&0x3E0?1:(position&0x7C00?2:3));
+	},
+	//bitToNode()
+		//returns a node 0-4
+		//position is a single bitBoard node
+		//position = 0b00000010000000000000 returns node 3
+	bitToNode: function(position){
+		return position&0x08421?0:(position&0x10842?1:(position&0x21084?2:(position&0x42108?3:4)));
 	},
 }
 
@@ -113,7 +112,7 @@ var bitManip = {
 	    return n ; 
 	},
 
-	//this.getLSB()
+	//getLSB()
 		//this takes any binary number and returns the least significant bit
 		//example:
 		//	this.getLSB(0b11001011000000)
@@ -146,10 +145,6 @@ var bitManip = {
 	}
 }
 
-
-// evaluation.Win(evaluation.winningBoard, 1,3)
-
-
 var evaluation = {
 	'nodeConnections':[
 		[0b00000000000000001110,0b00000000000001010101,0b00000000000000011011,0b00000010000000010101,0b10000100001000001110], //quad 0 node 0,1,2,3,4
@@ -158,29 +153,32 @@ var evaluation = {
 		[0b01110000000000000000,0b10101000100000000000,0b11011000000000000000,0b10101000000100000000,0b01110100001000010000]  //quad 3 node 0,1,2,3,4
 	],
 
-	'winningBoard': 0b11100000000000000000,
-
-	//checkFlag()
-		//return false or 0 if the flag should be removed.
-		//position it the board state of the player being checked.
-	checkFlag:function(player,position){
-		if(player == 1){
-			return position&0x3E0
+	//isHomeQuadEmpty()
+		//return 0 if the players home quadrant is empty.
+		//player is a 1 or 2 that represent the player number.
+		//position is the current position that needs to be checked.
+	isHomeQuadEmpty:function(player, position){
+		var quadIsEmpty = false;
+		if ( player == 1 && position&0b00000000001111100000 == 0){
+			quadIsEmpty = true;
+		} 
+		else if(player==2&& position&0b00000111110000000000 == 0){
+			quadIsEmpty = true;
 		}
-		return position&0x7C00
+		return quadIsEmpty;
 	},
 
-	stateValue:function(bitBoard, bitBoard2, player, endQuad){
+	stateValue:function(bitBoard, bitBoard2, player){
 		var total = 0;
 		total += this.stolenRealEstate(bitBoard, bitBoard2);
-		total += this.Win(bitBoard, player,endQuad);
+		total += this.Win(bitBoard, player);
 		return total;
 	},
 
 	stolenRealEstate:function(bitBoard, bitBoard2){
 		var stolenSpace = 0
 		for(var peice = bitManip.getLSB(bitBoard); bitBoard!=0; peice = bitManip.getLSB(bitBoard)){
-			var connections = this.nodeConnections[boardAspect.getQuad(peice)][boardAspect.getNode(peice)];
+			var connections = this.nodeConnections[convert.bitToQuad(peice)][convert.bitToNode(peice)];
 			var adjacentOpponentPeices = connections&bitBoard2;
 			stolenSpace += bitManip.BitCount(adjacentOpponentPeices);
 			bitBoard ^= peice;
@@ -188,17 +186,17 @@ var evaluation = {
 		return stolenSpace;
 	},
 
-	Win:function(bitBoard, player, endQuad){
-		debugger;
-		var homeFlag = this.checkFlag(player,bitBoard);
+	Win:function(bitBoard, player, f1, f2){
+		var homeFlag = player == 1  ? f1 : f2;
+		var value = 0;
 		var i = 0;
-		for(var quad = boardAspect.getQuadBits(bitBoard, i); i < 4; quad = boardAspect.getQuadBits(bitBoard, i)){
-			if(!(homeFlag && i == endQuad) && (quad == 0b11100 || quad == 0b11010 || quad == 0b11001 || quad == 0b10110 
+		for(var quad = boardAspect.getQuadBits(bitBoard, i); i < 4; i++, quad = boardAspect.getQuadBits(bitBoard, i)){
+			if((!homeFlag || i != player) 
+				&&(quad == 0b11100 || quad == 0b11010 || quad == 0b11001 || quad == 0b10110 
 				|| quad == 0b10011 || quad == 0b01101 || quad == 0b01011 || quad == 0b00111)){
-				return 1000;
+				value = 1000;
 			}
-			i++;
 		}
-		return 0;
+		return value;
 	},
 }
