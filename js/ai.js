@@ -5,128 +5,73 @@ var AI = function() {
 	var p1Flag = true
 	var p2Flag = true
 
-	this.getAvailableMoves = function (quad, node){
-		var openPositions = p2_Position^p1_Position^BITMASK
-		return (openPositions&((1<<(quad*5 + node))|evaluation.nodeConnections[quad][node]));
-	}
-	//getAvaiableMovesAI()
-		//board = p2_Position^p1_Position^1048575
-		//This is for temporary recursion positions
-	this.openPositionsAroundPeice = function(quad,node,openPositions){
-		return (openPositions&((1<<(quad*5 + node))|evaluation.nodeConnections[quad][node]));
-	}
-	//this.checkFlag()
-		//return false or 0 if the flag should be removed.
-		//position is the board state of the player being checked.
-	this.checkFlag = function (player,position){
-		if(player == 1){
-			return position&0x3E0
-		}
-		return position&0x7C00
-	}
-	this.removeFlag = function (player){
-		if(player == 1)
-			p1Flag = false;
-		else
-			p2Flag = false;
-	}
+	this.makeMoveAgainstAI = function (startQuad, startNode, endQuad, endNode){
+		var moveStart = convert.quadNodeToBit(startQuad,startNode);
+		var moveEnd = convert.quadNodeToBit(endQuad,endNode);
 
-
-	//performMoveHvsAI() 
-		//This takes the peices starting position and tries to move it to an ending position.
-		//
-	this.performMoveHvsAI = function (startQuad, startNode, endQuad, endNode){
-		var startPosition = (1<<(startQuad*5 + startNode))
-		var endPosition = (1<<(endQuad*5 + endNode))
-
-	 	if(startPosition&p2_Position && endPosition&this.getAvailableMoves(startQuad, startNode)){
-	 		p2_Position ^= startPosition^endPosition;
-	 		display.displayBoard(p1_Position, p2_Position,p1Flag,p2Flag);
-	 		var t1 = Date.now();
-	 		this.performAiMoveABDF(1);
-	 		//IDDFSStart(1);
-	 		var t2 = Date.now();
-	 		console.log((t2-t1)/1000)
-	 		display.displayBoard(p1_Position, p2_Position,p1Flag,p2Flag);
+		var open = p1_Position^p2_Position^BITMASK
+		//If the player picked a valid move then make that move and call the AI to choosee a counter move.
+	 	if(moveStart&p2_Position && moveEnd&boardAspect.openPositionsAroundPeice(startQuad, startNode,open)){
+	 		p2_Position ^= moveStart^moveEnd;
+	 		this.buildMoveTree(1);
 	 	}
 	 	else
 	 		console.log("invalidMove")
 	}
 
-	this.performAiMoveABDF = function(depth){
-		var max = -Infinity;
-		var tempBoard = p1_Position;
+	//buildMoveTree()
+		//This function is the beginning of the minimax process. The reason this is required is
+		//because a minimax algorithm only returns the value of the best move and not the actual move.
+		//buildMoveTree does a seperate minimax search on each of the first moves. The one that
+		//returns the highest value should be the move that is made.
+	this.buildMoveTree = function(depth){
+		var bestScoreSoFar = -Infinity;
+		var playersPeices = p1_Position; // make a copy of the AI's peices
 		var bestMove;
 
-		for(var peice = bitManip.getLSB(tempBoard); tempBoard != 0; tempBoard^=peice){
+		//loop through each peice on the AI board copy.
+		for(var peice = bitManip.getLSB(playersPeices); playersPeices != 0; peice = bitManip.getLSB(playersPeices)){
 			var open = p1_Position^p2_Position^BITMASK;
-			var openMoves = this.openPositionsAroundPeice(boardAspect.getQuad(peice), boardAspect.getNode(peice),open);
-			for(var nextSpace = bitManip.getLSB(openMoves); openMoves != 0; openMoves^=nextSpace){
-				var bitBoardCopy = p1_Position^peice^nextSpace
-				var score = this.alphaBeta(2, depth-1, max, Infinity, p2_Position, bitBoardCopy, nextSpace, false)
-				if(score > max){
-					max = score;
-					bestMove = nextSpace^peice;
+			var moveOptions = boardAspect.openPositionsAroundPeice(convert.bitToQuad(peice), convert.bitToNode(peice),open);
+
+			//loop through all the peices around that bit
+			for(var openSpace = bitManip.getLSB(moveOptions); moveOptions != 0; openSpace = bitManip.getLSB(moveOptions)){
+				var bitBoardCopy = p1_Position^peice^openSpace
+				var score = this.alphaBeta(2, depth-1, bestScoreSoFar, Infinity, p2_Position, bitBoardCopy, false)
+				if(score > bestScoreSoFar){
+					bestScoreSoFar = score;
+					bestMove = openSpace^peice;
 				}
-				nextSpace = bitManip.getLSB(openMoves);
+				//remove the last space checked from the list of open moves.
+				moveOptions^=openSpace
 			}
-			peice = bitManip.getLSB(tempBoard);
+
+			//remove the last peice from the list of peices that need to be checked.
+			playersPeices^=peice
 		}
+
+		//Make the best move that was found in the for-loops and check to see if the AI flag needs to be removed.
 		p1_Position ^= bestMove;
-		if(p1Flag && !this.checkFlag(1,p1_Position)){
-			this.removeFlag(1)
+		display.displayBoard(p1_Position, p2_Position, p1Flag, p2Flag);
+		if(p1Flag && evaluation.isHomeQuadEmpty(1,p1_Position)){
+			evaluation.removeFlag(1)
 		}
 	}
 
-	this.performAiMove = function (depth){
-		var max = -Infinity;
-		var tempBoard = p1_Position;
-		var bestMove;
-
-		var peice = bitManip.getLSB(tempBoard);
-		while(tempBoard != 0){
-			var openMoves = boardAspect.getOpenMovesFromTempBoard( boardAspect.getQuad(peice), boardAspect.getNode(peice), p1_Position^p2_Position^BITMASK);
-			var nextSpace = bitManip.getLSB(openMoves);
-			while( openMoves != 0){
-				var bitBoardCopy = p1_Position^peice^nextSpace
-				var score = this.alphaBeta(2, depth-1, max, Infinity, p2_Position, bitBoardCopy, nextSpace, false)
-				if(score > max){
-					max = score;
-					bestMove = nextSpace^peice;
-				}
-				openMoves^=nextSpace;
-				nextSpace = bitManip.getLSB(openMoves);
-			}
-			tempBoard^=peice;
-			peice = bitManip.getLSB(tempBoard);
-		}
-		p1_Position ^= bestMove;
-		if(p1Flag && !this.checkFlag(1,p1_Position)){
-			this.removeFlag(1)
-		}
-	}
-
-	//this.alphaBeta()
-		//this.alphaBeta only returns the value of a move, not the actual move that should be made.
-		//player--------can be a 1 or a 2
-		//depth---------how far in the tree you would like to go
-		//a-------------should start at -infinity
-		//b-------------should start at infinity
-		//bitBoard------the current players board state
-		//bitBoard2-----the other players state
-		//move----------the last move that was made (a single bitManip peice)
-		//maximizing----if the player is maximizing then this is TRUE, else FALSE
-	this.alphaBeta = function (player, depth, alpha, beta, bitBoard, bitBoard2, space, maximizing){
+	this.alphaBeta = function (player, depth, alpha, beta, bitBoard, opponentsBoard, maximizing){
 		if(depth == 0){
-			return evaluation.stateValue(bitBoard2, bitBoard, player^3);
+			//Here we evaluate the state of the last player to make a move.
+			return evaluation.stateValue(opponentsBoard, bitBoard, player^3);
 		}
-		var tempBoard = bitBoard;
-		for(var peice = bitManip.getLSB(tempBoard); tempBoard != 0; peice = bitManip.getLSB(tempBoard)){
-			var openMoves = this.openPositionsAroundPeice(boardAspect.getQuad(peice), boardAspect.getNode(peice),bitBoard^bitBoard2^0xFFFFF);
-			for(var nextSpace = bitManip.getLSB(openMoves); openMoves != 0; nextSpace = bitManip.getLSB(openMoves)){
-				var bitBoardCopy = bitBoard^peice^nextSpace
-				score = this.alphaBeta(player^3, depth-1, alpha, beta, bitBoard2, bitBoardCopy, nextSpace, !maximizing)
-				//Win(bitBoardCboard getQuad(nextSpace), player) ? Infinity : 
+		var playersPeices = bitBoard;
+		for(var peice = bitManip.getLSB(playersPeices); playersPeices != 0; peice = bitManip.getLSB(playersPeices)){
+			var open = bitBoard^opponentsBoard^BITMASK;
+
+			var moveOptions = boardAspect.openPositionsAroundPeice(convert.bitToQuad(peice), convert.bitToNode(peice), open);
+			for(var openSpace = bitManip.getLSB(moveOptions); moveOptions != 0; openSpace = bitManip.getLSB(moveOptions)){
+				var bitBoardCopy = bitBoard^peice^openSpace
+
+				score = this.alphaBeta(player^3, depth-1, alpha, beta, opponentsBoard, bitBoardCopy, !maximizing) 
 				if(maximizing == true){
 					if(score >= beta){return beta;}
 					if(score > alpha){alpha = score;}
@@ -134,9 +79,12 @@ var AI = function() {
 					if(score <= alpha){return alpha;}
 					if(score < beta){beta = score;}
 				}
-				openMoves^=nextSpace;
+				//remove the option that was just checked from the list
+				moveOptions^=openSpace;
 			}
-			tempBoard^=peice
+
+			//remove the peice that was just checked from the list
+			playersPeices^=peice
 		}
 		return maximizing?alpha:beta;
 	}
