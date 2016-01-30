@@ -11,7 +11,7 @@ var AI = function() {
 
 		var open = p1_Position^p2_Position^BITMASK
 		//If the player picked a valid move then make that move and call the AI to choosee a counter move.
-	 	if(moveStart&p2_Position && moveEnd&boardAspect.openPositionsAroundPeice(startQuad, startNode,open)){
+	 	if(moveStart&p2_Position && moveEnd&boardAspect.openPositionsAroundPeice(convert.quadNodeToBit(startQuad, startNode),open)){
 	 		p2_Position ^= moveStart^moveEnd;
 	 		this.buildMoveTree(1);
 	 	}
@@ -28,12 +28,11 @@ var AI = function() {
 		var bestScoreSoFar = -Infinity;
 		var playersPeices = p1_Position; // make a copy of the AI's peices
 		var bestMove;
-
-		//loop through each peice on the AI board copy.
+		// loop through each peice on the AI board copy.
+		debugger;
 		for(var peice = bitManip.getLSB(playersPeices); playersPeices != 0; peice = bitManip.getLSB(playersPeices)){
-			var open = p1_Position^p2_Position^BITMASK;
-			var moveOptions = boardAspect.openPositionsAroundPeice(convert.bitToQuad(peice), convert.bitToNode(peice),open);
-
+			var open = (p1_Position^p2_Position)^BITMASK;
+			var moveOptions = boardAspect.openPositionsAroundPeice(peice,open);
 			//loop through all the peices around that bit
 			for(var openSpace = bitManip.getLSB(moveOptions); moveOptions != 0; openSpace = bitManip.getLSB(moveOptions)){
 				var bitBoardCopy = p1_Position^peice^openSpace
@@ -65,9 +64,8 @@ var AI = function() {
 		}
 		var playersPeices = bitBoard;
 		for(var peice = bitManip.getLSB(playersPeices); playersPeices != 0; peice = bitManip.getLSB(playersPeices)){
-			var open = bitBoard^opponentsBoard^BITMASK;
-
-			var moveOptions = boardAspect.openPositionsAroundPeice(convert.bitToQuad(peice), convert.bitToNode(peice), open);
+			var open = (bitBoard^opponentsBoard)^BITMASK;
+			var moveOptions = boardAspect.openPositionsAroundPeice(peice, open);
 			for(var openSpace = bitManip.getLSB(moveOptions); moveOptions != 0; openSpace = bitManip.getLSB(moveOptions)){
 				var bitBoardCopy = bitBoard^peice^openSpace
 

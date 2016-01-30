@@ -47,16 +47,14 @@ var boardAspect = {
 	//getAvaiableMovesAI()
 		//board = p2_Position^p1_Position^1048575
 		//This is for temporary recursion positions
-	getOpenMovesFromTempBoard:function(quad,node,openPositions){
-		return (openPositions&((1<<(quad*5 + node))|nodeConnections[quad][node]));
-	},
+	openPositionsAroundPeice:function(peice,openPositions){
+		var quad = convert.bitToQuad(peice)
+		var node = convert.bitToNode(peice)
+		return openPositions&evaluation.nodeConnections[quad][node];
+		// 00111 01100 00000 00011
+		// 00000 00000 00000 00100
+		// 00000 00000 00000 11011
 
-	//getAvaiableMovesAI()
-		//board = p2_Position^p1_Position^1048575
-		//This is for temporary recursion positions
-	openPositionsAroundPeice:function(quad,node,openPositions){
-		var peice = convert.quadNodeToBit(quad,node);
-		return ((openPositions&peice)|evaluation.nodeConnections[quad][node]);
 	},
 }
 
