@@ -88,7 +88,8 @@ var boardAspect = {
 
 	//bitBoard for the player and the quadrant number 0 to 3
 	getQuadBits: function(bitBoard, quadrant){
-		return bitBoard & (0x1F<<(5*quadrant));
+		return ((bitBoard>>(5*quadrant)) & 0x1F);
+
 	},
 
 	//getAvaiableMovesAI()
@@ -145,6 +146,10 @@ var bitManip = {
 	}
 }
 
+
+// evaluation.Win(evaluation.winningBoard, 1,3)
+
+
 var evaluation = {
 	'nodeConnections':[
 		[0b00000000000000001110,0b00000000000001010101,0b00000000000000011011,0b00000010000000010101,0b10000100001000001110], //quad 0 node 0,1,2,3,4
@@ -153,8 +158,11 @@ var evaluation = {
 		[0b01110000000000000000,0b10101000100000000000,0b11011000000000000000,0b10101000000100000000,0b01110100001000010000]  //quad 3 node 0,1,2,3,4
 	],
 
+	'winningBoard': 0b11100000000000000000,
+
 	//checkFlag()
 		//return false or 0 if the flag should be removed.
+		//position it the board state of the player being checked.
 	checkFlag:function(player,position){
 		if(player == 1){
 			return position&0x3E0
@@ -162,10 +170,10 @@ var evaluation = {
 		return position&0x7C00
 	},
 
-	stateValue:function(bitBoard, bitBoard2, player){
+	stateValue:function(bitBoard, bitBoard2, player, endQuad){
 		var total = 0;
 		total += this.stolenRealEstate(bitBoard, bitBoard2);
-		total += this.Win(bitBoard, player);
+		total += this.Win(bitBoard, player,endQuad);
 		return total;
 	},
 
@@ -180,14 +188,17 @@ var evaluation = {
 		return stolenSpace;
 	},
 
-	Win:function(bitBoard, player){
+	Win:function(bitBoard, player, endQuad){
+		debugger;
 		var homeFlag = this.checkFlag(player,bitBoard);
-		var i = 1;
-		for(var quad = boardAspect.getQuadBits(bitBoard, i); i < 4; i++, quad = boardAspect.getQuadBits(bitBoard, i)){
-			if(!(homeFlag || i == player) && (quad == 0b11100 || quad == 0b11010 || quad == 0b11001 || quad == 0b10110 
-			|| quad == 0b10011 || quad == 0b01101 || quad == 0b01011 || quad == 0b00111))
+		var i = 0;
+		for(var quad = boardAspect.getQuadBits(bitBoard, i); i < 4; quad = boardAspect.getQuadBits(bitBoard, i)){
+			if(!(homeFlag && i == endQuad) && (quad == 0b11100 || quad == 0b11010 || quad == 0b11001 || quad == 0b10110 
+				|| quad == 0b10011 || quad == 0b01101 || quad == 0b01011 || quad == 0b00111)){
 				return 1000;
+			}
+			i++;
 		}
 		return 0;
-	}
+	},
 }

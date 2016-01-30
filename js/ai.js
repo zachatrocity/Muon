@@ -31,7 +31,6 @@ var AI = function() {
 			p2Flag = false;
 	}
 
-
 	//performMoveHvsAI() 
 		//This takes the peices starting position and tries to move it to an ending position.
 		//
@@ -43,7 +42,7 @@ var AI = function() {
 	 		p2_Position ^= startPosition^endPosition;
 	 		display.displayBoard(p1_Position, p2_Position,p1Flag,p2Flag);
 	 		var t1 = Date.now();
-	 		this.performAiMoveABDF(1);
+	 		this.performAiMoveABDF(2);
 	 		//IDDFSStart(1);
 	 		var t2 = Date.now();
 	 		console.log((t2-t1)/1000)
@@ -118,7 +117,7 @@ var AI = function() {
 		//maximizing----if the player is maximizing then this is TRUE, else FALSE
 	this.alphaBeta = function (player, depth, alpha, beta, bitBoard, bitBoard2, space, maximizing){
 		if(depth == 0){
-			return evaluation.stateValue(bitBoard2, bitBoard, player^3);
+			return evaluation.stateValue(bitBoard2, bitBoard, player^3, space);
 		}
 		var tempBoard = bitBoard;
 		for(var peice = bitManip.getLSB(tempBoard); tempBoard != 0; peice = bitManip.getLSB(tempBoard)){
