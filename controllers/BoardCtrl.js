@@ -26,6 +26,7 @@ muonApp.controller('BoardCtrl', function ($scope, $stateParams) {
 	var svg = d3.select("body").append("svg")
 	    .attr("width", width)
 	    .attr("height", height)
+	    .on("mousedown", mousedown);
 
 	var force = d3.layout.force()
 	    .nodes(nodes)
@@ -39,16 +40,34 @@ muonApp.controller('BoardCtrl', function ($scope, $stateParams) {
 	    .size([width, height])
 	    .on("tick", tick)
 	    
-	$scope.goToMainMenu = function(){
-		force.stop()
+	$scope.remove_board = function(){
+		force.stop();
+		d3.select("svg").remove();
 	}
 
 	var node = svg.selectAll("circle");
 	var links = force.links();
 	var link = svg.selectAll('.link');
 
-	function click(e){
-	  console.log(e)
+	function mousedown() {
+	  var point = d3.mouse(this);
+	  var maxdist = 30
+	  // This loops through all the nodes and outputs the ones within
+	  // 30 to point
+	  nodes.forEach(function(target) {
+	    var x = target.x - point[0],
+	        y = target.y - point[1];
+	    if (Math.sqrt(x * x + y * y) < maxdist) {
+	      target.selected = true;
+	      console.log(target);
+	      //using d3.select we should be able to do a transition and increase
+	      //the radius of a node
+	    } else {
+	    	target.selected = false;
+	    }
+	  });
+
+	  restart();
 	}
 
 	function tick(e) {
@@ -99,7 +118,7 @@ muonApp.controller('BoardCtrl', function ($scope, $stateParams) {
 	      .attr("cx", function(d) { return d.x; })
 	      .attr("cy", function(d) { return d.y; })
 	      .attr("r", 5)
-	      .style("fill", function(d) { return (!d.antimuon) ? d3.rgb(85,187,51) : d3.rgb(60,100,187) })
+	      .style("fill", function(d) { return (!d.antimuon) ? d3.rgb(85,187,51) : d3.rgb(60,100,187); })
 	      .style("stroke", function(d) { return ((!d.antimuon) ? d3.rgb(85,187,51) : d3.rgb(60,100,187)).darker(2); })
 	      .call(force.drag)
 
@@ -109,10 +128,10 @@ muonApp.controller('BoardCtrl', function ($scope, $stateParams) {
 	function addNodeAtFoci(f,anti){
 	    var i = f * 3
 
-	    nodes.push({id: i, foci: f, antimuon: anti});
-	    nodes.push({id: i + 1, foci: f, antimuon: anti});
+	    nodes.push({id: i, foci: f, antimuon: anti, selected: false});
+	    nodes.push({id: i + 1, foci: f, antimuon: anti, selected: false});
 	    links.push({source: i, target: i + 1});
-	    nodes.push({id: i + 2, foci: f, antimuon: anti});
+	    nodes.push({id: i + 2, foci: f, antimuon: anti, selected: false});
 	    links.push({source: i + 2, target: i + 1});
 	    links.push({source: i, target: i + 2});
 
