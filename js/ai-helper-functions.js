@@ -44,9 +44,8 @@ var boardAspect = {
 		return bitBoard & (0x1F<<(5*quadrant));
 	},
 
-	//getAvaiableMovesAI()
-		//board = p2_Position^p1_Position^1048575
-		//This is for temporary recursion positions
+	//openPositionsAroundPeice()
+		//peice is a bit representation of any peice on the board.
 	openPositionsAroundPeice:function(peice,openPositions){
 		var quad = convert.bitToQuad(peice)
 		var node = convert.bitToNode(peice)
@@ -55,6 +54,10 @@ var boardAspect = {
 }
 
 var convert = {
+
+	//inputToBit()
+		//Returns a binary representation of anything in standard from.
+		//If the input was not found here the function returns false.
 	inputToBit:function(coordinate){
 		coordinate = coordinate.toUpperCase();
 		if(coordinate == "A1")     {return 0b00000000000000100000} 
@@ -77,6 +80,8 @@ var convert = {
 		else if(coordinate == "D3"){return 0b00000001000000000000}
 		else if(coordinate == "D4"){return 0b00000000100000000000}
 		else if(coordinate == "D5"){return 0b00000000010000000000}
+		else 
+			return false
 	},
 
 	//formatQuadAndNodeToBits()
@@ -162,6 +167,22 @@ var evaluation = {
 		[0b01110000000000000000,0b10101000100000000000,0b11011000000000000000,0b10101000000100000000,0b01110100001000010000]  //quad 3 node 0,1,2,3,4
 	],
 
+	//validateMove()
+		//Input can be in either standard form or bit form
+		//open Positions must be the current open positions on the board
+	validateMove:function(startPosition, endPosition, openPositions){
+		var validation = true;
+		if(isNaN(startPosition) || isNaN(endPosition)){
+			startPosition = convert.inputToBit(startPosition);
+			endPosition = convert.inputToBit(endPosition);
+		}
+		if(startPosition == false || endPosition == false)){
+			return false;
+		}
+		spacesAroundStart = evaluation.nodeConnections[convert.bitToQuad(startPosition)][convert.bitToNode(startPosition)];
+		return (openPositions & spacesAroundStart & endPosition) ? true : false;
+	}
+
 	//isHomeQuadEmpty()
 		//return 0 if the players home quadrant is empty.
 		//player is a 1 or 2 that represent the player number.
@@ -180,7 +201,7 @@ var evaluation = {
 	stateValue:function(bitBoard, bitBoard2, player){
 		var total = 0;
 		total += this.stolenRealEstate(bitBoard, bitBoard2);
-		total += this.Win(bitBoard, player);
+		total += this.Win(bitBoard, player) ? 1000 : 0;
 		return total;
 	},
 
@@ -197,15 +218,17 @@ var evaluation = {
 
 	Win:function(bitBoard, player, f1, f2){
 		var homeFlag = player == 1  ? f1 : f2;
-		var value = 0;
-		var i = 0;
-		for(var quad = boardAspect.getQuadBits(bitBoard, i); i < 4; i++, quad = boardAspect.getQuadBits(bitBoard, i)){
-			if((!homeFlag || i != player) 
-				&&(quad == 0b11100 || quad == 0b11010 || quad == 0b11001 || quad == 0b10110 
-				|| quad == 0b10011 || quad == 0b01101 || quad == 0b01011 || quad == 0b00111)){
-				value = 1000;
+		var winPosition = false;
+
+		var winningPositions = [0b11100, 0b11010, 0b11001, 0b10110, 0b10011, 0b01101, 0b01011, 0b00111]
+
+		for(var i = 0; i < 4; i++){
+			var quad = boardAspect.getQuadBits(bitBoard, 0);
+			if((!homeFlag || i != player) && winningPositions.indexOf(quad) != -1){
+				winPosition = true;
+				break;
 			}
 		}
-		return value;
+		return winPosition;
 	},
 }
