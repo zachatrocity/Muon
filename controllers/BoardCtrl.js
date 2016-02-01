@@ -58,14 +58,20 @@ muonApp.controller('BoardCtrl', function ($scope, $stateParams) {
 	    var x = target.x - point[0],
 	        y = target.y - point[1];
 	    if (Math.sqrt(x * x + y * y) < maxdist) {
-	      target.selected = true;
-	      console.log(target);
-	      //using d3.select we should be able to do a transition and increase
-	      //the radius of a node
+	    	debugger;
+		    target.selected = true;
+		    console.log(target);
+		    
+		    
 	    } else {
 	    	target.selected = false;
 	    }
 	  });
+
+	  // d3.select(this).select("circle").transition()
+   //      .duration(750)
+   //      .attr("r", 16)
+
 
 	  restart();
 	}
