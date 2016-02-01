@@ -1,8 +1,6 @@
 var AI = function() {
 	var p2_Position = 0b00000111110000000000 //Always the other player
 	var p1_Position = 0b00000000001111100000 //Always the AI
-	// var p2_Position = 0b00000111000000000000 //Always the other player
-	// var p1_Position = 0b00000000001011000000 //Always the AI
 	var BITMASK = 0xFFFFF;
 	var p1Flag = true
 	var p2Flag = true
@@ -17,7 +15,7 @@ var AI = function() {
 		//If the player picked a valid move then make that move and call the AI to choosee a counter move.
 	 	if(moveStart&p2_Position && moveEnd&boardAspect.openPositionsAroundPeice(moveStart,open)){
 	 		p2_Position ^= moveStart^moveEnd;
-	 		this.buildMoveTree(8);
+	 		this.buildMoveTree(2);
 	 	}
 	 	else
 	 		console.log("invalidMove")
@@ -32,15 +30,19 @@ var AI = function() {
 		var bestScoreSoFar = -Infinity;
 		var playersPeices = p1_Position; // make a copy of the AI's peices
 		var bestMove;
+
 		// loop through each peice on the AI board copy.
 		for(var peice = bitManip.getLSB(playersPeices); playersPeices != 0; peice = bitManip.getLSB(playersPeices)){
 			var open = (p1_Position^p2_Position)^BITMASK;
 			var moveOptions = boardAspect.openPositionsAroundPeice(peice,open);
+
 			//loop through all the peices around that bit
 			for(var openSpace = bitManip.getLSB(moveOptions); moveOptions != 0; openSpace = bitManip.getLSB(moveOptions)){
 				var bitBoardCopy = p1_Position^peice^openSpace
 				var isWin = evaluation.Win(bitBoardCopy, 1, p1Flag, p2Flag);
-				var score = isWin ? 1000 : this.alphaBeta(2, depth-1, bestScoreSoFar, Infinity, p2_Position, bitBoardCopy, false)
+
+				//var score = isWin ? 1000 : this.alphaBeta(2, depth-1, bestScoreSoFar, Infinity, p2_Position, bitBoardCopy, false)
+				var score = this.alphaBeta(2, depth-1, bestScoreSoFar, Infinity, p2_Position, bitBoardCopy, false)
 				if(score > bestScoreSoFar){
 					bestScoreSoFar = score;
 					bestMove = openSpace^peice;
@@ -64,7 +66,7 @@ var AI = function() {
 	this.alphaBeta = function (player, depth, alpha, beta, bitBoard, opponentsBoard, maximizing){
 		if(depth == 0){
 			//Here we evaluate the state of the last player to make a move.
-			return evaluation.stateValue(opponentsBoard, bitBoard, player^3);
+			return evaluation.stateValue(opponentsBoard, bitBoard, tempP1Flag, tempP2Flag, player^3);
 		}
 		var playersPeices = bitBoard;
 		for(var peice = bitManip.getLSB(playersPeices); playersPeices != 0; peice = bitManip.getLSB(playersPeices)){
@@ -82,7 +84,8 @@ var AI = function() {
 				}
 				var isWin = evaluation.Win(bitBoardCopy, player, tempP1Flag, tempP2Flag);
 
-				score = isWin ? 1000 : this.alphaBeta(player^3, depth-1, alpha, beta, opponentsBoard, bitBoardCopy, !maximizing) 
+				// score = isWin ? 1000 : this.alphaBeta(player^3, depth-1, alpha, beta, opponentsBoard, bitBoardCopy, !maximizing) 
+				score = this.alphaBeta(player^3, depth-1, alpha, beta, opponentsBoard, bitBoardCopy, !maximizing) 
 				if(maximizing == true){
 					if(score > alpha){alpha = score;}
 					if(score >= beta){return beta;}

@@ -168,18 +168,35 @@ var evaluation = {
 		return quadIsEmpty;
 	},
 
-	stateValue:function(bitBoard, bitBoard2, player){
+	stateValue:function(bitBoard, opponentsBoard, flag1, flag2, player){
 		var total = 0;
-		total += this.stolenRealEstate(bitBoard, bitBoard2);
 		total += this.Win(bitBoard, player);
+		if(total > 0){
+			debugger;
+		}
+		//If a winning position has been found then you dont need to evaluate any more.
+		if(total < 3141592){
+			total += this.stolenRealEstate(bitBoard, opponentsBoard);
+			total += this.flagRemovalValue(flag1, flag2, player, bitBoard)
+		}
 		return total;
 	},
 
-	stolenRealEstate:function(bitBoard, bitBoard2){
+	flagRemovalValue:function(flag1, flag2, player, position){
+		var value = 0;
+		if(player == 1 && flag1 || player == 2 && flag2){
+			if(this.isHomeQuadEmpty(player, position)){
+				value = 50;
+			}
+		}
+		return value;
+	},
+
+	stolenRealEstate:function(bitBoard, opponentsBoard){
 		var stolenSpace = 0
 		for(var peice = bitManip.getLSB(bitBoard); bitBoard!=0; peice = bitManip.getLSB(bitBoard)){
 			var connections = this.nodeConnections[convert.bitToQuad(peice)][convert.bitToNode(peice)];
-			var adjacentOpponentPeices = connections&bitBoard2;
+			var adjacentOpponentPeices = connections&opponentsBoard;
 			stolenSpace += bitManip.BitCount(adjacentOpponentPeices);
 			bitBoard ^= peice;
 		}
@@ -194,7 +211,7 @@ var evaluation = {
 			if((!homeFlag || i != player) 
 				&&(quad == 0b11100 || quad == 0b11010 || quad == 0b11001 || quad == 0b10110 
 				|| quad == 0b10011 || quad == 0b01101 || quad == 0b01011 || quad == 0b00111)){
-				value = 1000;
+				value = 3141592;
 			}
 		}
 		return value;
