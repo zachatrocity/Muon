@@ -118,8 +118,8 @@ muonApp.controller('BoardCtrl', function ($scope, $stateParams) {
 	      .attr("cx", function(d) { return d.x; })
 	      .attr("cy", function(d) { return d.y; })
 	      .attr("r", 5)
-	      .style("fill", function(d) { return (!d.antimuon) ? d3.rgb(85,187,51) : d3.rgb(60,100,187); })
-	      .style("stroke", function(d) { return ((!d.antimuon) ? d3.rgb(85,187,51) : d3.rgb(60,100,187)).darker(2); })
+	      .style("fill", function(d) { return (!d.antimuon) ? d3.rgb(95,173,65) :  d3.rgb(84,144,204); })
+	      .style("stroke", function(d) { return ((!d.antimuon) ? d3.rgb(95,173,65) : d3.rgb(84,144,204)).darker(2); })
 	      .call(force.drag)
 
 	    force.start()
