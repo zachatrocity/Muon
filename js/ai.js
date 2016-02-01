@@ -9,6 +9,10 @@ var AI = function() {
 	var tempP1Flag = true;
 	var tempP2Flag = true;
 
+	this.printGame = function(){
+		printData.printMoves();
+	}
+
 	this.makeMoveAgainstAI = function (start, end){
 		var moveStart = convert.inputToBit(start);
 		var moveEnd = convert.inputToBit(end);
@@ -17,7 +21,8 @@ var AI = function() {
 		//If the player picked a valid move then make that move and call the AI to choosee a counter move.
 	 	if(moveStart&p2_Position && moveEnd&boardAspect.openPositionsAroundPeice(moveStart,open)){
 	 		p2_Position ^= moveStart^moveEnd;
-	 		this.buildMoveTree(8);
+	 		saveData.saveMove(start, end, 2)
+	 		this.buildMoveTree(1);
 	 	}
 	 	else
 	 		console.log("invalidMove")
@@ -32,6 +37,8 @@ var AI = function() {
 		var bestScoreSoFar = -Infinity;
 		var playersPeices = p1_Position; // make a copy of the AI's peices
 		var bestMove;
+		var p;
+		var o;
 		// loop through each peice on the AI board copy.
 		for(var peice = bitManip.getLSB(playersPeices); playersPeices != 0; peice = bitManip.getLSB(playersPeices)){
 			var open = (p1_Position^p2_Position)^BITMASK;
@@ -43,6 +50,8 @@ var AI = function() {
 				var score = isWin ? 1000 : this.alphaBeta(2, depth-1, bestScoreSoFar, Infinity, p2_Position, bitBoardCopy, false)
 				if(score > bestScoreSoFar){
 					bestScoreSoFar = score;
+					o = openSpace;
+					p = peice;
 					bestMove = openSpace^peice;
 				}
 				//remove the last space checked from the list of open moves.
@@ -55,6 +64,8 @@ var AI = function() {
 
 		//Make the best move that was found in the for-loops and check to see if the AI flag needs to be removed.
 		p1_Position ^= bestMove;
+
+		saveData.saveMove(convert.bitToStandard(p), convert.bitToStandard(o), 1)
 		display.displayBoard(p1_Position, p2_Position, p1Flag, p2Flag);
 		if(p1Flag && evaluation.isHomeQuadEmpty(1,p1_Position)){
 			evaluation.removeFlag(1)

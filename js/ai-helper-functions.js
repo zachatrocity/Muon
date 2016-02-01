@@ -84,6 +84,31 @@ var convert = {
 			return false
 	},
 
+	bitToStandard:function(coordinate){
+			 if(coordinate == 0b00000000000000100000){return "A1"} 
+		else if(coordinate == 0b00000000000001000000){return "A2"}
+		else if(coordinate == 0b00000000000010000000){return "A3"}
+		else if(coordinate == 0b00000000000100000000){return "A4"}
+		else if(coordinate == 0b00000000001000000000){return "A5"}
+		else if(coordinate == 0b00000000000000000010){return "B1"}
+		else if(coordinate == 0b00000000000000000001){return "B2"}
+		else if(coordinate == 0b00000000000000000100){return "B3"}
+		else if(coordinate == 0b00000000000000010000){return "B4"}
+		else if(coordinate == 0b00000000000000001000){return "B5"}
+		else if(coordinate == 0b01000000000000000000){return "C1"}
+		else if(coordinate == 0b10000000000000000000){return "C2"}
+		else if(coordinate == 0b00100000000000000000){return "C3"}
+		else if(coordinate == 0b00001000000000000000){return "C4"}
+		else if(coordinate == 0b00010000000000000000){return "C5"}
+		else if(coordinate == 0b00000100000000000000){return "D1"}
+		else if(coordinate == 0b00000010000000000000){return "D2"}
+		else if(coordinate == 0b00000001000000000000){return "D3"}
+		else if(coordinate == 0b00000000100000000000){return "D4"}
+		else if(coordinate == 0b00000000010000000000){return "D5"}
+		else 
+			return false
+	},
+
 	//formatQuadAndNodeToBits()
 	quadNodeToBit:function(quad, node){
 		return 1<<(quad*5 + node);
@@ -176,12 +201,12 @@ var evaluation = {
 			startPosition = convert.inputToBit(startPosition);
 			endPosition = convert.inputToBit(endPosition);
 		}
-		if(startPosition == false || endPosition == false)){
+		if(startPosition == false || endPosition == false){
 			return false;
 		}
 		spacesAroundStart = evaluation.nodeConnections[convert.bitToQuad(startPosition)][convert.bitToNode(startPosition)];
 		return (openPositions & spacesAroundStart & endPosition) ? true : false;
-	}
+	},
 
 	//isHomeQuadEmpty()
 		//return 0 if the players home quadrant is empty.
