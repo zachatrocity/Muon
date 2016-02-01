@@ -1,11 +1,10 @@
 <!-- views/board.html -->
 <h1>Game board goes here</h1>
-<div class="gameboard" id="viz"></div>
 <div class="inGameMenu">
 	<ul>
 		<li>Menu
 			<ul>
-				<a ui-sref="menu"><li>Main Menu</li></a>
+				<a ui-sref="menu" ng-click="remove_board()"><li>Main Menu</li></a>
 				<a ui-sref="#"><li>New Game</li></a>
 				<a ui-sref="#"><li>Hint</li></a>
 			</ul>
