@@ -58,7 +58,6 @@ muonApp.controller('BoardCtrl', function ($scope, $stateParams) {
 	    var x = target.x - point[0],
 	        y = target.y - point[1];
 	    if (Math.sqrt(x * x + y * y) < maxdist) {
-	    	debugger;
 		    target.selected = true;
 		    console.log(target);
 		    
@@ -68,12 +67,16 @@ muonApp.controller('BoardCtrl', function ($scope, $stateParams) {
 	    }
 	  });
 
+	  node.attr('r', function(d){ 
+	  	return (d.selected) ? 8 : 5
+	  });
+
 	  // d3.select(this).select("circle").transition()
    //      .duration(750)
    //      .attr("r", 16)
 
 
-	  restart();
+	  // restart();
 	}
 
 	function tick(e) {
@@ -123,7 +126,13 @@ muonApp.controller('BoardCtrl', function ($scope, $stateParams) {
 	      .attr("class", function(d) { return d.id + " node" })
 	      .attr("cx", function(d) { return d.x; })
 	      .attr("cy", function(d) { return d.y; })
-	      .attr("r", 5)
+	      .attr("r", function(d){
+		      	if(d.selected){
+		      		return 8;
+		      	} else {
+		      		return 5;
+		      	}
+	      	})
 	      .style("fill", function(d) { return (!d.antimuon) ? d3.rgb(95,173,65) :  d3.rgb(84,144,204); })
 	      .style("stroke", function(d) { return ((!d.antimuon) ? d3.rgb(95,173,65) : d3.rgb(84,144,204)).darker(2); })
 	      .call(force.drag)
