@@ -1,7 +1,3 @@
-<!-- views/board.html -->
-<h1>Game board goes here</h1>
-
-<div class="gameboard">
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!-- Created with Inkscape (http://www.inkscape.org/) -->
 
@@ -669,16 +665,3 @@
        transform="translate(0,352.36216)" />
   </g>
 </svg>
-</div>
-
-<div class="inGameMenu">
-	<ul>
-		<li>Menu
-			<ul>
-				<a ui-sref="menu" ng-click="remove_board()"><li>Main Menu</li></a>
-				<a ui-sref="#"><li>New Game</li></a>
-				<a ui-sref="#"><li>Hint</li></a>
-			</ul>
-		</li>
-	</ul>
-</div>
