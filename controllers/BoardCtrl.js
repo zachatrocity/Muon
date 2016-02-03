@@ -24,6 +24,7 @@ muonApp.controller('BoardCtrl', function ($scope, $stateParams) {
 	                
 	                
 	var svg = d3.select("body").append("svg")
+		.attr("class", "d3gameboard")
 	    .attr("width", width)
 	    .attr("height", height)
 	    .on("mousedown", mousedown);
@@ -42,7 +43,7 @@ muonApp.controller('BoardCtrl', function ($scope, $stateParams) {
 	    
 	$scope.remove_board = function(){
 		force.stop();
-		d3.select("svg").remove();
+		d3.select(".d3gameboard").remove();
 	}
 
 	var node = svg.selectAll("circle");
@@ -52,22 +53,26 @@ muonApp.controller('BoardCtrl', function ($scope, $stateParams) {
 	function mousedown() {
 	  var point = d3.mouse(this);
 	  var maxdist = 30
-	  // This loops through all the nodes and outputs the ones within
+	  // This loops through all the nodes and find the index of atleast one node within
 	  // 30 to point
 	  nodes.forEach(function(target) {
 	    var x = target.x - point[0],
 	        y = target.y - point[1];
 	    if (Math.sqrt(x * x + y * y) < maxdist) {
-	      target.selected = true;
-	      console.log(target);
-	      //using d3.select we should be able to do a transition and increase
-	      //the radius of a node
+	    	if(!target.selected){ //select it
+    			target.selected = true;
+		    	d3.selectAll(".id" + target.index).transition().duration(450).attr("r", 8);
+	    	} else { //deselect it 
+	    		target.selected = false;
+		    	d3.selectAll(".id" + target.index).transition().duration(450).attr("r", 5);
+	    	}
+		    
+		    console.log(target);
 	    } else {
 	    	target.selected = false;
+	    	d3.selectAll(".id" + target.index).transition().duration(450).attr("r", 5);
 	    }
 	  });
-
-	  restart();
 	}
 
 	function tick(e) {
@@ -114,12 +119,18 @@ muonApp.controller('BoardCtrl', function ($scope, $stateParams) {
 
 	    node = node.data(nodes);
 	    node.enter().append("circle")
-	      .attr("class", function(d) { return d.id + " node" })
+	      .attr("class", function(d) { return "id" + d.id + " node" })
 	      .attr("cx", function(d) { return d.x; })
 	      .attr("cy", function(d) { return d.y; })
-	      .attr("r", 5)
-	      .style("fill", function(d) { return (!d.antimuon) ? d3.rgb(85,187,51) : d3.rgb(60,100,187); })
-	      .style("stroke", function(d) { return ((!d.antimuon) ? d3.rgb(85,187,51) : d3.rgb(60,100,187)).darker(2); })
+	      .attr("r", function(d){
+		      	if(d.selected){
+		      		return 8;
+		      	} else {
+		      		return 5;
+		      	}
+	      	})
+	      .style("fill", function(d) { return (!d.antimuon) ? d3.rgb(95,173,65) :  d3.rgb(84,144,204); })
+	      .style("stroke", function(d) { return ((!d.antimuon) ? d3.rgb(95,173,65) : d3.rgb(84,144,204)).darker(2); })
 	      .call(force.drag)
 
 	    force.start()

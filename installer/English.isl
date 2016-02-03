@@ -103,8 +103,8 @@ BrowseDialogLabel=Select a folder in the list below, then click OK.
 NewFolderName=New Folder
 
 ; *** "Welcome" wizard page
-WelcomeLabel1=You're about to get some Muon!
-WelcomeLabel2=This will install [name/ver] on your computer.%n%nKeep in mind that Muon is in Beta and we make no guarantees, so use it at your own risk.
+WelcomeLabel1=You're about to get your Muon!
+WelcomeLabel2=This will install [name/ver] on your computer.%n%nKeep in mind that Muon is in Alpha and we make no guarantees, so use it at your own risk.
 
 ; *** "Password" wizard page
 WizardPassword=Password

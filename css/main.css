@@ -4,11 +4,25 @@ div {
 	border-color: red;*/
 }
 
+/*color scheme
+https://coolors.co/app/404040-f7f0f0-5490cc-5fad41-067bc2
+#5FAD41
+
+#067BC2
+
+#F7F0F0
+
+#404040
+
+#5490CC
+*/
+
 /*GENERAL CSS*/
 
 @font-face {
 	font-family: Orbitron;
 	src: url("../font/orbitron-medium.otf") format("opentype");
+	/*src: url("../font/maven-pro-v7-latin-700.ttf") */
 }
 
 body {
@@ -63,11 +77,15 @@ h1.view-heading{
 
 @-webkit-keyframes logo-glow {
   from {
-    text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #fff, 0 0 20px #fff, 0 0 30px #fff, 0 0 40px #fff, 0 0 50px #fff, 0 0 60px #fff;
+    text-shadow: 0 0 5px #5FAD41, 0 0 10px #5FAD41, 0 0 15px #5FAD41, 0 0 20px #5FAD41, 0 0 30px #5FAD41, 0 0 40px #5FAD41, 0 0 50px #5FAD41, 0 0 60px #5FAD41;
   }
   to {
-    text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #fff, 0 0 20px #fff, 0 0 30px #fff, 0 0 35px #fff, 0 0 45px #fff;
+    text-shadow: 0 0 5px #5FAD41, 0 0 10px #5FAD41, 0 0 15px #5FAD41, 0 0 20px #5FAD41, 0 0 30px #5FAD41, 0 0 35px #5FAD41, 0 0 45px #5FAD41;
   }
+}
+
+.logo img{
+	width: 400px;
 }
 
 .menu-container{
