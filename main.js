@@ -11,8 +11,6 @@ win.on('minimize', function() {
 
 var easter_egg = new Konami(function() { alert('Konami code!')});
 
-var gameCore = new GameCore();
-
 var muonApp = angular.module('muonApp', ["ui.router"])
     muonApp.config(function($stateProvider, $urlRouterProvider){
       

@@ -1,7 +1,7 @@
 muonApp.controller('BoardCtrl', function ($scope, $stateParams) {
 
-	var width = 1100,
-    	height = 1000;
+	var width = 800,
+    	height = 800;
 
 	var fill = d3.scale.category10();
 
