@@ -22,7 +22,7 @@ var AI = function() {
 	 	if(moveStart&p2_Position && moveEnd&boardAspect.openPositionsAroundPeice(moveStart,open)){
 	 		p2_Position ^= moveStart^moveEnd;
 	 		saveData.saveMove(start, end, 2)
-	 		this.buildMoveTree(1);
+	 		this.buildMoveTree(2);
 	 	}
 	 	else
 	 		console.log("invalidMove")
@@ -47,7 +47,7 @@ var AI = function() {
 			for(var openSpace = bitManip.getLSB(moveOptions); moveOptions != 0; openSpace = bitManip.getLSB(moveOptions)){
 				var bitBoardCopy = p1_Position^peice^openSpace
 				var isWin = evaluation.Win(bitBoardCopy, 1, p1Flag, p2Flag);
-				var score = isWin ? 1000 : this.alphaBeta(2, depth-1, bestScoreSoFar, Infinity, p2_Position, bitBoardCopy, false)
+				var score = isWin ? -1000 : this.alphaBeta(2, depth-1, bestScoreSoFar, Infinity, p2_Position, bitBoardCopy, true)
 				if(score > bestScoreSoFar){
 					bestScoreSoFar = score;
 					o = openSpace;
@@ -93,7 +93,7 @@ var AI = function() {
 				}
 				var isWin = evaluation.Win(bitBoardCopy, player, tempP1Flag, tempP2Flag);
 
-				score = isWin ? 1000 : this.alphaBeta(player^3, depth-1, alpha, beta, opponentsBoard, bitBoardCopy, !maximizing) 
+				score = isWin ? (player == 1 ? -1000 : 1000) : this.alphaBeta(player^3, depth-1, alpha, beta, opponentsBoard, bitBoardCopy, !maximizing) 
 				if(maximizing == true){
 					if(score > alpha){alpha = score;}
 					if(score >= beta){return beta;}

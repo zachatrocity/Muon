@@ -24,6 +24,7 @@ muonApp.controller('BoardCtrl', function ($scope, $stateParams) {
 	                
 	                
 	var svg = d3.select("body").append("svg")
+		.attr("class", "d3gameboard")
 	    .attr("width", width)
 	    .attr("height", height)
 	    .on("mousedown", mousedown);
@@ -42,7 +43,7 @@ muonApp.controller('BoardCtrl', function ($scope, $stateParams) {
 	    
 	$scope.remove_board = function(){
 		force.stop();
-		d3.select("svg").remove();
+		d3.select(".d3gameboard").remove();
 	}
 
 	var node = svg.selectAll("circle");
