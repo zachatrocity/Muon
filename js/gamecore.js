@@ -1,10 +1,4 @@
 var GameCore = function() {
-	this.ai = new AI();
-
-	this.openPositions = [0b00001,0b00010,0b00011,0b00100,0b00101,0b11001,0b11010,0b11011,0b11100,0b11101];
-	this.blackPlayerPositions = [0b01001,0b01010,0b01011,0b01100,0b01101];
-	this.whitePlayerPositions = [0b10001,0b10010,0b10011,0b10100,0b10101];
-
 	// Draws the board to the screen (console)
 	// Open spots are '@', black = 'B', white = 'W'
 	this.DisplayBoard = function() {
