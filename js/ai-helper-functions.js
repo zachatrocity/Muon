@@ -17,6 +17,7 @@ var display = {
 			return "#"
 	},
 
+	//If the AI is playing make it p1
 	displayBoard:function(p1, p2){
 		if(!evaluation.isHomeQuadEmpty(1,p1))
 			this.removeFlag(1)
@@ -35,6 +36,10 @@ var display = {
 		console.log("|  /   \\  |   |  /   \\  |");
 		console.log(""+ this.color(3,0,p1, p2) +"---------"+ this.color(3,1,p1, p2) +"---"+ this.color(2,1,p1, p2) +"---------"+ this.color(2,0,p1, p2) +"");
 		//console.log("                   " + (playerTwoFlag ? "LOCKED":""))
+	},
+
+	printGame:function(){
+		printData.printMoves();
 	},
 }
 
@@ -60,7 +65,7 @@ var convert = {
 		//If the input was not found here the function returns false.
 	inputToBit:function(coordinate){
 		coordinate = coordinate.toUpperCase();
-		if(coordinate == "A1")     {return 0b00000000000000100000} 
+			 if(coordinate == "A1"){return 0b00000000000000100000} 
 		else if(coordinate == "A2"){return 0b00000000000001000000}
 		else if(coordinate == "A3"){return 0b00000000000010000000}
 		else if(coordinate == "A4"){return 0b00000000000100000000}
@@ -226,7 +231,7 @@ var evaluation = {
 	stateValue:function(bitBoard, bitBoard2, player){
 		var total = 0;
 		total += this.stolenRealEstate(bitBoard, bitBoard2);
-		total += this.Win(bitBoard, player) ? (player == 1 ? -1000 : 1000) 1000 : 0;
+		total += this.Win(bitBoard, player) ? (1000 * (player == 1 ? -1:1)) : 0;
 		return total;
 	},
 
@@ -255,5 +260,17 @@ var evaluation = {
 			}
 		}
 		return winPosition;
+	},
+}
+
+var timer = {
+	't1':0,
+
+	startTimer:function(){
+		this.t1 = Date.now();
+	},
+
+	changeInTime:function(){
+		return Date.now() - this.t1;
 	},
 }
