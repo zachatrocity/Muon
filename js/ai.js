@@ -22,7 +22,7 @@ var AI = function() {
 	 	if(moveStart&p2_Position && moveEnd&boardAspect.openPositionsAroundPeice(moveStart,open)){
 	 		p2_Position ^= moveStart^moveEnd;
 	 		saveData.saveMove(start, end, 2)
-	 		this.buildMoveTree(1);
+	 		this.buildMoveTree(9);
 	 	}
 	 	else
 	 		console.log("invalidMove")
@@ -34,7 +34,7 @@ var AI = function() {
 		//buildMoveTree does a seperate minimax search on each of the first moves. The one that
 		//returns the highest value should be the move that is made.
 	this.buildMoveTree = function(depth){
-		var bestScoreSoFar = -Infinity;
+		var bestScoreSoFar = Infinity;
 		var playersPeices = p1_Position; // make a copy of the AI's peices
 		var bestMove;
 		var p;
@@ -47,8 +47,8 @@ var AI = function() {
 			for(var openSpace = bitManip.getLSB(moveOptions); moveOptions != 0; openSpace = bitManip.getLSB(moveOptions)){
 				var bitBoardCopy = p1_Position^peice^openSpace
 				var isWin = evaluation.Win(bitBoardCopy, 1, p1Flag, p2Flag);
-				var score = isWin ? 1000 : this.alphaBeta(2, depth-1, bestScoreSoFar, Infinity, p2_Position, bitBoardCopy, false)
-				if(score > bestScoreSoFar){
+				var score = isWin ? -1000 : this.alphaBeta(2, depth-1, -Infinity, bestScoreSoFar, p2_Position, bitBoardCopy, true)
+				if(score < bestScoreSoFar){
 					bestScoreSoFar = score;
 					o = openSpace;
 					p = peice;
@@ -93,7 +93,7 @@ var AI = function() {
 				}
 				var isWin = evaluation.Win(bitBoardCopy, player, tempP1Flag, tempP2Flag);
 
-				score = isWin ? 1000 : this.alphaBeta(player^3, depth-1, alpha, beta, opponentsBoard, bitBoardCopy, !maximizing) 
+				score = isWin ? (player == 1 ? -1000: 1000) : this.alphaBeta(player^3, depth-1, alpha, beta, opponentsBoard, bitBoardCopy, !maximizing) 
 				if(maximizing == true){
 					if(score > alpha){alpha = score;}
 					if(score >= beta){return beta;}

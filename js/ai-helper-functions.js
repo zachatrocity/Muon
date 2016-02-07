@@ -226,7 +226,7 @@ var evaluation = {
 	stateValue:function(bitBoard, bitBoard2, player){
 		var total = 0;
 		total += this.stolenRealEstate(bitBoard, bitBoard2);
-		total += this.Win(bitBoard, player) ? 1000 : 0;
+		total += this.Win(bitBoard, player) ? (player == 1 ? -1000 : 1000) 1000 : 0;
 		return total;
 	},
 

@@ -4,7 +4,7 @@ var saveData = {
 	'game': [],
 
 	saveMove:function(start, end, player){
-		saveData.game[saveData.game.length] = (player == 1 ? "AI: ":"HU: ") + start + " => " + end;
+		saveData.game[saveData.game.length] = saveData.game.length + (player == 1 ? " AI: ":" HU: ") + start + " => " + end;
 	},
 }
 
