@@ -1,10 +1,5 @@
 var gameCore = {
-	ai: new AI(),
-	audio: Audio,
 
-	openPositions: [0b00001,0b00010,0b00011,0b00100,0b00101,0b11001,0b11010,0b11011,0b11100,0b11101],
-	blackPlayerPositions: [0b01001,0b01010,0b01011,0b01100,0b01101],
-	whitePlayerPositions: [0b10001,0b10010,0b10011,0b10100,0b10101],
 
 	// Draws the board to the screen (console)
 	// Open spots are '@', black = 'B', white = 'W'
@@ -24,9 +19,9 @@ var gameCore = {
 	},
 
 	// Returns the color of the piece at the specified location on the board
-	GetColor: function(position) {
-		return this.blackPlayerPositions.indexOf(position) == -1 ? (this.whitePlayerPositions.indexOf(position) == -1 ? "@" : "W") : "B";
-	},
+	// GetColor: function(position) {
+	// 	return this.blackPlayerPositions.indexOf(position) == -1 ? (this.whitePlayerPositions.indexOf(position) == -1 ? "@" : "W") : "B";
+	// },
 
 	// Moves a piece from one position to another
 	// Returns 'true' for successful move, 'false' otherwise

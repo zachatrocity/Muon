@@ -77,10 +77,10 @@ h1.view-heading{
 
 @-webkit-keyframes logo-glow {
   from {
-    text-shadow: 0 0 5px #5FAD41, 0 0 10px #5FAD41, 0 0 15px #5FAD41, 0 0 20px #5FAD41, 0 0 30px #5FAD41, 0 0 40px #5FAD41, 0 0 50px #5FAD41, 0 0 60px #5FAD41;
+    text-shadow: 0 0 5px #F7F0F0, 0 0 10px #F7F0F0, 0 0 15px #F7F0F0, 0 0 20px #F7F0F0, 0 0 30px #F7F0F0, 0 0 40px #F7F0F0, 0 0 50px #F7F0F0, 0 0 60px #F7F0F0;
   }
   to {
-    text-shadow: 0 0 5px #5FAD41, 0 0 10px #5FAD41, 0 0 15px #5FAD41, 0 0 20px #5FAD41, 0 0 30px #5FAD41, 0 0 35px #5FAD41, 0 0 45px #5FAD41;
+    text-shadow: 0 0 5px #F7F0F0, 0 0 10px #F7F0F0, 0 0 15px #F7F0F0, 0 0 20px #F7F0F0, 0 0 30px #F7F0F0, 0 0 35px #F7F0F0, 0 0 45px #F7F0F0;
   }
 }
 
@@ -140,20 +140,32 @@ h1.view-heading{
 	position: fixed;
 	top: 50%;
 	left: 50%;
-	z-index: 100;
+	transform: translate(-50%, -50%);
+}
+
+.gameboard img {
+	z-index: 0;
+}
+
+.gamepeices {
+	position: fixed;
+	top: 50%;
+	left: 50%;
 	transform: translate(-50%, -50%);
 }
 
 .node {
-  opacity: 0.9;
+  stroke: #636363;
+  stroke-width: 2px;
 }
 
 .node:hover {
-  opacity: 1;
+	
 }
 
 .link {
-  stroke: #999;
+    stroke: #636363;
+    stroke-width: 2px;
 }
 
 .inGameMenu{

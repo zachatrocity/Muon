@@ -1,7 +1,7 @@
 muonApp.controller('BoardCtrl', function ($scope, $stateParams) {
 
-	var width = 800,
-    	height = 800;
+	var width = 700,
+    	height = 700;
 
 	var fill = d3.scale.category10();
 
@@ -23,8 +23,8 @@ muonApp.controller('BoardCtrl', function ($scope, $stateParams) {
 	                {x: 100, y: 600}, {x: 300, y: 600}];   //
 	                
 	                
-	var svg = d3.select("body").append("svg")
-		.attr("class", "d3gameboard")
+	var svg = d3.select(".gamepeices").append("svg")
+		.attr("class", "d3gamepeices")
 	    .attr("width", width)
 	    .attr("height", height)
 	    .on("mousedown", mousedown);
@@ -32,7 +32,7 @@ muonApp.controller('BoardCtrl', function ($scope, $stateParams) {
 	var force = d3.layout.force()
 	    .nodes(nodes)
 	    .links([])
-	    .linkDistance(30)
+	    .linkDistance(50)
 	    .linkStrength(1)
 	    .gravity(0.02)
 	    .charge(function(d, i) { 
@@ -43,7 +43,7 @@ muonApp.controller('BoardCtrl', function ($scope, $stateParams) {
 	    
 	$scope.remove_board = function(){
 		force.stop();
-		d3.select(".d3gameboard").remove();
+		d3.select(".d3gamepeices").remove();
 	}
 
 	var node = svg.selectAll("circle");
@@ -55,24 +55,38 @@ muonApp.controller('BoardCtrl', function ($scope, $stateParams) {
 	  var maxdist = 30
 	  // This loops through all the nodes and find the index of atleast one node within
 	  // 30 to point
+
+	  var closestNode; //used to store the node closest to the click
+	  var closestPoint = Infinity; //used to compare the distance between closestNode and other nodes
+	  //loop though all of the nodes
 	  nodes.forEach(function(target) {
 	    var x = target.x - point[0],
-	        y = target.y - point[1];
-	    if (Math.sqrt(x * x + y * y) < maxdist) {
-	    	if(!target.selected){ //select it
-    			target.selected = true;
-		    	d3.selectAll(".id" + target.index).transition().duration(450).attr("r", 8);
-	    	} else { //deselect it 
-	    		target.selected = false;
-		    	d3.selectAll(".id" + target.index).transition().duration(450).attr("r", 5);
+	        y = target.y - point[1],
+	        distance = Math.sqrt(x * x + y * y);
+	    //check if the node (target) is within the maxdist of the click    
+	    if (distance < maxdist) {
+	    	//if target is closer than my currently stored closestNode then replace it with target
+	    	if(closestPoint > distance)
+	    	{
+	    		closestNode = target;
+	    		closestPoint = distance;
 	    	}
-		    
-		    console.log(target);
 	    } else {
+	    	//unselect all other nodes
 	    	target.selected = false;
-	    	d3.selectAll(".id" + target.index).transition().duration(450).attr("r", 5);
+	    	d3.selectAll(".id" + target.index).transition().duration(450).attr("r", 10);
 	    }
 	  });
+
+		if(closestNode){
+			//select all the nodes around the node we clicked
+			var startIndex = closestNode.index - (closestNode.index % 3);
+			//closestNode.selected = true;
+			d3.selectAll(".id" + startIndex + ",.id" + (startIndex + 1) + ",.id" + (startIndex + 2))
+				.transition()
+				.duration(450)
+				.attr("r", 15);
+		}
 	}
 
 	function tick(e) {
@@ -122,15 +136,8 @@ muonApp.controller('BoardCtrl', function ($scope, $stateParams) {
 	      .attr("class", function(d) { return "id" + d.id + " node" })
 	      .attr("cx", function(d) { return d.x; })
 	      .attr("cy", function(d) { return d.y; })
-	      .attr("r", function(d){
-		      	if(d.selected){
-		      		return 8;
-		      	} else {
-		      		return 5;
-		      	}
-	      	})
+	      .attr("r", 10)
 	      .style("fill", function(d) { return (!d.antimuon) ? d3.rgb(95,173,65) :  d3.rgb(84,144,204); })
-	      .style("stroke", function(d) { return ((!d.antimuon) ? d3.rgb(95,173,65) : d3.rgb(84,144,204)).darker(2); })
 	      .call(force.drag)
 
 	    force.start()
