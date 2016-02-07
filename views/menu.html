@@ -7,11 +7,17 @@
 <div id="particles-js"></div>
 <div class="menu-container">
     <div class="main-menu"> 
-        <div class="main-menu-item"><a ui-sref="newgame">New Game</a></div>
-        <div class="main-menu-item"><a ui-sref="network">Network</a></div>
-        <div class="main-menu-item"><a ui-sref="howto">How To Play</a></div>
-        <div class="main-menu-item"><a ui-sref="options">Options</a></div>
-        <div class="main-menu-item"><a ui-sref="about">About</a></div>
-        <div class="main-menu-item"><a ui-sref="quit">Quit</a></div>
+        <div class="main-menu-item" ng-mouseover="mouse_over()">
+			<a ui-sref="newgame" ng-click="mouse_click()">New Game</a></div>
+        <div class="main-menu-item" ng-mouseover="mouse_over()">
+			<a ui-sref="network" ng-click="mouse_click()">Network</a></div>
+        <div class="main-menu-item" ng-mouseover="mouse_over()">
+			<a ui-sref="howto" ng-click="mouse_click()">How To Play</a></div>
+        <div class="main-menu-item" ng-mouseover="mouse_over()">
+			<a ui-sref="options" ng-click="mouse_click()">Options</a></div>
+        <div class="main-menu-item" ng-mouseover="mouse_over()">
+			<a ui-sref="about" ng-click="mouse_click()">About</a></div>
+        <div class="main-menu-item" ng-mouseover="mouse_over()">
+			<a ui-sref="quit" ng-click="mouse_click()">Quit</a></div>
     </div>
 </div>
