@@ -1,8 +1,24 @@
 var gameCore = {
+	// The initial position of player 1
+	playerOnePosition: 0b00010001011000001000,
+	// The initial position of player 2 (the opponent)
+	playerTwoPosition: 0b00000000000110110010,
+	// The flags for P1 and P2 for if they can can create a triangle in their starting quadrant
+	playerOneFlag: true,
+	playerTwoFlag: true,
 
+	// The available moves for a position can be found by nodeConnections[quad][node]
+	// OR it can be found through 'ai.evaluation.nodeConnections'
+	'nodeConnections':[
+		[0b00000000000000001110,0b00000000000001010101,0b00000000000000011011,0b00000010000000010101,0b10000100001000001110], //quad 0 node 0,1,2,3,4
+		[0b00000000000111000000,0b00000000001010100010,0b00000000001101100000,0b01000000001010100000,0b10000100000111010000], //quad 1 node 0,1,2,3,4
+		[0b00000011100000000000,0b00010101010000000000,0b00000110110000000000,0b00000101010000001000,0b10000011101000010000], //quad 2 node 0,1,2,3,4
+		[0b01110000000000000000,0b10101000100000000000,0b11011000000000000000,0b10101000000100000000,0b01110100001000010000]  //quad 3 node 0,1,2,3,4
+	],
 
-	// Draws the board to the screen (console)
+	// Draws the board to the console (solely for debugging purposes)
 	// Open spots are '@', black = 'B', white = 'W'
+	// Really should change this to be player/P and opponent/O because that's a lot more clear as to who is who
 	DrawBoardToConsole: function() {
 		console.log("A  " + this.GetColor(0b01001) + "--------" + this.GetColor(0b01010) + "---" + this.GetColor(0b00010) + "-------" + this.GetColor(0b00001));
 		console.log("   | \\     /|   |\\     /|");
@@ -19,21 +35,29 @@ var gameCore = {
 	},
 
 	// Returns the color of the piece at the specified location on the board
-	// GetColor: function(position) {
-	// 	return this.blackPlayerPositions.indexOf(position) == -1 ? (this.whitePlayerPositions.indexOf(position) == -1 ? "@" : "W") : "B";
-	// },
+	GetColor: function(position) {
+		return this.playerOnePosition.indexOf(position) == -1 ? (this.playerTwoPosition.indexOf(position) == -1 ? "@" : "P") : "O";
+	},
 
 	// Moves a piece from one position to another
 	// Returns 'true' for successful move, 'false' otherwise
 	MovePiece: function(from, to) {
-		var success = false;
-		
+		// Test to see if move human wants to perform is valid
+
+		// Perform move that human made
+		moveMuonTweenFoci(1, 10);
+		// Retrieve AI move		
 		//ai.
 		
-		return success;
-	}, 
+	},
 
-	// Returns 'B' for black won, 'W' for white won, and '@' for no winner
+	// Determines if the move the player wishes to perform is a valid one
+	// Assumes that the move is passed in the form of 0-19
+	ValidateMove: function(from, to) {
+		
+	}
+
+	// Returns 'P' for player won, 'O' for opponent won, and 'N' for no winner
 	GameWon: function() {
 		var winner = '@';
 
@@ -45,20 +69,6 @@ var gameCore = {
 	},
 
 	//-----------------------------------------------------------------------------------------------------------------------------------------------
-
-	playerOnePosition: 0b00010001011000001000,
-	playerTwoPosition: 0b00000000000110110010,
-	playerOneFlag: true,
-	playerTwoFlag: true,
-	positionGenes: [2,4,3,4,1],
-	geneticScalar: 1,
-	// nodeConnections[quad][node]
-	nodeConnections: [
-		[0b00000000000000011110,0b00000000000100010101,0b00000000000000011011,0b00000010000000010101,0b10000100001000001110], //quad 0 node 0,1,2,3,4
-		[0b00000000001111000000,0b00000000001010100010,0b00000000001101100000,0b01000000001010100000,0b10000100000111010000], //quad 1 node 0,1,2,3,4
-		[0b00000111100000000000,0b01000101010000000000,0b00000110110000000000,0b00000101010000001000,0b10000011101000010000], //quad 2 node 0,1,2,3,4
-		[0b11110000000000000000,0b10101000100000000000,0b11011000000000000000,0b10101000000100000000,0b01110100001000010000]  //quad 3 node 0,1,2,3,4
-	],
 
 	GetAvailableMoves: function(player, quad, node) {
 		var openPositions = (player == playerTwoPosition) ? playerTwoPosition^playerOnePosition^0b11111111111111111111 : playerOnePosition^playerTwoPosition^0b11111111111111111111;
