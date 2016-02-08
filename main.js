@@ -34,7 +34,11 @@ var muonApp = angular.module('muonApp', ["ui.router"])
         .state('network', {
             url: "/network",
             templateUrl: "views/network.html",
-            controller: "NetworkCtrl"
+            controller: "NetworkCtrl",
+        })
+
+        .state('network.lobby', {
+            templateUrl: "views/network.lobby.html"
         })
 
         .state('howto', {
