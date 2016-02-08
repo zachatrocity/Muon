@@ -105,4 +105,12 @@ muonApp.controller('MenuCtrl', function ($scope, $stateParams) {
 	  },
 	  "retina_detect": true
 	});  
+	
+	$scope.mouse_over = function() {
+		Audio.menuOver.play();
+	}
+	
+	$scope.mouse_click = function() {
+		Audio.menuSelect.play();
+	}
 })
