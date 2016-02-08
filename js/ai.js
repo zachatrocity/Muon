@@ -17,34 +17,33 @@ var AI = {
 	'bestMove':0,
 	'bestScore':0,
 	'transposition':[],
-	'currentPlayer':1,
 	'alphaPrime':-Infinity,
 	'betaPrime':Infinity,
 
 	pvs:function(alpha, beta, depth, p1_board, p2_board, pNum){
 		if(depth == 0){
-			evaluation.stateValue(p1_board, p2_board, pNum);
+			return evaluation.stateValue(p1_board, p2_board, pNum);
 		}
 		pNum ^= 3; // Change the player number
 		var bSearchPv = true;
 		var allPeices = pNum == 1 ? p1_board : p2_board;
-		for(var peice = getLSB(allPeices); allPeices; peice = getLSB(allPeices)){
+		for(var peice = bitManip.getLSB(allPeices); allPeices; peice = bitManip.getLSB(allPeices)){
 			var allSpace = p1_board^p2_board^BITMASK;
-			var moves = availabeMoves(peice, allSpace);
-			for(var nextMove = getLSB(moves); allSpace; nextMove = getLSB(moves)){
+			var moves = boardAspect.availabeMoves(peice, allSpace);
+			for(var nextMove = bitManip.getLSB(moves); allSpace; nextMove = bitManip.getLSB(moves)){
 
 				//These are the temp values for each move made
 				var pb1 = (pNum == 1 ? p1_board^peice^nextMove : p1_board);
 				var pb2 = (pNum == 2 ? p2_board^peice^nextMove : p2_board);
 				var score;
-
+				debugger;
 				if(bSearchPv){
-					score = -pvs(-beta, -alpha, depth-1, pb1, pb2, pNum);
+					score = -AI.pvs(-beta, -alpha, depth-1, pb1, pb2, pNum);
 				}
 				else{
-					score = -pvs(-alpha-1, -alpha, depth-1, pb1, pb2, pNum);
+					score = -AI.pvs(-alpha-1, -alpha, depth-1, pb1, pb2, pNum);
 					if(score > alpha){
-						score = -pvs(-beta, -alpha, depth-1, pb1, pb2, pNum);
+						score = -AI.pvs(-beta, -alpha, depth-1, pb1, pb2, pNum);
 					}
 				}
 
@@ -63,17 +62,10 @@ var AI = {
 		var score = -AI.pvs(-beta,-alpha,tempBoard,p2_board,pNum^0b11)
 	},
 
-	// makeFirstMove:function(depth){
-	// 	var score = -pvs(-Infinity, Infinity, p1_Position, p2_Position, 1);
-	// 	if( score > alpha){
-	// 		if()
-	// 	}
-	// },
-
 	ideepening:function(timeLimit){
+		timer.startTimer();
 		for(var i = 1; timer.changeInTime() < timeLimit; i++){
-			pvs()
-			//makeFirstMove(i);
+			AI.pvs(this.alphaPrime, this.betaPrime, i, p1_Position, p2_Position, 2);
 		}
 		console.log(this.bestMove);
 	},
@@ -92,7 +84,6 @@ var makeMoveAgainstAI = function(start, end){
 
  	if( evaluation.validateMove(moveStart, moveEnd, p1_Position^p2_Position^BITMASK) ){
  		updateBoard(moveStart, moveEnd, 2);
- 		startTimer();
  		AI.ideepening(timeLimit);
  	}
  	else
