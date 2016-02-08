@@ -11,6 +11,11 @@ cloak.configure({
 
     'listUsersResponse': function(users) {
       console.log(users);
+    },
+
+    'joinLobbyResponse': function(success) {
+      console.log('joined lobby');
+      cloak.message('listUsers');
     }
 
   }

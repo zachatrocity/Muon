@@ -2,13 +2,14 @@
 <h1 class="view-heading">Start an Online Game</h1>
 
 <span>
-	<h3>Online Players: </h3><h3 ng-model="onlinePlayerCount"></h3>
+	<h3>Online Players: </h3><h3 class="onlinePlayerCount"></h3>
 </span>
 
-<h3>Username: </h3>
-<input type="text" ng-model="username"/>
-
-<a ui-sref="network.lobby">Join Lobby</a>
+<div class="usernamebox" ng-show="notInLobby">
+	<h3>Username: </h3>
+	<input type="text" ng-model="username"/>
+	<a ng-click="joinLobby(username)">Join Lobby</a>
+</div>
 
 <div class="back">
 <a onclick="history.back()">Back</a>

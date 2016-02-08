@@ -145,6 +145,8 @@ h1.view-heading{
 
 .gameboard img {
 	z-index: 0;
+	width: 675px;
+	height: 675px;
 }
 
 .gamepeices {
