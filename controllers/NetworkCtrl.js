@@ -1,6 +1,6 @@
 muonApp.controller('NetworkCtrl', function ($scope, $stateParams) {
 
-	cloak.run('http://localhost:8090');
+	cloak.run('http://162.243.116.44:8090');
 
 	$scope.notInLobby = true;
 
