@@ -11,6 +11,7 @@ cloak.configure({
 
     'listUsersResponse': function(users) {
       console.log(users);
+      document.getElementById('onlinePlayerCount').innerHTML = users.data.length;
     },
 
     'joinLobbyResponse': function(success) {

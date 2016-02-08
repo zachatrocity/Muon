@@ -5,7 +5,7 @@ muonApp.controller('BoardCtrl', function ($scope, $stateParams) {
 
 
 	var nodes = [],
-	    foci = [{x: 5, y: 5}, {x: 300, y: 5},        //
+	    foci = 		[{x: 5, y: 5}, {x: 300, y: 5},        //
 	                        {x: 150, y: 150},              // Quad A
 	                {x: 5, y: 300}, {x: 300, y: 300},    //
 
