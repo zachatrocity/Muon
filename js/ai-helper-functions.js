@@ -49,9 +49,9 @@ var boardAspect = {
 		return bitBoard & (0x1F<<(5*quadrant));
 	},
 
-	//openPositionsAroundPeice()
+	//availabeMoves()
 		//peice is a bit representation of any peice on the board.
-	openPositionsAroundPeice:function(peice,openPositions){
+	availabeMoves:function(peice,openPositions){
 		var quad = convert.bitToQuad(peice)
 		var node = convert.bitToNode(peice)
 		return openPositions&evaluation.nodeConnections[quad][node];
@@ -231,7 +231,7 @@ var evaluation = {
 	stateValue:function(bitBoard, bitBoard2, player){
 		var total = 0;
 		total += this.stolenRealEstate(bitBoard, bitBoard2);
-		total += this.Win(bitBoard, player) ? (1000 * (player == 1 ? -1:1)) : 0;
+		total += this.Win(bitBoard, player) ? 1000 : 0;
 		return total;
 	},
 
