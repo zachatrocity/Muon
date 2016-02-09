@@ -178,7 +178,7 @@ var convert = {
 			default:
 				console.log("Cannot convert from " + position + "to bit");
 		}
-	}
+	},
 	// Converts from a bit
 	bitToInt: function(position) {
 		switch (position) {
