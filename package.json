@@ -3,7 +3,7 @@
   "name": "Muon",
   "description": "A simple game of Quadtria",
   "version": "0.0.1",
-  "serverurl": "http://localhost:8090",
+  "serverurl": "http://162.243.116.44:8090",
   "keywords": [
     "Quadtria",
     "Particle",
