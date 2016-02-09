@@ -57,6 +57,73 @@ h1.view-heading{
 	text-shadow: 1px 1px 1px #BDBDBD;
 }
 
+/*MODAL CSS*/
+
+.modal {
+	visibility: hidden;
+	background: rgba(0, 0, 0, 0.6);
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	z-index: 10;
+}
+
+.modal-dialog {
+	margin: auto;
+	position: absolute;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: 0;
+	height: 0;
+	width: 0;
+	z-index: 11;
+	cursor: default;
+	text-align: center;
+	color: rgba(0, 0, 0, 0);
+	background-color: #5490CC;
+	visibility: hidden;
+	-webkit-transition: width 0.5s, height 0.5s, color 0s 0.5s;
+	transition: width 0.5s, height 0.5s, color 0s 0.5s;
+	-webkit-transition-timing-function: ease-out;
+	border-width: 25px;
+	border-radius: 15px;
+	border-image: url("../images/border.svg") 10 stretch;
+}
+
+.show-modal {
+    opacity:1;
+	visibility: visible;
+	width: 400px;
+	height: 150px;
+	color: rgba(0, 0, 0, 1);
+}
+
+.dim-lights {
+	visibility: visible;
+}
+
+.modal-btn {
+	position: relative;
+	visibility: hidden;
+	opacity: 0;
+	top: 40%;
+	cursor: pointer;
+	margin: 10px;
+	margin-bottom: 0px;
+	margin-top: 0px;
+	-webkit-transition: visibility 0s 0.5s, opacity 0s;
+	transition: visibility 0s 0.5s, opacity: 0s;
+	-webkit-transition-timing-function: ease-out;
+}
+
+.show-modal-btn {
+	visibility: visible;
+	opacity: 1;
+}
+
 /*MAIN MENU CSS*/
 
 .logo {
