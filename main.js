@@ -1,5 +1,7 @@
 // Load native UI library
 var gui = require('nw.gui'); 
+var packjson = require('./package.json');
+
 // Get the current window
 var win = gui.Window.get();
 win.showDevTools();
