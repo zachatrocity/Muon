@@ -55,7 +55,7 @@ var gameCore = {
 	// Assumes that the move is passed in the form of 0-19
 	ValidateMove: function(from, to) {
 		
-	}
+	},
 
 	// Returns 'P' for player won, 'O' for opponent won, and 'N' for no winner
 	GameWon: function() {
