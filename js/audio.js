@@ -26,7 +26,7 @@ var _loser = new Howl({
 var _background = new Howl({
   urls: ['audio/background.ogg'],
   loop: true,
-  autoplay: true
+  autoplay: false
 });
 
 // The audio object that will contain arrays of songs to play for various actions

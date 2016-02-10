@@ -1,4 +1,6 @@
 <!-- views/board.html -->
+
+<body>
 <h1>Game board goes here</h1>
 
 <div class="gameboard">
@@ -12,10 +14,26 @@
 	<ul>
 		<li>Menu
 			<ul>
-				<a ui-sref="menu" ng-click="remove_board()"><li>Main Menu</li></a>
+				<a ng-click="showModal = true"><li>Main Menu</li></a>
 				<a ui-sref="#"><li>New Game</li></a>
 				<a ui-sref="#"><li>Hint</li></a>
 			</ul>
 		</li>
 	</ul>
 </div>
+    
+    <div class="modal" ng-init="showModal = false;"
+		ng-class="{'dim-lights': showModal}">
+		<div class="modal-dialog" ng-init="showModal = false;"
+			ng-class="{'show-modal': showModal}">
+			Are you sure you wish to return to the Main Menu? <br />
+			
+			<input type="button" class="modal-btn" ng-click="showModal = false;" 
+				value="Return to Game"
+				ng-init="showModal = false;" ng-class="{'show-modal-btn': showModal}" />
+			
+			<input type="button" class="modal-btn" ui-sref="menu" value="Yes" 
+				ng-init="showModal = false;" ng-class="{'show-modal-btn': showModal}" />
+		</div>
+    </div>
+</body>

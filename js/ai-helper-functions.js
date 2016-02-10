@@ -50,10 +50,10 @@ var boardAspect = {
 	},
 
 	//availabeMoves()
-		//peice is a bit representation of any peice on the board.
-	availabeMoves:function(peice,openPositions){
-		var quad = convert.bitToQuad(peice)
-		var node = convert.bitToNode(peice)
+		//piece is a bit representation of any piece on the board.
+	availabeMoves:function(piece,openPositions){
+		var quad = convert.bitToQuad(piece)
+		var node = convert.bitToNode(piece)
 		return openPositions&evaluation.nodeConnections[quad][node];
 	},
 }
@@ -132,63 +132,6 @@ var convert = {
 	bitToNode: function(position){
 		return position&0x08421?0:(position&0x10842?1:(position&0x21084?2:(position&0x42108?3:4)));
 	},
-
-	intToBit: function(position) {
-		switch (position) {
-			case 0:
-				return 0b00000000000000100000;
-			case 1:
-				return 0b00000000000001000000;
-			case 2:
-				return 0b00000000000010000000;
-			case 3:
-				return 0b00000000000100000000;
-			case 4:
-				return 0b00000000001000000000;
-			case 5:
-				return 0b00000100000000000000;
-			case 6:
-				return 0b00000010000000000000;
-			case 7:
-				return 0b00000001000000000000;
-			case 8:
-				return 0b00000000100000000000;
-			case 9:
-				return 0b00000000010000000000;
-			case 10:
-				return 0b00000000000000000010;
-			case 11:
-				return 0b00000000000000000001;
-			case 12:
-				return 0b00000000000000000100;
-			case 13:
-				return 0b00000000000000010000;
-			case 14:
-				return 0b00000000000000001000;
-			case 15:
-				return 0b01000000000000000000;
-			case 16:
-				return 0b10000000000000000000;
-			case 17:
-				return 0b00100000000000000000;
-			case 18:
-				return 0b00001000000000000000;
-			case 19:
-				return 0b00010000000000000000;
-			default:
-				console.log("Cannot convert from " + position + "to bit");
-		}
-	},
-	// Converts from a bit
-	bitToInt: function(position) {
-		switch (position) {
-			case 0b00000010000000000000:
-				return 0;
-			case 0b00000010000000000000:
-				return 1;
-			//...
-		}
-	}
 }
 
 var bitManip = {
@@ -287,18 +230,21 @@ var evaluation = {
 
 	stateValue:function(bitBoard, bitBoard2, player){
 		var total = 0;
-		total += this.stolenRealEstate(bitBoard, bitBoard2);
-		total += this.Win(bitBoard, player) ? 1000 : 0;
+		total += this.Win((player==1?bitBoard:bitBoard2), player) ? -99999 : 0;
+		if(total < Infinity){
+			total += this.stolenRealEstate(bitBoard, bitBoard2);
+		}
+		
 		return total;
 	},
 
 	stolenRealEstate:function(bitBoard, bitBoard2){
 		var stolenSpace = 0
-		for(var peice = bitManip.getLSB(bitBoard); bitBoard!=0; peice = bitManip.getLSB(bitBoard)){
-			var connections = this.nodeConnections[convert.bitToQuad(peice)][convert.bitToNode(peice)];
-			var adjacentOpponentPeices = connections&bitBoard2;
-			stolenSpace += bitManip.BitCount(adjacentOpponentPeices);
-			bitBoard ^= peice;
+		for(var piece = bitManip.getLSB(bitBoard); bitBoard!=0; piece = bitManip.getLSB(bitBoard)){
+			var connections = this.nodeConnections[convert.bitToQuad(piece)][convert.bitToNode(piece)];
+			var adjacentOpponentPieces = connections&bitBoard2;
+			stolenSpace += bitManip.BitCount(adjacentOpponentPieces);
+			bitBoard ^= piece;
 		}
 		return stolenSpace;
 	},
