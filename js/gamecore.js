@@ -7,14 +7,8 @@ var gameCore = {
 	playerOneFlag: true,
 	playerTwoFlag: true,
 
-	// The available moves for a position can be found by nodeConnections[quad][node]
-	// OR it can be found through 'ai.evaluation.nodeConnections'
-	'nodeConnections':[
-		[0b00000000000000001110,0b00000000000001010101,0b00000000000000011011,0b00000010000000010101,0b10000100001000001110], //quad 0 node 0,1,2,3,4
-		[0b00000000000111000000,0b00000000001010100010,0b00000000001101100000,0b01000000001010100000,0b10000100000111010000], //quad 1 node 0,1,2,3,4
-		[0b00000011100000000000,0b00010101010000000000,0b00000110110000000000,0b00000101010000001000,0b10000011101000010000], //quad 2 node 0,1,2,3,4
-		[0b01110000000000000000,0b10101000100000000000,0b11011000000000000000,0b10101000000100000000,0b01110100001000010000]  //quad 3 node 0,1,2,3,4
-	],
+	// The available moves for a position can be found through 'ai.evaluation.nodeConnections'
+	ai: AI,
 
 	// Draws the board to the console (solely for debugging purposes)
 	// Open spots are '@', black = 'B', white = 'W'
@@ -40,21 +34,45 @@ var gameCore = {
 	},
 
 	// Moves a piece from one position to another
-	// Returns 'true' for successful move, 'false' otherwise
-	MovePiece: function(from, to) {
-		// Test to see if move human wants to perform is valid
+	// Assumes that the move is passed in the form of 0-19
+	AttemptMove: function(from, to) {
+		var bitFrom = ai.convert(intToBit(from));
+		var bitTo = ai.convert(intToBit(to));
+		var inputFrom = ai.convert.bitToQuad(bitFrom) + ai.convert.bitToNode(bitFrom);
+		var inputEnd = ai.convert.bitToQuad(bitTo) + ai.convert.bitToNode(bitTo);
 
-		// Perform move that human made
-		moveMuonTweenFoci(1, 10);
-		// Retrieve AI move		
-		//ai.
-		
+		// Test to see if move human wants to perform is valid
+		if (ValidMove(bitFrom, bitTo)) {
+			console.log("Player moved from " + inputFrom + " to " + inputEnd);
+
+			// Perform move that human made
+			moveMuonTweenFoci(from, to);
+
+			if (GameWon()) {
+				console.log("Player won the game!");
+				// Lock the board from further moves somehow
+			}
+			else {
+				// Start a timer so the AI move is not immediate
+				var timer = Date.now();
+				// Retrieve AI move
+				var aiMove = makeMoveAgainstAI();
+				timer = Date.now() - timer;
+				//moveMuonTweenFoci(aiMove[0], aiMove[1]);
+			}
+		}
+		else {
+			console.log("Player attempted a invalid move, from " + inputFrom + " to " + inputEnd);
+		}
 	},
 
 	// Determines if the move the player wishes to perform is a valid one
-	// Assumes that the move is passed in the form of 0-19
-	ValidateMove: function(from, to) {
-		
+	// Assumes that the move is passed in the form of bits
+	ValidMove: function(from, to) {
+		var temp = ai.evaluation.nodeConnections[ai.convert.bitToQuad(from)][ai.convert.bitToNode(from)];
+		var openPositions = ~(playerOnePosition | playerTwoPosition) & temp;
+
+		return openPositions & to > 0;
 	},
 
 	// Returns 'P' for player won, 'O' for opponent won, and 'N' for no winner
@@ -85,39 +103,5 @@ var gameCore = {
 	 	} else {
 
 	 	}
-	},
-
-	PerformAiMove: function(player, quadFrom, nodeFrom, quadTo, nodeTo) {
-		//this.ai.performMoveHvsAI(player, quadFrom, nodeFrom, quadTo, nodeTo);
-		
-	},
-
-	CalculateStateValue: function(player, playerThatMoved, quadTo, nodeTo) {
-		var quad = (playerThatMoved>>5*quadTo)&0b11111;
-		var value = 0;
-		// Check to see if this move was a winning move.
-		// these are the cases of when a player is moving in their own quadrant (flag status must be checked)
-		if((!(playerOneFlag && player == 1 && quadTo == 2) || (playerTwoFlag && player == 2 && quadTo == 1))
-			//If the player wins
-			&& (quad^0b11100||quad^0b11010||quad^0b11001||quad^0b10110||quad^0b10011||quad^0b01101||quad^0b01011||quad^0b00111)) {
-			return 100;
-		} else if ( quad > 0b10001 || quad^0b11111 > 0b10001) {
-			value = (geneticScalar + 1)*positionGenes[nodeTo];
-		}
-
-		return value;
-	},
-
-	start: new Date().getTime(),
-	quadFrom: 2,
-	quadTo: 0,
-	nodeFrom: 3,
-	nodeTo: 3,
-	limit: 600000,
-	// for (var i = 0; i < limit; i++) {
-	// 	this.PerformAiMove(1,quadTo,nodeTo,quadFrom,nodeFrom)
-	// 	this.PerformAiMove(1,quadFrom,nodeFrom,quadTo,nodeTo)
-	// }
-	// page_load_time: new Date().getTime() - start;
-	//console.log("time for " + (limit*2) + " moves and calculations: " + (page_load_time/1000));
+	}
 };
