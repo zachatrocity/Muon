@@ -201,11 +201,14 @@ h1.view-heading{
 .main-menu-item {
     padding: 5px;
     height: 20px;
-    margin: 10px;
+    margin: 15px;
     line-height: 20px;
     font-weight: bold;
     font-size: 2em;
+    border: none;
+    transition: .3s;
 }
+
 
 .homeButton{
 	position: fixed;

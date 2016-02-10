@@ -96,7 +96,7 @@ var updateBoardp1 = function(start, end){
 var makeMoveAgainstAI = function(start, end){
 	var moveStart = convert.inputToBit(start);
 	var moveEnd = convert.inputToBit(end);
-	var depth = 5;
+	var depth = 2;
 
  	if( evaluation.validateMove(moveStart, moveEnd, p1_Position^p2_Position^BITMASK) ){
  		updateBoardp2(moveStart, moveEnd); // Human move
