@@ -20,6 +20,89 @@ var gameCore = {
 	// A list of the past ~10 move that the player/opponet have made (5 ea.)
 	moveHistory: [],
 
+	//gameboard
+	board: {
+		nodes: [],
+		links: [],
+		width: 700,
+    	height: 700,
+		foci: 	[{x: 5, y: 5}, {x: 300, y: 5},        //
+                        {x: 150, y: 150},              // Quad A
+                {x: 5, y: 300}, {x: 300, y: 300},    //
+
+                {x: 400, y: 400}, {x: 675, y: 400},   //
+                        {x: 550, y: 550},             // Quad D
+                {x: 400, y: 675}, {x: 675, y: 675},  //
+                
+                {x: 400, y: 5}, {x: 675, y: 5},    //
+                      {x: 550, y: 150},                // Quad B
+                {x: 400, y: 300}, {x: 675, y: 300},    //
+                
+                {x: 5, y: 400}, {x: 300, y: 400},   //
+                         {x: 200, y: 500},            // Quad C
+                {x: 5, y: 675}, {x: 300, y: 675}],   //
+        boardSVG: '',
+        d3force: '',
+        activeNodes: '',
+        activeLinks: '',
+        tick: function(e){
+        	var k = .1 * e.alpha;
+
+		    //Push center nodes toward their designated focus.
+		    gameCore.board.nodes.forEach(function(o, i) {
+		      if(typeof o.foci !== "undefined"){
+		        o.y += (gameCore.board.foci[o.foci].y - o.y) * k;
+		        o.x += (gameCore.board.foci[o.foci].x - o.x) * k;
+		      }
+		    });
+
+		    // Exit any old gameCore.board.nodes.
+		    gameCore.board.activeNodes.exit().remove();
+
+		    // Exit any old links
+		    gameCore.board.activeLinks.exit().remove();
+
+		    gameCore.board.activeNodes
+		      .attr("cx", function(d) { return d.x; })
+		      .attr("cy", function(d) { return d.y; })
+
+
+		    gameCore.board.activeLinks
+		      .attr("x1", function(d) { return d.source.x; })
+		      .attr("y1", function(d) { return d.source.y; })
+		      .attr("x2", function(d) { return d.target.x; })
+		      .attr("y2", function(d) { return d.target.y; })
+        },
+        refresh: function(){
+
+		    gameCore.board.activeLinks = gameCore.board.activeLinks.data(gameCore.board.links);
+		    gameCore.board.activeLinks.enter().insert("line", ".node")
+		      .attr("class", "link");
+
+
+		    gameCore.board.activeNodes = gameCore.board.activeNodes.data(gameCore.board.nodes);
+		    gameCore.board.activeNodes.enter().append("circle")
+		      .attr("class", function(d) { return "id" + d.id + " node" })
+		      .attr("cx", function(d) { return d.x; })
+		      .attr("cy", function(d) { return d.y; })
+		      .attr("r", 10)
+		      .style("fill", function(d) { return (!d.antimuon) ? d3.rgb(95,173,65) :  d3.rgb(84,144,204); })
+		      .call(gameCore.board.d3force.drag)
+
+		    gameCore.board.d3force.start()
+		},
+		moveMuonTweenFoci: function(f1,f2){
+		  gameCore.board.nodes.forEach(function(o, i) {
+		    if (o.foci == f1){
+		      o.foci = f2;
+		    }
+		  });
+
+		  gameCore.board.refresh();
+		}        
+
+	},
+
 	// Determines if the move the player wishes to perform is a valid one
 	// Assumes that the move is passed in the form of bits
 	ValidMove: function(from, to) {
@@ -61,7 +144,7 @@ var gameCore = {
 			this.p1Pos = (this.p1Pos ^ bitFrom) | bitTo;
 			this.moveHistory.push(new Move(from, to, "player"));
 			this.player1Turn = false;
-			//moveMuonTweenFoci(from, to);
+			gameCore.board.moveMuonTweenFoci(from, to);
 			display.displayBoard(this.p1Pos, this.p2Pos);
 
 			if (this.GameOver()) {
@@ -72,11 +155,12 @@ var gameCore = {
 				var timer = Date.now();
 				// Retrieve AI move
 				var aiMove = makeMoveAgainstAI(inputFrom, inputTo);
+				debugger;
 				timer = Date.now() - timer;
 				//this.p2Pos = (this.p2Pos ^ aiMove[0]) | aiMove[1];
 				//moveHistory.push(new Move(aiMove[0], aiMove[1], "opponent"));
 				//console.log("Opponent moved from " + aiMove[0] + " to " + aiMove[1]);
-				//moveMuonTweenFoci(aiMove[0], aiMove[1]);
+				gameCore.board.moveMuonTweenFoci(aiMove.start, aiMove.end);
 				display.displayBoard(this.p1Pos, this.p2Pos);
 				this.player1Turn = true;
 			}

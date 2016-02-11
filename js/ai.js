@@ -104,7 +104,7 @@ var makeMoveAgainstAI = function(start, end){
  		var s = convert.bitToInt(AI.moveList[(AI.moveList).length-1].piece)
  		var e = convert.bitToInt(AI.moveList[(AI.moveList).length-1].nextMove)
  		updateBoardp1(AI.moveList[(AI.moveList).length-1].piece, AI.moveList[(AI.moveList).length-1].nextMove);
- 		return { s, e };
+ 		return { start: s, end: e };
  	}
  	else{
  		console.log("invalid Move");
