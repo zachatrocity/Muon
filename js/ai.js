@@ -67,7 +67,6 @@ var AI = {
 					alpha = score;
 					bSearchPv = false;
 					if(score > AI.bestScore && pNum == 1){
-						debugger;
 						AI.bestScore = score;
 						AI.moveList[depth>>1] = {piece, nextMove};
 					}
@@ -101,7 +100,11 @@ var makeMoveAgainstAI = function(start, end){
  	if( evaluation.validateMove(moveStart, moveEnd, p1_Position^p2_Position^BITMASK) ){
  		updateBoardp2(moveStart, moveEnd); // Human move
  		AI.pvs(-Infinity, Infinity, depth, p1_Position, p2_Position, 2);
+ 		debugger;
+ 		var s = convert.bitToInt(AI.moveList[(AI.moveList).length-1].piece)
+ 		var e = convert.bitToInt(AI.moveList[(AI.moveList).length-1].nextMove)
  		updateBoardp1(AI.moveList[(AI.moveList).length-1].piece, AI.moveList[(AI.moveList).length-1].nextMove);
+ 		return { s, e };
  	}
  	else{
  		console.log("invalid Move");
