@@ -73,6 +73,44 @@ var gameCore = {
 		      .attr("x2", function(d) { return d.target.x; })
 		      .attr("y2", function(d) { return d.target.y; })
         },
+        mousedown: function() {
+			var point = d3.mouse(this);
+			var maxdist = 30
+			// This loops through all the nodes and find the index of atleast one node within
+			// 30 to point
+
+			var closestNode; //used to store the node closest to the click
+			var closestPoint = Infinity; //used to compare the distance between closestNode and other nodes
+			//loop though all of the nodes
+			gameCore.board.nodes.forEach(function(target) {
+				var x = target.x - point[0],
+				    y = target.y - point[1],
+				    distance = Math.sqrt(x * x + y * y);
+				//check if the node (target) is within the maxdist of the click    
+				if (distance < maxdist) {
+					//if target is closer than my currently stored closestNode then replace it with target
+					if(closestPoint > distance)
+					{
+						closestNode = target;
+						closestPoint = distance;
+					}
+				} else {
+					//unselect all other nodes
+					target.selected = false;
+					d3.selectAll(".id" + target.index).transition().duration(450).attr("r", 10);
+				}
+			});
+
+			if(closestNode){
+				//select all the nodes around the node we clicked
+				var startIndex = closestNode.index - (closestNode.index % 3);
+				//closestNode.selected = true;
+				d3.selectAll(".id" + startIndex + ",.id" + (startIndex + 1) + ",.id" + (startIndex + 2))
+					.transition()
+					.duration(450)
+					.attr("r", 15);
+			}
+		},
         refresh: function(){
 
 		    gameCore.board.activeLinks = gameCore.board.activeLinks.data(gameCore.board.links);
@@ -90,6 +128,36 @@ var gameCore = {
 		      .call(gameCore.board.d3force.drag)
 
 		    gameCore.board.d3force.start()
+		},
+		createBoard: function(){
+			gameCore.board.addMuons();
+			gameCore.board.addAntiMuons();
+		},
+		addNodeAtFoci: function(f,anti){
+		    var i = f * 3
+
+		    gameCore.board.nodes.push({id: i, foci: f, antimuon: anti, selected: false});
+		    gameCore.board.nodes.push({id: i + 1, foci: f, antimuon: anti, selected: false});
+		    gameCore.board.links.push({source: i, target: i + 1});
+		    gameCore.board.nodes.push({id: i + 2, foci: f, antimuon: anti, selected: false});
+		    gameCore.board.links.push({source: i + 2, target: i + 1});
+		    gameCore.board.links.push({source: i, target: i + 2});
+
+		    gameCore.board.refresh();
+		},
+		addMuons: function(){
+			gameCore.board.addNodeAtFoci(0,0);
+			gameCore.board.addNodeAtFoci(1,0);
+			gameCore.board.addNodeAtFoci(2,0);
+			gameCore.board.addNodeAtFoci(3,0);
+			gameCore.board.addNodeAtFoci(4,0);
+		},
+		addAntiMuons: function(){
+			gameCore.board.addNodeAtFoci(5,1);
+			gameCore.board.addNodeAtFoci(6,1);
+			gameCore.board.addNodeAtFoci(7,1);
+			gameCore.board.addNodeAtFoci(8,1);
+			gameCore.board.addNodeAtFoci(9,1);
 		},
 		moveMuonTweenFoci: function(f1,f2){
 		  gameCore.board.nodes.forEach(function(o, i) {
