@@ -10,9 +10,9 @@ var display = {
 
 	color:function(quad, node, p1, p2){
 		if(1<<(quad*5 + node)&p1)
-			return "W"
+			return "H"	// for Human
 		else if(1<<(quad*5 + node)&p2)
-			return "B"
+			return "C"	// for Computer
 		else 
 			return "#"
 	},
@@ -158,7 +158,7 @@ var convert = {
 			case 17: return 0b00100000000000000000;
 			case 18: return 0b00001000000000000000;
 			case 19: return 0b00010000000000000000;
-			default: console.log("Cannot convert from " + position + "to bit");
+			default: console.log("Cannot convert from int " + position + " to bit");
 		}
 	},
 
@@ -185,7 +185,7 @@ var convert = {
 			case 0b00100000000000000000 : return 17;
 			case 0b00001000000000000000 : return 18;
 			case 0b00010000000000000000 : return 19;
-			default: console.log("Cannot convert from " + position + "to bit");
+			default: console.log("Cannot convert from int " + position + " to int");
 		}
 	},
 }

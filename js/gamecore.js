@@ -1,107 +1,116 @@
+var Move = function(f, t, p) {
+	this.from = f;
+	this.to = t;
+	this.player = p;
+};
+
+// An object that holds all the logic associated with running the gamecore
 var gameCore = {
 	// The initial position of player 1
-	playerOnePosition: 0b00010001011000001000,
+	p1Pos: 0b00000111110000000000,
 	// The initial position of player 2 (the opponent)
-	playerTwoPosition: 0b00000000000110110010,
+	p2Pos: 0b00000000001111100000,
 	// The flags for P1 and P2 for if they can can create a triangle in their starting quadrant
 	playerOneFlag: true,
 	playerTwoFlag: true,
-
-	// The available moves for a position can be found through 'ai.evaluation.nodeConnections'
+	// Flag for the current player's turn
+	player1Turn: true,
+	// The available moves for a position can be found through 'evaluation.nodeConnections'
 	ai: AI,
+	// A list of the past ~10 move that the player/opponet have made (5 ea.)
+	moveHistory: [],
 
-	// Draws the board to the console (solely for debugging purposes)
-	// Open spots are '@', black = 'B', white = 'W'
-	// Really should change this to be player/P and opponent/O because that's a lot more clear as to who is who
-	DrawBoardToConsole: function() {
-		console.log("A  " + this.GetColor(0b01001) + "--------" + this.GetColor(0b01010) + "---" + this.GetColor(0b00010) + "-------" + this.GetColor(0b00001));
-		console.log("   | \\     /|   |\\     /|");
-		console.log("B  " + "|    "+ this.GetColor(0b01011) + "   |   |   " + this.GetColor(0b00011) + "   |");
-		console.log("   | /     \\|   |/     \\|");
-		console.log("C  " + this.GetColor(0b01100) + "--------" + this.GetColor(0b01101) + "---" + this.GetColor(0b00101) + "-------" + this.GetColor(0b00100));
-		console.log("   |		| X |		|");
-		console.log("D  " + this.GetColor(0b11100) + "--------" + this.GetColor(0b11101) + "---" + this.GetColor(0b10101) + "-------" + this.GetColor(0b10100));
-		console.log("   | \\     /|   |\\     /|");
-		console.log("E  " + "|    "+ this.GetColor(0b11011) + "   |   |   " + this.GetColor(0b10011) + "   |");
-		console.log("   | /     \\|   |/     \\|");
-		console.log("F  " + this.GetColor(0b11001) + "--------" + this.GetColor(0b11010) + "---" + this.GetColor(0b10010) + "-------" + this.GetColor(0b10001));
-		console.log("   1    2   3   4   5   6");
+	// Determines if the move the player wishes to perform is a valid one
+	// Assumes that the move is passed in the form of bits
+	ValidMove: function(from, to) {
+		// Retrieve the positions adjecent to the selectied piece
+		var quad = convert.bitToQuad(from);
+		var node = convert.bitToNode(from);
+		var openPositions = this.GetAvailableMoves(quad, node);
+		console.log("Open positions: " + this.dec2bin(openPositions));
+
+		// Return if the move selected is both adjacent to the selected piece, and free from other pieces
+		// console.log(this.dec2bin(from));
+		// console.log(this.dec2bin(to));
+		// console.log(this.dec2bin(openPositions & to));
+		return (openPositions & to) > 0;
 	},
 
-	// Returns the color of the piece at the specified location on the board
-	GetColor: function(position) {
-		return this.playerOnePosition.indexOf(position) == -1 ? (this.playerTwoPosition.indexOf(position) == -1 ? "@" : "P") : "O";
+	GetAvailableMoves: function(quad, node) {
+		var temp = evaluation.nodeConnections[quad][node];
+		// console.log("Adjacent positions: " + this.dec2bin(temp));
+		// console.log("Player 1 positions: " + this.dec2bin(this.p1Pos));
+		// console.log("Player 2 positions: " + this.dec2bin(this.p2Pos));
+		// console.log("    " + this.dec2bin(~(this.p1Pos | this.p2Pos) & temp));
+		return ~(this.p1Pos | this.p2Pos) & temp;
 	},
 
 	// Moves a piece from one position to another
 	// Assumes that the move is passed in the form of 0-19
 	AttemptMove: function(from, to) {
-		var bitFrom = ai.convert(intToBit(from));
-		var bitTo = ai.convert(intToBit(to));
-		var inputFrom = ai.convert.bitToQuad(bitFrom) + ai.convert.bitToNode(bitFrom);
-		var inputEnd = ai.convert.bitToQuad(bitTo) + ai.convert.bitToNode(bitTo);
+		var bitFrom = convert.intToBit(from);
+		var bitTo = convert.intToBit(to);
+		var inputFrom =  convert.bitToStandard(bitFrom);
+		var inputTo = convert.bitToStandard(bitTo);
 
 		// Test to see if move human wants to perform is valid
-		if (ValidMove(bitFrom, bitTo)) {
-			console.log("Player moved from " + inputFrom + " to " + inputEnd);
+		if (this.ValidMove(bitFrom, bitTo)) {
+			console.log("Player moved from " + inputFrom + " to " + inputTo);
 
 			// Perform move that human made
-			moveMuonTweenFoci(from, to);
+			this.p1Pos = (this.p1Pos ^ bitFrom) | bitTo;
+			this.moveHistory.push(new Move(from, to, "player"));
+			this.player1Turn = false;
+			//moveMuonTweenFoci(from, to);
+			display.displayBoard(this.p1Pos, this.p2Pos);
 
-			if (GameWon()) {
-				console.log("Player won the game!");
-				// Lock the board from further moves somehow
+			if (this.GameOver()) {
+				this.EndGame();
 			}
 			else {
 				// Start a timer so the AI move is not immediate
 				var timer = Date.now();
 				// Retrieve AI move
-				var aiMove = makeMoveAgainstAI();
+				var aiMove = makeMoveAgainstAI(inputFrom, inputTo);
 				timer = Date.now() - timer;
+				//this.p2Pos = (this.p2Pos ^ aiMove[0]) | aiMove[1];
+				//moveHistory.push(new Move(aiMove[0], aiMove[1], "opponent"));
+				//console.log("Opponent moved from " + aiMove[0] + " to " + aiMove[1]);
 				//moveMuonTweenFoci(aiMove[0], aiMove[1]);
+				display.displayBoard(this.p1Pos, this.p2Pos);
+				this.player1Turn = true;
 			}
 		}
 		else {
-			console.log("Player attempted a invalid move, from " + inputFrom + " to " + inputEnd);
+			console.log("Player attempted an invalid move, from " + inputFrom + " to " + inputTo);
 		}
 	},
 
-	// Determines if the move the player wishes to perform is a valid one
-	// Assumes that the move is passed in the form of bits
-	ValidMove: function(from, to) {
-		var temp = ai.evaluation.nodeConnections[ai.convert.bitToQuad(from)][ai.convert.bitToNode(from)];
-		var openPositions = ~(playerOnePosition | playerTwoPosition) & temp;
+	// Updates the flag for whether or not player 1 can create triangles in their starting quad
+	ChangePlayer1Flag: function(status) {
+		this.playerOneFlag = status;
+	},
 
-		return openPositions & to > 0;
+	// Updates the flag for whether or not player 2 can create triangles in their starting quad
+	ChangePlayer2Flag: function(status) {
+		this.playerTwoFlag = status;
 	},
 
 	// Returns 'P' for player won, 'O' for opponent won, and 'N' for no winner
-	GameWon: function() {
-		var winner = '@';
+	GameOver: function() {
+		var over = false;
 
-		if (this.CalculateStateValue() == 100) {
+		//...
 
-		}
-
-		return winner;
+		return over;
 	},
 
-	//-----------------------------------------------------------------------------------------------------------------------------------------------
-
-	GetAvailableMoves: function(player, quad, node) {
-		var openPositions = (player == playerTwoPosition) ? playerTwoPosition^playerOnePosition^0b11111111111111111111 : playerOnePosition^playerTwoPosition^0b11111111111111111111;
-		return openPositions&((1<<(quad*5 + node))|nodeConnections[quad][node]);
+	// Sets the game board to not be able to be interfered wiith by the player
+	EndGame: function() {
+		// Lock the board from player input
 	},
 
-	PerformHumanMove: function(player, quadFrom, nodeFrom, quadTo, nodeTo) {
-		var starting = (1<<(quadFrom*5 + nodeFrom))
-		var ending = (1<<(quadTo*5 + nodeTo))
-		var playerToMove = player == 1 ? playerOnePosition : playerTwoPosition;
-	 	if(starting&playerToMove && ending&getAvailableMoves(quadFrom, nodeFrom)) {
-	 		player == 1 ? playerOnePosition ^= starting^ending : playerTwoPosition ^= starting^ending;
-	 		console.log("State value: " + this.CalculateStateValue(player, playerToMove, quadTo, nodeTo))
-	 	} else {
-
-	 	}
-	}
+	dec2bin: function(dec) {
+    	return dec.toString(2);
+	},
 };
