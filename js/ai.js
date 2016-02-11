@@ -16,6 +16,10 @@ var p1_Position = 0b00000000001111100000 //Always the AI
 // var p1_Position = 0b00000100001000111000
 // var p2_Position = 0b10000011000000000011
 
+// The AI is about to make a win move
+// var p2_Position = 0b00000111110000000000 //Always the other player
+// var p1_Position = 0b10001000000110000001 //Always the AI
+
 var timeLimit = 5000; // 5 seconds
 var BITMASK = 0xFFFFF;
 var p1Flag = true
@@ -30,10 +34,17 @@ var AI = {
 	'bestMoveEnd':-1,
 	'bestScore':-Infinity,
 	'moveList':[],
+	'maxDepth':-1,
 
 	pvs:function(alpha, beta, depth, p1_board, p2_board, pNum){
-		if(depth == 0)
+		var p = (pNum == 1 ? p2_board : p1_board);
+		if(evaluation.Win(p, pNum^3, false, false)){
+			debugger;
+			return -Infinity;
+		}
+		if(depth == 0){
 			return evaluation.stateValue(p1_board, p2_board, pNum);
+		}
 
 		pNum ^= 3; // Change the player number
 		var bSearchPv = true;
@@ -46,7 +57,8 @@ var AI = {
 			var moves = boardAspect.availabeMoves(piece, allSpaces);
 
 			//Get and loop through all the moves a piece can make.
-			for(var nextMove = bitManip.getLSB(moves); moves; nextMove = bitManip.getLSB(moves)){
+			var nextMove;
+			for(nextMove = bitManip.getLSB(moves); moves; nextMove = bitManip.getLSB(moves)){
 
 				//b1 and b2 are the temp values for each move made on a board(b)
 				var b1 = (pNum == 1 ? p1_board^piece^nextMove : p1_board); 
@@ -63,10 +75,10 @@ var AI = {
 				if(score >= beta){
 					return beta;
 				}
-				if(score > alpha){
+				if(score >= alpha){
 					alpha = score;
 					bSearchPv = false;
-					if(score > AI.bestScore && pNum == 1){
+					if(score > AI.bestScore && depth == AI.maxDepth){
 						AI.bestScore = score;
 						AI.moveList[depth>>1] = {piece, nextMove};
 					}
@@ -96,11 +108,11 @@ var makeMoveAgainstAI = function(start, end){
 	var moveStart = convert.inputToBit(start);
 	var moveEnd = convert.inputToBit(end);
 	var depth = 2;
+	AI.maxDepth = depth;
 
  	if( evaluation.validateMove(moveStart, moveEnd, p1_Position^p2_Position^BITMASK) ){
  		updateBoardp2(moveStart, moveEnd); // Human move
  		AI.pvs(-Infinity, Infinity, depth, p1_Position, p2_Position, 2);
- 		debugger;
  		var s = convert.bitToInt(AI.moveList[(AI.moveList).length-1].piece)
  		var e = convert.bitToInt(AI.moveList[(AI.moveList).length-1].nextMove)
  		updateBoardp1(AI.moveList[(AI.moveList).length-1].piece, AI.moveList[(AI.moveList).length-1].nextMove);

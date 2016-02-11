@@ -287,7 +287,7 @@ var evaluation = {
 	stateValue:function(bitBoard, bitBoard2, player){
 		var total = 0;
 		total += this.Win((player==1?bitBoard:bitBoard2), player) ? -99999 : 0;
-		if(total < Infinity){
+		if(total > -99999){
 			total += this.stolenRealEstate(bitBoard, bitBoard2);
 		}
 		
@@ -307,8 +307,10 @@ var evaluation = {
 
 	Win:function(bitBoard, player, f1, f2){
 		var homeFlag = player == 1  ? f1 : f2;
+		// var homeFlag = false;
 		var winPosition = false;
 
+		//negate this
 		var winningPositions = [0b11100, 0b11010, 0b11001, 0b10110, 0b10011, 0b01101, 0b01011, 0b00111]
 
 		for(var i = 0; i < 4; i++){
