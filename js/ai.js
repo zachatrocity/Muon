@@ -30,8 +30,9 @@ var AI = {
 
 	pvs:function(alpha, beta, depth, p1_board, p2_board, pNum){
 		var p = (pNum == 1 ? p1_board : p2_board);
-		if(evaluation.Win(p, pNum, true, true))
-			return -1000;
+		if(evaluation.Win(p, pNum, true, true)){
+			return -1000; // because of negation the caller gets back 1000
+		}
 		if(depth == 0)
 			return evaluation.stateValue(p1_board, p2_board, pNum);
 
@@ -59,7 +60,7 @@ var AI = {
 					if(score > alpha)
 						score = -AI.pvs(-beta, -alpha, depth-1, b1, b2, pNum);
 				}
-				if(score >= beta)
+				if(score > beta)
 					return beta;
 				if(score > alpha){
 					alpha = score;
@@ -84,7 +85,8 @@ var updateBoardp2 = function(start, end){
 var updateBoardp1 = function(start, end){
 	p1_Position ^= start^end;
 	saveData.saveMove(convert.bitToStandard(start),convert.bitToStandard(end), 1);
-	AI.bestScore = -Infinity;
+	AI.bestScore = -999999;
+	AI.moveList = [];
 	display.displayBoard(p1_Position,p2_Position);
 	printData.showBitBoards(p1_Position,p2_Position);
 }
@@ -92,17 +94,18 @@ var updateBoardp1 = function(start, end){
 var makeMoveAgainstAI = function(start, end){
 	var moveStart = convert.inputToBit(start);
 	var moveEnd = convert.inputToBit(end);
-	var depth = 1;
+	var depth = 4;
 	AI.maxDepth = depth;
 
  	if( evaluation.validateMove(moveStart, moveEnd, p1_Position^p2_Position^BITMASK) ){
  		updateBoardp2(moveStart, moveEnd); // Human move
- 		debugger;
- 		AI.pvs(-Infinity, Infinity, depth, p1_Position, p2_Position, 2);
+ 		AI.pvs(-1000, 1000, depth, p1_Position, p2_Position, 2);
 
  		var bestIndex;
  		var bestScore = -Infinity;
+ 		console.log(AI.moveList)
  		for (var i = 0; i < (AI.moveList).length; i++) {
+ 			console.log("S:" + AI.moveList[i].start + " \tE:" + AI.moveList[i].end + " \tV:" + AI.moveList[i].value)
  			if(AI.moveList[i].value > bestScore){
  				bestScore = AI.moveList[i].value;
  				bestIndex = i;
@@ -113,8 +116,8 @@ var makeMoveAgainstAI = function(start, end){
  		var e = convert.bitToInt(AI.moveList[bestIndex].end)
  		updateBoardp1(AI.moveList[bestIndex].start, AI.moveList[bestIndex].end);
  		return { start: s, end: e };
- 	}
- 	else{
+ 	
+} 	else{
  		console.log("invalid Move");
  		return -1;
  	}
