@@ -34,7 +34,7 @@ var AI = {
 			return -1000; // because of negation the caller gets back 1000
 		}
 		if(depth == 0)
-			return evaluation.stateValue(p1_board, p2_board, pNum);
+			return -evaluation.stateValue(p1_board, p2_board, pNum);
 
 		pNum ^= 3; // Change the player number
 		var bSearchPv = true;
@@ -47,8 +47,7 @@ var AI = {
 			var moves = boardAspect.availabeMoves(piece, allSpaces);
 
 			//Get and loop through all the moves a piece can make.
-			var nextMove;
-			for(nextMove = bitManip.getLSB(moves); moves; nextMove = bitManip.getLSB(moves)){
+			for(var nextMove = bitManip.getLSB(moves); moves; nextMove = bitManip.getLSB(moves)){
 
 				//b1 and b2 are the temp values for each move made on a board(b)
 				var b1 = (pNum == 1 ? p1_board^piece^nextMove : p1_board); 
@@ -94,7 +93,7 @@ var updateBoardp1 = function(start, end){
 var makeMoveAgainstAI = function(start, end){
 	var moveStart = convert.inputToBit(start);
 	var moveEnd = convert.inputToBit(end);
-	var depth = 4;
+	var depth = 7;
 	AI.maxDepth = depth;
 
  	if( evaluation.validateMove(moveStart, moveEnd, p1_Position^p2_Position^BITMASK) ){

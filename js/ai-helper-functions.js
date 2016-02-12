@@ -286,7 +286,7 @@ var evaluation = {
 	stateValue:function(bitBoard, bitBoard2, player){
 		var total = 0;
 		total += this.stolenRealEstate(bitBoard, bitBoard2);
-		return -total;
+		return total;
 	},
 
 	stolenRealEstate:function(bitBoard, bitBoard2){
