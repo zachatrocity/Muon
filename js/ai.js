@@ -1,5 +1,5 @@
-var p2_Position = 0b00000111110000000000 //Always the other player
-var p1_Position = 0b00000000001111100000 //Always the AI
+// var p2_Position = 0b00000111110000000000 //Always the other player
+// var p1_Position = 0b00000000001111100000 //Always the AI
 
 //If The AI makes the wrong move here the human will win
 //test move makeMoveAgainstAI("b4","b1")
@@ -17,8 +17,8 @@ var p1_Position = 0b00000000001111100000 //Always the AI
 // var p2_Position = 0b10000011000000000011
 
 // The AI is about to make a win move
-// var p2_Position = 0b00000111110000000000 //Always the other player
-// var p1_Position = 0b10001000000110000001 //Always the AI
+var p2_Position = 0b00000111110000000000 //Always the other player
+var p1_Position = 0b10001000000110000001 //Always the AI
 
 var BITMASK = 0xFFFFF;
 display.displayBoard(p1_Position,p2_Position);
@@ -59,9 +59,11 @@ var AI = {
 					if(score > alpha)
 						score = -AI.pvs(-beta, -alpha, depth-1, b1, b2, pNum);
 				}
-				if(score > beta)
+				if(score >= beta){
+					AI.moveList[(AI.moveList).length] = {start: piece, end: nextMove, value:score};
 					return beta;
-				if(score > alpha){
+				}
+				if(score >= alpha){
 					alpha = score;
 					bSearchPv = false;
 				}
@@ -93,7 +95,7 @@ var updateBoardp1 = function(start, end){
 var makeMoveAgainstAI = function(start, end){
 	var moveStart = convert.inputToBit(start);
 	var moveEnd = convert.inputToBit(end);
-	var depth = 7;
+	var depth = 9;
 	AI.maxDepth = depth;
 
  	if( evaluation.validateMove(moveStart, moveEnd, p1_Position^p2_Position^BITMASK) ){
@@ -102,9 +104,9 @@ var makeMoveAgainstAI = function(start, end){
 
  		var bestIndex;
  		var bestScore = -Infinity;
- 		console.log(AI.moveList)
+ 		//console.log(AI.moveList)
  		for (var i = 0; i < (AI.moveList).length; i++) {
- 			console.log("S:" + AI.moveList[i].start + " \tE:" + AI.moveList[i].end + " \tV:" + AI.moveList[i].value)
+ 			//console.log("S:" + AI.moveList[i].start + " \tE:" + AI.moveList[i].end + " \tV:" + AI.moveList[i].value)
  			if(AI.moveList[i].value > bestScore){
  				bestScore = AI.moveList[i].value;
  				bestIndex = i;

@@ -8,11 +8,12 @@ var display = {
 			playerTwoFlag = false;
 	},
 
+	//The computer is always player1 (p1)
 	color:function(quad, node, p1, p2){
 		if(1<<(quad*5 + node)&p1)
-			return "H"	// for Human
+			return "C"	// for Human
 		else if(1<<(quad*5 + node)&p2)
-			return "C"	// for Computer
+			return "H"	// for Computer
 		else 
 			return "#"
 	},
