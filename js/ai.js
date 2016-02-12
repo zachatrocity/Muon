@@ -20,31 +20,20 @@ var p1_Position = 0b00000000001111100000 //Always the AI
 // var p2_Position = 0b00000111110000000000 //Always the other player
 // var p1_Position = 0b10001000000110000001 //Always the AI
 
-var timeLimit = 5000; // 5 seconds
 var BITMASK = 0xFFFFF;
-var p1Flag = true
-var p2Flag = true
-var tempP1Flag = true;
-var tempP2Flag = true;
-
 display.displayBoard(p1_Position,p2_Position);
 
 var AI = {
-	'bestMoveStart':-1,
-	'bestMoveEnd':-1,
-	'bestScore':-Infinity,
+	'bestScore':-999999,
 	'moveList':[],
 	'maxDepth':-1,
 
 	pvs:function(alpha, beta, depth, p1_board, p2_board, pNum){
-		var p = (pNum == 1 ? p2_board : p1_board);
-		if(evaluation.Win(p, pNum^3, false, false)){
-			debugger;
-			return -Infinity;
-		}
-		if(depth == 0){
+		var p = (pNum == 1 ? p1_board : p2_board);
+		if(evaluation.Win(p, pNum, true, true))
+			return -1000;
+		if(depth == 0)
 			return evaluation.stateValue(p1_board, p2_board, pNum);
-		}
 
 		pNum ^= 3; // Change the player number
 		var bSearchPv = true;
@@ -63,26 +52,22 @@ var AI = {
 				//b1 and b2 are the temp values for each move made on a board(b)
 				var b1 = (pNum == 1 ? p1_board^piece^nextMove : p1_board); 
 				var b2 = (pNum == 2 ? p2_board^piece^nextMove : p2_board); 
-				if(bSearchPv){
+				if(bSearchPv)
 					score = -AI.pvs(-beta, -alpha, depth-1, b1, b2, pNum);
-				}
 				else{
 					score = -AI.pvs(-alpha-1, -alpha, depth-1, b1, b2, pNum);
 					if(score > alpha)
 						score = -AI.pvs(-beta, -alpha, depth-1, b1, b2, pNum);
 				}
-
-				if(score >= beta){
+				if(score >= beta)
 					return beta;
-				}
-				if(score >= alpha){
+				if(score > alpha){
 					alpha = score;
 					bSearchPv = false;
-					if(score > AI.bestScore && depth == AI.maxDepth){
-						AI.bestScore = score;
-						AI.moveList[depth>>1] = {piece, nextMove};
-					}
 				}
+				if(depth == AI.maxDepth)
+					AI.moveList[(AI.moveList).length] = {start: piece, end: nextMove, value:score};
+
 				moves ^= nextMove; //nextMove has been checked, remove it from moves
 			}
 			allPieces ^= piece; //piece has been checked, remove it from allPieces
@@ -107,15 +92,26 @@ var updateBoardp1 = function(start, end){
 var makeMoveAgainstAI = function(start, end){
 	var moveStart = convert.inputToBit(start);
 	var moveEnd = convert.inputToBit(end);
-	var depth = 2;
+	var depth = 1;
 	AI.maxDepth = depth;
 
  	if( evaluation.validateMove(moveStart, moveEnd, p1_Position^p2_Position^BITMASK) ){
  		updateBoardp2(moveStart, moveEnd); // Human move
+ 		debugger;
  		AI.pvs(-Infinity, Infinity, depth, p1_Position, p2_Position, 2);
- 		var s = convert.bitToInt(AI.moveList[(AI.moveList).length-1].piece)
- 		var e = convert.bitToInt(AI.moveList[(AI.moveList).length-1].nextMove)
- 		updateBoardp1(AI.moveList[(AI.moveList).length-1].piece, AI.moveList[(AI.moveList).length-1].nextMove);
+
+ 		var bestIndex;
+ 		var bestScore = -Infinity;
+ 		for (var i = 0; i < (AI.moveList).length; i++) {
+ 			if(AI.moveList[i].value > bestScore){
+ 				bestScore = AI.moveList[i].value;
+ 				bestIndex = i;
+ 			}
+ 		}
+
+ 		var s = convert.bitToInt(AI.moveList[bestIndex].start)
+ 		var e = convert.bitToInt(AI.moveList[bestIndex].end)
+ 		updateBoardp1(AI.moveList[bestIndex].start, AI.moveList[bestIndex].end);
  		return { start: s, end: e };
  	}
  	else{

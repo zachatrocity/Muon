@@ -65,74 +65,55 @@ var convert = {
 		//If the input was not found here the function returns false.
 	inputToBit:function(coordinate){
 		coordinate = coordinate.toUpperCase();
-		if(coordinate == "A1"){return 0b00000000000000100000} 
-		else if(coordinate == "A2"){return 0b00000000000001000000}
-		else if(coordinate == "A3"){return 0b00000000000010000000}
-		else if(coordinate == "A4"){return 0b00000000000100000000}
-		else if(coordinate == "A5"){return 0b00000000001000000000}
-		else if(coordinate == "B1"){return 0b00000000000000000010}
-		else if(coordinate == "B2"){return 0b00000000000000000001}
-		else if(coordinate == "B3"){return 0b00000000000000000100}
-		else if(coordinate == "B4"){return 0b00000000000000010000}
-		else if(coordinate == "B5"){return 0b00000000000000001000}
-		else if(coordinate == "C1"){return 0b01000000000000000000}
-		else if(coordinate == "C2"){return 0b10000000000000000000}
-		else if(coordinate == "C3"){return 0b00100000000000000000}
-		else if(coordinate == "C4"){return 0b00001000000000000000}
-		else if(coordinate == "C5"){return 0b00010000000000000000}
-		else if(coordinate == "D1"){return 0b00000100000000000000}
-		else if(coordinate == "D2"){return 0b00000010000000000000}
-		else if(coordinate == "D3"){return 0b00000001000000000000}
-		else if(coordinate == "D4"){return 0b00000000100000000000}
-		else if(coordinate == "D5"){return 0b00000000010000000000}
-		else 
-			return false
+		switch (coordinate){
+			case "A1": return 0b00000000000000100000; 
+			case "A2": return 0b00000000000001000000;
+			case "A3": return 0b00000000000010000000;
+			case "A4": return 0b00000000000100000000;
+			case "A5": return 0b00000000001000000000;
+			case "B1": return 0b00000000000000000010;
+			case "B2": return 0b00000000000000000001;
+			case "B3": return 0b00000000000000000100;
+			case "B4": return 0b00000000000000010000;
+			case "B5": return 0b00000000000000001000;
+			case "C1": return 0b01000000000000000000;
+			case "C2": return 0b10000000000000000000;
+			case "C3": return 0b00100000000000000000;
+			case "C4": return 0b00001000000000000000;
+			case "C5": return 0b00010000000000000000;
+			case "D1": return 0b00000100000000000000;
+			case "D2": return 0b00000010000000000000;
+			case "D3": return 0b00000001000000000000;
+			case "D4": return 0b00000000100000000000;
+			case "D5": return 0b00000000010000000000;
+			default: return false;
+		}
 	},
 
 	bitToStandard:function(coordinate){
-		if(coordinate == 0b00000000000000100000){return "A1"} 
-		else if(coordinate == 0b00000000000001000000){return "A2"}
-		else if(coordinate == 0b00000000000010000000){return "A3"}
-		else if(coordinate == 0b00000000000100000000){return "A4"}
-		else if(coordinate == 0b00000000001000000000){return "A5"}
-		else if(coordinate == 0b00000000000000000010){return "B1"}
-		else if(coordinate == 0b00000000000000000001){return "B2"}
-		else if(coordinate == 0b00000000000000000100){return "B3"}
-		else if(coordinate == 0b00000000000000010000){return "B4"}
-		else if(coordinate == 0b00000000000000001000){return "B5"}
-		else if(coordinate == 0b01000000000000000000){return "C1"}
-		else if(coordinate == 0b10000000000000000000){return "C2"}
-		else if(coordinate == 0b00100000000000000000){return "C3"}
-		else if(coordinate == 0b00001000000000000000){return "C4"}
-		else if(coordinate == 0b00010000000000000000){return "C5"}
-		else if(coordinate == 0b00000100000000000000){return "D1"}
-		else if(coordinate == 0b00000010000000000000){return "D2"}
-		else if(coordinate == 0b00000001000000000000){return "D3"}
-		else if(coordinate == 0b00000000100000000000){return "D4"}
-		else if(coordinate == 0b00000000010000000000){return "D5"}
-		else 
-			return false
-	},
-
-	//quadNodeToBit()
-	quadNodeToBit:function(quad, node){
-		return 1<<(quad*5 + node);
-	},
-
-	//bitToQuad()
-		//This returns a quadrant 0-3
-		//position is a single bitBoard node
-		//position = 0b00000001000000000000 returns quadrant 2
-	bitToQuad: function(position){
-		return position&0x1F?0:(position&0x3E0?1:(position&0x7C00?2:3));
-	},
-
-	//bitToNode()
-		//returns a node 0-4
-		//position is a single bitBoard node
-		//position = 0b00000010000000000000 returns node 3
-	bitToNode: function(position){
-		return position&0x08421?0:(position&0x10842?1:(position&0x21084?2:(position&0x42108?3:4)));
+		switch (coordinate){
+			case 0b00000000000000100000: return "A1"; 
+			case 0b00000000000001000000: return "A2";
+			case 0b00000000000010000000: return "A3";
+			case 0b00000000000100000000: return "A4";
+			case 0b00000000001000000000: return "A5";
+			case 0b00000000000000000010: return "B1";
+			case 0b00000000000000000001: return "B2";
+			case 0b00000000000000000100: return "B3";
+			case 0b00000000000000010000: return "B4";
+			case 0b00000000000000001000: return "B5";
+			case 0b01000000000000000000: return "C1";
+			case 0b10000000000000000000: return "C2";
+			case 0b00100000000000000000: return "C3";
+			case 0b00001000000000000000: return "C4";
+			case 0b00010000000000000000: return "C5";
+			case 0b00000100000000000000: return "D1";
+			case 0b00000010000000000000: return "D2";
+			case 0b00000001000000000000: return "D3";
+			case 0b00000000100000000000: return "D4";
+			case 0b00000000010000000000: return "D5";
+			default: return false;
+		}
 	},
 
 	// Converts from a 0-19 board configuration to a bit for bitBoard manipulation.
@@ -187,6 +168,27 @@ var convert = {
 			case 0b00010000000000000000 : return 19;
 			default: console.log("Cannot convert from int " + position + " to int");
 		}
+	},
+
+	//quadNodeToBit()
+	quadNodeToBit:function(quad, node){
+		return 1<<(quad*5 + node);
+	},
+
+	//bitToQuad()
+		//This returns a quadrant 0-3
+		//position is a single bitBoard node
+		//position = 0b00000001000000000000 returns quadrant 2
+	bitToQuad: function(position){
+		return position&0x1F?0:(position&0x3E0?1:(position&0x7C00?2:3));
+	},
+
+	//bitToNode()
+		//returns a node 0-4
+		//position is a single bitBoard node
+		//position = 0b00000010000000000000 returns node 3
+	bitToNode: function(position){
+		return position&0x08421?0:(position&0x10842?1:(position&0x21084?2:(position&0x42108?3:4)));
 	},
 }
 
@@ -274,24 +276,17 @@ var evaluation = {
 		//player is a 1 or 2 that represent the player number.
 		//position is the current position that needs to be checked.
 	isHomeQuadEmpty:function(player, position){
-		var quadIsEmpty = false;
-		if ( player == 1 && position&0b00000000001111100000 == 0){
-			quadIsEmpty = true;
-		} 
-		else if(player==2&& position&0b00000111110000000000 == 0){
-			quadIsEmpty = true;
-		}
-		return quadIsEmpty;
+		if( player == 1 && position&0b00000000001111100000 == 0)
+			return true;
+		if( player == 2 && position&0b00000111110000000000 == 0)
+			return true;
+		return false;
 	},
 
 	stateValue:function(bitBoard, bitBoard2, player){
 		var total = 0;
-		total += this.Win((player==1?bitBoard:bitBoard2), player) ? -99999 : 0;
-		if(total > -99999){
-			total += this.stolenRealEstate(bitBoard, bitBoard2);
-		}
-		
-		return total;
+		total += this.stolenRealEstate(bitBoard, bitBoard2);
+		return -total;
 	},
 
 	stolenRealEstate:function(bitBoard, bitBoard2){
@@ -307,20 +302,28 @@ var evaluation = {
 
 	Win:function(bitBoard, player, f1, f2){
 		var homeFlag = player == 1  ? f1 : f2;
-		// var homeFlag = false;
-		var winPosition = false;
 
-		//negate this
-		var winningPositions = [0b11100, 0b11010, 0b11001, 0b10110, 0b10011, 0b01101, 0b01011, 0b00111]
+		var quad = boardAspect.getQuadBits(bitBoard, 0);
+		var bits = bitManip.BitCount(quad);
+		if(!(quad == 0b01110 || quad == 0b10101) && bits >= 3)
+			return true;
 
-		for(var i = 0; i < 4; i++){
-			var quad = boardAspect.getQuadBits(bitBoard, 0);
-			if((!homeFlag || i != player) && winningPositions.indexOf(quad) != -1){
-				winPosition = true;
-				break;
-			}
-		}
-		return winPosition;
+		quad = boardAspect.getQuadBits(bitBoard, 1);
+		bits = bitManip.BitCount(quad);
+		if(!(homeFlag && player == 1) && !(quad == 0b01110 || quad == 0b10101) && bits >= 3)
+			return true;
+
+		quad = boardAspect.getQuadBits(bitBoard, 2);
+		bits = bitManip.BitCount(quad);
+		if(!(homeFlag && player == 2) && !(quad == 0b01110 || quad == 0b10101) && bits >= 3)
+			return true;
+
+		quad = boardAspect.getQuadBits(bitBoard, 3);
+		bits = bitManip.BitCount(quad);
+		if(!(quad == 0b01110 || quad == 0b10101) && bits >= 3)
+			return true;
+
+		return false;
 	},
 }
 
