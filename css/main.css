@@ -144,7 +144,7 @@ h1.view-heading{
 	margin-bottom: 0px;
 	margin-top: 0px;
 	-webkit-transition: visibility 0s 0.5s, opacity 0s;
-	transition: visibility 0s 0.5s, opacity: 0s;
+	transition: visibility 0s 0.5s, opacity 0s;
 	-webkit-transition-timing-function: ease-out;
 }
 
@@ -154,6 +154,17 @@ h1.view-heading{
 
 .show-modal-btn {
 	visibility: visible;
+	opacity: 1;
+}
+
+.modal-txt-box {
+	opacity: 0;
+	-webkit-transition: opacity 0s 0.5s;
+	transition: opacity 0s 0.5s;
+	-webkit-transition-timing-function: ease-out;
+}
+
+.show-modal-txt-box {
 	opacity: 1;
 }
 
@@ -211,6 +222,7 @@ h1.view-heading{
     font-size: 2em;
     border: none;
     transition: .3s;
+	cursor: pointer;
 }
 
 

@@ -32,7 +32,9 @@
 		<form name="usernameForm">
 		<!-- <a ng-click="joinLobby(username)">Join Lobby</a> -->
 		<div class="row">
-			<div class="col-xs-12"><input type="text" ng-model="username" required/></div>
+			<div class="col-xs-12"><input type="text" ng-model="username" 
+			class="modal-txt-box"
+			ng-class="{'show-modal-txt-box': showNetworkingModal}" required/></div>
 		</div>
 		<div class="row network-modal-btns">
 				<div class="col-xs-4 col-xs-offset-2">
