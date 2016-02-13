@@ -47,6 +47,11 @@ cloak.configure({
       }
     },
 
+    'refreshAll':function(){
+      cloak.message('listUsers');
+      cloak.message('listRooms');
+    },
+
     'refreshLobby': function(data) {
       console.log(data);
       //set the player count
