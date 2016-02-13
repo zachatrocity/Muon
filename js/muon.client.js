@@ -13,15 +13,25 @@ var NetworkGUI = {
     var users = data.users;
     var inLobby = data.inLobby;
     var lobbyListElement = NetworkGUI.getLobbyElement();
+    lobbyListElement.innerHTML = '';
     _.chain(users)
       .each(function(user) {
         if (inLobby) {
-          lobbyListElement.innerHTML += '<li>' + escape(user.name) + '</li>';
-        }
-        else {
-          lobbyListElement.innerHTML += '<li>' + escape(user.name) + ' (' + user.room.userCount + '/' + user.room.size + ')</li>';
+          lobbyListElement.innerHTML += '<li>' + unescape(user.name) + '</li>';
         }
       });
+  },
+  getRoomElement: function() {
+    return document.getElementById("room-list");
+  },
+  refreshRoomElement: function(rooms) {
+    var roomListElement = NetworkGUI.getRoomElement();
+
+    roomListElement.innerHTML = '';
+      _.each(rooms, function(room) {
+        roomListElement.innerHTML += '<li>' + unescape(room.name) + ' (' + room.users.length + '/' + room.size + ') <a href="#" onclick="game.joinRoom(\'' + room.id  + '\')">join</a></li>';
+      });
+    roomListElement.innerHTML += '</ul>';
   }
 }
 
@@ -46,13 +56,23 @@ cloak.configure({
     },
 
     'refreshRooms': function(rooms){
-      
+      console.log(rooms);
+      NetworkGUI.refreshRoomElement(rooms);
     },
 
     'joinLobbyResponse': function(success) {
       if(success){
         console.log('joined lobby');
         cloak.message('listUsers');
+      }
+    },
+
+    'roomCreated': function(result) {
+      console.log(result.success ? 'room join success' : 'room join failure');
+      if (result.success) {
+        // game.room.id = result.roomId;
+        // game.begin();
+        //start game!
       }
     }
 

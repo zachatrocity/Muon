@@ -1,5 +1,5 @@
-// var p2_Position = 0b00000111110000000000 //Always the other player
-// var p1_Position = 0b00000000001111100000 //Always the AI
+var p2_Position = 0b00000111110000000000 //Always the other player
+var p1_Position = 0b00000000001111100000 //Always the AI
 
 //If The AI makes the wrong move here the human will win
 //test move makeMoveAgainstAI("b4","b1")
@@ -17,8 +17,8 @@
 // var p2_Position = 0b10000011000000000011
 
 // The AI is about to make a win move
-var p2_Position = 0b00000111110000000000 //Always the other player
-var p1_Position = 0b10001000000110000001 //Always the AI
+//var p2_Position = 0b00000111110000000000 //Always the other player
+//var p1_Position = 0b10001000000110000001 //Always the AI
 
 var BITMASK = 0xFFFFF;
 display.displayBoard(p1_Position,p2_Position);

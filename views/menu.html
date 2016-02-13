@@ -10,7 +10,7 @@
         <div class="main-menu-item" ng-mouseover="mouse_over()">
 			<a ui-sref="newgame" ng-click="mouse_click()">New Game</a></div>
         <div class="main-menu-item" ng-mouseover="mouse_over()">
-			<a ui-sref="network" ng-click="mouse_click()">Network</a></div>
+			<a ng-click="showNetworkingModal = true">Network</a></div>
         <div class="main-menu-item" ng-mouseover="mouse_over()">
 			<a ui-sref="howto" ng-click="mouse_click()">How To Play</a></div>
         <div class="main-menu-item" ng-mouseover="mouse_over()">
@@ -20,4 +20,35 @@
         <div class="main-menu-item" ng-mouseover="mouse_over()">
 			<a ui-sref="quit" ng-click="mouse_click()">Quit</a></div>
     </div>
+</div>
+
+
+<div class="modal" ng-init="showNetworkingModal = false;"
+	ng-class="{'dim-lights': showNetworkingModal}">
+	<div class="modal-dialog" ng-init="showNetworkingModal = false;"
+		ng-class="{'show-modal': showNetworkingModal}">
+		<h3>Please enter a username</h3>
+
+		<form name="usernameForm">
+		<!-- <a ng-click="joinLobby(username)">Join Lobby</a> -->
+		<div class="row">
+			<div class="col-xs-12"><input type="text" ng-model="username" required/></div>
+		</div>
+		<div class="row network-modal-btns">
+				<div class="col-xs-4 col-xs-offset-2">
+					<input type="button" class="modal-btn" value="Connect" 
+					ng-class="{'show-modal-btn': showNetworkingModal}" 
+					ng-click="goToNetworkingPage(username)"
+					ng-disabled="usernameForm.$invalid"/>
+				</div>
+				<div class="col-xs-4">
+					<input type="button" class="modal-btn" ng-click="showNetworkingModal = false;" 
+					value="Cancel" ng-class="{'show-modal-btn': showNetworkingModal}" />
+				</div>
+		</div>
+		</form>
+		
+
+
+	</div>
 </div>

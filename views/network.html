@@ -1,17 +1,12 @@
 <!-- views/network.html -->
 <h1 class="view-heading">Network Lobby</h1>
-
-
-<div class="usernamebox" ng-show="notInLobby">
-	<h3>Username: </h3>
-	<input type="text" ng-model="username"/>
-	<a ng-click="joinLobby(username)">Join Lobby</a>
-</div>
-
+<a class="button" ng-click="refresh()">
+    <span >refresh</span>
+ </a>
 <h3 id="onlinePlayerCount">0</h3>
 <div class="row">
 	<div class="col-xs-2 col-xs-offset-1" id="lobbyDiv">
-		<h3>Online Players:</h3>
+		<h3>Lobby</h3>
 		<ul id="lobby-list">
 			
 		</ul>
@@ -26,7 +21,7 @@
 
 <div class="row">
 	<div class="col-xs-3 col-xs-offset-3">
-		 <a class="button">
+		 <a class="button" ng-click="createRoom()">
 		    <span >Create Room</span>
 		 </a>
 	</div>
@@ -40,3 +35,4 @@
 <div class="back">
 <a class="button" onclick="history.back()">Back</a>
 </div>
+

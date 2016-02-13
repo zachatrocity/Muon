@@ -1,17 +1,22 @@
 muonApp.controller('NetworkCtrl', function ($scope, $stateParams) {
+
 	cloak.run(packjson.serverurl);
 
-	$scope.notInLobby = true;
-
-	$scope.joinLobby = function(username){
-		cloak.message('registerUsername', {'username' : username})
-		
-		$scope.notInLobby = false;
+	$scope.$on('$viewContentLoaded', function(){
+		setTimeout(function(){ 
+			cloak.message('registerUsername', {'username' : $stateParams.username})
+			cloak.message('listRooms');
+		}, 1000);
+	});
+	
+	$scope.refresh = function(){
+		cloak.message('listUsers');
+		cloak.message('listRooms');
 	}
 
-	$scope.hostGame = function(hostname){
-		if(hostname != ''){
-			console.log(hostname)
-		}
+	$scope.createRoom = function(){
+		cloak.message('createRoom', {
+	      name: escape($stateParams.username + "'s Game")
+	    });
 	}
 });

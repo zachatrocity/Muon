@@ -1,3 +1,4 @@
+'use strict';
 // Load native UI library
 var gui = require('nw.gui'); 
 var packjson = require('./package.json');
@@ -8,7 +9,8 @@ win.showDevTools();
 
 var easter_egg = new Konami(function() { alert('Konami code!')});
 
-var muonApp = angular.module('muonApp', ["ui.router"])
+var muonApp = angular.module('muonApp', ["ui.router"]);
+
     muonApp.config(function($stateProvider, $urlRouterProvider){
       
       // For any unmatched url, send to /menu
@@ -29,7 +31,7 @@ var muonApp = angular.module('muonApp', ["ui.router"])
         })
 
         .state('network', {
-            url: "/network",
+            url: "/network/:username",
             templateUrl: "views/network.html",
             controller: "NetworkCtrl"
         })

@@ -96,7 +96,7 @@ h1.view-heading{
 	left: 0;
 	right: 0;
 	bottom: 0;
-	z-index: 10;
+	z-index: 10000;
 }
 
 .modal-dialog {
@@ -146,6 +146,10 @@ h1.view-heading{
 	-webkit-transition: visibility 0s 0.5s, opacity 0s;
 	transition: visibility 0s 0.5s, opacity: 0s;
 	-webkit-transition-timing-function: ease-out;
+}
+
+.network-modal-btns{
+	margin-top: 20px; 
 }
 
 .show-modal-btn {

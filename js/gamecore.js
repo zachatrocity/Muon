@@ -39,7 +39,7 @@ var gameCore = {
                 {x: 400, y: 300}, {x: 675, y: 300},    //
                 
                 {x: 5, y: 400}, {x: 300, y: 400},   //
-                         {x: 200, y: 500},            // Quad C
+                         {x: 150, y: 550},            // Quad C
                 {x: 5, y: 675}, {x: 300, y: 675}],   //
         boardSVG: null,
         d3force: null,
@@ -77,6 +77,7 @@ var gameCore = {
         mousedown: function() {
 			var point = d3.mouse(this);
 			var maxdist = 30
+			var maxFociDist = 60;
 			// This loops through all the nodes and find the index of atleast one node within
 			// 30 to point
 
@@ -87,7 +88,7 @@ var gameCore = {
 					    y = target.y - point[1],
 					    distance = Math.sqrt(x * x + y * y);
 					//check if the node (target) is within the maxdist of the click    
-					if (distance < maxdist) {
+					if (distance < maxFociDist) {
 						//click was close to a foci
 						//move gameCore.board.selectedMuon toward this target (foci)
 						gameCore.AttemptMove(gameCore.board.selectedMuon,index);
@@ -239,10 +240,11 @@ var gameCore = {
 			}
 			else {
 				// Start a timer so the AI move is not immediate
-				var timer = Date.now();
+				//var timer = Date.now();
 				// Retrieve AI move
+				debugger;
 				var aiMove = makeMoveAgainstAI(inputFrom, inputTo);
-				timer = Date.now() - timer;
+				//timer = Date.now() - timer;
 				//this.p2Pos = (this.p2Pos ^ aiMove[0]) | aiMove[1];
 				//moveHistory.push(new Move(aiMove[0], aiMove[1], "opponent"));
 				//console.log("Opponent moved from " + aiMove[0] + " to " + aiMove[1]);
