@@ -1,3 +1,5 @@
+var aiWorker = new Worker('./js/aiworker.js');
+
 var Move = function(f, t, p) {
 	this.from = f;
 	this.to = t;
@@ -6,17 +8,17 @@ var Move = function(f, t, p) {
 
 // An object that holds all the logic associated with running the gamecore
 var gameCore = {
-	// The initial position of player 1
-	p1Pos: 0b00000111110000000000,
+	
+	p1Pos: 0b00000000001111100000, 	//Always the AI
 	// The initial position of player 2 (the opponent)
-	p2Pos: 0b00000000001111100000,
+	p2Pos: 0b00000111110000000000, //HUMAN
 	// The flags for P1 and P2 for if they can can create a triangle in their starting quadrant
 	playerOneFlag: true,
 	playerTwoFlag: true,
 	// Flag for the current player's turn
 	player1Turn: true,
 	// The available moves for a position can be found through 'evaluation.nodeConnections'
-	ai: AI,
+	//ai: AI,
 	// A list of the past ~10 move that the player/opponet have made (5 ea.)
 	moveHistory: [],
 
@@ -197,23 +199,23 @@ var gameCore = {
 		// Retrieve the positions adjecent to the selectied piece
 		var quad = convert.bitToQuad(from);
 		var node = convert.bitToNode(from);
-		var openPositions = this.GetAvailableMoves(quad, node);
-		console.log("Open positions: " + this.dec2bin(openPositions));
+		var openPositions = gameCore.GetAvailableMoves(quad, node);
+		console.log("Open positions: " + gameCore.dec2bin(openPositions));
 
 		// Return if the move selected is both adjacent to the selected piece, and free from other pieces
-		// console.log(this.dec2bin(from));
-		// console.log(this.dec2bin(to));
-		// console.log(this.dec2bin(openPositions & to));
+		// console.log(gameCore.dec2bin(from));
+		// console.log(gameCore.dec2bin(to));
+		// console.log(gameCore.dec2bin(openPositions & to));
 		return (openPositions & to) > 0;
 	},
 
 	GetAvailableMoves: function(quad, node) {
 		var temp = evaluation.nodeConnections[quad][node];
-		// console.log("Adjacent positions: " + this.dec2bin(temp));
-		// console.log("Player 1 positions: " + this.dec2bin(this.p1Pos));
-		// console.log("Player 2 positions: " + this.dec2bin(this.p2Pos));
-		// console.log("    " + this.dec2bin(~(this.p1Pos | this.p2Pos) & temp));
-		return ~(this.p1Pos | this.p2Pos) & temp;
+		// console.log("Adjacent positions: " + gameCore.dec2bin(temp));
+		// console.log("Player 1 positions: " + gameCore.dec2bin(gameCore.p1Pos));
+		// console.log("Player 2 positions: " + gameCore.dec2bin(gameCore.p2Pos));
+		// console.log("    " + gameCore.dec2bin(~(gameCore.p1Pos | gameCore.p2Pos) & temp));
+		return ~(gameCore.p1Pos | gameCore.p2Pos) & temp;
 	},
 
 	// Moves a piece from one position to another
@@ -225,32 +227,37 @@ var gameCore = {
 		var inputTo = convert.bitToStandard(bitTo);
 
 		// Test to see if move human wants to perform is valid
-		if (this.ValidMove(bitFrom, bitTo)) {
+		if (gameCore.ValidMove(bitFrom, bitTo)) {
 			console.log("Player moved from " + inputFrom + " to " + inputTo);
-
 			// Perform move that human made
-			this.p1Pos = (this.p1Pos ^ bitFrom) | bitTo;
-			this.moveHistory.push(new Move(from, to, "player"));
-			this.player1Turn = false;
+			gameCore.p2Pos ^= bitFrom ^ bitTo;
+			gameCore.moveHistory.push(new Move(from, to, "player"));
+			gameCore.player1Turn = true; //AIs turn
 			gameCore.board.moveMuonTweenFoci(from, to);
-			display.displayBoard(this.p1Pos, this.p2Pos);
+			//display.displayBoard(gameCore.p1Pos, gameCore.p2Pos);
 
-			if (this.GameOver()) {
-				this.EndGame();
+			if (gameCore.GameOver()) {
+				gameCore.EndGame();
 			}
 			else {
 				// Start a timer so the AI move is not immediate
 				//var timer = Date.now();
 				// Retrieve AI move
-				makeMoveAgainstAI(inputFrom, inputTo, function(s,e){
-					//timer = Date.now() - timer;
-					//this.p2Pos = (this.p2Pos ^ aiMove[0]) | aiMove[1];
-					//moveHistory.push(new Move(aiMove[0], aiMove[1], "opponent"));
-					//console.log("Opponent moved from " + aiMove[0] + " to " + aiMove[1]);
-					gameCore.board.moveMuonTweenFoci(s, e);
-					display.displayBoard(this.p1Pos, this.p2Pos);
-					this.player1Turn = true;
-				});
+
+				aiWorker.postMessage(
+					{ 
+						'from': inputFrom,
+						'to': inputTo
+					});
+				// makeMoveAgainstAI(inputFrom, inputTo, function(s,e){
+				// 	//timer = Date.now() - timer;
+				// 	//gameCore.p2Pos = (gameCore.p2Pos ^ aiMove[0]) | aiMove[1];
+				// 	//moveHistory.push(new Move(aiMove[0], aiMove[1], "opponent"));
+				// 	//console.log("Opponent moved from " + aiMove[0] + " to " + aiMove[1]);
+				// 	gameCore.board.moveMuonTweenFoci(s, e);
+				// 	display.displayBoard(gameCore.p1Pos, gameCore.p2Pos);
+				// 	gameCore.player1Turn = true;
+				// });
 			}
 		}
 		else {
@@ -260,12 +267,12 @@ var gameCore = {
 
 	// Updates the flag for whether or not player 1 can create triangles in their starting quad
 	ChangePlayer1Flag: function(status) {
-		this.playerOneFlag = status;
+		gameCore.playerOneFlag = status;
 	},
 
 	// Updates the flag for whether or not player 2 can create triangles in their starting quad
 	ChangePlayer2Flag: function(status) {
-		this.playerTwoFlag = status;
+		gameCore.playerTwoFlag = status;
 	},
 
 	// Returns 'P' for player won, 'O' for opponent won, and 'N' for no winner
@@ -285,4 +292,13 @@ var gameCore = {
 	dec2bin: function(dec) {
     	return dec.toString(2);
 	},
+};
+
+aiWorker.onmessage = function(e) {
+	console.log('Message received from worker');
+	
+	gameCore.p1Pos ^= (convert.intToBit(e.data.from)) ^ (convert.intToBit(e.data.to));
+	gameCore.moveHistory.push(new Move(e.data.from, e.data.to, "player"));
+	gameCore.player1Turn = false; //human turn
+	gameCore.board.moveMuonTweenFoci(e.data.from, e.data.to);
 };
