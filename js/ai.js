@@ -92,7 +92,7 @@ var updateBoardp1 = function(start, end){
 	printData.showBitBoards(p1_Position,p2_Position);
 }
 
-var makeMoveAgainstAI = function(start, end){
+var makeMoveAgainstAI = function(start, end, callback){
 	var moveStart = convert.inputToBit(start);
 	var moveEnd = convert.inputToBit(end);
 	var depth = 9;
@@ -116,9 +116,9 @@ var makeMoveAgainstAI = function(start, end){
  		var s = convert.bitToInt(AI.moveList[bestIndex].start)
  		var e = convert.bitToInt(AI.moveList[bestIndex].end)
  		updateBoardp1(AI.moveList[bestIndex].start, AI.moveList[bestIndex].end);
- 		return { start: s, end: e };
- 	
-} 	else{
+ 		callback(s,e);
+ 	} 	
+ 	else{
  		console.log("invalid Move");
  		return -1;
  	}

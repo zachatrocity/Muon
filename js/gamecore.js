@@ -242,15 +242,15 @@ var gameCore = {
 				// Start a timer so the AI move is not immediate
 				//var timer = Date.now();
 				// Retrieve AI move
-				debugger;
-				var aiMove = makeMoveAgainstAI(inputFrom, inputTo);
-				//timer = Date.now() - timer;
-				//this.p2Pos = (this.p2Pos ^ aiMove[0]) | aiMove[1];
-				//moveHistory.push(new Move(aiMove[0], aiMove[1], "opponent"));
-				//console.log("Opponent moved from " + aiMove[0] + " to " + aiMove[1]);
-				gameCore.board.moveMuonTweenFoci(aiMove.start, aiMove.end);
-				display.displayBoard(this.p1Pos, this.p2Pos);
-				this.player1Turn = true;
+				makeMoveAgainstAI(inputFrom, inputTo, function(s,e){
+					//timer = Date.now() - timer;
+					//this.p2Pos = (this.p2Pos ^ aiMove[0]) | aiMove[1];
+					//moveHistory.push(new Move(aiMove[0], aiMove[1], "opponent"));
+					//console.log("Opponent moved from " + aiMove[0] + " to " + aiMove[1]);
+					gameCore.board.moveMuonTweenFoci(s, e);
+					display.displayBoard(this.p1Pos, this.p2Pos);
+					this.player1Turn = true;
+				});
 			}
 		}
 		else {
