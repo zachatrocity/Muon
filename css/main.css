@@ -31,8 +31,8 @@ https://coolors.co/app/404040-f7f0f0-5490cc-5fad41-067bc2
   margin: 15px 30px;
   padding: 25px 60px;
   min-width: 150px;
-  background: #333;
-  color: #fff;
+  background: #067BC2;
+  color: #000;
   border-radius: 4px;
   box-shadow: 0 4px 2px 2px #111;
   border: none;
@@ -47,10 +47,10 @@ https://coolors.co/app/404040-f7f0f0-5490cc-5fad41-067bc2
 }
 
 .button:hover {
-  background: #2b2b2b;
+  background: #0569AD;
 }
 .button:active {
-  background: #2b2b2b;
+  background: #0569AD;
   box-shadow: 0 0px #111;
   top: 4px;
 }
@@ -149,8 +149,8 @@ h1.view-heading{
 	display: inline-block;
 	padding: 10px 15px;
 	min-width: 50px;
-	background: #333;
-	color: #fff;
+	background: #067BC2;
+	color: #000;
 	border-radius: 4px;
 	box-shadow: 0 4px 2px 2px #111;
 	border: none;
@@ -163,17 +163,17 @@ h1.view-heading{
 }
 
 .modal-btn:hover {
-  background: #2b2b2b;
+  background: #0569AD;
 }
 
 .modal-btn:active {
-  background: #2b2b2b;
+  background: #0569AD;
   box-shadow: 0 0px #111;
   top: 4px;
 }
 
 .modal-btn:disabled {
-	background: #2b2b2b;
+	background: #0569AD;
 	box-shadow: 0 0px #111;
 	top: 4px;
 }
@@ -231,7 +231,6 @@ h1.view-heading{
 
 .menu-container{
 	height: 100%;
-	background-color: 
     padding: 0;
     margin: 0;
     display: flex;
@@ -241,6 +240,8 @@ h1.view-heading{
 
 .main-menu{
 	z-index: 100;
+	background-color: rgba(6, 123, 196, 0.7);
+	box-shadow: 0 4px 2px 2px #5FAD41;
 	margin-top: 25%;
 }
 
@@ -344,13 +345,7 @@ h1.view-heading{
 	transition: all 0.2s;
 	width: 150px;
 	top: 4px;
-	background: #2b2b2b;
 	box-shadow: 0 0px #111;
-}
-
-.inGameMenu ul li: hover {
-	background: #555;
-	color: #FFF;
 }
 
 .inGameMenu ul li ul {
@@ -372,16 +367,14 @@ h1.view-heading{
 }
 
 .inGameMenu ul li ul li{
-	background: #555;
+	background: #5490CC;
 	display: block;
 	color: black;
-	text-shadow: 1px 1px 1px #BDBDBD;
+	text-shadow: none;
 }
 
 .inGameMenu ul li ul li:hover {
-	background: #666;
-	color: #BDBDBD;
-	text-shadow: 2px 2px 2px #000;
+	background: #067BC2;
 }
 
 .inGameMenu ul li:hover ul{
