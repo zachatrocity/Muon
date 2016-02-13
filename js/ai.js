@@ -92,7 +92,7 @@ var updateBoardp1 = function(start, end){
 var makeMoveAgainstAI = function(start, end){
 	var moveStart = convert.inputToBit(start);
 	var moveEnd = convert.inputToBit(end);
-	var depth = 1;
+	var depth = 3;
 	AI.maxDepth = depth;
 
  	if( evaluation.validateMove(moveStart, moveEnd, p1_Position^p2_Position^BITMASK) ){
