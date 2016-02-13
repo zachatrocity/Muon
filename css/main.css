@@ -45,6 +45,7 @@ https://coolors.co/app/404040-f7f0f0-5490cc-5fad41-067bc2
   -webkit-transition: none;
   transition: none;
 }
+
 .button:hover {
   background: #2b2b2b;
 }
@@ -126,7 +127,7 @@ h1.view-heading{
     opacity:1;
 	visibility: visible;
 	width: 400px;
-	height: 150px;
+	min-height: 150px;
 	color: rgba(0, 0, 0, 1);
 }
 
@@ -138,11 +139,10 @@ h1.view-heading{
 	position: relative;
 	visibility: hidden;
 	opacity: 0;
-	top: 40%;
 	cursor: pointer;
 	margin: 10px;
-	margin-bottom: 0px;
-	margin-top: 0px;
+	margin-bottom: 20px;
+	margin-top: 20px;
 	-webkit-transition: visibility 0s 0.5s, opacity 0s;
 	transition: visibility 0s 0.5s, opacity 0s;
 	-webkit-transition-timing-function: ease-out;
@@ -323,30 +323,29 @@ h1.view-heading{
 	bottom: 20px;
 	left: 20px;
 	margin: 0;
-	width: 150px;
 }
 
 .inGameMenu ul{
-	text-align: left;
+	text-align: center;
 	display: inline;
 	margin: 0;
-	padding: 15px 4px 17px 0px;
-	-webkit-box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
-	-moz-box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
-	box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
 }
 
 .inGameMenu ul li{
 	display: inline-block;
 	margin-right: -4px;
+	width: 150px;
 	position: relative;
 	padding: 15px 20px;
 	cursor: pointer;
-	text-shadow: 1px 1px 1px #BDBDBD;
 	-webkit-transition: all 0.2s;
 	-moz-transition: all 0.2s;
 	-o-transition: all 0.2s;
 	transition: all 0.2s;
+	width: 150px;
+	top: 4px;
+	background: #2b2b2b;
+	box-shadow: 0 0px #111;
 }
 
 .inGameMenu ul li: hover {
