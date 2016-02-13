@@ -41,10 +41,11 @@ var gameCore = {
                 {x: 5, y: 400}, {x: 300, y: 400},   //
                          {x: 200, y: 500},            // Quad C
                 {x: 5, y: 675}, {x: 300, y: 675}],   //
-        boardSVG: '',
-        d3force: '',
-        activeNodes: '',
-        activeLinks: '',
+        boardSVG: null,
+        d3force: null,
+        activeNodes: null,
+        activeLinks: null,
+        selectedMuon: null,
         tick: function(e){
         	var k = .1 * e.alpha;
 
@@ -79,6 +80,21 @@ var gameCore = {
 			// This loops through all the nodes and find the index of atleast one node within
 			// 30 to point
 
+			if(gameCore.board.selectedMuon != null){
+				//see if the click was near a foci
+				gameCore.board.foci.forEach(function(target, index) {
+					var x = target.x - point[0],
+					    y = target.y - point[1],
+					    distance = Math.sqrt(x * x + y * y);
+					//check if the node (target) is within the maxdist of the click    
+					if (distance < maxdist) {
+						//click was close to a foci
+						//move gameCore.board.selectedMuon toward this target (foci)
+						gameCore.AttemptMove(gameCore.board.selectedMuon,index);
+					} 
+				});
+			}
+
 			var closestNode; //used to store the node closest to the click
 			var closestPoint = Infinity; //used to compare the distance between closestNode and other nodes
 			//loop though all of the nodes
@@ -98,6 +114,7 @@ var gameCore = {
 					//unselect all other nodes
 					target.selected = false;
 					d3.selectAll(".id" + target.index).transition().duration(450).attr("r", 10);
+					gameCore.board.selectedMuon = null;
 				}
 			});
 
@@ -109,6 +126,8 @@ var gameCore = {
 					.transition()
 					.duration(450)
 					.attr("r", 15);
+
+				gameCore.board.selectedMuon = closestNode.foci;
 			}
 		},
         refresh: function(){
@@ -223,7 +242,6 @@ var gameCore = {
 				var timer = Date.now();
 				// Retrieve AI move
 				var aiMove = makeMoveAgainstAI(inputFrom, inputTo);
-				debugger;
 				timer = Date.now() - timer;
 				//this.p2Pos = (this.p2Pos ^ aiMove[0]) | aiMove[1];
 				//moveHistory.push(new Move(aiMove[0], aiMove[1], "opponent"));

@@ -6,11 +6,6 @@ var packjson = require('./package.json');
 var win = gui.Window.get();
 win.showDevTools();
 
-// Listen to the minimize event
-win.on('minimize', function() {
-  console.log('Window is minimized');
-});
-
 var easter_egg = new Konami(function() { alert('Konami code!')});
 
 var muonApp = angular.module('muonApp', ["ui.router"])

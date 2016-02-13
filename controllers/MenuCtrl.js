@@ -5,6 +5,6 @@ muonApp.controller('MenuCtrl', function ($scope, $stateParams) {
 	}
 	
 	$scope.mouse_click = function() {
-		Audio.menuSelect.play();
+		//Audio.menuSelect.play();
 	}
 })

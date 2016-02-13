@@ -4,9 +4,9 @@ var _menuOver = new Howl({
   urls: ['audio/menuOver.wav']
 });
 
-var _menuSelect = new Howl({
-  urls: ['audio/menuSelect.wav']
-});
+// var _menuSelect = new Howl({
+//   urls: ['audio/menuSelect.wav']
+// });
 
 var _move = new Howl({
   urls: ['audio/move.wav']
@@ -32,7 +32,7 @@ var _background = new Howl({
 // The audio object that will contain arrays of songs to play for various actions
 var Audio = {
     menuOver: _menuOver,
-    menuSelect: _menuSelect,
+    //menuSelect: _menuSelect,
     move: _move,
     winner: _winner,
     loser: _loser,
