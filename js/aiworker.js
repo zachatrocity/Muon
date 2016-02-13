@@ -436,7 +436,9 @@ var AI = {
 						score = -AI.pvs(-beta, -alpha, depth-1, b1, b2, pNum);
 				}
 				if(score >= beta){
-					//AI.moveList[(AI.moveList).length] = {start: piece, end: nextMove, value:score};
+					if(pNum == 1 && depth == AI.maxDepth){
+						AI.moveList[(AI.moveList).length] = {start: piece, end: nextMove, value:score};
+					}
 					return beta;
 				}
 				if(score >= alpha){
