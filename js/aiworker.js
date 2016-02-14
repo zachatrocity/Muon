@@ -1,4 +1,12 @@
-//Testing
+var p1_Position = 0b00000000001111100000; //Always the AI
+var p2_Position = 0b00000111110000000000; //Always the other player
+
+// var p1_Position = 0b01000001001000010000; //Always the AI
+// var p2_Position = 0b10000010100010000000; //Always the other player
+
+var p1_flag = true;
+var p2_flag = true;
+var BITMASK = 0xFFFFF;
 
 var saveData = {
 	'game': [],
@@ -32,33 +40,18 @@ var printData = {
 	}
 }
 
-// gameCore.ai.performMoveHvsAI(2,3,0,3)
-
 var display = {
-	removeFlag:function(player){
-		if(player == 1)
-			playerOneFlag = false;
-		else
-			playerTwoFlag = false;
-	},
-
 	//The computer is always player1 (p1)
 	color:function(quad, node, p1, p2){
 		if(1<<(quad*5 + node)&p1)
-			return "C"	// for Human
+			return "C"	// for Computer
 		else if(1<<(quad*5 + node)&p2)
-			return "H"	// for Computer
+			return "H"	// for Human
 		else 
 			return "#"
 	},
-
-	//If the AI is playing make it p1
 	displayBoard:function(p1, p2){
-		if(!evaluation.isHomeQuadEmpty(1,p1))
-			this.removeFlag(1)
-		if(!evaluation.isHomeQuadEmpty(2,p2))
-			this.removeFlag(2)
-		//console.log(playerOneFlag ? "LOCKED":"")
+		console.log(p1_flag ? "LOCKED":"")
 		console.log(""+ this.color(1,0,p1, p2) + "---------"+ this.color(1,1,p1, p2) +"---"+ this.color(0,1,p1, p2) +"---------"+ this.color(0,0,p1, p2) +"");
 		console.log("|  \\   /  |   |  \\   /  |");
 		console.log("|    "+ this.color(1,2,p1, p2) +"    |   |    "+ this.color(0,2,p1, p2) +"    |");
@@ -70,7 +63,7 @@ var display = {
 		console.log("|    "+ this.color(3,2,p1, p2) +"    |   |    "+ this.color(2,2,p1, p2) +"    |");
 		console.log("|  /   \\  |   |  /   \\  |");
 		console.log(""+ this.color(3,0,p1, p2) +"---------"+ this.color(3,1,p1, p2) +"---"+ this.color(2,1,p1, p2) +"---------"+ this.color(2,0,p1, p2) +"");
-		//console.log("                   " + (playerTwoFlag ? "LOCKED":""))
+		console.log("                   " + (p2_flag ? "LOCKED":""))
 	},
 
 	printGame:function(){
@@ -281,7 +274,6 @@ var evaluation = {
 		[0b00001011100000100001,0b00010101010000000000,0b00000110110000000000,0b00000101010000001000,0b10000011101000010000], //quad 2 node 0,1,2,3,4
 		[0b01110000010000100001,0b10101000100000000000,0b11011000000000000000,0b10101000000100000000,0b01110100001000010000]  //quad 3 node 0,1,2,3,4
 	],
-
 	//Normal connections
 	'nodeConnections':[
 		[0b00000000000000001110,0b00000000000001010101,0b00000000000000011011,0b00000010000000010101,0b10000100001000001110], //quad 0 node 0,1,2,3,4
@@ -307,21 +299,28 @@ var evaluation = {
 	},
 
 	//isHomeQuadEmpty()
-		//return 0 if the players home quadrant is empty.
-		//player is a 1 or 2 that represent the player number.
-		//position is the current position that needs to be checked.
-	isHomeQuadEmpty:function(player, position){
-		if( player == 1 && position&0b00000000001111100000 == 0)
+	//return true if the players home quadrant is empty.
+	//player is a 1(AI) or 2(HUMAN) that represent the player number.
+	isHomeQuadEmpty:function(bitBoard, player){
+		if(player == 2 && (bitBoard&0b111110000000000) == 0){
 			return true;
-		if( player == 2 && position&0b00000111110000000000 == 0)
+		}
+		if(player == 1 && (bitBoard&0b1111100000) == 0){
 			return true;
+		}
 		return false;
 	},
 
 	stateValue:function(bitBoard, bitBoard2, player){
 		var total = 0;
+		var currentBitBoard = (player == 1 ? bitBoard : bitBoard2);
 		total += this.stolenRealEstate(bitBoard, bitBoard2);
+		total += this.clearingFlag(currentBitBoard, player);
 		return total;
+	},
+
+	clearingFlag:function(bitBoard, player){
+		return ( this.isHomeQuadEmpty(bitBoard, player) ? 50 : 0);
 	},
 
 	stolenRealEstate:function(bitBoard, bitBoard2){
@@ -374,31 +373,6 @@ var timer = {
 	},
 }
 
-var p2_Position = 0b00000111110000000000 //Always the other player
-var p1_Position = 0b00000000001111100000 //Always the AI
-
-//If The AI makes the wrong move here the human will win
-//test move makeMoveAgainstAI("b4","b1")
-// var p2_Position = 0b00000011100000010001
-// var p1_Position = 0b00000100000110101000
-
-//The AI jumped on one of player 2's pieces
-//test the move makeMoveAgainstAI("d3","d1")
-// var p2_Position = 0b00010011000000000011
-// var p1_Position = 0b00000000100111001000
-
-//The next move makeMoveAgainstAI("d3","d4")
-//caused the AI to make invalid moves
-// var p1_Position = 0b00000100001000111000
-// var p2_Position = 0b10000011000000000011
-
-// The AI is about to make a win move
-//var p2_Position = 0b00000111110000000000 //Always the other player
-//var p1_Position = 0b10001000000110000001 //Always the AI
-
-var BITMASK = 0xFFFFF;
-display.displayBoard(p1_Position,p2_Position);
-
 var AI = {
 	'bestScore':-999999,
 	'moveList':[],
@@ -406,7 +380,7 @@ var AI = {
 
 	pvs:function(alpha, beta, depth, p1_board, p2_board, pNum){
 		var p = (pNum == 1 ? p1_board : p2_board);
-		if(evaluation.Win(p, pNum, true, true)){
+		if(evaluation.Win(p, pNum, p1_flag, p2_flag)){
 			return -1000; // because of negation the caller gets back 1000
 		}
 		if(depth == 0)
@@ -426,8 +400,8 @@ var AI = {
 			for(var nextMove = bitManip.getLSB(moves); moves; nextMove = bitManip.getLSB(moves)){
 
 				//b1 and b2 are the temp values for each move made on a board(b)
-				var b1 = (pNum == 1 ? p1_board^piece^nextMove : p1_board); 
-				var b2 = (pNum == 2 ? p2_board^piece^nextMove : p2_board); 
+				var b1 = (pNum == 1 ? p1_board^piece^nextMove : p1_board);
+				var b2 = (pNum == 2 ? p2_board^piece^nextMove : p2_board);
 				if(bSearchPv)
 					score = -AI.pvs(-beta, -alpha, depth-1, b1, b2, pNum);
 				else{
@@ -436,9 +410,8 @@ var AI = {
 						score = -AI.pvs(-beta, -alpha, depth-1, b1, b2, pNum);
 				}
 				if(score >= beta){
-					if(pNum == 1 && depth == AI.maxDepth){
+					if(pNum == 1 && depth == AI.maxDepth)
 						AI.moveList[(AI.moveList).length] = {start: piece, end: nextMove, value:score};
-					}
 					return beta;
 				}
 				if(score >= alpha){
@@ -458,11 +431,21 @@ var AI = {
 
 var updateBoardp2 = function(start, end){
 	p2_Position ^= start^end;
+
+	if(evaluation.isHomeQuadEmpty(p2_Position, 2)){
+		p2_flag = false;
+	}
+
 	saveData.saveMove(convert.bitToStandard(start),convert.bitToStandard(end), 2);
 }
 
 var updateBoardp1 = function(start, end){
 	p1_Position ^= start^end;
+
+	if(evaluation.isHomeQuadEmpty(p1_Position, 1)){
+		p1_flag = false;
+	}
+
 	saveData.saveMove(convert.bitToStandard(start),convert.bitToStandard(end), 1);
 	AI.bestScore = -999999;
 	AI.moveList = [];
@@ -470,36 +453,30 @@ var updateBoardp1 = function(start, end){
 	printData.showBitBoards(p1_Position,p2_Position);
 }
 
+display.displayBoard(p1_Position,p2_Position);
 var makeMoveAgainstAI = function(start, end){
 	var moveStart = convert.inputToBit(start);
 	var moveEnd = convert.inputToBit(end);
-	var depth = 9;
+	var depth = 7;
+
 	AI.maxDepth = depth;
- 	if( evaluation.validateMove(moveStart, moveEnd, p1_Position^p2_Position^BITMASK) ){
- 		updateBoardp2(moveStart, moveEnd); // Human move
- 		AI.pvs(-1000, 1000, depth, p1_Position, p2_Position, 2);
- 		var bestIndex;
- 		var bestScore = -Infinity;
- 		//console.log(AI.moveList)
- 		for (var i = 0; i < (AI.moveList).length; i++) {
- 			//console.log("S:" + AI.moveList[i].start + " \tE:" + AI.moveList[i].end + " \tV:" + AI.moveList[i].value)
- 			if(AI.moveList[i].value > bestScore){
- 				bestScore = AI.moveList[i].value;
- 				bestIndex = i;
- 			}
- 		}
+	updateBoardp2(moveStart, moveEnd); // Human move
+	AI.pvs(-1000, 1000, depth, p1_Position, p2_Position, 2);
 
- 		var s = convert.bitToInt(AI.moveList[bestIndex].start)
- 		var e = convert.bitToInt(AI.moveList[bestIndex].end)
- 		updateBoardp1(AI.moveList[bestIndex].start, AI.moveList[bestIndex].end);
- 		return({'from': s, 'to': e});
- 	} 	
- 	else{
- 		console.log("invalid Move");
- 		return -1;
- 	}
+	var indexOfBestMove;
+	var bestScore = -Infinity;
+	for (var i = 0; i < AI.moveList.length; i++) {
+		if(AI.moveList[i].value > bestScore){
+			bestScore = AI.moveList[i].value;
+			indexOfBestMove = i;
+		}
+	}
+
+	var s = convert.bitToInt(AI.moveList[indexOfBestMove].start)
+	var e = convert.bitToInt(AI.moveList[indexOfBestMove].end)
+	updateBoardp1(AI.moveList[indexOfBestMove].start, AI.moveList[indexOfBestMove].end);
+	return({'from': s, 'to': e});
 }
-
 
 onmessage = function(e) {
 	console.log('Message received from main script');
