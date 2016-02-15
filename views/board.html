@@ -13,26 +13,41 @@
 	<ul>
 		<li class="button">Menu
 			<ul>
-				<a ng-click="showModal = true"><li>Main Menu</li></a>
-				<a ui-sref="#"><li>New Game</li></a>
+				<a ng-click="showQuitModal = true"><li>Main Menu</li></a>
+				<a ng-click="showNewGameModal = true"><li>New Game</li></a>
 				<a ui-sref="#"><li>Hint</li></a>
 			</ul>
 		</li>
 	</ul>
 </div>
     
-    <div class="modal" ng-init="showModal = false;"
-		ng-class="{'dim-lights': showModal}">
-		<div class="modal-dialog" ng-init="showModal = false;"
-			ng-class="{'show-modal': showModal}">
+    <div class="modal" ng-init="showQuitModal = false;"
+		ng-class="{'dim-lights': showQuitModal}">
+		<div class="modal-dialog" ng-init="showQuitModal = false;"
+			ng-class="{'show-modal': showQuitModal}">
 			Are you sure you wish to return to the Main Menu? <br />
 			
-			<input type="button" class="modal-btn" ng-click="showModal = false;" 
+			<input type="button" class="modal-btn" ng-click="showQuitModal = false;" 
 				value="Cancel"
-				ng-init="showModal = false;" ng-class="{'show-modal-btn': showModal}" />
+				ng-init="showQuitModal = false;" ng-class="{'show-modal-btn': showQuitModal}" />
 			
 			<input type="button" class="modal-btn" ui-sref="menu" value="Quit" 
-				ng-init="showModal = false;" ng-class="{'show-modal-btn': showModal}" />
+				ng-init="showQuitModal = false;" ng-class="{'show-modal-btn': showQuitModal}" />
+		</div>
+    </div>
+
+    <div class="modal" ng-init="showNewGameModal = false;"
+		ng-class="{'dim-lights': showNewGameModal}">
+		<div class="modal-dialog" ng-init="showNewGameModal = false;"
+			ng-class="{'show-modal': showNewGameModal}">
+			Are you sure you want to start a new game? <br />
+			
+			<input type="button" class="modal-btn" ng-click="showNewGameModal = false;" 
+				value="Cancel"
+				ng-init="showNewGameModal = false;" ng-class="{'show-modal-btn': showNewGameModal}" />
+			
+			<input type="button" class="modal-btn" ng-click="startNewGame()" value="New Game" 
+				ng-init="showNewGameModal = false;" ng-class="{'show-modal-btn': showNewGameModal}" />
 		</div>
     </div>
 </body>
