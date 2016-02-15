@@ -479,6 +479,10 @@ var makeMoveAgainstAI = function(start, end){
 }
 
 onmessage = function(e) {
+	if(e.data.restart === true){
+		p1_Position = 0b00000000001111100000;
+		p2_Position = 0b00000111110000000000; 
+	}
 	console.log('Message received from main script');
 	var workerResult = makeMoveAgainstAI(e.data.from, e.data.to);
 	console.log('Posting message back to main script');
