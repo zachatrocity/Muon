@@ -175,9 +175,11 @@ var gameCore = {
 			gameCore.board.addMuons();
 			gameCore.board.addAntiMuons();
 		},
-		restartBoard: function(){
-			gameCore.board.d3force.stop();
-			d3.select(".d3gamepeices").remove();
+		clearBoard: function(){
+			if(gameCore.board.d3force != null){
+				gameCore.board.d3force.stop();
+				d3.select(".d3gamepeices").remove();
+			}
 
 			gameCore.board.nodes = [];
 			gameCore.board.links = [];
@@ -187,7 +189,13 @@ var gameCore = {
 			gameCore.board.activeLinks = null;
 			gameCore.board.selectedMuon = null;
 
-			gameCore.board.createBoard();
+			gameCore.p1Pos = 0b00000000001111100000; 	//Always the AI
+			// The initial position of player 2 (the opponent)
+			gameCore.p2Pos = 0b00000111110000000000;
+			gameCore.playerOneFlag = true;
+			gameCore.playerTwoFlag = true;
+			gameCore.player1Turn = true;
+			gameCore.moveHistory = [];
 		},
 		addNodeAtFoci: function(f,anti){
 		    var i = f * 3
@@ -319,6 +327,8 @@ var gameCore = {
 	},
 
 	RestartGame: function() {
+		gameCore.board.clearBoard();
+	 	gameCore.board.createBoard();	
 		aiWorker.postMessage(
 		{ 
 			'restart': true

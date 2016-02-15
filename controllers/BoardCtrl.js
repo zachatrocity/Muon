@@ -1,15 +1,22 @@
-muonApp.controller('BoardCtrl', function ($scope, $stateParams) {
+muonApp.controller('BoardCtrl', function ($scope, $stateParams, $state) {
 
 	$scope.startNewGame = function(){
 		$scope.showNewGameModal = false;
-		gameCore.board.restartBoard();
 		gameCore.RestartGame();
 	}	                
 	
-	$scope.remove_board = function(){
-		gameCore.board.d3force.stop();
-		d3.select(".d3gamepeices").remove();
+	$scope.quitToMenu = function(){
+		$state.go('menu', {});
 	}
 
-	gameCore.board.createBoard();
+	// if(gameCore.board.d3force != null){
+	// 	gameCore.board.clearBoard();
+	// 	gameCore.RestartGame();
+	// 	gameCore.board.createBoard();		
+	// } else {
+	// 	gameCore.board.createBoard();
+	// }
+
+	gameCore.RestartGame();
+	
 });

@@ -31,7 +31,7 @@
 				value="Cancel"
 				ng-init="showQuitModal = false;" ng-class="{'show-modal-btn': showQuitModal}" />
 			
-			<input type="button" class="modal-btn" ui-sref="menu" value="Quit" 
+			<input type="button" class="modal-btn" ng-click="quitToMenu()" value="Quit" 
 				ng-init="showQuitModal = false;" ng-class="{'show-modal-btn': showQuitModal}" />
 		</div>
     </div>
