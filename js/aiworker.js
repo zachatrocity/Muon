@@ -17,7 +17,7 @@ var saveData = {
 }
 
 var printData = {
-
+	
 	printMoves:function(){
 		for (var i = 0; i < saveData.game.length; i++) {
 			console.log(saveData.game[i]);
@@ -483,6 +483,8 @@ onmessage = function(e) {
 		console.log("Restarting AI Brain");
 		p1_Position = 0b00000000001111100000;
 		p2_Position = 0b00000111110000000000; 
+		p1_flag = true;
+		p2_flag = true;
 		display.displayBoard(p1_Position,p2_Position);
 	} else {
 		console.log('Message received from main script');
