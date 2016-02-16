@@ -32,7 +32,7 @@ var NetworkGUI = {
     if(roomListElement != null){
       roomListElement.innerHTML = '';
         _.each(rooms, function(room) {
-          roomListElement.innerHTML += '<li>' + unescape(room.name) + ' (' + room.users.length + '/' + room.size + ') <a href="#" ng-click"joinRoom(' + room.id + ')">join</a></li>';
+          roomListElement.innerHTML += '<li>' + unescape(room.name) + ' (' + room.users.length + '/' + room.size + ') <a href="#/board/' + room.id + '/0">join</a></li>';
         });
       roomListElement.innerHTML += '</ul>';
     }
@@ -97,12 +97,61 @@ cloak.configure({
     
     'joinRoomResponse': function(result) {
       if (result.success) {
-        window.location.hash = "#/board/" + result.roomId + "/0";
+        console.log("room joined");
+
         // game.room.id = result.id;
         // game.begin();
         // game.refreshWaiting();
       }
     }
 
+  },
+  serverEvents: {
+    'connect': function() {
+      console.log('connect');
+    },
+
+    'disconnect': function() {
+      console.log('disconnect');
+    },
+
+    'lobbyMemberJoined': function(user) {
+      console.log('lobby member joined', user);
+      cloak.message('listUsers');
+    },
+
+    'lobbyMemberLeft': function(user) {
+      console.log('lobby member left', user);
+      cloak.message('listUsers');
+    },
+
+    'roomCreated': function(rooms) {
+      console.log('created a room', rooms);
+      cloak.message('listUsers');
+      cloak.message('listRooms');
+    },
+
+    'roomDeleted': function(rooms) {
+      console.log('deleted a room', rooms);
+      cloak.message('listUsers');
+      cloak.message('listRooms');
+    },
+
+    'roomMemberJoined': function(user) {
+      console.log('room member joined', user);
+    },
+
+    'roomMemberLeft': function(user) {
+      console.log('room member left', user);
+      // The other player dropped, so we need to stop the game and show return to lobby prompt
+      // game.showGameOver('The other player disconnected!');
+      // cloak.message('leaveRoom');
+      console.log('Removing you from the room because the other player disconnected.');
+    },
+
+    'begin': function() {
+      console.log('begin');
+      cloak.message('listRooms');
+    }
   }
 });

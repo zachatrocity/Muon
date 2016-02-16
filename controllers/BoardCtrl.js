@@ -9,10 +9,13 @@ muonApp.controller('BoardCtrl', function ($scope, $stateParams, $state) {
 		$state.go('menu', {});
 	}
 
-	if($stateParams.waiting){
+	if($stateParams.waiting == 1){
 		//angular.element(boardHeaderText)[0].innerHTML = "Waiting for opponent";
 		document.getElementById('boardHeaderText').innerHTML = "Waiting for opponent";
 	} else {
+		debugger;
+		console.log("attempting to join room");
+		cloak.message('joinRoom', $stateParams.roomid);
 		//no longer waiting, broadcast that player is here
 		//start game
 	}

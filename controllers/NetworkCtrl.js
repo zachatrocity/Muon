@@ -21,6 +21,7 @@ muonApp.controller('NetworkCtrl', function ($scope, $stateParams) {
 	}
 
 	$scope.joinRoom = function(id){
+		console.log("attempting to join room");
 		cloak.message('joinRoom', id);
 	}
 });
