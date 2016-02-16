@@ -103,6 +103,16 @@ cloak.configure({
         // game.begin();
         // game.refreshWaiting();
       }
+    },
+
+    'refreshRoomResponse': function(members){
+      if (!members) {
+        return;
+      }
+
+      if (members.length < 2) {
+        BoardGUI.setBoardHeaderElement("Your turn");
+      }
     }
 
   },
