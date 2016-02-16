@@ -19,4 +19,9 @@ muonApp.controller('NetworkCtrl', function ($scope, $stateParams) {
 	      name: escape($stateParams.username + "'s Game")
 	    });
 	}
+
+	$scope.joinRoom = function(id){
+		console.log("attempting to join room");
+		cloak.message('joinRoom', id);
+	}
 });
