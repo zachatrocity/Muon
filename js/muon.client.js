@@ -60,6 +60,10 @@ cloak.configure({
       }
     },
 
+    'userMessage': function(msg) {
+      console.log('The server says: ' + msg);
+    },
+
     'refreshAll':function(){
       cloak.message('listUsers');
       cloak.message('listRooms');
@@ -102,6 +106,8 @@ cloak.configure({
         // game.room.id = result.id;
         // game.begin();
         // game.refreshWaiting();
+      } else {
+        console.log("room is full");
       }
     },
 
