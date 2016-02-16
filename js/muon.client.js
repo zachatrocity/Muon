@@ -111,7 +111,7 @@ cloak.configure({
       }
 
       if (members.length < 2) {
-        BoardGUI.setBoardHeaderElement("Your turn");
+        BoardGUI.setBoardHeaderElement("Game Started");
       }
     }
 
@@ -149,6 +149,7 @@ cloak.configure({
 
     'roomMemberJoined': function(user) {
       console.log('room member joined', user);
+      cloak.message('refreshRoom');
     },
 
     'roomMemberLeft': function(user) {
