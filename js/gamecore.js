@@ -210,18 +210,18 @@ var gameCore = {
 		    gameCore.board.refresh();
 		},
 		addMuons: function(){
-			gameCore.board.addNodeAtFoci(0,0);
-			gameCore.board.addNodeAtFoci(1,0);
-			gameCore.board.addNodeAtFoci(2,0);
-			gameCore.board.addNodeAtFoci(3,0);
-			gameCore.board.addNodeAtFoci(4,0);
+			gameCore.board.addNodeAtFoci(0,1);
+			gameCore.board.addNodeAtFoci(1,1);
+			gameCore.board.addNodeAtFoci(2,1);
+			gameCore.board.addNodeAtFoci(3,1);
+			gameCore.board.addNodeAtFoci(4,1);
 		},
 		addAntiMuons: function(){
-			gameCore.board.addNodeAtFoci(5,1);
-			gameCore.board.addNodeAtFoci(6,1);
-			gameCore.board.addNodeAtFoci(7,1);
-			gameCore.board.addNodeAtFoci(8,1);
-			gameCore.board.addNodeAtFoci(9,1);
+			gameCore.board.addNodeAtFoci(5,0);
+			gameCore.board.addNodeAtFoci(6,0);
+			gameCore.board.addNodeAtFoci(7,0);
+			gameCore.board.addNodeAtFoci(8,0);
+			gameCore.board.addNodeAtFoci(9,0);
 		},
 		moveMuonTweenFoci: function(f1,f2){
 		  gameCore.board.nodes.forEach(function(o, i) {
@@ -291,15 +291,6 @@ var gameCore = {
 						'from': inputFrom,
 						'to': inputTo
 					});
-				// makeMoveAgainstAI(inputFrom, inputTo, function(s,e){
-				// 	//timer = Date.now() - timer;
-				// 	//gameCore.p2Pos = (gameCore.p2Pos ^ aiMove[0]) | aiMove[1];
-				// 	//moveHistory.push(new Move(aiMove[0], aiMove[1], "opponent"));
-				// 	//console.log("Opponent moved from " + aiMove[0] + " to " + aiMove[1]);
-				// 	gameCore.board.moveMuonTweenFoci(s, e);
-				// 	display.displayBoard(gameCore.p1Pos, gameCore.p2Pos);
-				// 	gameCore.player1Turn = true;
-				// });
 			}
 		}
 		else {
@@ -326,13 +317,18 @@ var gameCore = {
 		return over;
 	},
 
-	RestartGame: function() {
+	RestartGame: function(isNetworkGame) {
 		gameCore.board.clearBoard();
 	 	gameCore.board.createBoard();	
-		aiWorker.postMessage(
-		{ 
-			'restart': true
-		});
+
+	 	if(isNetworkGame){
+
+	 	} else {
+	 		aiWorker.postMessage(
+			{ 
+				'restart': true
+			});
+	 	}
 	},
 
 	// Sets the game board to not be able to be interfered wiith by the player
