@@ -9,13 +9,13 @@ muonApp.controller('BoardCtrl', function ($scope, $stateParams, $state) {
 		$state.go('menu', {});
 	}
 
-	// if(gameCore.board.d3force != null){
-	// 	gameCore.board.clearBoard();
-	// 	gameCore.RestartGame();
-	// 	gameCore.board.createBoard();		
-	// } else {
-	// 	gameCore.board.createBoard();
-	// }
+	if($stateParams.waiting){
+		//angular.element(boardHeaderText)[0].innerHTML = "Waiting for opponent";
+		document.getElementById('boardHeaderText').innerHTML = "Waiting for opponent";
+	} else {
+		//no longer waiting, broadcast that player is here
+		//start game
+	}
 
 	gameCore.RestartGame();
 	

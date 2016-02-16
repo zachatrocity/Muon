@@ -9,8 +9,7 @@ win.showDevTools();
 
 var easter_egg = new Konami(function() { alert('Konami code!')});
 
-var muonApp = angular.module('muonApp', ["ui.router"]);
-
+var muonApp = angular.module('muonApp', ["ui.router"])
     muonApp.config(function($stateProvider, $urlRouterProvider){
       
       // For any unmatched url, send to /menu
@@ -55,7 +54,7 @@ var muonApp = angular.module('muonApp', ["ui.router"]);
         })
 
         .state('board', {
-            url: "/board",
+            url: "/board/:roomid/:waiting",
             templateUrl: "views/board.html",
             controller: "BoardCtrl"
         })

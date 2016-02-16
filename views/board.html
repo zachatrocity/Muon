@@ -1,7 +1,7 @@
 <!-- views/board.html -->
 
 <body>
-
+<h2 id="boardHeaderText">Your turn</h2>
 <div class="gameboard">
     <img src="./images/board.svg">
 </div>
@@ -28,7 +28,7 @@
 			Are you sure you wish to return to the Main Menu? <br />
 			
 			<input type="button" class="modal-btn" ng-click="showQuitModal = false;" 
-				value="Cancel"
+				value="Cancel" ng-focus="true"
 				ng-init="showQuitModal = false;" ng-class="{'show-modal-btn': showQuitModal}" />
 			
 			<input type="button" class="modal-btn" ng-click="quitToMenu()" value="Quit" 
