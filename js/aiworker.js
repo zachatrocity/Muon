@@ -374,21 +374,22 @@ var timer = {
 }
 
 var AI = {
-	'bestScore':-999999,
-	'moveList':[],
+	'currentMoveOptions':[],
+	'nextMoveOptions':[],
+	'bestMoveOptions':[],
 	'maxDepth':-1,
 
 	pvs:function(alpha, beta, depth, p1_board, p2_board, pNum){
 		var p = (pNum == 1 ? p1_board : p2_board);
-		if(evaluation.Win(p, pNum, p1_flag, p2_flag)){
-			return -1000; // because of negation the caller gets back 1000
-		}
+
+		//Check for a win condition. If the win is close to the top of the tree it's worth more.
+		if(evaluation.Win(p, pNum, p1_flag, p2_flag))
+			return -100 * (depth + 1); // because of negation the caller gets back 1000
 		if(depth == 0)
 			return -evaluation.stateValue(p1_board, p2_board, pNum);
 
 		pNum ^= 3; // Change the player number
 		var bSearchPv = true;
-		var score;
 
 		//Get and loop through all the players pieces.
 		var allPieces = pNum == 1 ? p1_board : p2_board;
@@ -403,23 +404,24 @@ var AI = {
 				var b1 = (pNum == 1 ? p1_board^piece^nextMove : p1_board);
 				var b2 = (pNum == 2 ? p2_board^piece^nextMove : p2_board);
 				if(bSearchPv)
-					score = -AI.pvs(-beta, -alpha, depth-1, b1, b2, pNum);
+					var score = -AI.pvs(-beta, -alpha, depth-1, b1, b2, pNum);
 				else{
-					score = -AI.pvs(-alpha-1, -alpha, depth-1, b1, b2, pNum);
+					var score = -AI.pvs(-alpha-1, -alpha, depth-1, b1, b2, pNum);
 					if(score > alpha)
 						score = -AI.pvs(-beta, -alpha, depth-1, b1, b2, pNum);
 				}
-				if(score >= beta){
-					if(pNum == 1 && depth == AI.maxDepth)
-						AI.moveList[(AI.moveList).length] = {start: piece, end: nextMove, value:score};
+
+				if(depth == AI.maxDepth)
+					AI.currentMoveOptions[(AI.currentMoveOptions).length] = {start: piece, end: nextMove, value:score};
+				else if(depth == AI.maxDepth - 2) // Setup bestfirst search move options.
+					AI.nextMoveOptions[p2_board^p1_board] = AI.insertMove({'start': piece, 'end': nextMove, 'score': score}, p2_board^p1_board);
+				if(score >= beta)
 					return beta;
-				}
 				if(score >= alpha){
 					alpha = score;
 					bSearchPv = false;
 				}
-				if(depth == AI.maxDepth)
-					AI.moveList[(AI.moveList).length] = {start: piece, end: nextMove, value:score};
+				
 
 				moves ^= nextMove; //nextMove has been checked, remove it from moves
 			}
@@ -427,54 +429,82 @@ var AI = {
 		}
 		return alpha;
 	},
+
+	insertMove:function(element, p2_board) {
+		var array = AI.nextMoveOptions[p2_board] || [];
+		array.splice(AI.locationOf(element, array) + 1, 0, element);
+		return array;
+	},
+
+	locationOf:function(element, array, start, end) {
+		start = start || 0;
+		end = end || array.length;
+
+		var pivot = parseInt(start + (end - start) / 2, 10);
+
+		if (end-start <= 1 || array[pivot].score === element.score) 
+			return pivot;
+		if (array[pivot].score < element.score) 
+			return AI.locationOf(element, array, pivot, end);
+		return AI.locationOf(element, array, start, pivot);
+	},
 }
 
 var updateBoardp2 = function(start, end){
+	//Make and save player twos move.
 	p2_Position ^= start^end;
-
-	if(evaluation.isHomeQuadEmpty(p2_Position, 2)){
-		p2_flag = false;
-	}
-
 	saveData.saveMove(convert.bitToStandard(start),convert.bitToStandard(end), 2);
+
+	//remove the flag if needed.
+	if(evaluation.isHomeQuadEmpty(p2_Position, 2))
+		p2_flag = false;
+
+	//reset best first move options.
+	AI.bestMoveOptions = AI.nextMoveOptions[p2_Position^p1_Position] || [];
+	AI.nextMoveOptions = [];
 }
 
 var updateBoardp1 = function(start, end){
+	//Make and save player ones move.
 	p1_Position ^= start^end;
+	saveData.saveMove(convert.bitToStandard(start),convert.bitToStandard(end), 1);
 
+	//remove the flag if needed.
 	if(evaluation.isHomeQuadEmpty(p1_Position, 1)){
 		p1_flag = false;
 	}
 
-	saveData.saveMove(convert.bitToStandard(start),convert.bitToStandard(end), 1);
-	AI.bestScore = -999999;
-	AI.moveList = [];
+	//reset current move options.
+	AI.currentMoveOptions = [];
+
+	//diplay information in console.
 	display.displayBoard(p1_Position,p2_Position);
 	printData.showBitBoards(p1_Position,p2_Position);
 }
 
-display.displayBoard(p1_Position,p2_Position);
 var makeMoveAgainstAI = function(start, end){
 	var moveStart = convert.inputToBit(start);
 	var moveEnd = convert.inputToBit(end);
 	var depth = 7;
 
 	AI.maxDepth = depth;
+	debugger
 	updateBoardp2(moveStart, moveEnd); // Human move
 	AI.pvs(-1000, 1000, depth, p1_Position, p2_Position, 2);
 
+	//Find the best move to be made.
 	var indexOfBestMove;
 	var bestScore = -Infinity;
-	for (var i = 0; i < AI.moveList.length; i++) {
-		if(AI.moveList[i].value > bestScore){
-			bestScore = AI.moveList[i].value;
+	for (var i = 0; i < AI.currentMoveOptions.length; i++) {
+		if(AI.currentMoveOptions[i].value > bestScore){
+			bestScore = AI.currentMoveOptions[i].value;
 			indexOfBestMove = i;
 		}
 	}
 
-	var s = convert.bitToInt(AI.moveList[indexOfBestMove].start)
-	var e = convert.bitToInt(AI.moveList[indexOfBestMove].end)
-	updateBoardp1(AI.moveList[indexOfBestMove].start, AI.moveList[indexOfBestMove].end);
+	var s = convert.bitToInt(AI.currentMoveOptions[indexOfBestMove].start)
+	var e = convert.bitToInt(AI.currentMoveOptions[indexOfBestMove].end)
+	updateBoardp1(AI.currentMoveOptions[indexOfBestMove].start, AI.currentMoveOptions[indexOfBestMove].end);
 	return({'from': s, 'to': e});
 }
 
@@ -485,6 +515,10 @@ onmessage = function(e) {
 		p2_Position = 0b00000111110000000000; 
 		p1_flag = true;
 		p2_flag = true;
+		AI.currentMoveOptions = [];
+		AI.nextMoveOptions = [];
+		AI.bestMoveOptions = [];
+
 		display.displayBoard(p1_Position,p2_Position);
 	} else {
 		console.log('Message received from main script');
