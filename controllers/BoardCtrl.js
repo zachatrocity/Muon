@@ -11,8 +11,10 @@ muonApp.controller('BoardCtrl', function ($scope, $stateParams, $state) {
 	
 	if($stateParams.roomid == ''){
 		//local game against AI
+		//gameCore.RestartGame();
 	} else {
-		if($stateParams.waiting == 1){
+		debugger;
+		if($stateParams.waiting == '1'){
 		//angular.element(boardHeaderText)[0].innerHTML = "Waiting for opponent";
 		document.getElementById('boardHeaderText').innerHTML = "Waiting for opponent";
 		} else {
@@ -24,7 +26,6 @@ muonApp.controller('BoardCtrl', function ($scope, $stateParams, $state) {
 		}
 	}
 	
-
 	gameCore.RestartGame();
 	
 });
