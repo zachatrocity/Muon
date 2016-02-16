@@ -9,6 +9,7 @@
   
 </div>
 
+<!--
 <div class="inGameMenu">
 	<ul>
 		<li class="button">Menu
@@ -20,7 +21,14 @@
 		</li>
 	</ul>
 </div>
+-->
     
+	<div class="game-menu-container">
+		<a ng-click="showQuitModal = true">Main Menu</a>
+		<a ng-click="showNewGameModal = true">New Game</a>
+		<a ui-sref="#">Help</a>
+	</div>
+	
     <div class="modal" ng-init="showQuitModal = false;"
 		ng-class="{'dim-lights': showQuitModal}">
 		<div class="modal-dialog" ng-init="showQuitModal = false;"
