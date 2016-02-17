@@ -257,6 +257,10 @@ h1.view-heading{
 	cursor: pointer;
 }
 
+.main-menu-item:hover {
+    text-shadow: 0 0 5px #F7F0F0
+}
+
 
 .homeButton{
 	position: fixed;
