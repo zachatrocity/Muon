@@ -288,8 +288,8 @@ var gameCore = {
 
 				aiWorker.postMessage(
 					{ 
-						'from': inputFrom,
-						'to': inputTo
+						'from': bitFrom,
+						'to': bitTo
 					});
 			}
 		}
