@@ -230,12 +230,13 @@ h1.view-heading{
 }
 
 .menu-container{
-	height: 100%;
+	position: relative;
     padding: 0;
     margin: 0;
     display: flex;
-    align-items: center;
+    align-items: stretch;
     justify-content: center;
+	align-content: center;
 }
 
 .main-menu{
@@ -255,6 +256,10 @@ h1.view-heading{
     border: none;
     transition: .3s;
 	cursor: pointer;
+}
+
+.main-menu-item:hover {
+    text-shadow: 0 0 5px #F7F0F0
 }
 
 

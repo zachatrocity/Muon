@@ -22,7 +22,7 @@ console.log = function () {
 
 var easter_egg = new Konami(function() { alert('Konami code!')});
 
-var muonApp = angular.module('muonApp', ["ui.router"])
+var muonApp = angular.module('muonApp', ["ui.router", "ngAnimate"])
     muonApp.config(function($stateProvider, $urlRouterProvider){
       
       // For any unmatched url, send to /menu
