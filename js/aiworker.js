@@ -4,29 +4,6 @@ var p1_flag = true;
 var p2_flag = true;
 var BITMASK = 0xFFFFF;
 
-var display = {
-	color:function(quad, node, p1, p2){
-		if(1<<(quad*5 + node)&p1) return "C";
-		else if(1<<(quad*5 + node)&p2) return "H";
-		else return "#";
-	},
-	displayBoard:function(p1, p2){
-		console.log(p1_flag ? "LOCKED":"")
-		console.log(""+ this.color(1,0,p1, p2) + "---------"+ this.color(1,1,p1, p2) +"---"+ this.color(0,1,p1, p2) +"---------"+ this.color(0,0,p1, p2) +"");
-		console.log("|  \\   /  |   |  \\   /  |");
-		console.log("|    "+ this.color(1,2,p1, p2) +"    |   |    "+ this.color(0,2,p1, p2) +"    |");
-		console.log("|  /   \\  |   |  /   \\  |");
-		console.log(""+ this.color(1,3,p1, p2) +"---------"+ this.color(1,4,p1, p2) +"---"+ this.color(0,4,p1, p2) +"---------"+ this.color(0,3,p1, p2) +"");
-		console.log("|         | X |         |");
-		console.log(""+ this.color(3,3,p1, p2) + "---------"+ this.color(3,4,p1, p2) +"---"+ this.color(2,4,p1, p2) +"---------"+ this.color(2,3,p1, p2) +"");
-		console.log("|  \\   /  |   |  \\   /  |");
-		console.log("|    "+ this.color(3,2,p1, p2) +"    |   |    "+ this.color(2,2,p1, p2) +"    |");
-		console.log("|  /   \\  |   |  /   \\  |");
-		console.log(""+ this.color(3,0,p1, p2) +"---------"+ this.color(3,1,p1, p2) +"---"+ this.color(2,1,p1, p2) +"---------"+ this.color(2,0,p1, p2) +"");
-		console.log("                   " + (p2_flag ? "LOCKED":""))
-	},
-}
-
 var boardAspect = {
 	//bitBoard for the player and the quadrant number 0 to 3
 	getQuadBits: function(bitBoard, quadrant){
@@ -268,15 +245,24 @@ var updateBoardp1 = function(start, end){
 
 	//reset current move options.
 	AI.currentMoveOptions = [];
-	display.displayBoard(p1_Position,p2_Position);
 }
 
-var makeMoveAgainstAI = function(start, end){
-	var depth = 7;
+var moves = 0;
+var totalTime = 0;
 
+var makeMoveAgainstAI = function(start, end){
+	var depth = 9;
+	
+	
 	AI.maxDepth = depth;
 	updateBoardp2(start, end); // Human move
+
+	var t0 = Date.now();
 	AI.pvs(-1000, 1000, depth, p1_Position, p2_Position, 2);
+	var t1 = Date.now();
+	moves++;
+	totalTime += (t1-t0);
+	console.log("moves: " + moves + "time: " + totalTime);
 
 	//Find the best move to be made.
 	var indexOfBestMove;
@@ -304,8 +290,6 @@ onmessage = function(e) {
 		AI.currentMoveOptions = [];
 		AI.nextMoveOptions = [];
 		AI.bestMoveOptions = [];
-
-		display.displayBoard(p1_Position,p2_Position);
 	} else {
 		console.log('Message received from main script');
 		var workerResult = makeMoveAgainstAI(e.data.from, e.data.to);
