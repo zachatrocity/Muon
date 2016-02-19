@@ -90,11 +90,12 @@ cloak.configure({
     },
 
     'roomCreated': function(result) {
+      debugger;
       console.log(result.success ? 'room join success' : 'room join failure');
       if (result.success) {
+        gameCore.roomid = result.roomId;
         ///board/:roomid/:waiting
         window.location.hash = "#/board/" + result.roomId + "/1";
-        // game.begin();
         //start game!
       }
     },
@@ -102,8 +103,7 @@ cloak.configure({
     'joinRoomResponse': function(result) {
       if (result.success) {
         console.log("room joined");
-
-        game.roomid = result.id;
+        gameCore.roomid = result.roomId;
         cloak.message('refreshRoom');
       } else {
         console.log("room is full");
@@ -111,7 +111,6 @@ cloak.configure({
     },
 
     'refreshRoomResponse': function(members){
-      debugger;
       if (!members) {
         return;
       }

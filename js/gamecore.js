@@ -296,6 +296,7 @@ var gameCore = {
 						});
 				}
 			} else { //playing over network
+				debugger;
 				if(gameCore.turn == gameCore.team){ //if it is even my turn
 					console.log("Player moved from " + inputFrom + " to " + inputTo);
 					// Perform move
