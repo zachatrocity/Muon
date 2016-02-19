@@ -267,13 +267,11 @@ var gameCore = {
 		var bitTo = convert.intToBit(to);
 		var inputFrom =  convert.bitToStandard(bitFrom);
 		var inputTo = convert.bitToStandard(bitTo);
-		if (gameCore.ValidMove(bitFrom, bitTo)) {
-			console.log("opponent moved from " + inputFrom + " to " + inputTo);
-			// Perform move
-			gameCore.p1 ^= bitFrom ^ bitTo;
-			gameCore.moveHistory.push(new Move(from, to, "player"));
-			gameCore.board.moveMuonTweenFoci(from, to);
-		}
+		console.log("opponent moved from " + inputFrom + " to " + inputTo);
+		// Perform move
+		gameCore.p1 ^= bitFrom ^ bitTo;
+		gameCore.moveHistory.push(new Move(from, to, "player"));
+		gameCore.board.moveMuonTweenFoci(from, to);
 	},
 
 	// Moves a piece from one position to another
