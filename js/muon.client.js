@@ -141,7 +141,7 @@ cloak.configure({
 
     'performOpponentMove': function(data) {
       console.log('opponent moved!!!!!!', data);
-      gameCore.moveMuonTweenFoci(data[0], data[1]);
+      gameCore.board.moveMuonTweenFoci(data[0], data[1]);
     }
 
 
