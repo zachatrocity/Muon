@@ -119,7 +119,24 @@ cloak.configure({
       if (members.length < 2) {
         BoardGUI.setBoardHeaderElement("Game Started");
       }
+    },
+
+    //game
+    'assignTeam': function(data) {
+      console.log('my team is', data.team);
+      gameCore.team = data.team;
+      gameCore.otherTeam = (gameCore.team === 'muon') ? 'antimuon' : 'muon';
+      gameCore.turn = data.turn;
+      BoardGUI.setBoardHeaderElement("Turn:" + gameCore.turn);
+    },
+
+    'turn': function(msg) {
+      gameCore.turn = msg;
+      console.log('Turn: ' + gameCore.turn);
+      BoardGUI.setBoardHeaderElement("Turn:" + gameCore.turn);
+      cloak.message('refreshRoom');
     }
+
 
   },
   serverEvents: {

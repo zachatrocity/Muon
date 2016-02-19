@@ -19,6 +19,8 @@ var gameCore = {
 	player1Turn: true,
 	// A list of the past ~10 move that the player/opponet have made (5 ea.)
 	moveHistory: [],
+	team: '',
+	turn: '',
 
 	//gameboard
 	board: {
