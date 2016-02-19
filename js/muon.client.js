@@ -117,7 +117,11 @@ cloak.configure({
       }
 
       if (members.length > 1) {
-        BoardGUI.setBoardHeaderElement("Turn: " + gameCore.turn);
+        if(gameCore.turn == gameCore.team){
+          BoardGUI.setBoardHeaderElement("Your Turn");  
+        } else {
+          BoardGUI.setBoardHeaderElement("Their Turn");
+        }
       }
     },
 
@@ -133,6 +137,11 @@ cloak.configure({
       gameCore.turn = msg;
       console.log('Turn: ' + gameCore.turn);
       cloak.message('refreshRoom');
+    },
+
+    'performOpponentMove': function(data) {
+      console.log('opponent moved!!!!!!', data);
+      
     }
 
 

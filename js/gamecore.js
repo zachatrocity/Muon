@@ -271,27 +271,41 @@ var gameCore = {
 
 		// Test to see if move human wants to perform is valid
 		if (gameCore.ValidMove(bitFrom, bitTo)) {
-			console.log("Player moved from " + inputFrom + " to " + inputTo);
-			// Perform move that human made
-			gameCore.p2Pos ^= bitFrom ^ bitTo;
-			gameCore.moveHistory.push(new Move(from, to, "player"));
-			gameCore.player1Turn = true; //AIs turn
-			gameCore.board.moveMuonTweenFoci(from, to);
-			//display.displayBoard(gameCore.p1Pos, gameCore.p2Pos);
+			
+			if(gameCore.roomid == null) //playing against ai
+			{
+				console.log("Player moved from " + inputFrom + " to " + inputTo);
+				// Perform move
+				gameCore.p2Pos ^= bitFrom ^ bitTo;
+				gameCore.moveHistory.push(new Move(from, to, "player"));
+				gameCore.player1Turn = true; //AIs turn
+				gameCore.board.moveMuonTweenFoci(from, to);
+				//display.displayBoard(gameCore.p1Pos, gameCore.p2Pos);
 
-			if (gameCore.GameOver()) {
-				gameCore.EndGame();
-			}
-			else {
-				// Start a timer so the AI move is not immediate
-				//var timer = Date.now();
-				// Retrieve AI move
+				if (gameCore.GameOver()) {
+					gameCore.EndGame();
+				}
+				else {
+					// Start a timer so the AI move is not immediate
+					//var timer = Date.now();
+					// Retrieve AI move
+					aiWorker.postMessage(
+						{ 
+							'from': bitFrom,
+							'to': bitTo
+						});
+				}
+			} else { //playing over network
+				if(gameCore.turn == gameCore.team){ //if it is even my turn
+					console.log("Player moved from " + inputFrom + " to " + inputTo);
+					// Perform move
+					gameCore.p2Pos ^= bitFrom ^ bitTo;
+					gameCore.board.moveMuonTweenFoci(from, to);
+					cloak.message('turnDone', from, to);
 
-				aiWorker.postMessage(
-					{ 
-						'from': bitFrom,
-						'to': bitTo
-					});
+				} else {
+					console.log("it is not your turn idiot.");
+				}
 			}
 		}
 		else {
