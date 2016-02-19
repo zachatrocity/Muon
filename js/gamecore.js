@@ -17,8 +17,6 @@ var gameCore = {
 	playerTwoFlag: true,
 	// Flag for the current player's turn
 	player1Turn: true,
-	// The available moves for a position can be found through 'evaluation.nodeConnections'
-	//ai: AI,
 	// A list of the past ~10 move that the player/opponet have made (5 ea.)
 	moveHistory: [],
 
@@ -334,6 +332,7 @@ var gameCore = {
 	// Sets the game board to not be able to be interfered wiith by the player
 	EndGame: function() {
 		// Lock the board from player input
+		console.log("game over");
 	},
 
 	dec2bin: function(dec) {
@@ -345,7 +344,7 @@ aiWorker.onmessage = function(e) {
 	console.log('Message received from worker');
 	
 	gameCore.p1Pos ^= (convert.intToBit(e.data.from)) ^ (convert.intToBit(e.data.to));
-	gameCore.moveHistory.push(new Move(e.data.from, e.data.to, "player"));
+	gameCore.moveHistory.push(new Move(e.data.from, e.data.to, "ai"));
 	gameCore.player1Turn = false; //human turn
 	gameCore.board.moveMuonTweenFoci(e.data.from, e.data.to);
 };
