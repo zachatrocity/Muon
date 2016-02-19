@@ -103,7 +103,8 @@ cloak.configure({
     'joinRoomResponse': function(result) {
       if (result.success) {
         console.log("room joined");
-        gameCore.roomid = result.roomId;
+        debugger;
+        gameCore.roomid = result.id;
         cloak.message('refreshRoom');
       } else {
         console.log("room is full");
