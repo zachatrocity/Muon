@@ -261,6 +261,21 @@ var gameCore = {
 		return ~(gameCore.p1Pos | gameCore.p2Pos) & temp;
 	},
 
+	//USE ONLY FOR NETWORK MOVE
+	MakeOpponentMove: function(from, to){ 
+		var bitFrom = convert.intToBit(from);
+		var bitTo = convert.intToBit(to);
+		var inputFrom =  convert.bitToStandard(bitFrom);
+		var inputTo = convert.bitToStandard(bitTo);
+		if (gameCore.ValidMove(bitFrom, bitTo)) {
+			console.log("opponent moved from " + inputFrom + " to " + inputTo);
+			// Perform move
+			gameCore.p1 ^= bitFrom ^ bitTo;
+			gameCore.moveHistory.push(new Move(from, to, "player"));
+			gameCore.board.moveMuonTweenFoci(from, to);
+		}
+	},
+
 	// Moves a piece from one position to another
 	// Assumes that the move is passed in the form of 0-19
 	AttemptMove: function(from, to) {
