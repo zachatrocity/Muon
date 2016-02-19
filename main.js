@@ -9,6 +9,11 @@ var packjson = require('./package.json');
 var win = gui.Window.get();
 win.showDevTools();
 
+win.on('close', function(){
+  this.hide();
+  gui.App.quit();
+})
+
 var fs = require('fs');
 var util = require('util');
 var logFile = fs.createWriteStream('log.txt', { flags: 'w' });
