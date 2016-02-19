@@ -21,6 +21,7 @@ var gameCore = {
 	moveHistory: [],
 	team: '',
 	turn: '',
+	roomid: null,
 
 	//gameboard
 	board: {

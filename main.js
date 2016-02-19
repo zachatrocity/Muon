@@ -14,17 +14,6 @@ win.on('close', function(){
   gui.App.quit();
 })
 
-var fs = require('fs');
-var util = require('util');
-var logFile = fs.createWriteStream('log.txt', { flags: 'w' });
-var logStdout = process.stdout;
-
-console.log = function () {
-  logFile.write(util.format.apply(null, arguments) + '\n');
-  logStdout.write(util.format.apply(null, arguments) + '\n');
-}
-
-
 var easter_egg = new Konami(function() { alert('Konami code!')});
 
 var muonApp = angular.module('muonApp', ["ui.router", "ngAnimate"])

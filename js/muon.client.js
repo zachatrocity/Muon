@@ -103,21 +103,21 @@ cloak.configure({
       if (result.success) {
         console.log("room joined");
 
-        // game.room.id = result.id;
-        // game.begin();
-        // game.refreshWaiting();
+        game.roomid = result.id;
+        cloak.message('refreshRoom');
       } else {
         console.log("room is full");
       }
     },
 
     'refreshRoomResponse': function(members){
+      debugger;
       if (!members) {
         return;
       }
 
-      if (members.length < 2) {
-        BoardGUI.setBoardHeaderElement("Game Started");
+      if (members.length > 1) {
+        BoardGUI.setBoardHeaderElement("Turn: " + gameCore.turn);
       }
     },
 
@@ -127,13 +127,11 @@ cloak.configure({
       gameCore.team = data.team;
       gameCore.otherTeam = (gameCore.team === 'muon') ? 'antimuon' : 'muon';
       gameCore.turn = data.turn;
-      BoardGUI.setBoardHeaderElement("Turn:" + gameCore.turn);
     },
 
     'turn': function(msg) {
       gameCore.turn = msg;
       console.log('Turn: ' + gameCore.turn);
-      BoardGUI.setBoardHeaderElement("Turn:" + gameCore.turn);
       cloak.message('refreshRoom');
     }
 
