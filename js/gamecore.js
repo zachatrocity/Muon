@@ -302,7 +302,7 @@ var gameCore = {
 					// Perform move
 					gameCore.p2Pos ^= bitFrom ^ bitTo;
 					gameCore.board.moveMuonTweenFoci(from, to);
-					cloak.message('turnDone', from, to);
+					cloak.message('turnDone', [from, to]);
 
 				} else {
 					console.log("it is not your turn idiot.");
