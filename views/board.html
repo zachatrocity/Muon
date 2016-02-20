@@ -22,18 +22,19 @@
 	</ul>
 </div>
 -->
-    
-	<div class="game-menu-container">
+    <div class="row">
+		<div class="col-xs-offset-9 game-menu-container">
 		<a ng-click="showQuitModal = true">Main Menu</a>
 		<a ng-click="showNewGameModal = true">New Game</a>
 		<a ui-sref="#">Help</a>
+		</div>
 	</div>
 	
     <div class="modal" ng-init="showQuitModal = false;"
 		ng-class="{'dim-lights': showQuitModal}">
 		<div class="modal-dialog" ng-init="showQuitModal = false;"
 			ng-class="{'show-modal': showQuitModal}">
-			Are you sure you wish to return to the Main Menu? <br />
+			Are you sure you want to return to the Main Menu? <br />
 			
 			<input type="button" class="modal-btn" ng-click="showQuitModal = false;" 
 				value="Cancel" ng-focus="true"
