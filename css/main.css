@@ -248,13 +248,11 @@ h1.view-heading{
 	-webkit-transition: all 0.5s;
 	-moz-transition: all 0.5s;
 	transition: all 0.5s;
-	position: fixed;
-	top: 15%;
 	font-size: 4em;
-	left: 50%;
-	z-index: 100;
-	transform: translate(-50%, -50%);
 	cursor: default;
+	position: relative;
+	width: 30%; 
+	margin: 0 auto;
 }
 
 @-webkit-keyframes logo-glow {
@@ -273,18 +271,15 @@ h1.view-heading{
 .menu-container{
 	position: relative;
     padding: 0;
-    margin: 0;
-    display: flex;
-    align-items: stretch;
-    justify-content: center;
-	align-content: center;
+    margin: 0 auto;
+    width: 20%;
 }
 
 .main-menu{
 	z-index: 100;
 	/*background-color: rgba(6, 123, 196, 0.7);
 	box-shadow: 0 4px 2px 2px #5FAD41;*/
-	margin-top: 25%;
+	padding-top: 15%;
 }
 
 .main-menu-item {
@@ -322,11 +317,8 @@ h1.view-heading{
 
 .back{
 	position: absolute;
-	bottom: 20px;
-	left: 20px;
-	cursor: pointer;
-	padding: 15px 4px 17px 0px;
-	width: 150px;
+	left: 0;
+	bottom: 0;
 }
 
 /*BOARD CSS*/
