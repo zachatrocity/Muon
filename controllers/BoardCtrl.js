@@ -10,7 +10,6 @@ muonApp.controller('BoardCtrl', function ($scope, $stateParams, $state) {
 	}
 	
 	$scope.sendChat = function(){
-		debugger;
 		if($scope.chatText != ''){
 			if($stateParams.roomid != ''){
 				cloak.message('chat', $scope.chatText);
@@ -18,6 +17,11 @@ muonApp.controller('BoardCtrl', function ($scope, $stateParams, $state) {
 			}
 			else {
 				//chat against the AI
+				BoardGUI.appendChatMessage($scope.chatText, true);
+				$scope.chatText = '';
+				var category = aichat[_.shuffle(_.keys(aichat))[0]];
+				var randex = Math.floor(Math.random() * category.length) + 0;
+				BoardGUI.appendChatMessage(category[randex], false);
 			}
 		}
 	}

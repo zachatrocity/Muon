@@ -1,0 +1,32 @@
+connect
+begin
+[]
+username registered
+[]
+lobby member joined { id: '412e0b1c-ae8d-4c40-811c-866dd8858140', name: 'lol' }
+joined lobby
+{ users: [ { id: '412e0b1c-ae8d-4c40-811c-866dd8858140', name: 'lol' } ],
+  inLobby: true,
+  roomCount: 1,
+  roomSize: 0 }
+[]
+{ users: [ { id: '412e0b1c-ae8d-4c40-811c-866dd8858140', name: 'lol' } ],
+  inLobby: true,
+  roomCount: 1,
+  roomSize: 0 }
+{ users: [ { id: '412e0b1c-ae8d-4c40-811c-866dd8858140', name: 'lol' } ],
+  inLobby: true,
+  roomCount: 1,
+  roomSize: 0 }
+The server says: your are muons and your id is 412e0b1c-ae8d-4c40-811c-866dd8858140
+my team is muon
+room member joined { id: '412e0b1c-ae8d-4c40-811c-866dd8858140', name: 'lol' }
+room join success
+{ users: [ { id: '412e0b1c-ae8d-4c40-811c-866dd8858140', name: 'lol' } ],
+  inLobby: false,
+  roomCount: 1,
+  roomSize: 2 }
+[ { id: '66de2470-ca26-4369-a7e8-d3fe85546d4e',
+    name: 'lol%27s%20Game',
+    users: [ [Object] ],
+    size: 2 } ]

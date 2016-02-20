@@ -47,10 +47,13 @@ var BoardGUI = {
     document.getElementById('boardHeaderText').innerHTML = value;
   },
   appendChatMessage: function(msg, isMyMessage){
+    var messages = document.getElementById("messages");
     if(isMyMessage) //left align
-      document.getElementById("messages").innerHTML += '<li class="sent">' + msg + '</li>'
+      messages.innerHTML += '<li class="sent">' + msg + '</li>'
     else
-      document.getElementById("messages").innerHTML += '<li class="received">' + msg + '</li>'
+      messages.innerHTML += '<li class="received">' + msg + '</li>'
+
+    messages.scrollTop = messages.scrollHeight
   }
 }
 
@@ -197,9 +200,6 @@ cloak.configure({
 
     'roomMemberLeft': function(user) {
       console.log('room member left', user);
-      // The other player dropped, so we need to stop the game and show return to lobby prompt
-      // game.showGameOver('The other player disconnected!');
-      // cloak.message('leaveRoom');
       console.log('Removing you from the room because the other player disconnected.');
     },
 

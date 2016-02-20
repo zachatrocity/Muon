@@ -116,6 +116,7 @@ body {
 }
 
 #chat{
+	font-size: 0.8em;
 	height : 30%;
 	width  : 400px;
 	float  : right;
@@ -148,14 +149,37 @@ body {
 	padding: 0;
 }
 
-#messages { list-style-type: none; margin: 0; padding: 0; }
+#messages { 
+	list-style-type: none; 
+	margin: 0;
+	padding: 0;
+	overflow:hidden; 
+	overflow-y:scroll;
+	height: 84%;
+}
+
 #messages li { 
 	padding: 5px 10px; 
 	margin: 5px;
 }
 
+#messages::-webkit-scrollbar {
+  width: 10px;
+}
+ 
+#messages::-webkit-scrollbar-thumb {
+  background: #666;
+  border-radius: 20px;
+}
+
+#messages::-webkit-scrollbar-track {
+  background: #ddd;
+  border-radius: 20px;
+}
+
 .sent{
 	text-align: left;
+	background: rgba(174, 174, 174, 0.75);
 }
 
 .received{
@@ -370,9 +394,9 @@ h1.view-heading{
 /*BOARD CSS*/
 
 .gameboard{
-	position: fixed;
+	position: absolute;
 	top: 50%;
-	left: 50%;
+	left: 30%;
 	transform: translate(-50%, -50%);
 }
 
@@ -383,9 +407,9 @@ h1.view-heading{
 }
 
 .gamepeices {
-	position: fixed;
+	position: absolute;
 	top: 50%;
-	left: 50%;
+	left: 30%;
 	transform: translate(-50%, -50%);
 }
 
