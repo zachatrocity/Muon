@@ -9,6 +9,19 @@ muonApp.controller('BoardCtrl', function ($scope, $stateParams, $state) {
 		$state.go('menu', {});
 	}
 	
+	$scope.sendChat = function(){
+		debugger;
+		if($scope.chatText != ''){
+			if($stateParams.roomid != ''){
+				cloak.message('chat', $scope.chatText);
+				$scope.chatText = '';
+			}
+			else {
+				//chat against the AI
+			}
+		}
+	}
+
 	if($stateParams.roomid == ''){
 		//local game against AI
 		gameCore.RestartGame(false);

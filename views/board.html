@@ -28,6 +28,17 @@
 		<a ng-click="showNewGameModal = true">New Game</a>
 		<a ui-sref="#">Help</a>
 	</div>
+
+	<div id="chat" ng-model="chat">
+		<ul id="messages">
+			
+		</ul>
+		<form id="chat-form" ng-submit="sendChat()">
+		      <input id="chat-text" ng-model="chatText" autofocus>
+		      <input id="chat-enter" type="submit" class="button">
+		</form>
+	</div>
+
 	
     <div class="modal" ng-init="showQuitModal = false;"
 		ng-class="{'dim-lights': showQuitModal}">
