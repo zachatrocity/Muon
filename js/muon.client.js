@@ -111,9 +111,10 @@ cloak.configure({
       }
     },
 
-    'chat': function(msg) {
+    'chat': function(data) {
       //chat received
-      console.log(msg);
+      //data[0] is the message and data[1] is the username that sent it
+      console.log(data[0]);
     },
 
     'refreshRoomResponse': function(members){
