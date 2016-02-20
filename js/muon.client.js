@@ -111,6 +111,11 @@ cloak.configure({
       }
     },
 
+    'chat': function(msg) {
+      //chat received
+      console.log(msg);
+    },
+
     'refreshRoomResponse': function(members){
       if (!members) {
         return;
