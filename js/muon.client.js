@@ -45,17 +45,27 @@ var BoardGUI = {
   },
   setBoardHeaderElement: function(value) {
     document.getElementById('boardHeaderText').innerHTML = value;
+  },
+  appendChatMessage: function(msg, isMyMessage){
+    var messages = document.getElementById("messages");
+    if(isMyMessage) //left align
+      messages.innerHTML += '<li class="sent">' + msg + '</li>'
+    else
+      messages.innerHTML += '<li class="received">' + msg + '</li>'
+
+    messages.scrollTop = messages.scrollHeight
   }
 }
 
 
 cloak.configure({
   messages: {
-    'registerUsernameResponse': function(success) {
-      console.log(success ? 'username registered' : 'username failed');
+    'registerUsernameResponse': function(data) {
+      console.log(data[0] ? 'username registered' : 'username failed');
       // if we registered a username, try to join the lobby
-      if (success) {
+      if (data[0]) {
         // get the lobby
+        cloak.username = data[1];
         cloak.message('joinLobby');
       }
     },
@@ -90,7 +100,6 @@ cloak.configure({
     },
 
     'roomCreated': function(result) {
-      debugger;
       console.log(result.success ? 'room join success' : 'room join failure');
       if (result.success) {
         gameCore.roomid = result.roomId;
@@ -103,7 +112,6 @@ cloak.configure({
     'joinRoomResponse': function(result) {
       if (result.success) {
         console.log("room joined");
-        debugger;
         gameCore.roomid = result.id;
         cloak.message('refreshRoom');
       } else {
@@ -112,9 +120,11 @@ cloak.configure({
     },
 
     'chat': function(data) {
+      debugger;
       //chat received
       //data[0] is the message and data[1] is the username that sent it
       console.log(data[0]);
+      BoardGUI.appendChatMessage(data[0], (data[1] == cloak.username));
     },
 
     'refreshRoomResponse': function(members){
@@ -190,9 +200,6 @@ cloak.configure({
 
     'roomMemberLeft': function(user) {
       console.log('room member left', user);
-      // The other player dropped, so we need to stop the game and show return to lobby prompt
-      // game.showGameOver('The other player disconnected!');
-      // cloak.message('leaveRoom');
       console.log('Removing you from the room because the other player disconnected.');
     },
 

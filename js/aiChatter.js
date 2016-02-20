@@ -1,4 +1,4 @@
-{
+var aichat = {
 	"question": [
 		"Really?",
 		"What does admiral Ackbar say?",

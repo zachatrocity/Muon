@@ -78,10 +78,10 @@ var muonApp = angular.module('muonApp', ["ui.router", "ngAnimate"])
     particlesJS("particles-js", {
       "particles": {
         "number": {
-          "value": 80,
+          "value": 60,
           "density": {
             "enable": true,
-            "value_area": 800
+            "value_area": 900
           }
         },
         "color": {

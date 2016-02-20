@@ -41,10 +41,10 @@ https://coolors.co/app/404040-f7f0f0-5490cc-5fad41-067bc2
   display: inline-block;
   position: relative;
   margin: 15px 30px;
-  padding: 15px 25px;
+  padding: 15px;
   background: #067BC2;
-  border-radius: 4px;
-  
+  border-radius: 3px;
+  border: none;
   cursor: pointer;
   text-transform: uppercase;
   letter-spacing: 2px;
@@ -115,6 +115,76 @@ body {
   }
 }
 
+#chat{
+	font-size: 0.8em;
+	height : 30%;
+	width  : 400px;
+	float  : right;
+	position : absolute;
+	bottom: 50px;
+	right: 50px;
+	background: rgba(174, 174, 174, 0.55);
+	border-radius: 3px;
+  	box-shadow: 0 1px 5px rgba(0, 0, 0, 0.25);
+	transition: .3s;
+}
+
+#chat-form{
+	position: absolute;
+	bottom: 0;
+	width: inherit;
+}
+
+#chat-form input{
+	margin: 5px;
+	height: 20px;
+}
+
+#chat-text{
+	width: 70%;
+}
+
+#chat-enter{
+	width: 20%;
+	padding: 0;
+}
+
+#messages { 
+	list-style-type: none; 
+	margin: 0;
+	padding: 0;
+	overflow:hidden; 
+	overflow-y:scroll;
+	height: 84%;
+}
+
+#messages li { 
+	padding: 5px 10px; 
+	margin: 5px;
+}
+
+#messages::-webkit-scrollbar {
+  width: 10px;
+}
+ 
+#messages::-webkit-scrollbar-thumb {
+  background: #666;
+  border-radius: 20px;
+}
+
+#messages::-webkit-scrollbar-track {
+  background: #ddd;
+  border-radius: 20px;
+}
+
+.sent{
+	text-align: left;
+	background: rgba(174, 174, 174, 0.75);
+}
+
+.received{
+	text-align: right;
+}
 
 ul{
     list-style-type: none;
@@ -272,7 +342,7 @@ h1.view-heading{
 	position: relative;
     padding: 0;
     margin: 0 auto;
-    width: 20%;
+    width: 30%;
 }
 
 .main-menu{
@@ -324,9 +394,9 @@ h1.view-heading{
 /*BOARD CSS*/
 
 .gameboard{
-	position: fixed;
+	position: absolute;
 	top: 50%;
-	left: 50%;
+	left: 30%;
 	transform: translate(-50%, -50%);
 }
 
@@ -337,9 +407,9 @@ h1.view-heading{
 }
 
 .gamepeices {
-	position: fixed;
+	position: absolute;
 	top: 50%;
-	left: 50%;
+	left: 30%;
 	transform: translate(-50%, -50%);
 }
 
@@ -359,8 +429,8 @@ h1.view-heading{
 
 .game-menu-container {
 	position: absolute;
-	top: 5%;
-	right: 5%;
+	top: 50px;
+	right: 50px;
 	width: 200px;
 	text-align: center;
 	background-color: rgba(21, 146, 174, 0.5);
