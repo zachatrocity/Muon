@@ -7,7 +7,7 @@ var packjson = require('./package.json');
 
 // Get the current window
 var win = gui.Window.get();
-//win.showDevTools();
+win.showDevTools();
 
 win.on('close', function(){
   this.hide();
@@ -78,10 +78,10 @@ var muonApp = angular.module('muonApp', ["ui.router", "ngAnimate"])
     particlesJS("particles-js", {
       "particles": {
         "number": {
-          "value": 80,
+          "value": 60,
           "density": {
             "enable": true,
-            "value_area": 800
+            "value_area": 900
           }
         },
         "color": {
