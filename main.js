@@ -7,7 +7,7 @@ var packjson = require('./package.json');
 
 // Get the current window
 var win = gui.Window.get();
-win.showDevTools();
+//win.showDevTools();
 
 win.on('close', function(){
   this.hide();
