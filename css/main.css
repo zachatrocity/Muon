@@ -331,6 +331,18 @@ h1.view-heading{
 	height: 700px;
 }
 
+.atom {
+	position: absolute;
+	top: 20%;
+	right: 5%;
+}
+
+.atom  img{
+	z-index: 0;
+	width: 500px;
+	height: 500px;
+}
+
 .gamepeices {
 	position: absolute;
 	top: 50%;
