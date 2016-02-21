@@ -289,7 +289,13 @@ h1.view-heading{
 
 /*BOARD CSS*/
 
-.gameboard{
+#boardHeaderText {
+	position: absolute;
+	right: 300px;
+	top: 50px;
+}
+
+.gameboard {
 	position: absolute;
 	top: 50%;
 	left: 30%;
