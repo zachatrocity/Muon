@@ -27,6 +27,19 @@ https://coolors.co/app/404040-f7f0f0-5490cc-5fad41-067bc2
 	/*src: url("../font/maven-pro-v7-latin-700.ttf") */
 }
 
+/*Batch icons*/
+
+@font-face{
+	font-family:Batch;
+	src:url('../font/Batch/batch-icons-webfont.eot');
+	src:url('../font/Batch/batch-icons-webfont.eot?#iefix') format('embedded-opentype'),
+	  url('../font/Batch/batch-icons-webfont.woff') format('woff'),
+	  url('../font/Batch/batch-icons-webfont.ttf') format('truetype'),
+	  url('../font/Batch/batch-icons-webfont.svg#batchregular') format('svg');
+	font-weight:normal;
+	font-style:normal;
+}
+
 /*
 
 #597699
@@ -65,8 +78,18 @@ https://coolors.co/app/404040-f7f0f0-5490cc-5fad41-067bc2
 }
 
 html {
-  width: 100%;
-  height: 100%;
+	width: 100%;
+	height: 100%;
+}
+
+.batch {
+	font-family:"Batch"; 
+	line-height:1;
+	display:inline-block;
+}
+
+.batch:before {
+        content:attr(data-icon);
 }
 
 .videocontainer{
