@@ -205,110 +205,6 @@ h1.view-heading{
 	text-shadow: 1px 1px 1px #BDBDBD;
 }
 
-/*MODAL CSS*/
-
-.modal {
-	visibility: hidden;
-	background: rgba(0, 0, 0, 0.6);
-	position: fixed;
-	top: 0;
-	left: 0;
-	right: 0;
-	bottom: 0;
-	z-index: 10000;
-}
-
-.modal-dialog {
-	margin: auto;
-	position: absolute;
-	top: 0;
-	left: 0;
-	bottom: 0;
-	right: 0;
-	height: 0;
-	width: 0;
-	z-index: 11;
-	cursor: default;
-	text-align: center;
-	color: rgba(0, 0, 0, 0);
-	background: rgba(174, 174, 174, 0.55);
-  	border-radius: 3px;
-  	box-shadow: 0 1px 5px rgba(0, 0, 0, 0.25);
-	visibility: hidden;
-	-webkit-transition: width 0.5s, height 0.5s, color 0s 0.5s;
-	transition: width 0.5s, height 0.5s, color 0s 0.5s;
-	-webkit-transition-timing-function: ease-out;
-}
-
-.show-modal {
-    opacity:1;
-	visibility: visible;
-	width: 400px;
-	min-height: 150px;
-	color: rgba(0, 0, 0, 1);
-}
-
-.dim-lights {
-	visibility: visible;
-}
-
-.modal-btn {
-	position: relative;
-	visibility: hidden;
-	opacity: 0;
-	cursor: pointer;
-	padding: 15px 25px;
-	-webkit-transition: visibility 0s 0.5s, opacity 0s;
-	transition: visibility 0s 0.5s, opacity 0s;
-	-webkit-transition-timing-function: ease-out;
-	display: inline-block;
-	padding: 10px 15px;
-	min-width: 50px;
-	background: rgb(84,144,204);
-	border-radius: 4px;
-	border: solid 2px #636363;
-	cursor: pointer;
-	text-transform: uppercase;
-	letter-spacing: 2px;
-	font-size: 14px;
-	font-weight: 700;
-	outline: none;
-}
-
-.modal-btn:hover {
-  background: #0569AD;
-}
-
-.modal-btn:active {
-  background: #0569AD;
-  box-shadow: 0 0px #111;
-  top: 4px;
-}
-
-.modal-btn:disabled {
-	background: #0569AD;	
-}
-
-.network-modal-btns{
-	margin-top: 20px; 
-}
-
-.show-modal-btn {
-	visibility: visible;
-	opacity: 1;
-}
-
-.modal-txt-box {
-	opacity: 0;
-	-webkit-transition: opacity 0s 0.5s;
-	transition: opacity 0s 0.5s;
-	-webkit-transition-timing-function: ease-out;
-}
-
-.show-modal-txt-box {
-	opacity: 1;
-}
-
 /*MAIN MENU CSS*/
 
 .logo {
@@ -433,7 +329,7 @@ h1.view-heading{
 	right: 50px;
 	width: 200px;
 	text-align: center;
-	background-color: rgba(21, 146, 174, 0.5);
+	background: rgba(174, 174, 174, 0.55);
 }
 
 .game-menu-container a {
