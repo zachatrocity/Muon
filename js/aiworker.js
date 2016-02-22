@@ -4,10 +4,25 @@ var p1_flag = true;
 var p2_flag = true;
 var BITMASK = 0xFFFFF;
 
+//For now this only stores losses
+var transposition = {
+	'table':[],
+	add:function(b1,b2,f1,f2,p,score){
+		var state = b1.toString(2) + b2.toString(2) + (f1?1:0) + (f2?1:0) + (p==1?0:1);
+		transposition.table[state] = score;
+	},
+	get:function(b1,b2,f1,f2,p){
+		var state = b1.toString(2) + b2.toString(2) + (f1 ? 1:0) + (f2 ? 1:0) + (p==1?0:1);
+		if(transposition.table.indexOf(state) == -1)
+			return false;
+		return transposition.table[state];
+	},
+}
+
 var boardAspect = {
 	//bitBoard for the player and the quadrant number 0 to 3
 	getQuadBits: function(bitBoard, quadrant){
-		return bitBoard & (0x1F<<(5*quadrant));
+		return (bitBoard >>> (5*quadrant)) & 0x1F;
 	},
 
 	//peice is a bit representation of any peice on the board.
@@ -103,16 +118,13 @@ var evaluation = {
 		return false;
 	},
 
-	stateValue:function(bitBoard, bitBoard2, player){
+	stateValue:function(bitBoard, bitBoard2, f1, f2, player){
 		var total = 0;
 		var currentBitBoard = (player == 1 ? bitBoard : bitBoard2);
 		total += this.stolenRealEstate(bitBoard, bitBoard2);
-		total += this.clearingFlag(currentBitBoard, player);
+		// total += this.isHomeQuadEmpty(bitBoard, player) ? 5 : -1;
+		total += this.isHomeQuadEmpty(bitBoard2, player^3) ? -5 : 1;
 		return total;
-	},
-
-	clearingFlag:function(bitBoard, player){
-		return ( this.isHomeQuadEmpty(bitBoard, player) ? 50 : 0);
 	},
 
 	stolenRealEstate:function(bitBoard, bitBoard2){
@@ -146,79 +158,135 @@ var evaluation = {
 
 var AI = {
 	'currentMoveOptions':[],
-	'nextMoveOptions':[],
-	'bestMoveOptions':[],
+	'nextMoveOption':[],
+	'bestMovePredicted':[],
 	'maxDepth':-1,
 	'bSearchPv':true,
 
-	pvs:function(alpha, beta, depth, p1_board, p2_board, pNum){
-		var p = (pNum == 1 ? p1_board : p2_board);
-
+	DeepPVSAI:function(alpha, beta, depth, p1_board, p2_board, f1, f2){
 		//Check for a win condition. If the win is close to the top of the tree it's worth more.
-		if(evaluation.Win(p, pNum, p1_flag, p2_flag))
-			return ~(100 * (depth + 1))+1; // because of negation the caller gets back 1000
+		if(evaluation.Win(p2_board, 2, f1, f2))
+			return ~(100 * (depth + 1)) + 1;
 		if(depth == 0)
-			return ~evaluation.stateValue(p1_board, p2_board, pNum) + 1;
-
-		pNum ^= 3; // Change the player number
+			return ~(evaluation.stateValue(p1_board, p2_board, f1, f2, 2)) + 1
 
 		//Get and loop through all the players pieces.
-		var allPieces = pNum == 1 ? p1_board : p2_board;
-		var piece, allSpaces, moves, nextMove, b1, b2, score;
-		for(piece = bitManip.getLSB(allPieces); allPieces; piece = bitManip.getLSB(allPieces)){
+		var allPieces = p1_board;
+		var allSpaces, moves, b1, score, piece, nextMove;
+
+		for(piece = bitManip.getLSB(allPieces); allPieces != 0; piece = bitManip.getLSB(allPieces)){
 			allSpaces = p1_board^p2_board^BITMASK;
 			moves = boardAspect.availabeMoves(piece, allSpaces);
 
 			//Get and loop through all the moves a piece can make.
-			for(nextMove = bitManip.getLSB(moves); moves; nextMove = bitManip.getLSB(moves)){
-
-				//b1 and b2 are the temp values for each move made on a board(b)
-				b1 = (pNum == 1 ? p1_board^piece^nextMove : p1_board);
-				b2 = (pNum == 2 ? p2_board^piece^nextMove : p2_board);
+			for(nextMove = bitManip.getLSB(moves); moves != 0; nextMove = bitManip.getLSB(moves)){
+				b1 = p1_board^piece^nextMove;
+				f1 = f1 ? !evaluation.isHomeQuadEmpty(b1,1) : f1
 				if(AI.bSearchPv)
-					score = -AI.pvs(~beta+1, ~alpha+1, depth-1, b1, b2, pNum);
+					score = -AI.DeepPVSHU(~beta+1, ~alpha+1, depth-1, b1, p2_board, f1, f2);
 				else{
-					score = -AI.pvs(~alpha, ~alpha+1, depth-1, b1, b2, pNum);
+					score = -AI.DeepPVSHU(~alpha, ~alpha+1, depth-1, b1, p2_board, f1, f2);
 					if(score > alpha)
-						score = -AI.pvs(~beta+1, ~alpha+1, depth-1, b1, b2, pNum);
+						score = -AI.DeepPVSHU(~beta+1, ~alpha+1, depth-1, b1, p2_board, f1, f2);
 				}
 
-				if(depth == AI.maxDepth)
-					AI.currentMoveOptions[(AI.currentMoveOptions).length] = {start: piece, end: nextMove, value:score};
-				else if(depth == AI.maxDepth - 2) // Setup bestfirst search move options.
-					AI.nextMoveOptions[p2_board^p1_board] = AI.insertMove({'start': piece, 'end': nextMove, 'score': score}, p2_board^p1_board);
+				// if(depth == AI.maxDepth - 2){ // Setup bestfirst search move options.
+				// 	var state = 'x' + p2_board + 'y' + p1_board
+				// 	AI.nextMoveOption[state] = AI.nextMoveOption[state] || {'start':piece, 'end':nextMove, 'score':score};
+				// 	if(AI.nextMoveOption[state].score < score){
+				// 		AI.nextMoveOption[state] = {'start':piece, 'end':nextMove, 'score':score}
+				// 	}
+				// }
+
 				if(score >= beta)
 					return beta;
-				if(score >= alpha){
+				if(score > alpha){
 					alpha = score;
 					AI.bSearchPv = false;
 				}
-				
-
-				moves ^= nextMove; //nextMove has been checked, remove it from moves
+				moves ^= nextMove;
 			}
-			allPieces ^= piece; //piece has been checked, remove it from allPieces
+			allPieces ^= piece;
 		}
 		return alpha;
 	},
 
-	insertMove:function(element, p2_board) {
-		var array = AI.nextMoveOptions[p2_board] || [];
-		array.splice(AI.locationOf(element, array) + 1, 0, element);
-		return array;
+	DeepPVSHU:function(alpha, beta, depth, p1_board, p2_board, f1, f2){
+		//Check for a win condition. If the win is close to the top of the tree it's worth more.
+		if(evaluation.Win(p1_board, 1, f1, f2))
+			return ~(100 * (depth + 1)) + 1;
+		if(depth == 0)
+			return ~(evaluation.stateValue(p1_board, p2_board, f1, f2, 1)) + 1
+
+		//Get and loop through all the players pieces.
+		var allPieces = p2_board;
+		var piece, allSpaces, moves, nextMove, b2, score;
+		for(piece = bitManip.getLSB(allPieces); allPieces != 0; piece = bitManip.getLSB(allPieces)){
+			allSpaces = p1_board^p2_board^BITMASK;
+			moves = boardAspect.availabeMoves(piece, allSpaces);
+
+			//Get and loop through all the moves the piece can make.
+			for(nextMove = bitManip.getLSB(moves); moves != 0; nextMove = bitManip.getLSB(moves)){
+				b2 = p2_board^piece^nextMove;
+				f2 = f2 ? !evaluation.isHomeQuadEmpty(b2, 2) : f2
+				if(AI.bSearchPv)
+					score = -AI.DeepPVSAI(~beta+1, ~alpha+1, depth-1, p1_board, b2, f1, f2);
+				else{
+					score = -AI.DeepPVSAI(~alpha, ~alpha+1, depth-1, p1_board, b2, f1, f2);
+					if(score > alpha)
+						score = -AI.DeepPVSAI(~beta+1, ~alpha+1, depth-1, p1_board, b2, f1, f2);
+				}
+				if(score >= beta)
+					return beta;
+				if(score > alpha){
+					alpha = score;
+					AI.bSearchPv = false;
+				}
+				moves ^= nextMove;
+			}
+			allPieces ^= piece;
+		}
+		AI.bSearchPv = true;
+		return alpha;
 	},
 
-	locationOf:function(element, array, start, end) {
-		start = start || 0;
-		end = end || array.length;
+	pvs:function(alpha, beta, depth, p1_board, p2_board){
+		var allPieces = p1_board;
+		var piece, moves, nextMove, b1,f1,score;
 
-		var pivot = parseInt(start + (end - start) / 2, 10);
+		//var piece = AI.bestMovePredicted.move || false;
+		// if(piece){
+		// 	b1 = p1_board^piece;
+		// 	f1 = (evaluation.isHomeQuadEmpty(b1, 1) ? false : true);
+		// 	alpha = -AI.DeepPVSHU(~beta+1, ~alpha+1, depth-1, b1, p2_board, f1, p2_flag);
+		// 	AI.currentMoveOptions[0] = {start: piece&p1_board, end: ~p1_board&piece, value:alpha};
+		// 	allPieces = (~piece)&p1_board;
+		// }
 
-		if (end-start <= 1 || array[pivot].score === element.score) 
-			return pivot;
-		if (array[pivot].score < element.score) 
-			return AI.locationOf(element, array, pivot, end);
-		return AI.locationOf(element, array, start, pivot);
+		//loop through all the AIs pieces
+		for(piece = bitManip.getLSB(allPieces); allPieces != 0; piece = bitManip.getLSB(allPieces)){
+			moves = boardAspect.availabeMoves(piece, (p1_board^p2_board^BITMASK));
+
+			//loop through all the moves that piece can make.
+			for(nextMove = bitManip.getLSB(moves); moves != 0; nextMove = bitManip.getLSB(moves)){
+
+				b1 = p1_board^piece^nextMove;
+				f1 = p1_flag ? !evaluation.isHomeQuadEmpty(b1, 1) : p1_flag;
+				
+				score = -AI.DeepPVSHU(~beta+1, ~alpha+1, depth-1, b1, p2_board, f1, p2_flag);
+
+				AI.currentMoveOptions[(AI.currentMoveOptions).length] = {start: piece, end: nextMove, value:score};
+				// if(score >= beta)
+				// 	return beta;
+				// if(score > alpha){
+				// 	alpha = score;
+				// 	AI.bSearchPv = false;
+				// }
+				moves ^= nextMove
+			}
+
+			allPieces ^= piece
+		}
 	},
 }
 
@@ -231,8 +299,8 @@ var updateBoardp2 = function(start, end){
 		p2_flag = false;
 
 	//reset best first move options.
-	AI.bestMoveOptions = AI.nextMoveOptions[p2_Position^p1_Position] || [];
-	AI.nextMoveOptions = [];
+	AI.bestMovePredicted = AI.nextMoveOption['x' + p2_Position + 'y' + p1_Position] || [];
+	AI.nextMoveOption = [];
 }
 
 var updateBoardp1 = function(start, end){
@@ -249,35 +317,37 @@ var updateBoardp1 = function(start, end){
 
 var moves = 0;
 var totalTime = 0;
-
 var makeMoveAgainstAI = function(start, end){
 	var depth = 9;
-	
-	
-	AI.maxDepth = depth;
 	updateBoardp2(start, end); // Human move
-
 	var t0 = Date.now();
-	AI.pvs(-1000, 1000, depth, p1_Position, p2_Position, 2);
-	var t1 = Date.now();
-	moves++;
-	totalTime += (t1-t0);
-	console.log("moves: " + moves + "time: " + totalTime);
 
-	//Find the best move to be made.
-	var indexOfBestMove;
-	var bestScore = -Infinity;
-	for (var i = 0; i < AI.currentMoveOptions.length; i++) {
-		if(AI.currentMoveOptions[i].value > bestScore){
-			bestScore = AI.currentMoveOptions[i].value;
-			indexOfBestMove = i;
+	if(!evaluation.Win(p2_Position, 2, p1_flag, p2_flag)){
+		AI.maxDepth = depth;
+
+		var t0 = Date.now();
+		AI.pvs(-1000, 1000, depth, p1_Position, p2_Position);
+
+		moves++;
+		totalTime += (Date.now() -t0);
+		console.log("moves: " + moves + " time: " + totalTime);
+
+		var indexOfBestMove;
+		var bestScore = -Infinity;
+		for (var i = 0; i < AI.currentMoveOptions.length; i++){
+			if(AI.currentMoveOptions[i].value > bestScore){
+				bestScore = AI.currentMoveOptions[i].value;
+				indexOfBestMove = i;
+			}
+			//else if == then pick random value
 		}
-	}
 
-	var s = convert.bitToInt(AI.currentMoveOptions[indexOfBestMove].start)
-	var e = convert.bitToInt(AI.currentMoveOptions[indexOfBestMove].end)
-	updateBoardp1(AI.currentMoveOptions[indexOfBestMove].start, AI.currentMoveOptions[indexOfBestMove].end);
-	return({'from': s, 'to': e});
+		var s = convert.bitToInt(AI.currentMoveOptions[indexOfBestMove].start);
+		var e = convert.bitToInt(AI.currentMoveOptions[indexOfBestMove].end);
+		updateBoardp1(AI.currentMoveOptions[indexOfBestMove].start, AI.currentMoveOptions[indexOfBestMove].end);
+		var w = evaluation.Win(p1_Position, 1, p1_flag, p2_flag);
+	}
+	return({'from': s, 'to': e, 'AiWin': w});
 }
 
 onmessage = function(e) {
@@ -288,12 +358,10 @@ onmessage = function(e) {
 		p1_flag = true;
 		p2_flag = true;
 		AI.currentMoveOptions = [];
-		AI.nextMoveOptions = [];
-		AI.bestMoveOptions = [];
+		AI.nextMoveOption = [];
+		AI.bestMovePredicted = [];
 	} else {
-		console.log('Message received from main script');
 		var workerResult = makeMoveAgainstAI(e.data.from, e.data.to);
-		console.log('Posting message back to main script');
 		postMessage(workerResult);
 	}
 }
