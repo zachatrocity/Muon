@@ -24,7 +24,12 @@
 	ng-class="{'dim-lights': showNetworkingModal}">
 	<div class="modal-dialog" ng-init="showNetworkingModal = false;"
 		ng-class="{'show-modal': showNetworkingModal}">
-		<h3>Please enter a username</h3>
+		
+		<span class="modal-X batch" data-icon='&#xf14e' 
+		ng-click="showNetworkingModal = false;" 
+		ng-class="{'show-modal-btn': showNetworkingModal}"></span>
+		
+		<h3 class="modal-prompt">Please enter a username:</h3>
 
 		<form name="usernameForm">
 		<!-- <a ng-click="joinLobby(username)">Join Lobby</a> -->
