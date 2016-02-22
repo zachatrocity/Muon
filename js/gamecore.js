@@ -37,21 +37,23 @@ var gameCore = {
 		links: [],
 		width: 700,
     	height: 700,
-		foci: 	[{x: 0, y: 0}, {x: 285, y: 0},        //
-                        {x: 140, y: 140},              // Quad A
-                {x: 0, y: 285}, {x: 285, y: 285},    //
 
-                {x: 415, y: 415}, {x: 700, y: 415},   //
-                        {x: 560, y: 560},             // Quad D
-                {x: 415, y: 700}, {x: 700, y: 700},  //
+    	//0,140,280,420,560,700
+		foci: 	[{x: 0, y: 0}, {x: 280, y: 0},			//
+                		{x: 143, y: 140},				// Quad A
+                 {x: 0, y: 280}, 	{x: 280, y: 280},	//
+
+                 {x: 420, y: 420},	{x: 700, y: 420},   //
+                		{x: 560, y: 560},				// Quad D
+                 {x: 420, y: 700},	{x: 700, y: 700},	//
                 
-                {x: 415, y: 0}, {x: 700, y: 0},    //
-                      {x: 560, y: 140},                // Quad B
-                {x: 415, y: 285}, {x: 700, y: 285},    //
+                 {x: 420, y: 0},	{x: 700, y: 0},		//
+                		{x: 560, y: 140},				// Quad B
+                 {x: 420, y: 280},	{x: 700, y: 280},	//
                 
-                {x: 0, y: 415}, {x: 285, y: 415},   //
-                         {x: 140, y: 140},            // Quad C
-                {x: 0, y: 700}, {x: 285, y: 700}],   //
+                 {x: 0, y: 420},	{x: 280, y: 420},	//
+                		{x: 143, y: 560},				// Quad C
+                 {x: 0, y: 700},	{x: 280, y: 700}],	//
         boardSVG: null,
         d3force: null,
         activeNodes: null,
@@ -88,7 +90,7 @@ var gameCore = {
         mousedown: function() {
 			var point = d3.mouse(this);
 			var maxdist = 30
-			var maxFociDist = 60;
+			var maxFociDist = 80;
 
 			if (gameCore.gameOver)
 				return
