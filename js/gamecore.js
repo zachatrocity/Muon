@@ -24,7 +24,7 @@ var gameCore = {
 	// The players (humans) can offer a draw at any time though (I think...)
 	moveHistory: [],
 	// For when the game ends if we display if the local player won or lost
-	isWinner: false,
+	winner: "none",
 	// Stop allowing the selection of muons if true
 	gameOver: false,
 	team: '',
@@ -209,6 +209,7 @@ var gameCore = {
 			gameCore.playerTwoFlag = true;
 			gameCore.player1Turn = true;
 			gameCore.moveHistory = [];
+			gameCore.gameOver = false;
 		},
 		addNodeAtFoci: function(f,anti){
 		    var i = f * 3
@@ -246,6 +247,14 @@ var gameCore = {
 		  gameCore.board.refresh();
 		}        
 
+	},
+
+	// Called when the player proposes a draw (ONLY TO THE AI)
+	// Draws between networked players are determined if the other accepts
+	ProposeDrawToAI: function() {
+		if (gameCore.moveHistory.length >= gameCore.MAX_HIST)
+
+		EndGame();
 	},
 
 	// Determines if the selected node belongs to the current player
@@ -376,7 +385,7 @@ var gameCore = {
 	GameOver: function(position) {
 		player = position == gameCore.p1Pos ? 1 : 2
 		if (evaluation.Win(position, player, gameCore.playerOneFlag, gameCore.playerTwoFlag)) {
-			isWinner = player == 1 ? false : true
+			winner = player == 1 ? "lost" : "won"
 			return true
 		}
 		else {
@@ -404,11 +413,13 @@ var gameCore = {
 		// Lock the board from player input
 		gameCore.gameOver = true;
 
-		if (isWinner) {
+		if (winner == "won") {
 			console.log("YOU WON!")
 		}
-		else
+		else if (winner == "lost")
 			console.log("YOU LOST!")
+		else
+			console.log("IT'S A TIE!")
 	},
 
 	dec2bin: function(dec) {
