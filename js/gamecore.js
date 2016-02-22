@@ -122,7 +122,8 @@ var gameCore = {
 				}
 			});
 
-			if(closestNode){
+			if(closestNode && gameCore.BelongsToPlayer(gameCore.p2Pos, closestNode.foci)){
+
 				//select all the nodes around the node we clicked
 				var startIndex = closestNode.index - (closestNode.index % 3);
 				//closestNode.selected = true;
@@ -234,6 +235,18 @@ var gameCore = {
 		  gameCore.board.refresh();
 		}        
 
+	},
+
+	// Determines if the selected node belongs to the current player
+	// This is so the player cannot select a piece that is not theirs
+	BelongsToPlayer: function(player, selectedNode) {
+		node = convert.intToBit(selectedNode)
+
+		console.log("Inside BelongsToPlayer")
+		console.log(gameCore.dec2bin(player))
+		console.log(gameCore.dec2bin(node))
+		console.log(gameCore.dec2bin(player & node))
+		return (player & node) > 0
 	},
 
 	// Determines if the move the player wishes to perform is a valid one
