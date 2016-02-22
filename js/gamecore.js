@@ -50,7 +50,7 @@ var gameCore = {
                 {x: 415, y: 285}, {x: 700, y: 285},    //
                 
                 {x: 0, y: 415}, {x: 285, y: 415},   //
-                         {x: 140, y: 140},            // Quad C
+                         {x: 140, y: 560},            // Quad C
                 {x: 0, y: 700}, {x: 285, y: 700}],   //
         boardSVG: null,
         d3force: null,
@@ -88,7 +88,7 @@ var gameCore = {
         mousedown: function() {
 			var point = d3.mouse(this);
 			var maxdist = 30
-			var maxFociDist = 60;
+			var maxFociDist = 80;
 
 			if (gameCore.gameOver)
 				return
