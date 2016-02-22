@@ -13,7 +13,12 @@
     "title": "Muon",
     "icon": "link.png",
     "toolbar": false,
-    "fullscreen": true
+    "fullscreen": false,
+    "width": 1360,
+    "height": 768
+  },
+  "options":{
+    "music_enabled": true
   },
   "webkit": {
     "page-cache": true
@@ -24,6 +29,7 @@
     "nw-builder": "^2.1.0"
   },
   "dependencies": {
+    "lowdb": "^0.12.4",
     "player": "^0.6.1"
   }
 }

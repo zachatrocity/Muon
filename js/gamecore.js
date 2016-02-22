@@ -339,9 +339,7 @@ var gameCore = {
 					gameCore.EndGame();
 				}
 				else {
-					// Start a timer so the AI move is not immediate
-					//var timer = Date.now();
-					// Retrieve AI move
+					//make ai move
 					aiWorker.postMessage(
 						{ 
 							'from': bitFrom,

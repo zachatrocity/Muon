@@ -3,11 +3,11 @@
 var gui = require('nw.gui'); 
 var packjson = require('./package.json');
 
-
-
 // Get the current window
 var win = gui.Window.get();
 win.showDevTools();
+
+var db = new PouchDB('optionsdb', {adapter: 'websql'});
 
 win.on('close', function(){
   this.hide();
@@ -180,4 +180,45 @@ var muonApp = angular.module('muonApp', ["ui.router", "ngAnimate"])
       },
       "retina_detect": true
     });  
+
+  //load/create the options
+
+  db.get('music_enabled', function(err, resp) {
+    if (err) {
+       //does not exists so create
+      db.put({
+        _id: 'music_enabled',
+        title: true
+      }).then(function (response) {
+      // handle response
+        console.log(response);
+      }).catch(function (err) {
+        console.log(err);
+      });
+     } else {
+      console.log("music_enabled: " + resp.title);
+      if(resp.title){
+        Audio.background.play();
+      }
+    }
+  });
+
+  db.get('sound_enabled', function(err, resp) {
+    if (err) {
+       //does not exists so create
+      db.put({
+        _id: 'sound_enabled',
+        title: true
+      }).then(function (response) {
+      // handle response
+        console.log(response);
+      }).catch(function (err) {
+        console.log(err);
+      });
+     } else {
+      console.log("sound_enabled: " + resp.title);
+    }
+  });
+
+  
 })
