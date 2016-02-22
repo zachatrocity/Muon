@@ -37,23 +37,21 @@ var gameCore = {
 		links: [],
 		width: 700,
     	height: 700,
+		foci: 	[{x: 0, y: 0}, {x: 285, y: 0},        //
+                        {x: 140, y: 140},              // Quad A
+                {x: 0, y: 285}, {x: 285, y: 285},    //
 
-    	//0,140,280,420,560,700
-		foci: 	[{x: 0, y: 0}, {x: 280, y: 0},			//
-                		{x: 143, y: 140},				// Quad A
-                 {x: 0, y: 280}, 	{x: 280, y: 280},	//
-
-                 {x: 420, y: 420},	{x: 700, y: 420},   //
-                		{x: 560, y: 560},				// Quad D
-                 {x: 420, y: 700},	{x: 700, y: 700},	//
+                {x: 415, y: 415}, {x: 700, y: 415},   //
+                        {x: 560, y: 560},             // Quad D
+                {x: 415, y: 700}, {x: 700, y: 700},  //
                 
-                 {x: 420, y: 0},	{x: 700, y: 0},		//
-                		{x: 560, y: 140},				// Quad B
-                 {x: 420, y: 280},	{x: 700, y: 280},	//
+                {x: 415, y: 0}, {x: 700, y: 0},    //
+                      {x: 560, y: 140},                // Quad B
+                {x: 415, y: 285}, {x: 700, y: 285},    //
                 
-                 {x: 0, y: 420},	{x: 280, y: 420},	//
-                		{x: 143, y: 560},				// Quad C
-                 {x: 0, y: 700},	{x: 280, y: 700}],	//
+                {x: 0, y: 415}, {x: 285, y: 415},   //
+                         {x: 140, y: 140},            // Quad C
+                {x: 0, y: 700}, {x: 285, y: 700}],   //
         boardSVG: null,
         d3force: null,
         activeNodes: null,
@@ -90,7 +88,7 @@ var gameCore = {
         mousedown: function() {
 			var point = d3.mouse(this);
 			var maxdist = 30
-			var maxFociDist = 80;
+			var maxFociDist = 60;
 
 			if (gameCore.gameOver)
 				return
@@ -135,21 +133,7 @@ var gameCore = {
 				}
 			});
 
-			if(gameCore.roomid != null){
-
-				if(gameCore.team == gameCore.turn){
-					//select all the nodes around the node we clicked
-					var startIndex = closestNode.index - (closestNode.index % 3);
-					//closestNode.selected = true;
-					d3.selectAll(".id" + startIndex + ",.id" + (startIndex + 1) + ",.id" + (startIndex + 2))
-						.transition()
-						.duration(450)
-						.attr("r", 15);
-
-					gameCore.board.selectedMuon = closestNode.foci;
-				}
-
-			} else if (closestNode && gameCore.BelongsToPlayer(gameCore.p2Pos, closestNode.foci)){
+			if(closestNode && gameCore.BelongsToPlayer(gameCore.p2Pos, closestNode.foci)){
 
 				//select all the nodes around the node we clicked
 				var startIndex = closestNode.index - (closestNode.index % 3);
