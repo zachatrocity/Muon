@@ -192,6 +192,7 @@ var muonApp = angular.module('muonApp', ["ui.router", "ngAnimate"])
       }).then(function (response) {
       // handle response
         console.log(response);
+        Audio.background.play();
       }).catch(function (err) {
         console.log(err);
       });

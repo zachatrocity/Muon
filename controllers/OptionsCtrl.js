@@ -1,7 +1,7 @@
 muonApp.controller('OptionsCtrl', function ($scope, $stateParams) {
 	
-	var muteFalseText = 'Mute Sound &nbsp<span class="batch" data-icon="&#xf03b"></span>';
-	var muteTrueText = 'Unmute Sound &nbsp<span class="batch" data-icon="&#xf038" style="color: #990000"></span>';
+	var muteFalseText = 'Mute Music &nbsp<span class="batch" data-icon="&#xf03b"></span>';
+	var muteTrueText = 'Unmute Music &nbsp<span class="batch" data-icon="&#xf038" style="color: #990000"></span>';
 
 	db.get('music_enabled').then(function(doc) {
 		if(doc.title){
@@ -25,7 +25,7 @@ muonApp.controller('OptionsCtrl', function ($scope, $stateParams) {
 				});
 			}).then(function(response) {
 			  // handle response
-			  Audio.background.stop()
+			  Audio.background.stop();
 			}).catch(function (err) {
 			  console.log(err);
 			});
@@ -41,7 +41,7 @@ muonApp.controller('OptionsCtrl', function ($scope, $stateParams) {
 				});
 			}).then(function(response) {
 			  // handle response
-			  Audio.background.play()
+			  Audio.background.play();
 			}).catch(function (err) {
 			  console.log(err);
 			});
