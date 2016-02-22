@@ -133,7 +133,21 @@ var gameCore = {
 				}
 			});
 
-			if(closestNode && gameCore.BelongsToPlayer(gameCore.p2Pos, closestNode.foci)){
+			if(gameCore.roomid != null){
+
+				if(gameCore.team == gameCore.turn){
+					//select all the nodes around the node we clicked
+					var startIndex = closestNode.index - (closestNode.index % 3);
+					//closestNode.selected = true;
+					d3.selectAll(".id" + startIndex + ",.id" + (startIndex + 1) + ",.id" + (startIndex + 2))
+						.transition()
+						.duration(450)
+						.attr("r", 15);
+
+					gameCore.board.selectedMuon = closestNode.foci;
+				}
+
+			} else if (closestNode && gameCore.BelongsToPlayer(gameCore.p2Pos, closestNode.foci)){
 
 				//select all the nodes around the node we clicked
 				var startIndex = closestNode.index - (closestNode.index % 3);
