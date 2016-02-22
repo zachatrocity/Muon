@@ -2,8 +2,13 @@
 
 <body>
 <h2 id="boardHeaderText"></h2>
+
+<div class="atom">
+	<img src="./images/atom.svg">
+</div>
+
 <div class="gameboard">
-    <img src="./images/board.svg">
+    <img src="./images/newBoard.png">
 </div>
 <div class="gamepeices">
   
@@ -34,8 +39,9 @@
 			
 		</ul>
 		<form id="chat-form" ng-submit="sendChat()">
-		      <input id="chat-text" ng-model="chatText" autofocus>
-		      <input id="chat-enter" type="submit" class="button">
+			<span class='batch' data-icon='&#xf139'></span>
+		    <input id="chat-text" ng-model="chatText" autofocus>
+		    <input id="chat-enter" type="submit" class="button">
 		</form>
 	</div>
 
@@ -44,14 +50,25 @@
 		ng-class="{'dim-lights': showQuitModal}">
 		<div class="modal-dialog" ng-init="showQuitModal = false;"
 			ng-class="{'show-modal': showQuitModal}">
-			Are you sure you wish to return to the Main Menu? <br />
 			
-			<input type="button" class="modal-btn" ng-click="showQuitModal = false;" 
-				value="Cancel" ng-focus="true"
-				ng-init="showQuitModal = false;" ng-class="{'show-modal-btn': showQuitModal}" />
+			<span class="modal-X batch" data-icon='&#xf14e' 
+				ng-click="showQuitModal = false;" 
+				ng-class="{'show-modal-btn': showQuitModal}"></span>
 			
-			<input type="button" class="modal-btn" ng-click="quitToMenu()" value="Quit" 
-				ng-init="showQuitModal = false;" ng-class="{'show-modal-btn': showQuitModal}" />
+			<h3 class="modal-prompt">Are you sure you wish to return to the Main Menu?</h3>
+			
+			<div class="row">
+				<div class="col-xs-4 col-xs-offset-2">
+					<input type="button" class="modal-btn" ng-click="showQuitModal = false;" 
+						value="Cancel" ng-focus="true"
+						ng-init="showQuitModal = false;" ng-class="{'show-modal-btn': showQuitModal}" />
+				</div>
+				
+				<div class="col-xs-4">
+					<input type="button" class="modal-btn" ng-click="quitToMenu()" value="Quit" 
+						ng-init="showQuitModal = false;" ng-class="{'show-modal-btn': showQuitModal}" />
+				</div>
+			</div>
 		</div>
     </div>
 
@@ -59,14 +76,24 @@
 		ng-class="{'dim-lights': showNewGameModal}">
 		<div class="modal-dialog" ng-init="showNewGameModal = false;"
 			ng-class="{'show-modal': showNewGameModal}">
-			Are you sure you want to start a new game? <br />
 			
-			<input type="button" class="modal-btn" ng-click="showNewGameModal = false;" 
-				value="Cancel"
-				ng-init="showNewGameModal = false;" ng-class="{'show-modal-btn': showNewGameModal}" />
+			<span class="modal-X batch" data-icon='&#xf14e' 
+				ng-click="showNewGameModal = false;" 
+				ng-class="{'show-modal-btn': showNewGameModal}"></span>
 			
-			<input type="button" class="modal-btn" ng-click="startNewGame()" value="New Game" 
-				ng-init="showNewGameModal = false;" ng-class="{'show-modal-btn': showNewGameModal}" />
+			<h3 class="modal-prompt">Are you sure you want to start a new game?</h3>
+			
+			<div class="row">
+				<div class="col-xs-4 col-xs-offset-2">
+					<input type="button" class="modal-btn" ng-click="showNewGameModal = false;" 
+						value="Cancel"
+						ng-init="showNewGameModal = false;" ng-class="{'show-modal-btn': showNewGameModal}" />
+				</div>
+				<div class="col-xs-4">
+					<input type="button" class="modal-btn" ng-click="startNewGame()" value="New Game" 
+						ng-init="showNewGameModal = false;" ng-class="{'show-modal-btn': showNewGameModal}" />
+				</div>
+			</div>
 		</div>
     </div>
 </body>

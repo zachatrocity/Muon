@@ -20,13 +20,10 @@ var _loser = new Howl({
   urls: ['audio/loser.wav']
 });
 
-// This file is Phone Home by Lamin Fofana
-// https://soundcloud.com/laminfofana/phone-home
-// NOT OURS
 var _background = new Howl({
-  urls: ['audio/background.ogg'],
+  urls: ['audio/hive.ogg'],
   loop: true,
-  autoplay: false
+  autoplay: true
 });
 
 // The audio object that will contain arrays of songs to play for various actions

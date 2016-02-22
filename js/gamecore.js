@@ -17,8 +17,16 @@ var gameCore = {
 	playerTwoFlag: true,
 	// Flag for the current player's turn
 	player1Turn: true,
-	// A list of the past ~10 move that the player/opponet have made (5 ea.)
+	// Maximum moves to keep track of
+	MAX_HIST: 30,
+	// A history of the moves made by both player and AI/p2
+	// If this is >= MAX_HIST then the AI will accept a draw
+	// The players (humans) can offer a draw at any time though (I think...)
 	moveHistory: [],
+	// For when the game ends if we display if the local player won or lost
+	isWinner: false,
+	// Stop allowing the selection of muons if true
+	gameOver: false,
 	team: '',
 	turn: '',
 	roomid: null,
@@ -29,21 +37,21 @@ var gameCore = {
 		links: [],
 		width: 700,
     	height: 700,
-		foci: 	[{x: 5, y: 5}, {x: 300, y: 5},        //
-                        {x: 150, y: 150},              // Quad A
-                {x: 5, y: 300}, {x: 300, y: 300},    //
+		foci: 	[{x: 0, y: 0}, {x: 285, y: 0},        //
+                        {x: 140, y: 140},              // Quad A
+                {x: 0, y: 285}, {x: 285, y: 285},    //
 
-                {x: 400, y: 400}, {x: 675, y: 400},   //
-                        {x: 550, y: 550},             // Quad D
-                {x: 400, y: 675}, {x: 675, y: 675},  //
+                {x: 415, y: 415}, {x: 700, y: 415},   //
+                        {x: 560, y: 560},             // Quad D
+                {x: 415, y: 700}, {x: 700, y: 700},  //
                 
-                {x: 400, y: 5}, {x: 675, y: 5},    //
-                      {x: 550, y: 150},                // Quad B
-                {x: 400, y: 300}, {x: 675, y: 300},    //
+                {x: 415, y: 0}, {x: 700, y: 0},    //
+                      {x: 560, y: 140},                // Quad B
+                {x: 415, y: 285}, {x: 700, y: 285},    //
                 
-                {x: 5, y: 400}, {x: 300, y: 400},   //
-                         {x: 150, y: 550},            // Quad C
-                {x: 5, y: 675}, {x: 300, y: 675}],   //
+                {x: 0, y: 415}, {x: 285, y: 415},   //
+                         {x: 140, y: 140},            // Quad C
+                {x: 0, y: 700}, {x: 285, y: 700}],   //
         boardSVG: null,
         d3force: null,
         activeNodes: null,
@@ -81,9 +89,12 @@ var gameCore = {
 			var point = d3.mouse(this);
 			var maxdist = 30
 			var maxFociDist = 60;
+
+			if (gameCore.gameOver)
+				return
+
 			// This loops through all the nodes and find the index of atleast one node within
 			// 30 to point
-
 			if(gameCore.board.selectedMuon != null){
 				//see if the click was near a foci
 				gameCore.board.foci.forEach(function(target, index) {
@@ -122,7 +133,8 @@ var gameCore = {
 				}
 			});
 
-			if(closestNode){
+			if(closestNode && gameCore.BelongsToPlayer(gameCore.p2Pos, closestNode.foci)){
+
 				//select all the nodes around the node we clicked
 				var startIndex = closestNode.index - (closestNode.index % 3);
 				//closestNode.selected = true;
@@ -236,6 +248,14 @@ var gameCore = {
 
 	},
 
+	// Determines if the selected node belongs to the current player
+	// This is so the player cannot select a piece that is not theirs
+	BelongsToPlayer: function(player, selectedNode) {
+		node = convert.intToBit(selectedNode)
+
+		return (player & node) > 0
+	},
+
 	// Determines if the move the player wishes to perform is a valid one
 	// Assumes that the move is passed in the form of bits
 	ValidMove: function(from, to) {
@@ -250,6 +270,17 @@ var gameCore = {
 		// console.log(gameCore.dec2bin(to));
 		// console.log(gameCore.dec2bin(openPositions & to));
 		return (openPositions & to) > 0;
+	},
+
+	// Adds the specified move to the history list
+	// Only keeps track of the past ~30 moves (15 ea)
+	AddMoveToHistory: function(move) {
+		if (gameCore.moveHistory.length < gameCore.MAX_HIST)
+			gameCore.moveHistory.push(move);
+		else {
+			gameCore.moveHistory.shift();
+			gameCore.moveHistory.push(move);
+		}
 	},
 
 	GetAvailableMoves: function(quad, node) {
@@ -270,7 +301,7 @@ var gameCore = {
 		console.log("opponent moved from " + inputFrom + " to " + inputTo);
 		// Perform move
 		gameCore.p1Pos ^= bitFrom ^ bitTo;
-		gameCore.moveHistory.push(new Move(from, to, "player"));
+		gameCore.AddMoveToHistory(new Move(from, to, "opponent"));
 		gameCore.board.moveMuonTweenFoci(from, to);
 	},
 
@@ -290,12 +321,12 @@ var gameCore = {
 				console.log("Player moved from " + inputFrom + " to " + inputTo);
 				// Perform move
 				gameCore.p2Pos ^= bitFrom ^ bitTo;
-				gameCore.moveHistory.push(new Move(from, to, "player"));
+				gameCore.AddMoveToHistory(new Move(from, to, "player"));
 				gameCore.player1Turn = true; //AIs turn
 				gameCore.board.moveMuonTweenFoci(from, to);
 				//display.displayBoard(gameCore.p1Pos, gameCore.p2Pos);
 
-				if (gameCore.GameOver()) {
+				if (gameCore.GameOver(gameCore.p2Pos)) {
 					gameCore.EndGame();
 				}
 				else {
@@ -316,6 +347,10 @@ var gameCore = {
 					gameCore.p2Pos ^= bitFrom ^ bitTo;
 					gameCore.board.moveMuonTweenFoci(from, to);
 					cloak.message('turnDone', [from, to]);
+
+					if (gameCore.GameOver(gameCore.p1Pos)) {
+						gameCore.EndGame();
+					}
 
 				} else {
 					console.log("it is not your turn idiot.");
@@ -338,12 +373,16 @@ var gameCore = {
 	},
 
 	// Returns 'P' for player won, 'O' for opponent won, and 'N' for no winner
-	GameOver: function() {
-		var over = false;
-
-		//...
-
-		return over;
+	GameOver: function(position) {
+		player = position == gameCore.p1Pos ? 1 : 2
+		if (evaluation.Win(position, player, gameCore.playerOneFlag, gameCore.playerTwoFlag)) {
+			isWinner = player == 1 ? false : true
+			return true
+		}
+		else {
+			console.log("No one won")
+			return false
+		}
 	},
 
 	RestartGame: function(isNetworkGame) {
@@ -363,7 +402,13 @@ var gameCore = {
 	// Sets the game board to not be able to be interfered wiith by the player
 	EndGame: function() {
 		// Lock the board from player input
-		console.log("game over");
+		gameCore.gameOver = true;
+
+		if (isWinner) {
+			console.log("YOU WON!")
+		}
+		else
+			console.log("YOU LOST!")
 	},
 
 	dec2bin: function(dec) {
@@ -375,7 +420,11 @@ aiWorker.onmessage = function(e) {
 	console.log('Message received from worker');
 	
 	gameCore.p1Pos ^= (convert.intToBit(e.data.from)) ^ (convert.intToBit(e.data.to));
-	gameCore.moveHistory.push(new Move(e.data.from, e.data.to, "ai"));
+	gameCore.AddMoveToHistory(new Move(e.data.from, e.data.to, "ai"));
 	gameCore.player1Turn = false; //human turn
 	gameCore.board.moveMuonTweenFoci(e.data.from, e.data.to);
+
+	if (gameCore.GameOver(gameCore.p1Pos)) {
+		gameCore.EndGame();
+	}
 };
