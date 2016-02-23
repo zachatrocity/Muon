@@ -417,9 +417,12 @@ var gameCore = {
 
 		if (winner == "won") {
 			console.log("YOU WON!")
+			BoardGUI.showWinModal();
 		}
-		else if (winner == "lost")
+		else if (winner == "lost"){
 			console.log("YOU LOST!")
+			BoardGUI.showLoseModal();
+		}
 		else
 			console.log("IT'S A TIE!")
 	},

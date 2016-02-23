@@ -13,12 +13,13 @@ gulp.task('package', function () {
             "./js/*",
             "./images/*",
             "./audio/*",
-            "./font/*",
+            "./font/**/**",
             "./css/*",
             "./controllers/*"
         ], // use the glob format
         platforms: ['win','osx'],
-        version: '0.12.3'
+        version: '0.12.3',
+        winIco: "./images/muonIcon.ico"
     });
 
     //Log stuff you want

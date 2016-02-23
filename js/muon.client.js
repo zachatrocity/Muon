@@ -122,10 +122,61 @@ var BoardGUI = {
   },
   clearChatMessages: function(){
     document.getElementById("messages").innerHTML = '';
+  },
+  showWaitingModal: function(){
+    var modal = document.getElementById("waiting_modal")
+    if(modal != null){
+      modal.classList.add("dim-lights");
+      modal.children[0].classList.add("show-modal");
+    }
+  },
+  hideWaitingModal: function(){
+    var modal = document.getElementById("waiting_modal")
+    if(modal != null){
+      modal.classList.remove("dim-lights");
+      modal.children[0].classList.remove("show-modal");
+    }
+  },
+  showWinModal: function(){
+    var modal = document.getElementById("win-modal")
+    if(modal != null){
+      modal.classList.add("dim-lights");
+      modal.children[0].classList.add("show-modal");
+      modal.getElementsByTagName("input")[0].classList.add("show-modal-btn");
+      modal.getElementsByTagName("input")[1].classList.add("show-modal-btn");
+    }
+  },
+  hideWinModal: function(){
+    var modal = document.getElementById("win-modal")
+    if(modal != null){
+      modal.classList.remove("dim-lights");
+      modal.children[0].classList.remove("show-modal");
+      modal.getElementsByTagName("input")[0].classList.remove("show-modal-btn");
+      modal.getElementsByTagName("input")[1].classList.remove("show-modal-btn");
+    }
+  },
+  showLoseModal: function(){
+    var modal = document.getElementById("lose-modal")
+    if(modal != null){
+      modal.classList.add("dim-lights");
+      modal.children[0].classList.add("show-modal");
+      modal.getElementsByTagName("input")[0].classList.add("show-modal-btn");
+      modal.getElementsByTagName("input")[1].classList.add("show-modal-btn");
+    }
+  },
+  hideLoseModal: function(){
+    var modal = document.getElementById("lose-modal")
+    if(modal != null){
+      modal.classList.remove("dim-lights");
+      modal.children[0].classList.remove("show-modal");
+      modal.getElementsByTagName("input")[0].classList.remove("show-modal-btn");
+      modal.getElementsByTagName("input")[1].classList.remove("show-modal-btn");
+    }
   }
 }
 
 var Network = {
+  isConnected: false,
   configureNetwork: function(){
     cloak.configure({
       messages: {
@@ -203,7 +254,8 @@ var Network = {
 
           if (members.length > 1) {
             if(gameCore.turn == gameCore.team){
-              BoardGUI.setBoardHeaderElement("Your Turn");  
+              BoardGUI.setBoardHeaderElement("Your Turn");
+              gameCore.BoardGUI.hideWaitingModal();  
             } else {
               BoardGUI.setBoardHeaderElement("Their Turn");
             }
@@ -234,10 +286,12 @@ var Network = {
       serverEvents: {
         'connect': function() {
           console.log('connect');
+          Network.isConnected = true;
         },
 
         'disconnect': function() {
           console.log('disconnect');
+          Network.isConnected = false;
         },
 
         'lobbyMemberJoined': function(user) {

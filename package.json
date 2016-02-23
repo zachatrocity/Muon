@@ -11,11 +11,9 @@
   ],
   "window": {
     "title": "Muon",
-    "icon": "link.png",
+    "icon": "images/muonIcon.ico",
     "toolbar": false,
-    "fullscreen": false,
-    "width": 1360,
-    "height": 768
+    "fullscreen": true
   },
   "options":{
     "music_enabled": true

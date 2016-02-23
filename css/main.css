@@ -122,8 +122,8 @@ body {
 	background-size: 200% 200%;
 	height: 100%;
 	width: 100%;
-	-webkit-animation: background 6s ease infinite;
-	-webkit-animation-direction: alternate;
+	/*-webkit-animation: background 6s ease infinite;
+	-webkit-animation-direction: alternate;*/
 }
 
 img {

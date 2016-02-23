@@ -1,6 +1,6 @@
 ; Installer Variables
 #define AppName "Muon"
-#define AppVersion "Alpha 0.0.0.1"
+#define AppVersion "Alpha 0.0.0.2"
 #define AppPublisher "Colossity"
 #define AppURL "https://github.com/zachatrocity/Muon"
 #define AppExeName "Muon.exe"
@@ -50,7 +50,7 @@ SolidCompression=yes
 
 ; Final Installer
 OutputBaseFilename=MuonInstaller_{#AppVersion}
-;SetupIconFile=..\images\muon.ico
+SetupIconFile=..\images\muonIcon.ico
 OutputDir=.\
 
 
@@ -68,17 +68,17 @@ Source: "..\build\Muon\win32\libEGL.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\build\Muon\win32\icudtl.dat"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\build\Muon\win32\ffmpegsumo.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\build\Muon\win32\d3dcompiler_47.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\images\muonIcon.ico"; DestDir: "{app}"; Flags: ignoreversion
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 
 [Icons]
 ; Add an Icon in the app folder as a reference
-;Name: "{app}\{#AppName}"; WorkingDir: "{app}"; Filename: "{app}\node-webkit\nw.exe"; Parameters:"""{app}\app"""; IconFilename: "{app}\app\images\popcorntime.ico"; Flags: runminimized preventpinning
+Name: "{app}\{#AppName}"; WorkingDir: "{app}"; Filename: "{app}\Muon.exe"; Parameters:"""{app}\app"""; IconFilename: "{app}\muonIcon.ico"; Flags: runminimized preventpinning
 ; Another in the group (this one can be featured)
-;Name: "{group}\{#AppName}"; WorkingDir: "{app}"; Filename: "{app}\node-webkit\nw.exe"; Parameters:"""{app}\app"""; IconFilename: "{app}\app\images\popcorntime.ico"; Flags: runminimized
+Name: "{group}\{#AppName}"; WorkingDir: "{app}"; Filename: "{app}\Muon.exe"; Parameters:"""{app}\app"""; IconFilename: "{app}\muonIcon.ico"; Flags: runminimized
 ; Another in the desktop
-;Name: "{commondesktop}\{#AppName}"; WorkingDir: "{app}"; Filename: "{app}\node-webkit\nw.exe"; Parameters:"""{app}\app"""; IconFilename: "{app}\app\images\popcorntime.ico"; Flags: runminimized preventpinning
-
+Name: "{commondesktop}\{#AppName}"; WorkingDir: "{app}"; Filename: "{app}\Muon.exe"; Parameters:"""{app}\app"""; IconFilename: "{app}\muonIcon.ico"; Flags: runminimized preventpinning
 
 [Run]
 ; Run the app after installing

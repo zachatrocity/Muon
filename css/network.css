@@ -50,7 +50,6 @@
 
 #lobby-list li {
 	padding: 4px;
-	overflow: inherit;
 	height: 1.5em;    
     line-height: 12px;
 }
