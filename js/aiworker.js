@@ -318,15 +318,12 @@ var updateBoardp1 = function(start, end){
 var moves = 0;
 var totalTime = 0;
 var makeMoveAgainstAI = function(start, end, HumanMovesFirst){
-	var depth = 7;
 	updateBoardp2(start, end); // Human move
 	var t0 = Date.now();
 
 	if(!evaluation.Win(p2_Position, 2, p1_flag, p2_flag)){
-		AI.maxDepth = depth;
-
 		var t0 = Date.now();
-		AI.pvs(-1000, 1000, depth, p1_Position, p2_Position);
+		AI.pvs(-1000, 1000, AI.maxDepth, p1_Position, p2_Position);
 
 		moves++;
 		totalTime += (Date.now() -t0);
@@ -351,11 +348,8 @@ var makeMoveAgainstAI = function(start, end, HumanMovesFirst){
 }
 
 var makeAIMove = function(){
-	var depth = 7;
-	AI.maxDepth = depth;
-
 	var t0 = Date.now();
-	AI.pvs(-1000, 1000, depth, p1_Position, p2_Position);
+	AI.pvs(-1000, 1000, AI.maxDepth, p1_Position, p2_Position);
 
 	moves++;
 	totalTime += (Date.now() -t0);
@@ -387,6 +381,7 @@ onmessage = function(e) {
 		AI.currentMoveOptions = [];
 		AI.nextMoveOption = [];
 		AI.bestMovePredicted = [];
+		AI.maxDepth = e.data.depth;
 		if(e.data.AIStarts === true){
 			var workerResult = makeAIMove();
 			postMessage(workerResult);

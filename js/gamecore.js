@@ -30,6 +30,7 @@ var gameCore = {
 	team: '',
 	turn: '',
 	roomid: null,
+	AITreeDepth: 7,
 
 	//gameboard
 	board: {
@@ -314,13 +315,6 @@ var gameCore = {
 		gameCore.board.moveMuonTweenFoci(from, to);
 	},
 
-	computerGoesFirst:function( goFirst ){
-		aiWorker.postMessage(
-		{
-			'AIStarts':goFirst,
-		});
-	},
-
 	// Moves a piece from one position to another
 	// Assumes that the move is passed in the form of 0-19
 	AttemptMove: function(from, to) {
@@ -410,7 +404,8 @@ var gameCore = {
 	 		aiWorker.postMessage(
 			{ 
 				'restart': true,
-				'AIStarts': gameCore.AIwentFirst
+				'AIStarts': gameCore.AIwentFirst,
+				'depth': gameCore.AITreeDepth
 			});
 	 	}
 	},
