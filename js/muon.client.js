@@ -10,6 +10,44 @@ var NetworkGUI = {
   getLobbyElement: function() {
     return document.getElementById("lobby-list");
   },
+  addTestLobbyElemnts: function(){
+    var lobbyListElement = NetworkGUI.getLobbyElement();
+    if(lobbyListElement != null){
+      lobbyListElement.innerHTML = '';
+      lobbyListElement.innerHTML += '<li>' + unescape("zach") + '</li>';
+      lobbyListElement.innerHTML += '<li>' + unescape("zach") + '</li>';
+      lobbyListElement.innerHTML += '<li>' + unescape("zach") + '</li>';
+      lobbyListElement.innerHTML += '<li>' + unescape("zach") + '</li>';
+      lobbyListElement.innerHTML += '<li>' + unescape("zach") + '</li>';
+      lobbyListElement.innerHTML += '<li>' + unescape("zach") + '</li>';
+      lobbyListElement.innerHTML += '<li>' + unescape("zach") + '</li>';
+      lobbyListElement.innerHTML += '<li>' + unescape("zach") + '</li>';
+      lobbyListElement.innerHTML += '<li>' + unescape("zach") + '</li>';
+      lobbyListElement.innerHTML += '<li>' + unescape("zach") + '</li>';
+      lobbyListElement.innerHTML += '<li>' + unescape("zach") + '</li>';
+      lobbyListElement.innerHTML += '<li>' + unescape("zach") + '</li>';
+      lobbyListElement.innerHTML += '<li>' + unescape("zach") + '</li>';
+      lobbyListElement.innerHTML += '<li>' + unescape("zach") + '</li>';
+      lobbyListElement.innerHTML += '<li>' + unescape("zach") + '</li>';
+      lobbyListElement.innerHTML += '<li>' + unescape("zach") + '</li>';
+      lobbyListElement.innerHTML += '<li>' + unescape("zach") + '</li>';
+      lobbyListElement.innerHTML += '<li>' + unescape("zach") + '</li>';
+      lobbyListElement.innerHTML += '<li>' + unescape("zach") + '</li>';
+      lobbyListElement.innerHTML += '<li>' + unescape("zach") + '</li>';
+      lobbyListElement.innerHTML += '<li>' + unescape("zach") + '</li>';
+      lobbyListElement.innerHTML += '<li>' + unescape("zach") + '</li>';
+      lobbyListElement.innerHTML += '<li>' + unescape("zach") + '</li>';
+      lobbyListElement.innerHTML += '<li>' + unescape("zach") + '</li>';
+      lobbyListElement.innerHTML += '<li>' + unescape("zach") + '</li>';
+      lobbyListElement.innerHTML += '<li>' + unescape("zach") + '</li>';
+      lobbyListElement.innerHTML += '<li>' + unescape("zach") + '</li>';
+      lobbyListElement.innerHTML += '<li>' + unescape("zach") + '</li>';
+      lobbyListElement.innerHTML += '<li>' + unescape("zach") + '</li>';
+      lobbyListElement.innerHTML += '<li>' + unescape("zach") + '</li>';
+      lobbyListElement.innerHTML += '<li>' + unescape("zach") + '</li>';
+      lobbyListElement.innerHTML += '<li>' + unescape("zach") + '</li>';
+    }
+  },
   refreshLobbyElement: function(data) {
     var users = data.users;
     var inLobby = data.inLobby;
@@ -24,6 +62,34 @@ var NetworkGUI = {
         });
     }
   },
+  addTestRoomElement: function(){
+    var roomListElement = NetworkGUI.getRoomElement();
+    if(roomListElement != null){
+      roomListElement.innerHTML = '';
+      roomListElement.innerHTML += '<li><span>' + unescape("zach's room") + ' (' + 1 + '/' + 2 + ')</span><a class="button join-btn" href="#/board/' + 123 + '/0">join</a></li>';
+      roomListElement.innerHTML += '<li><span>' + unescape("jacob's room") + ' (' + 1 + '/' + 2 + ')</span><a class="button join-btn" href="#/board/' + 123 + '/0">join</a></li>';
+      roomListElement.innerHTML += '<li><span>' + unescape("jordan's room") + ' (' + 1 + '/' + 2 + ')</span><a class="button join-btn" href="#/board/' + 123 + '/0">join</a></li>';
+      roomListElement.innerHTML += '<li><span>' + unescape("zach's room") + ' (' + 1 + '/' + 2 + ')</span><a class="button join-btn" href="#/board/' + 123 + '/0">join</a></li>';
+      roomListElement.innerHTML += '<li><span>' + unescape("zach's room") + ' (' + 1 + '/' + 2 + ')</span><a class="button join-btn" href="#/board/' + 123 + '/0">join</a></li>';
+      roomListElement.innerHTML += '<li><span>' + unescape("zach's room") + ' (' + 1 + '/' + 2 + ')</span><a class="button join-btn" href="#/board/' + 123 + '/0">join</a></li>';
+      roomListElement.innerHTML += '<li><span>' + unescape("zach's room") + ' (' + 1 + '/' + 2 + ')</span><a class="button join-btn" href="#/board/' + 123 + '/0">join</a></li>';
+      roomListElement.innerHTML += '<li><span>' + unescape("zach's room") + ' (' + 1 + '/' + 2 + ')</span><a class="button join-btn" href="#/board/' + 123 + '/0">join</a></li>';
+      roomListElement.innerHTML += '<li><span>' + unescape("zach's room") + ' (' + 1 + '/' + 2 + ')</span><a class="button join-btn" href="#/board/' + 123 + '/0">join</a></li>';
+      roomListElement.innerHTML += '<li><span>' + unescape("zach's room") + ' (' + 1 + '/' + 2 + ')</span><a class="button join-btn" href="#/board/' + 123 + '/0">join</a></li>';
+      roomListElement.innerHTML += '<li><span>' + unescape("zach's room") + ' (' + 1 + '/' + 2 + ')</span><a class="button join-btn" href="#/board/' + 123 + '/0">join</a></li>';
+      roomListElement.innerHTML += '<li><span>' + unescape("zach's room") + ' (' + 1 + '/' + 2 + ')</span><a class="button join-btn" href="#/board/' + 123 + '/0">join</a></li>';
+      roomListElement.innerHTML += '<li><span>' + unescape("zach's room") + ' (' + 1 + '/' + 2 + ')</span><a class="button join-btn" href="#/board/' + 123 + '/0">join</a></li>';
+      roomListElement.innerHTML += '<li><span>' + unescape("zach's room") + ' (' + 1 + '/' + 2 + ')</span><a class="button join-btn" href="#/board/' + 123 + '/0">join</a></li>';
+      roomListElement.innerHTML += '<li><span>' + unescape("zach's room") + ' (' + 1 + '/' + 2 + ')</span><a class="button join-btn" href="#/board/' + 123 + '/0">join</a></li>';
+      roomListElement.innerHTML += '<li><span>' + unescape("zach's room") + ' (' + 1 + '/' + 2 + ')</span><a class="button join-btn" href="#/board/' + 123 + '/0">join</a></li>';
+      roomListElement.innerHTML += '<li><span>' + unescape("zach's room") + ' (' + 1 + '/' + 2 + ')</span><a class="button join-btn" href="#/board/' + 123 + '/0">join</a></li>';
+      roomListElement.innerHTML += '<li><span>' + unescape("zach's room") + ' (' + 1 + '/' + 2 + ')</span><a class="button join-btn" href="#/board/' + 123 + '/0">join</a></li>';
+      roomListElement.innerHTML += '<li><span>' + unescape("zach's room") + ' (' + 1 + '/' + 2 + ')</span><a class="button join-btn" href="#/board/' + 123 + '/0">join</a></li>';
+      roomListElement.innerHTML += '<li><span>' + unescape("zach's room") + ' (' + 1 + '/' + 2 + ')</span><a class="button join-btn" href="#/board/' + 123 + '/0">join</a></li>';
+      roomListElement.innerHTML += '<li><span>' + unescape("zach's room") + ' (' + 1 + '/' + 2 + ')</span><a class="button join-btn" href="#/board/' + 123 + '/0">join</a></li>';
+      roomListElement.innerHTML += '';
+    }
+  },
   getRoomElement: function() {
     return document.getElementById("room-list");
   },
@@ -32,9 +98,8 @@ var NetworkGUI = {
     if(roomListElement != null){
       roomListElement.innerHTML = '';
         _.each(rooms, function(room) {
-          roomListElement.innerHTML += '<li>' + unescape(room.name) + ' (' + room.users.length + '/' + room.size + ') <a href="#/board/' + room.id + '/0">join</a></li>';
+          roomListElement.innerHTML += '<li><span>' + unescape(room.name) + ' (' + room.users.length + '/' + room.size + ')</span><a class="button join-btn" href="#/board/' + room.id + '/0">join</a></li>';
         });
-      roomListElement.innerHTML += '</ul>';
     }
   }
 }

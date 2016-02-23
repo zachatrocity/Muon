@@ -1,0 +1,133 @@
+#lobbyDiv{
+	margin-bottom: 50px;
+  	min-height: 400px;
+  	max-height: 500px;
+  	background: rgba(174, 174, 174, 0.55);
+  	border-radius: 3px;
+  	box-shadow: 0 1px 5px rgba(0, 0, 0, 0.25);
+	color: black;
+	letter-spacing: 2px;
+	z-index: 100;
+}
+
+#roomDiv{
+	margin-bottom: 50px;
+	min-height: 400px;
+  	max-height: 500px;
+  	background: rgba(174, 174, 174, 0.55);
+  	border-radius: 3px;
+  	box-shadow: 0 1px 5px rgba(0, 0, 0, 0.25);
+	color: black;
+	letter-spacing: 2px;
+	z-index: 100;
+}
+
+#lobby-list {
+	width: 100%;
+	transition: .3s;
+	border-radius: 3px;
+	overflow:hidden; 
+	overflow-y:scroll;
+	margin-bottom: 20px;
+	padding: 0;
+	min-height: 400px;
+	max-height: 400px;
+}
+
+#lobby-list::-webkit-scrollbar {
+  width: 10px;
+}
+ 
+#lobby-list::-webkit-scrollbar-thumb {
+  background: #666;
+  border-radius: 20px;
+}
+
+#lobby-list::-webkit-scrollbar-track {
+  border-radius: 20px;
+}
+
+
+#lobby-list li {
+	padding: 4px;
+	overflow: inherit;
+	height: 1.5em;    
+    line-height: 12px;
+}
+
+#lobby-list li span {
+	display: inline-block;  
+    vertical-align: middle;
+}
+
+#lobby-list li:before{
+    content: '';
+    display: inline-block;
+    vertical-align: middle;
+    height: 100%;       
+}
+
+#lobby-list li:nth-child(odd) {
+	background: rgba(174, 174, 174, 0.75);
+}
+
+#room-list {
+	width: 100%;
+	transition: .3s;
+	border-radius: 3px;
+	overflow:hidden; 
+	overflow-y:scroll;
+	margin-bottom: 20px;
+	padding: 0;
+	min-height: 400px;
+	max-height: 400px;
+}
+
+#room-list::-webkit-scrollbar {
+  width: 10px;
+}
+ 
+#room-list::-webkit-scrollbar-thumb {
+  background: #666;
+  border-radius: 20px;
+}
+
+#room-list::-webkit-scrollbar-track {
+  border-radius: 20px;
+}
+
+
+#room-list li {
+	padding: 4px;
+	overflow: inherit;
+	height: 3em;    
+    line-height: 12px;
+}
+
+#room-list li span {
+	display: inline-block;  
+    vertical-align: middle;
+}
+
+#room-list li:before{
+    content: '';
+    display: inline-block;
+    vertical-align: middle;
+    height: 100%;       
+}
+
+#room-list li:nth-child(odd) {
+	background: rgba(174, 174, 174, 0.75);
+}
+
+.join-btn {
+	padding: 18px;
+	float: right;
+	margin: 0;
+	vertical-align: middle;
+}
+
+
+.usernamebox{
+	z-index: 100;
+}

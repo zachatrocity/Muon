@@ -219,6 +219,7 @@ var muonApp = angular.module('muonApp', ["ui.router", "ngAnimate"])
       });
      } else {
       console.log("sound_enabled: " + resp.title);
+      Audio.togglesound = resp.title;
     }
   });
 
