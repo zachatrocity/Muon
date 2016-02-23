@@ -33,5 +33,6 @@ var Audio = {
     move: _move,
     winner: _winner,
     loser: _loser,
-    background: _background
+    background: _background,
+    togglesound: true
 };

@@ -1,19 +1,30 @@
 muonApp.controller('OptionsCtrl', function ($scope, $stateParams) {
 	
-	var muteFalseText = 'Mute Music &nbsp<span class="batch" data-icon="&#xf03b"></span>';
-	var muteTrueText = 'Unmute Music &nbsp<span class="batch" data-icon="&#xf038" style="color: #990000"></span>';
+	var muteMusicFalseText = 'Mute Music &nbsp<span class="batch" data-icon="&#xf03b"></span>';
+	var muteMusicTrueText = 'Unmute Music &nbsp<span class="batch" data-icon="&#xf038" style="color: #990000"></span>';
+
+	var muteSoundFXFalseText = 'Mute Sound FX &nbsp<span class="batch" data-icon="&#xf03b"></span>';
+	var muteSoundFXTrueText = 'Unmute Sound FX &nbsp<span class="batch" data-icon="&#xf038" style="color: #990000"></span>';
 
 	db.get('music_enabled').then(function(doc) {
 		if(doc.title){
-			document.getElementById("mutebtn").innerHTML = muteFalseText;
+			document.getElementById("mute-musicbtn").innerHTML = muteMusicFalseText;
 		} else {
-			document.getElementById("mutebtn").innerHTML = muteTrueText;
+			document.getElementById("mute-musicbtn").innerHTML = muteMusicTrueText;
 		}
 	})
 
-	$scope.toggleSound = function() {
+	db.get('sound_enabled').then(function(doc) {
+		if(doc.title){
+			document.getElementById("mute-soundbtn").innerHTML = muteSoundFXFalseText;
+		} else {
+			document.getElementById("mute-soundbtn").innerHTML = muteSoundFXTrueText;
+		}
+	})
+
+	$scope.toggleMusic = function() {
 		
-		var muteText = document.getElementById("mutebtn").innerHTML;
+		var muteText = document.getElementById("mute-musicbtn").innerHTML;
 		
 		if (muteText.indexOf("Unmute") == -1)
 		{			
@@ -29,7 +40,7 @@ muonApp.controller('OptionsCtrl', function ($scope, $stateParams) {
 			}).catch(function (err) {
 			  console.log(err);
 			});
-			document.getElementById("mutebtn").innerHTML = muteTrueText;
+			document.getElementById("mute-musicbtn").innerHTML = muteMusicTrueText;
 		}
 		else
 		{
@@ -45,7 +56,45 @@ muonApp.controller('OptionsCtrl', function ($scope, $stateParams) {
 			}).catch(function (err) {
 			  console.log(err);
 			});
-			document.getElementById("mutebtn").innerHTML = muteFalseText;
+			document.getElementById("mute-musicbtn").innerHTML = muteMusicFalseText;
+		}
+	}
+
+	$scope.toggleSound = function() {
+		
+		var muteText = document.getElementById("mute-soundbtn").innerHTML;
+		
+		if (muteText.indexOf("Unmute") == -1)
+		{			
+			db.get('sound_enabled').then(function(doc) {
+				return db.put({
+					_id: 'sound_enabled',
+					_rev: doc._rev,
+					title: false
+				});
+			}).then(function(response) {
+			  // handle response
+			  Audio.togglesound = false;
+			}).catch(function (err) {
+			  console.log(err);
+			});
+			document.getElementById("mute-soundbtn").innerHTML = muteSoundFXTrueText;
+		}
+		else
+		{
+			db.get('sound_enabled').then(function(doc) {
+				return db.put({
+					_id: 'sound_enabled',
+					_rev: doc._rev,
+					title: true
+				});
+			}).then(function(response) {
+			  // handle response
+			  Audio.togglesound = true;
+			}).catch(function (err) {
+			  console.log(err);
+			});
+			document.getElementById("mute-soundbtn").innerHTML = muteSoundFXFalseText;
 		}
 	}
 	
