@@ -1,10 +1,21 @@
 <!-- views/newgame.html -->
 <h1 class="view-heading">Start a New Game</h1>
 
-<ul>
-  <li ng-repeat="option in options">{{ option }}</li>
-</ul>
+<h1>Team</h1>
+<div class="dif-container">
+  <div class="button-wrap">
+    <input type="radio" name="accept-offers" id="muon-button" checked="checked" class="hidden radio-label"/>
+    <label for="muon-button" class="button-label">
+      <h1>Muon</h1>
+    </label>
+    <input type="radio" name="accept-offers" id="antimuon-button" class="hidden radio-label"/>
+    <label for="antimuon-button" class="button-label">
+      <h1>Antimuon</h1>
+    </label>
+  </div>
+</div>
 
+<h1>Difficulty</h1>
 <div class="dif-container">
   <div class="button-wrap">
     <input type="radio" name="accept-offers" id="easy-button" checked="checked" class="hidden radio-label"/>

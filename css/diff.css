@@ -74,6 +74,24 @@ input[type="radio"]{
   color: #e2e2e2;
 }
 
+#muon-button:checked + .button-label {
+  background: #2ECC71;
+  color: #efefef;
+}
+#muon-button:checked + .button-label:hover {
+  background: #29b765;
+  color: #e2e2e2;
+}
+
+#antimuon-button:checked + .button-label {
+  background: #4183D7;
+  color: #efefef;
+}
+#antimuon-button:checked + .button-label:hover {
+  background: #2c75d2;
+  color: #e2e2e2;
+}
+
 .hidden {
   display: none;
 }
