@@ -1,0 +1,170 @@
+
+
+fieldset {
+  position: relative;
+  border: none;
+  width: 16rem;
+  height: 16rem;
+  margin: 0 auto;
+}
+fieldset legend {
+  left: 0;
+  width: 100%;
+}
+fieldset label {
+  position: absolute;
+  display: block;
+  margin: 0 auto;
+  padding-top: 1rem;
+  width: 1rem;
+  left: 7.5rem;
+  -webkit-transform-origin: 50% 7.5rem;
+          transform-origin: 50% 7.5rem;
+}
+fieldset label:hover {
+  cursor: pointer;
+}
+fieldset input {
+  position: absolute;
+  width: 2rem;
+  left: 7rem;
+  display: block;
+  margin: 1rem auto 0 auto;
+  padding: 0;
+  -webkit-transform-origin: 50% 7.5rem;
+          transform-origin: 50% 7.5rem;
+  opacity: 0;
+}
+fieldset input:hover {
+  cursor: pointer;
+}
+fieldset #radio-choice-easy, fieldset label[for="radio-choice-easy"] {
+  -webkit-transform: rotateZ(-53deg);
+          transform: rotateZ(-53deg);
+}
+fieldset #radio-choice-medium, fieldset label[for="radio-choice-medium"] {
+  -webkit-transform: rotateZ(0deg);
+          transform: rotateZ(0deg);
+  -webkit-transform: translate(-20px, 5px);
+          transform: translate(-20px, 5px);
+}
+fieldset #radio-choice-hard, fieldset label[for="radio-choice-hard"] {
+  -webkit-transform: rotateZ(38deg);
+          transform: rotateZ(38deg);
+}
+fieldset input[type="radio"]:checked + label {
+  color: #2f5;
+  text-shadow: 0px 0px 4px #2f5;
+}
+
+input[type="radio"]:checked#radio-choice-easy ~ .dial {
+  -webkit-transform: rotateZ(-48deg);
+          transform: rotateZ(-48deg);
+}
+input[type="radio"]:checked#radio-choice-easy ~ .dial::before {
+  -webkit-transform: rotateZ(48deg);
+          transform: rotateZ(48deg);
+}
+input[type="radio"]:checked#radio-choice-easy ~ .dial::after {
+  -webkit-transform: rotateZ(48deg);
+          transform: rotateZ(48deg);
+}
+input[type="radio"]:checked#radio-choice-medium ~ .dial {
+  -webkit-transform: rotateZ(0deg);
+          transform: rotateZ(0deg);
+}
+input[type="radio"]:checked#radio-choice-medium ~ .dial::before {
+  -webkit-transform: rotateZ(0);
+          transform: rotateZ(0);
+}
+input[type="radio"]:checked#radio-choice-medium ~ .dial::after {
+  -webkit-transform: rotateZ(0);
+          transform: rotateZ(0);
+}
+input[type="radio"]:checked#radio-choice-hard ~ .dial {
+  -webkit-transform: rotateZ(48deg);
+          transform: rotateZ(48deg);
+}
+input[type="radio"]:checked#radio-choice-hard ~ .dial::before {
+  -webkit-transform: rotateZ(-48deg);
+          transform: rotateZ(-48deg);
+}
+input[type="radio"]:checked#radio-choice-hard ~ .dial::after {
+  -webkit-transform: rotateZ(-48deg);
+          transform: rotateZ(-48deg);
+}
+
+.dial {
+  position: relative;
+  text-align: center;
+  line-height: 0;
+  font-size: 65%;
+  color: #082;
+  text-shadow: 0px 0px 7px #2f5;
+  display: block;
+  width: 8rem;
+  height: 8rem;
+  padding: 1rem;
+  margin-top: 20px;
+  background: -webkit-radial-gradient(#272727 30%, #333333 50%, #222222 65%, #111111 90%, #000000 98%);
+  background: radial-gradient(#272727 30%, #333333 50%, #222222 65%, #111111 90%, #000000 98%);
+  margin: 3rem auto;
+  border-radius: 50%;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.6);
+  -webkit-transition: -webkit-transform 0.3s ease-in-out;
+  transition: -webkit-transform 0.3s ease-in-out;
+  transition: transform 0.3s ease-in-out;
+  transition: transform 0.3s ease-in-out, -webkit-transform 0.3s ease-in-out;
+}
+.dial::before {
+  position: absolute;
+  content: '';
+  display: block;
+  width: 6rem;
+  height: 6rem;
+  border-radius: 50%;
+ 
+  -webkit-transition: -webkit-transform 0.3s ease-in-out;
+  transition: -webkit-transform 0.3s ease-in-out;
+  transition: transform 0.3s ease-in-out;
+  transition: transform 0.3s ease-in-out, -webkit-transform 0.3s ease-in-out;
+}
+.dial::after {
+  position: absolute;
+  content: '';
+  display: block;
+  width: 8rem;
+  height: 8rem;
+  border-radius: 50%;
+  top: 0;
+  left: 0;
+  
+  -webkit-transition: -webkit-transform 0.3s ease-in-out;
+  transition: -webkit-transform 0.3s ease-in-out;
+  transition: transform 0.3s ease-in-out;
+  transition: transform 0.3s ease-in-out, -webkit-transform 0.3s ease-in-out;
+}
+
+.clearfix:after {
+  visibility: hidden;
+  display: block;
+  font-size: 0;
+  content: " ";
+  clear: both;
+  height: 0;
+}
+
+.clearfix {
+  display: inline-block;
+}
+
+/* start commented backslash hack \*/
+* html .clearfix {
+  height: 1%;
+}
+
+.clearfix {
+  display: block;
+}
+
+/* close commented backslash hack */

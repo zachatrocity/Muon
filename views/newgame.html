@@ -5,7 +5,18 @@
   <li ng-repeat="option in options">{{ option }}</li>
 </ul>
 
-<a class="button" ui-sref="board">New Board</a>
+<fieldset>
+    <legend><h1>Difficulty</h1></legend>
+    <input type="radio" name="radio-choice" id="radio-choice-easy" value="5" />
+    <label for="radio-choice-easy">Easy</label>
+    <input type="radio" name="radio-choice" id="radio-choice-medium" value="7" />
+    <label for="radio-choice-medium">Medium</label> 
+    <input type="radio" name="radio-choice" id="radio-choice-hard" value="9" />
+    <label for="radio-choice-hard">Hard</label>
+<div class="dial">▲</div>
+</fieldset>
+
+<a class="button" ui-sref="board">Start</a>
 
 <div class="back">
 	<a class="button" onclick="history.back()">
