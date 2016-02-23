@@ -7,6 +7,8 @@ muonApp.controller('BoardCtrl', function ($scope, $stateParams, $state) {
 	
 	$scope.quitToMenu = function(){
 		$state.go('menu', {});
+		console.log('leaving room');
+		cloak.message('leaveRoom');
 	}
 	
 	$scope.sendChat = function(){
