@@ -114,3 +114,19 @@
 .show-modal-txt-box {
 	opacity: 1;
 }
+
+.waiting {
+	position: absolute;
+	top: 50%;
+	left: 30%;
+	transform: translate(-50%, -50%);
+	
+	background: rgba(0, 0, 0, 0.6);
+	width: 710px;
+	height: 710px;
+	z-index: 10000;
+}
+
+.dim-lights-waiting {
+	visibility: visible;
+}

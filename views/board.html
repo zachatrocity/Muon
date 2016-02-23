@@ -10,6 +10,22 @@
   
 </div>
 
+<div class="modal waiting" ng-init="showWaitingModal = false;"
+	ng-class="{'dim-lights-waiting': showWaitingModal}">
+	<div class="modal-dialog" ng-init="showWaitingModal = false;"
+		ng-class="{'show-modal': showWaitingModal}">
+		
+		<h3 class="modal-prompt">Waiting for opponent...</h3>
+		</br>
+		<div class="loader">
+			<div class="inner one"></div>
+			<div class="inner two"></div>
+			<div class="inner three"></div>
+		</div>
+
+	</div>
+</div>
+
 <!--
 <div class="inGameMenu">
 	<ul>
@@ -27,8 +43,8 @@
 	<div class="game-menu-container">
 		<a ng-click="showQuitModal = true">Main Menu</a>
 		<a ng-click="showNewGameModal = true">New Game</a>
-		<a ng-click="showQuitMuonModal = true">Quit</a>
 		<a ui-sref="#">Help</a>
+		<a ng-click="showQuitMuonModal = true">Quit</a>
 	</div>
 
 	<div id="chat" ng-model="chat">
@@ -62,7 +78,7 @@
 				</div>
 				
 				<div class="col-xs-4">
-					<input type="button" class="modal-btn" ng-click="quitToMenu()" value="Quit" 
+					<input type="button" class="modal-btn" ng-click="quitToMenu()" value="Continue" 
 						ng-init="showQuitModal = false;" ng-class="{'show-modal-btn': showQuitModal}" />
 				</div>
 			</div>
