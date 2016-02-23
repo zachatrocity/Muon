@@ -6,6 +6,13 @@ muonApp.controller('MenuCtrl', function ($scope, $stateParams, $state) {
 		$state.go('network', {'username':username});
 	}
 
+	$scope.showNetworkModal = function(){
+		$scope.showNetworkingModal = true;
+		setTimeout(function(){
+			document.getElementById('usernameInput').focus();
+		},1000);
+	}
+
 	$scope.mouse_over = function() {
 		if(Audio.togglesound)
 			Audio.menuOver.play();
