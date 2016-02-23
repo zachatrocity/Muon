@@ -201,7 +201,6 @@ img {
 }
 
 #messages::-webkit-scrollbar-track {
-  background: #ddd;
   border-radius: 20px;
 }
 
