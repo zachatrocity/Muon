@@ -29,7 +29,6 @@ input[type="radio"]{
 }
 .button-label h1 {
   font-size: 1em;
-  font-family: "Lato", sans-serif;
 }
 .button-label:hover {
   background: #d6d6d6;

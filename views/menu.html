@@ -11,7 +11,7 @@
         <div class="main-menu-item" ng-mouseover="mouse_over()">
 			<a ng-click="showNetworkingModal = true">Network</a></div>
         <div class="main-menu-item" ng-mouseover="mouse_over()">
-			<a ui-sref="howto" ng-click="mouse_click()">How to Play</a></div>
+			<a ui-sref="howto" ng-click="mouse_click()">Tutorial</a></div>
         <div class="main-menu-item" ng-mouseover="mouse_over()">
 			<a ui-sref="options" ng-click="mouse_click()">Options</a></div>
         <div class="main-menu-item" ng-mouseover="mouse_over()">
@@ -36,7 +36,7 @@
 		<!-- <a ng-click="joinLobby(username)">Join Lobby</a> -->
 		<div class="row">
 			<div class="col-xs-12"><input type="text" ng-model="username" 
-			class="modal-txt-box"
+			class="modal-txt-box" ng-enter="goToNetworkingPage(username)"
 			ng-class="{'show-modal-txt-box': showNetworkingModal}" required/></div>
 		</div>
 		<div class="row">
