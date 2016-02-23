@@ -213,6 +213,7 @@ var muonApp = angular.module('muonApp', ["ui.router", "ngAnimate"])
       }).then(function (response) {
       // handle response
         console.log(response);
+        Audio.togglesound = true;
       }).catch(function (err) {
         console.log(err);
       });
