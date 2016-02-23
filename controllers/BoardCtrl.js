@@ -9,8 +9,11 @@ muonApp.controller('BoardCtrl', function ($scope, $stateParams, $state) {
 	$scope.quitToMenu = function(){
 		$state.go('menu', {});
 		console.log('leaving room');
-		if (Network.isConnected)
+		if (Network.isConnected){
 			cloak.message('leaveRoom');
+			Network.isConnected = false;
+			cloak.end();
+		}
 	}
 	
 	$scope.sendChat = function(){

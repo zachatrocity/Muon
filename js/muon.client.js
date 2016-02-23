@@ -294,6 +294,10 @@ var Network = {
           Network.isConnected = false;
         },
 
+        'resume': function() {
+          console.log('RESUMING!!');
+        },
+
         'lobbyMemberJoined': function(user) {
           console.log('lobby member joined', user);
           cloak.message('listUsers');

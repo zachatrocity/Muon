@@ -1,6 +1,5 @@
 muonApp.controller('NetworkCtrl', function ($scope, $stateParams) {
 
-	Network.configureNetwork();
 	cloak.run(packjson.serverurl);
 
 	$scope.$on('$viewContentLoaded', function(){
