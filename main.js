@@ -43,9 +43,24 @@ var muonApp = angular.module('muonApp', ["ui.router", "ngAnimate"])
         })
 
         .state('howto', {
-            url: "/howto",
-            templateUrl: "views/howto.html",
+            url: "/help",
+            templateUrl: "views/help.html",
             controller: "HowToCtrl"
+        })
+
+        .state('help2', {
+            url: "/help2",
+            templateUrl: "views/help2.html"
+        })
+
+        .state('help3', {
+            url: "/help3",
+            templateUrl: "views/help3.html"
+        })
+
+        .state('help4', {
+            url: "/help4",
+            templateUrl: "views/help4.html"
         })
 
         .state('options', {

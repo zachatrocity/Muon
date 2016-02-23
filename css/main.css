@@ -314,6 +314,12 @@ h1.view-heading{
 	bottom: 0;
 }
 
+.next{
+	position: absolute;
+	right: 0;
+	bottom: 0;
+}
+
 /*BOARD CSS*/
 
 #boardHeaderText {
