@@ -26,6 +26,48 @@
 	</div>
 </div>
 
+<div class="modal" ng-init="showWinModal = false;"
+	ng-class="{'dim-lights': showWinModal}">
+	<div class="modal-dialog" ng-init="showWinModal = false;"
+		ng-class="{'show-modal': showWinModal}">
+		
+		<h3 class="modal-prompt">Muons Won!</h3>
+		
+		<div class="row">
+			<div class="col-xs-4 col-xs-offset-2">
+				<input type="button" class="modal-btn" ng-click="startNewGame()" value="New Game" 
+					ng-init="showWinModal = false;" ng-class="{'show-modal-btn': showWinModal}" />
+			</div>
+			
+			<div class="col-xs-4">
+				<input type="button" class="modal-btn" ng-click="quitToMenu()" value="Main Menu" 
+					ng-init="showWinModal = false;" ng-class="{'show-modal-btn': showWinModal}" />
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="modal" ng-init="showLoseModal = false;"
+	ng-class="{'dim-lights': showLoseModal}">
+	<div class="modal-dialog" ng-init="showLoseModal = false;"
+		ng-class="{'show-modal': showLoseModal}">
+		
+		<h3 class="modal-prompt">Antimuons Won!</h3>
+		
+		<div class="row">
+			<div class="col-xs-4 col-xs-offset-2">
+				<input type="button" class="modal-btn" ng-click="startNewGame()" value="New Game" 
+					ng-init="showLoseModal = false;" ng-class="{'show-modal-btn': showLoseModal}" />
+			</div>
+			
+			<div class="col-xs-4">
+				<input type="button" class="modal-btn" ng-click="quitToMenu()" value="Main Menu" 
+					ng-init="showLoseModal = false;" ng-class="{'show-modal-btn': showLoseModal}" />
+			</div>
+		</div>
+	</div>
+</div>
+
 <!--
 <div class="inGameMenu">
 	<ul>
