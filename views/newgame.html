@@ -1,38 +1,57 @@
 <!-- views/newgame.html -->
 <h1 class="view-heading">Start a New Game</h1>
 
-<h1>Team</h1>
+<div class="gamesettings">
+<h1 class="view-heading">Team</h1>
 <div class="dif-container">
   <div class="button-wrap">
-    <input type="radio" name="accept-offers" id="muon-button" checked="checked" class="hidden radio-label"/>
+    <input type="radio" name="team-select" id="muon-button" checked="checked" class="hidden radio-label"/>
     <label for="muon-button" class="button-label">
       <h1>Muon</h1>
     </label>
-    <input type="radio" name="accept-offers" id="antimuon-button" class="hidden radio-label"/>
+    <input type="radio" name="team-select" id="antimuon-button" class="hidden radio-label"/>
     <label for="antimuon-button" class="button-label">
       <h1>Antimuon</h1>
     </label>
   </div>
 </div>
 
-<h1>Difficulty</h1>
+<h1 class="view-heading">Difficulty</h1>
 <div class="dif-container">
   <div class="button-wrap">
-    <input type="radio" name="accept-offers" id="easy-button" checked="checked" ng-click="setAILevel(5)" class="hidden radio-label"/>
+    <input type="radio" name="difficulty-select" id="easy-button" checked="checked" ng-click="setAILevel(5)" class="hidden radio-label"/>
     <label for="easy-button" class="button-label">
       <h1>Easy</h1>
     </label>
-    <input type="radio" name="accept-offers" id="med-button" ng-click="setAILevel(7)" class="hidden radio-label"/>
+    <input type="radio" name="difficulty-select" id="med-button" ng-click="setAILevel(7)" class="hidden radio-label"/>
     <label for="med-button" class="button-label">
       <h1>Medium</h1>
     </label>
-    <input type="radio" name="accept-offers" id="hard-button" ng-click="setAILevel(9)" class="hidden radio-label"/>
+    <input type="radio" name="difficulty-select" id="hard-button" ng-click="setAILevel(9)" class="hidden radio-label"/>
     <label for="hard-button" class="button-label">
       <h1>Hard</h1>
     </label>
   </div>
 </div>
 
+<h1 class="view-heading">First Move</h1>
+<div class="dif-container">
+  <div class="button-wrap">
+    <input type="radio" name="move-select" id="you-button" checked="checked" 
+    ng-click="setAIGoesFirst(false)"
+    class="hidden radio-label"/>
+    <label for="you-button" class="button-label">
+      <h1>You</h1>
+    </label>
+    <input type="radio" name="move-select" id="ai-button" 
+    ng-click="setAIGoesFirst(true)"
+    class="hidden radio-label"/>
+    <label for="ai-button" class="button-label">
+      <h1>AI</h1>
+    </label>
+  </div>
+</div>
+</div>
 <a class="button" ui-sref="board">Start</a>
 
 <div class="back">

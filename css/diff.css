@@ -1,3 +1,7 @@
+.gamesettings{
+  margin: 100px;
+}
+
 .diff-container {
   height: 100%;
   min-height: 100%;
@@ -91,6 +95,28 @@ input[type="radio"]{
   background: #2c75d2;
   color: #e2e2e2;
 }
+
+
+#you-button:checked + .button-label {
+  background: #2ECC71;
+  color: #efefef;
+}
+#you-button:checked + .button-label:hover {
+  background: #29b765;
+  color: #e2e2e2;
+}
+
+
+#ai-button:checked + .button-label {
+  background: #2ECC71;
+  color: #efefef;
+}
+#ai-button:checked + .button-label:hover {
+  background: #29b765;
+  color: #e2e2e2;
+}
+
+
 
 .hidden {
   display: none;

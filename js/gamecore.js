@@ -396,7 +396,6 @@ var gameCore = {
 	RestartGame: function(isNetworkGame) {
 		gameCore.board.clearBoard();
 	 	gameCore.board.createBoard();	
-	 	gameCore.AIGoesFirst = !gameCore.AIGoesFirst;
 
 	 	if(isNetworkGame){
 

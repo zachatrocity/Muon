@@ -10,9 +10,7 @@ muonApp.controller('BoardCtrl', function ($scope, $stateParams, $state) {
 		$state.go('menu', {});
 		console.log('leaving room');
 		if (Network.isConnected){
-			cloak.message('leaveRoom');
-			Network.isConnected = false;
-			cloak.end();
+			cloak.message('leaveRoom'); 
 		}
 	}
 	

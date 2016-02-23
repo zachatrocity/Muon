@@ -383,7 +383,14 @@ onmessage = function(e) {
 		AI.bestMovePredicted = [];
 		AI.maxDepth = e.data.depth;
 		if(e.data.AIStarts === true){
+			p1_Position ^= p2_Position;
+			p2_Position ^= p1_Position;
+			p1_Position ^= p2_Position;
+
 			var workerResult = makeAIMove();
+			
+			
+
 			postMessage(workerResult);
 		}
 	} else {

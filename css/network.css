@@ -98,7 +98,6 @@
 
 #room-list li {
 	padding: 4px;
-	overflow: inherit;
 	height: 3em;    
     line-height: 12px;
 }
