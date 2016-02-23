@@ -1,0 +1,80 @@
+.diff-container {
+  height: 100%;
+  min-height: 100%;
+  margin: 0 auto;
+}
+
+input[type="radio"]{
+  margin: 2px;
+}
+
+.button-label {
+  display: inline-block;
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  margin: 0.5em;
+  cursor: pointer;
+  color: #292929;
+  border-radius: 0.25em;
+  background: #efefef;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2), inset 0 -3px 0 rgba(0, 0, 0, 0.22);
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+}
+.button-label h1 {
+  font-size: 1em;
+  font-family: "Lato", sans-serif;
+}
+.button-label:hover {
+  background: #d6d6d6;
+  color: #101010;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2), inset 0 -3px 0 rgba(0, 0, 0, 0.32);
+}
+.button-label:active {
+  -webkit-transform: translateY(2px);
+          transform: translateY(2px);
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2), inset 0px -1px 0 rgba(0, 0, 0, 0.22);
+}
+@media (max-width: 40em) {
+  .button-label {
+    padding: 0em 1em 3px;
+    margin: 0.25em;
+  }
+}
+
+#easy-button:checked + .button-label {
+  background: #2ECC71;
+  color: #efefef;
+}
+#easy-button:checked + .button-label:hover {
+  background: #29b765;
+  color: #e2e2e2;
+}
+
+#med-button:checked + .button-label {
+  background: #2ECC71;
+  color: #efefef;
+}
+#med-button:checked + .button-label:hover {
+  background: #29b765;
+  color: #e2e2e2;
+}
+
+#hard-button:checked + .button-label {
+  background: #2ECC71;
+  color: #efefef;
+}
+#hard-button:checked + .button-label:hover {
+  background: #29b765;
+  color: #e2e2e2;
+}
+
+.hidden {
+  display: none;
+}
