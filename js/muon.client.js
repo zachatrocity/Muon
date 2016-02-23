@@ -119,158 +119,168 @@ var BoardGUI = {
       messages.innerHTML += '<li class="received">' + msg + '</li>'
 
     messages.scrollTop = messages.scrollHeight
+  },
+  clearChatMessages: function(){
+    document.getElementById("messages").innerHTML = '';
   }
 }
 
+var Network = {
+  configureNetwork: function(){
+    cloak.configure({
+      messages: {
+        'registerUsernameResponse': function(data) {
+          console.log(data[0] ? 'username registered' : 'username failed');
+          // if we registered a username, try to join the lobby
+          if (data[0]) {
+            // get the lobby
+            cloak.username = data[1];
+            cloak.message('joinLobby');
+          }
+        },
 
-cloak.configure({
-  messages: {
-    'registerUsernameResponse': function(data) {
-      console.log(data[0] ? 'username registered' : 'username failed');
-      // if we registered a username, try to join the lobby
-      if (data[0]) {
-        // get the lobby
-        cloak.username = data[1];
-        cloak.message('joinLobby');
-      }
-    },
+        'userMessage': function(msg) {
+          console.log('The server says: ' + msg);
+        },
 
-    'userMessage': function(msg) {
-      console.log('The server says: ' + msg);
-    },
+        'refreshAll':function(){
+          cloak.message('listUsers');
+          cloak.message('listRooms');
+        },
 
-    'refreshAll':function(){
-      cloak.message('listUsers');
-      cloak.message('listRooms');
-    },
+        'refreshLobby': function(data) {
+          console.log(data);
+          //set the player count
+          NetworkGUI.setPlayerCountElement(data.users.length);
+          //show the online users
+          NetworkGUI.refreshLobbyElement(data);
+        },
 
-    'refreshLobby': function(data) {
-      console.log(data);
-      //set the player count
-      NetworkGUI.setPlayerCountElement(data.users.length);
-      //show the online users
-      NetworkGUI.refreshLobbyElement(data);
-    },
+        'refreshRooms': function(rooms){
+          console.log(rooms);
+          NetworkGUI.refreshRoomElement(rooms);
+        },
 
-    'refreshRooms': function(rooms){
-      console.log(rooms);
-      NetworkGUI.refreshRoomElement(rooms);
-    },
+        'joinLobbyResponse': function(success) {
+          if(success){
+            console.log('joined lobby');
+            cloak.message('listUsers');
+          }
+        },
 
-    'joinLobbyResponse': function(success) {
-      if(success){
-        console.log('joined lobby');
-        cloak.message('listUsers');
-      }
-    },
+        'roomCreated': function(result) {
+          console.log(result.success ? 'room join success' : 'room join failure');
+          if (result.success) {
+            gameCore.roomid = result.roomId;
+            ///board/:roomid/:waiting
+            window.location.hash = "#/board/" + result.roomId + "/1";
+            //start game!
+          }
+        },
+        
+        'joinRoomResponse': function(result) {
+          if (result.success) {
+            console.log("room joined");
+            gameCore.roomid = result.id;
+            BoardGUI.clearChatMessages();
+            cloak.message('refreshRoom');
+          } else {
+            console.log("room is full");
+          }
+        },
 
-    'roomCreated': function(result) {
-      console.log(result.success ? 'room join success' : 'room join failure');
-      if (result.success) {
-        gameCore.roomid = result.roomId;
-        ///board/:roomid/:waiting
-        window.location.hash = "#/board/" + result.roomId + "/1";
-        //start game!
-      }
-    },
-    
-    'joinRoomResponse': function(result) {
-      if (result.success) {
-        console.log("room joined");
-        gameCore.roomid = result.id;
-        cloak.message('refreshRoom');
-      } else {
-        console.log("room is full");
-      }
-    },
+        'chat': function(data) {
+          //chat received
+          //data[0] is the message and data[1] is the username that sent it
+          console.log(data[0]);
+          BoardGUI.appendChatMessage(data[0], (data[1] == cloak.username));
+        },
 
-    'chat': function(data) {
-      debugger;
-      //chat received
-      //data[0] is the message and data[1] is the username that sent it
-      console.log(data[0]);
-      BoardGUI.appendChatMessage(data[0], (data[1] == cloak.username));
-    },
+        'refreshRoomResponse': function(members){
+          if (!members) {
+            return;
+          }
 
-    'refreshRoomResponse': function(members){
-      if (!members) {
-        return;
-      }
+          if (members.length > 1) {
+            if(gameCore.turn == gameCore.team){
+              BoardGUI.setBoardHeaderElement("Your Turn");  
+            } else {
+              BoardGUI.setBoardHeaderElement("Their Turn");
+            }
+          }
+        },
 
-      if (members.length > 1) {
-        if(gameCore.turn == gameCore.team){
-          BoardGUI.setBoardHeaderElement("Your Turn");  
-        } else {
-          BoardGUI.setBoardHeaderElement("Their Turn");
+        //game
+        'assignTeam': function(data) {
+          console.log('my team is', data.team);
+          gameCore.team = data.team;
+          gameCore.otherTeam = (gameCore.team === 'muon') ? 'antimuon' : 'muon';
+          gameCore.turn = data.turn;
+        },
+
+        'turn': function(msg) {
+          gameCore.turn = msg;
+          console.log('Turn: ' + gameCore.turn);
+          cloak.message('refreshRoom');
+        },
+
+        'performOpponentMove': function(data) {
+          console.log('opponent moved!!!!!!', data);
+          gameCore.MakeOpponentMove(data[0], data[1]);
+        }
+
+
+      },
+      serverEvents: {
+        'connect': function() {
+          console.log('connect');
+        },
+
+        'disconnect': function() {
+          console.log('disconnect');
+        },
+
+        'lobbyMemberJoined': function(user) {
+          console.log('lobby member joined', user);
+          cloak.message('listUsers');
+        },
+
+        'lobbyMemberLeft': function(user) {
+          console.log('lobby member left', user);
+          cloak.message('listUsers');
+        },
+
+        'roomCreated': function(rooms) {
+          console.log('created a room', rooms);
+          cloak.message('listUsers');
+          cloak.message('listRooms');
+        },
+
+        'roomDeleted': function(rooms) {
+          console.log('deleted a room', rooms);
+          cloak.message('listUsers');
+          cloak.message('listRooms');
+        },
+
+        'roomMemberJoined': function(user) {
+          console.log('room member joined', user);
+          cloak.message('refreshRoom');
+        },
+
+        'roomMemberLeft': function(user) {
+          console.log('room member left', user);
+          cloak.message('leaveRoom');
+          console.log('Removing you from the room because the other player disconnected.');
+        },
+
+        'begin': function() {
+          console.log('begin');
+          cloak.message('listRooms');
         }
       }
-    },
-
-    //game
-    'assignTeam': function(data) {
-      console.log('my team is', data.team);
-      gameCore.team = data.team;
-      gameCore.otherTeam = (gameCore.team === 'muon') ? 'antimuon' : 'muon';
-      gameCore.turn = data.turn;
-    },
-
-    'turn': function(msg) {
-      gameCore.turn = msg;
-      console.log('Turn: ' + gameCore.turn);
-      cloak.message('refreshRoom');
-    },
-
-    'performOpponentMove': function(data) {
-      console.log('opponent moved!!!!!!', data);
-      gameCore.MakeOpponentMove(data[0], data[1]);
-    }
-
-
-  },
-  serverEvents: {
-    'connect': function() {
-      console.log('connect');
-    },
-
-    'disconnect': function() {
-      console.log('disconnect');
-    },
-
-    'lobbyMemberJoined': function(user) {
-      console.log('lobby member joined', user);
-      cloak.message('listUsers');
-    },
-
-    'lobbyMemberLeft': function(user) {
-      console.log('lobby member left', user);
-      cloak.message('listUsers');
-    },
-
-    'roomCreated': function(rooms) {
-      console.log('created a room', rooms);
-      cloak.message('listUsers');
-      cloak.message('listRooms');
-    },
-
-    'roomDeleted': function(rooms) {
-      console.log('deleted a room', rooms);
-      cloak.message('listUsers');
-      cloak.message('listRooms');
-    },
-
-    'roomMemberJoined': function(user) {
-      console.log('room member joined', user);
-      cloak.message('refreshRoom');
-    },
-
-    'roomMemberLeft': function(user) {
-      console.log('room member left', user);
-      console.log('Removing you from the room because the other player disconnected.');
-    },
-
-    'begin': function() {
-      console.log('begin');
-      cloak.message('listRooms');
-    }
+    });
   }
-});
+}
+
+Network.configureNetwork();
+
