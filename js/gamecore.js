@@ -314,6 +314,13 @@ var gameCore = {
 		gameCore.board.moveMuonTweenFoci(from, to);
 	},
 
+	computerGoesFirst:function( goFirst ){
+		aiWorker.postMessage(
+		{
+			'AIStarts':goFirst,
+		});
+	},
+
 	// Moves a piece from one position to another
 	// Assumes that the move is passed in the form of 0-19
 	AttemptMove: function(from, to) {
@@ -341,13 +348,12 @@ var gameCore = {
 				else {
 					//make ai move
 					aiWorker.postMessage(
-						{ 
+						{
 							'from': bitFrom,
 							'to': bitTo
 						});
 				}
 			} else { //playing over network
-				debugger;
 				if(gameCore.turn == gameCore.team){ //if it is even my turn
 					console.log("Player moved from " + inputFrom + " to " + inputTo);
 					// Perform move
@@ -392,16 +398,19 @@ var gameCore = {
 		}
 	},
 
+	'AIwentFirst':false,
 	RestartGame: function(isNetworkGame) {
 		gameCore.board.clearBoard();
 	 	gameCore.board.createBoard();	
+	 	gameCore.AIwentFirst = !gameCore.AIwentFirst;
 
 	 	if(isNetworkGame){
 
 	 	} else {
 	 		aiWorker.postMessage(
 			{ 
-				'restart': true
+				'restart': true,
+				'AIStarts': gameCore.AIwentFirst
 			});
 	 	}
 	},

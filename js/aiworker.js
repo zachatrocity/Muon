@@ -317,8 +317,8 @@ var updateBoardp1 = function(start, end){
 
 var moves = 0;
 var totalTime = 0;
-var makeMoveAgainstAI = function(start, end){
-	var depth = 9;
+var makeMoveAgainstAI = function(start, end, HumanMovesFirst){
+	var depth = 7;
 	updateBoardp2(start, end); // Human move
 	var t0 = Date.now();
 
@@ -350,6 +350,33 @@ var makeMoveAgainstAI = function(start, end){
 	return({'from': s, 'to': e, 'AiWin': w});
 }
 
+var makeAIMove = function(){
+	var depth = 7;
+	AI.maxDepth = depth;
+
+	var t0 = Date.now();
+	AI.pvs(-1000, 1000, depth, p1_Position, p2_Position);
+
+	moves++;
+	totalTime += (Date.now() -t0);
+	console.log("moves: " + moves + " time: " + totalTime);
+
+	var indexOfBestMove;
+	var bestScore = -Infinity;
+	for (var i = 0; i < AI.currentMoveOptions.length; i++){
+		if(AI.currentMoveOptions[i].value > bestScore){
+			bestScore = AI.currentMoveOptions[i].value;
+			indexOfBestMove = i;
+		}
+		//else if == then pick random value
+	}
+
+	var s = convert.bitToInt(AI.currentMoveOptions[indexOfBestMove].start);
+	var e = convert.bitToInt(AI.currentMoveOptions[indexOfBestMove].end);
+	updateBoardp1(AI.currentMoveOptions[indexOfBestMove].start, AI.currentMoveOptions[indexOfBestMove].end);
+	return({'from': s, 'to': e});
+}
+
 onmessage = function(e) {
 	if(e.data.restart === true){
 		console.log("Restarting AI Brain");
@@ -360,6 +387,10 @@ onmessage = function(e) {
 		AI.currentMoveOptions = [];
 		AI.nextMoveOption = [];
 		AI.bestMovePredicted = [];
+		if(e.data.AIStarts === true){
+			var workerResult = makeAIMove();
+			postMessage(workerResult);
+		}
 	} else {
 		var workerResult = makeMoveAgainstAI(e.data.from, e.data.to);
 		postMessage(workerResult);
