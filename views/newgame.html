@@ -18,15 +18,15 @@
 <h1>Difficulty</h1>
 <div class="dif-container">
   <div class="button-wrap">
-    <input type="radio" name="accept-offers" id="easy-button" checked="checked" class="hidden radio-label"/>
+    <input type="radio" name="accept-offers" id="easy-button" checked="checked" ng-click="setAILevel(5)" class="hidden radio-label"/>
     <label for="easy-button" class="button-label">
       <h1>Easy</h1>
     </label>
-    <input type="radio" name="accept-offers" id="med-button" class="hidden radio-label"/>
+    <input type="radio" name="accept-offers" id="med-button" ng-click="setAILevel(7)" class="hidden radio-label"/>
     <label for="med-button" class="button-label">
       <h1>Medium</h1>
     </label>
-    <input type="radio" name="accept-offers" id="hard-button" class="hidden radio-label"/>
+    <input type="radio" name="accept-offers" id="hard-button" ng-click="setAILevel(9)" class="hidden radio-label"/>
     <label for="hard-button" class="button-label">
       <h1>Hard</h1>
     </label>

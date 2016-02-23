@@ -55,8 +55,11 @@ https://coolors.co/app/404040-f7f0f0-5490cc-5fad41-067bc2
   position: relative;
   margin: 15px 30px;
   padding: 15px;
-  background: #067BC2;
-  border-radius: 3px;
+  border-radius: 0.25em;
+  background: #4183D7;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2), inset 0 -3px 0 rgba(0, 0, 0, 0.22);
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
   border: none;
   cursor: pointer;
   text-transform: uppercase;
@@ -69,12 +72,14 @@ https://coolors.co/app/404040-f7f0f0-5490cc-5fad41-067bc2
 }
 
 .button:hover {
-  background: #0569AD;
+  background: #2c75d2;
+  color: #101010;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2), inset 0 -3px 0 rgba(0, 0, 0, 0.32);
 }
 .button:active {
-  background: #0569AD;
-  box-shadow: 0 0px #111;
-  top: 4px;
+  -webkit-transform: translateY(2px);
+          transform: translateY(2px);
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2), inset 0px -1px 0 rgba(0, 0, 0, 0.22);
 }
 
 html {

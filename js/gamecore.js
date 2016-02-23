@@ -392,11 +392,11 @@ var gameCore = {
 		}
 	},
 
-	'AIwentFirst':false,
+	'AIGoesFirst':false,
 	RestartGame: function(isNetworkGame) {
 		gameCore.board.clearBoard();
 	 	gameCore.board.createBoard();	
-	 	gameCore.AIwentFirst = !gameCore.AIwentFirst;
+	 	gameCore.AIGoesFirst = !gameCore.AIGoesFirst;
 
 	 	if(isNetworkGame){
 
@@ -404,7 +404,7 @@ var gameCore = {
 	 		aiWorker.postMessage(
 			{ 
 				'restart': true,
-				'AIStarts': gameCore.AIwentFirst,
+				'AIStarts': gameCore.AIGoesFirst,
 				'depth': gameCore.AITreeDepth
 			});
 	 	}
