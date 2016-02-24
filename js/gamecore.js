@@ -25,7 +25,18 @@ var gameCore = {
 		turn: '',
 		roomid: null,
 		localPos: '',
-		opponentPos: ''
+		opponentPos: '',
+		MakeOpponentMove: function(from, to){
+			var bitFrom = convert.intToBit(from);
+			var bitTo = convert.intToBit(to);
+			console.log("opponent moved from " + convert.bitToStandard(bitFrom) + " to " + convert.bitToStandard(bitTo));
+
+			// Update opponents bit board.
+			gameCore.network.opponentPos ^= bitFrom ^ bitTo;
+
+			gameCore.AddMoveToHistory(new Move(from, to, "opponent"));
+			gameCore.board.moveMuonTweenFoci(from, to);
+		}
 	},
 	board: {
 		nodes: [],
@@ -284,19 +295,6 @@ var gameCore = {
 	GetAvailableMoves: function(quad, node) {
 		var temp = evaluation.nodeConnections[quad][node];
 		return ~(gameCore.p1Pos | gameCore.p2Pos) & temp;
-	},
-	// USE ONLY FOR NETWORK MOVE.
-	// Assume p1 is always 00000 00000 11111 00000 at the start of the game = (992).
-	MakeOpponentMove: function(from, to){
-		var bitFrom = convert.intToBit(from);
-		var bitTo = convert.intToBit(to);
-		console.log("opponent moved from " + convert.bitToStandard(bitFrom) + " to " + convert.bitToStandard(bitTo));
-
-		// Update opponents bit board.
-		gameCore.network.opponentPos ^= bitFrom ^ bitTo;
-
-		gameCore.AddMoveToHistory(new Move(from, to, "opponent"));
-		gameCore.board.moveMuonTweenFoci(from, to);
 	},
 	// Moves a piece from one position to another
 	// Assumes that the move is passed in the form of 0-19
