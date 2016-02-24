@@ -44,7 +44,7 @@ var gameCore = {
 				p1_flag = false;
 
 
-			if (gameCore.GameOver(gameCore.network.opponentPos)) {
+			if (gameCore.network.NetworkGameOver(gameCore.network.opponentPos)) {
 				gameCore.EndGame();
 			}
 
