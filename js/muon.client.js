@@ -183,7 +183,6 @@ var Network = {
       messages: {
         'registerUsernameResponse': function(data) {
           console.log(data[0] ? 'username registered' : 'username failed');
-          debugger;
           // if we registered a username, try to join the lobby
           if (data[0]) {
             // get the lobby
@@ -297,7 +296,6 @@ var Network = {
         },
 
         'resume': function() {
-          debugger;
           console.log('RESUMING!!');
         },
 

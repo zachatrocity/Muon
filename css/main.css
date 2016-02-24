@@ -411,69 +411,8 @@ h1.view-heading{
 	background: #0569AD;
 }
 
-/*
-.inGameMenu{
-	position: absolute;
-	bottom: 20px;
-	left: 20px;
-	margin: 0;
-}
+/*HELP PAGE CSS*/
 
-.inGameMenu ul{
-	text-align: center;
-	display: inline;
-	margin: 0;
+.help-one-container{
+	margin-top: 200px;
 }
-
-.inGameMenu ul li{
-	display: inline-block;
-	margin-right: -4px;
-	width: 150px;
-	position: relative;
-	padding: 15px 20px;
-	cursor: pointer;
-	-webkit-transition: all 0.2s;
-	-moz-transition: all 0.2s;
-	-o-transition: all 0.2s;
-	transition: all 0.2s;
-	width: 150px;
-	top: 4px;
-	box-shadow: 0 0px #111;
-}
-
-.inGameMenu ul li ul {
-	padding: 0;
-	position: absolute;
-	bottom: 48px;
-	width: 150px;
-	left: 0;
-	-webkit-box-shadow: none;
-	-moz-box-shadow: none;
-	box-shadow: none;
-	display: none;
-	opacity: 0;
-	visibility: hidden;
-	-webkit-transition: opacity 0.2s;
-	-moz-transition: opacity 0.2s;
-	-o-transition: opacity 0.2s;
-	transition: opacity 0.2s;
-}
-
-.inGameMenu ul li ul li{
-	background: #5490CC;
-	display: block;
-	color: black;
-	text-shadow: none;
-}
-
-.inGameMenu ul li ul li:hover {
-	background: #067BC2;
-}
-
-.inGameMenu ul li:hover ul{
-	display: block;
-	opacity: 1; 
-	visibility: visible;
-}
-*/
-
