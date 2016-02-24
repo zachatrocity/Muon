@@ -223,7 +223,7 @@ var Network = {
         'roomCreated': function(result) {
           console.log(result.success ? 'room join success' : 'room join failure');
           if (result.success) {
-            gameCore.roomid = result.roomId;
+            gameCore.network.roomid = result.roomId;
             ///board/:roomid/:waiting
             window.location.hash = "#/board/" + result.roomId + "/1";
             //start game!
@@ -233,7 +233,7 @@ var Network = {
         'joinRoomResponse': function(result) {
           if (result.success) {
             console.log("room joined");
-            gameCore.roomid = result.id;
+            gameCore.network.roomid = result.id;
             BoardGUI.clearChatMessages();
             cloak.message('refreshRoom');
           } else {
@@ -254,7 +254,7 @@ var Network = {
           }
 
           if (members.length > 1) {
-            if(gameCore.turn == gameCore.team){
+            if(gameCore.network.turn == gameCore.network.team){
               BoardGUI.setBoardHeaderElement("Your Turn");
               BoardGUI.hideWaitingModal();  
             } else {
@@ -266,20 +266,20 @@ var Network = {
         //game
         'assignTeam': function(data) {
           console.log('my team is', data.team);
-          gameCore.team = data.team;
-          gameCore.otherTeam = (gameCore.team === 'muon') ? 'antimuon' : 'muon';
-          gameCore.turn = data.turn;
+          gameCore.network.team = data.team;
+          gameCore.network.otherTeam = (gameCore.network.team === 'muon') ? 'antimuon' : 'muon';
+          gameCore.network.turn = data.turn;
         },
 
         'turn': function(msg) {
-          gameCore.turn = msg;
-          console.log('Turn: ' + gameCore.turn);
+          gameCore.network.turn = msg;
+          console.log('Turn: ' + gameCore.network.turn);
           cloak.message('refreshRoom');
         },
 
         'performOpponentMove': function(data) {
           console.log('opponent moved!!!!!!', data);
-          gameCore.MakeOpponentMove(data[0], data[1]);
+          gameCore.network.MakeOpponentMove(data[0], data[1]);
         }
 
 
