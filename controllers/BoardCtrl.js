@@ -39,13 +39,15 @@ muonApp.controller('BoardCtrl', function ($scope, $stateParams, $state) {
 		//angular.element(boardHeaderText)[0].innerHTML = "Waiting for opponent";
 		document.getElementById('boardHeaderText').innerHTML = "Waiting for opponent";
 		BoardGUI.showWaitingModal();
-		gameCore.RestartGame(true, 'host');
+		gameCore.network.role = 'host';
+		gameCore.RestartGame(true);
 
 		} else {
 			console.log("attempting to join room");
 			cloak.message('joinRoom', $stateParams.roomid);
 			document.getElementById('boardHeaderText').innerHTML = "Their turn";
-			gameCore.RestartGame(true, 'client');
+			gameCore.network.role = 'client';
+			gameCore.RestartGame(true);
 			//client is here
 			//start game
 		}

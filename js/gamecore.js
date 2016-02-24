@@ -23,9 +23,12 @@ var gameCore = {
 	network: {
 		team: '',
 		turn: '',
+		role: '',
 		roomid: null,
+		localFlag: true,
 		localPos: '',
 		opponentPos: '',
+		opponentFlag: true,
 		MakeOpponentMove: function(from, to){
 			var bitFrom = convert.intToBit(from);
 			var bitTo = convert.intToBit(to);
@@ -36,10 +39,24 @@ var gameCore = {
 			gameCore.AddMoveToHistory(new Move(from, to, "opponent"));
 			gameCore.board.moveMuonTweenFoci(from, to);
 
+			//remove opponent flag if needed
+			if(evaluation.isHomeQuadEmpty((gameCore.network.role == 'host') ? 2 : 1, gameCore.network.opponentPos))
+				p1_flag = false;
+
+
 			if (gameCore.GameOver(gameCore.network.opponentPos)) {
 				gameCore.EndGame();
 			}
 
+		},
+		NetworkGameOver: function(position) {
+			player = (position == gameCore.network.opponentPos ? 1 : 2);
+			if (evaluation.Win(position, player, gameCore.network.opponentFlag, gameCore.network.localFlag)) {
+				gameCore.winner = player == 1 ? "lost" : "won";
+				return true;
+			} else {
+				return false;
+			}
 		}
 	},
 	board: {
@@ -332,6 +349,10 @@ var gameCore = {
 				// Update the users bit board.
 				gameCore.network.localPos ^= bitFrom ^ bitTo;
 				gameCore.board.moveMuonTweenFoci(from, to);
+				//remove my flag if needed
+				if(evaluation.isHomeQuadEmpty((gameCore.network.role == 'host') ? 2 : 1, gameCore.network.localPos))
+					p1_flag = false;
+
 				cloak.message('turnDone', [from, to]);
 				if (gameCore.GameOver(gameCore.network.localPos)) {
 					gameCore.EndGame();
@@ -366,12 +387,12 @@ var gameCore = {
 	 	gameCore.board.createBoard();	
 
 	 	if(isNetworkGame){
-	 		if(role == 'host'){
+	 		if(gameCore.network.role == 'host'){
 	 			//then i'm the bottom right peices
 	 			gameCore.network.localPos = 0b00000111110000000000;
 	 			//my opponent is up top
 	 			gameCore.network.opponentPos = 0b00000000001111100000;
-	 		} else if(role =='client'){
+	 		} else if(gameCore.network.role =='client'){
 	 			//then i'm the top peices
 	 			gameCore.network.localPos = 0b00000000001111100000;
 	 			//my opponent is below
