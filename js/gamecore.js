@@ -18,11 +18,15 @@ var gameCore = {
 	moveHistory: [],	// A history of the moves made by both players
 	winner: "none",		// To display if the local player won or lost
 	gameOver: false,	// Stop allowing the selection of muons if true
-	team: '',
-	turn: '',
-	roomid: null,
 	AIGoesFirst:false,
 	AITreeDepth: 7,
+	network: {
+		team: '',
+		turn: '',
+		roomid: null,
+		localPos: '',
+		opponentPos: ''
+	},
 	board: {
 		nodes: [],
 		links: [],
@@ -121,9 +125,9 @@ var gameCore = {
 				}
 			});
 
-            if(gameCore.roomid != null && closestNode){
-                if(gameCore.team == gameCore.turn){ //my turn
-	            	if(closestNode.antimuon == (gameCore.team == 'antimuon' ? 1 : 0)){
+            if(gameCore.network.roomid != null && closestNode){
+                if(gameCore.network.team == gameCore.network.turn){ //my turn
+	            	if(closestNode.antimuon == (gameCore.network.team == 'antimuon' ? 1 : 0)){
 		                //select all the nodes around the node we clicked
 		                var startIndex = closestNode.index - (closestNode.index % 3);
 		                //closestNode.selected = true;
@@ -289,7 +293,7 @@ var gameCore = {
 		console.log("opponent moved from " + convert.bitToStandard(bitFrom) + " to " + convert.bitToStandard(bitTo));
 
 		// Update opponents bit board.
-		gameCore.p1Pos ^= bitFrom ^ bitTo;
+		gameCore.network.opponentPos ^= bitFrom ^ bitTo;
 
 		gameCore.AddMoveToHistory(new Move(from, to, "opponent"));
 		gameCore.board.moveMuonTweenFoci(from, to);
@@ -303,7 +307,7 @@ var gameCore = {
 		if (gameCore.ValidMove(bitFrom, bitTo)) {
 			
 			// If there is no room ID then you are playing against the AI.
-			if(gameCore.roomid == null){
+			if(gameCore.network.roomid == null){
 				console.log("Player moved from " + convert.bitToStandard(bitFrom) + " to " + convert.bitToStandard(bitTo));
 				
 				// Update the users bit board.
@@ -320,11 +324,11 @@ var gameCore = {
 				}
 			} 
 			// If there is a room ID then you are playing over network.
-			else if(gameCore.turn == gameCore.team) { // If it's the the users turn.
+			else if(gameCore.network.turn == gameCore.network.team) { // If it's the the users turn.
 				console.log("Player moved from " + convert.bitToStandard(bitFrom) + " to " + convert.bitToStandard(bitTo));
 				
 				// Update the users bit board.
-				gameCore.p2Pos ^= bitFrom ^ bitTo;
+				gameCore.network.localPos ^= bitFrom ^ bitTo;
 				gameCore.board.moveMuonTweenFoci(from, to);
 				cloak.message('turnDone', [from, to]);
 				if (gameCore.GameOver(gameCore.p2Pos)) {
@@ -355,12 +359,22 @@ var gameCore = {
 			return false;
 		}
 	},
-	RestartGame: function(isNetworkGame) {
+	RestartGame: function(isNetworkGame, role) {
 		gameCore.board.clearBoard();
 	 	gameCore.board.createBoard();	
 
 	 	if(isNetworkGame){
-
+	 		if(role == 'host'){
+	 			//then i'm the bottom right peices
+	 			gameCore.network.localPos = 0b00000111110000000000;
+	 			//my opponent is up top
+	 			gameCore.network.opponentPos = 0b00000000001111100000;
+	 		} else if(role =='client'){
+	 			//then i'm the top peices
+	 			gameCore.network.localPos = 0b00000000001111100000;
+	 			//my opponent is below
+	 			gameCore.network.opponentPos = 0b00000111110000000000;
+	 		}
 	 	} else {
 	 		aiWorker.postMessage(
 			{ 
