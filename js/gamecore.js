@@ -33,9 +33,13 @@ var gameCore = {
 
 			// Update opponents bit board.
 			gameCore.network.opponentPos ^= bitFrom ^ bitTo;
-
 			gameCore.AddMoveToHistory(new Move(from, to, "opponent"));
 			gameCore.board.moveMuonTweenFoci(from, to);
+
+			if (gameCore.GameOver(gameCore.network.opponentPos)) {
+				gameCore.EndGame();
+			}
+
 		}
 	},
 	board: {
@@ -329,7 +333,7 @@ var gameCore = {
 				gameCore.network.localPos ^= bitFrom ^ bitTo;
 				gameCore.board.moveMuonTweenFoci(from, to);
 				cloak.message('turnDone', [from, to]);
-				if (gameCore.GameOver(gameCore.p2Pos)) {
+				if (gameCore.GameOver(gameCore.network.localPos)) {
 					gameCore.EndGame();
 				}
 			} else {
