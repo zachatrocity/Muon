@@ -334,7 +334,7 @@ var gameCore = {
 				console.log("it is not your turn idiot.");
 			}
 		} else {
-			console.log("Player attempted an invalid move, from " + inputFrom + " to " + inputTo);
+			console.log("Player attempted an invalid move, from " + bitFrom + " to " + bitTo);
 		}
 	},
 	// Updates the flag for whether or not player 1 can create triangles in their starting quad
@@ -373,11 +373,11 @@ var gameCore = {
 	//EndGame sets the game board to not be able to be interfered with by the player.
 	EndGame: function() {
 		gameCore.gameOver = true;	// Lock the board from player input
-		if (winner == "won") {
+		if (gameCore.winner == "won") {
 			console.log("YOU WON!");
 			BoardGUI.showWinModal();
 		}
-		else if (winner == "lost"){
+		else if (gameCore.winner == "lost"){
 			console.log("YOU LOST!");
 			BoardGUI.showLoseModal();
 		}
