@@ -135,18 +135,20 @@ var gameCore = {
 				}
 			});
 
-            if(gameCore.roomid != null){
+            if(gameCore.roomid != null && closestNode){
 
-                if(gameCore.team == gameCore.turn){
-                    //select all the nodes around the node we clicked
-                    var startIndex = closestNode.index - (closestNode.index % 3);
-                    //closestNode.selected = true;
-                    d3.selectAll(".id" + startIndex + ",.id" + (startIndex + 1) + ",.id" + (startIndex + 2))
-                        .transition()
-                        .duration(450)
-                        .attr("r", 15);
+                if(gameCore.team == gameCore.turn){ //my turn
+	            	if(closestNode.antimuon == (gameCore.team == 'antimuon' ? 1 : 0)){
+		                //select all the nodes around the node we clicked
+		                var startIndex = closestNode.index - (closestNode.index % 3);
+		                //closestNode.selected = true;
+		                d3.selectAll(".id" + startIndex + ",.id" + (startIndex + 1) + ",.id" + (startIndex + 2))
+		                    .transition()
+		                    .duration(450)
+		                    .attr("r", 15);
 
-                    gameCore.board.selectedMuon = closestNode.foci;
+		                gameCore.board.selectedMuon = closestNode.foci;
+                	}
                 }
 
             } else if (closestNode && gameCore.BelongsToPlayer(gameCore.p2Pos, closestNode.foci)){
@@ -291,9 +293,7 @@ var gameCore = {
 		console.log("Open positions: " + gameCore.dec2bin(openPositions));
 
 		// Return if the move selected is both adjacent to the selected piece, and free from other pieces
-		// console.log(gameCore.dec2bin(from));
-		// console.log(gameCore.dec2bin(to));
-		// console.log(gameCore.dec2bin(openPositions & to));
+
 		return (openPositions & to) > 0;
 	},
 
@@ -370,7 +370,7 @@ var gameCore = {
 					gameCore.board.moveMuonTweenFoci(from, to);
 					cloak.message('turnDone', [from, to]);
 
-					if (gameCore.GameOver(gameCore.p1Pos)) {
+					if (gameCore.GameOver(gameCore.p2Pos)) {
 						gameCore.EndGame();
 					}
 
