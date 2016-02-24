@@ -47,7 +47,7 @@ var gameCore = {
 
 
 			if (gameCore.network.CheckForOpponentWin()) {
-				gameCore.EndNetworkGame();
+				gameCore.network.EndNetworkGame();
 			}
 
 		},
@@ -382,7 +382,7 @@ var gameCore = {
 
 				cloak.message('turnDone', [from, to]);
 				if (gameCore.network.CheckForLocalWin(gameCore.network.localPos)) {
-					gameCore.EndNetworkGame();
+					gameCore.network.EndNetworkGame();
 				}
 			} else {
 				console.log("it is not your turn idiot.");
