@@ -47,29 +47,45 @@ var gameCore = {
 
 
 			if (gameCore.network.CheckForOpponentWin()) {
-				gameCore.EndGame();
+				gameCore.EndNetworkGame();
 			}
 
 		},
 		CheckForOpponentWin: function() {
+			debugger;
 			player = (gameCore.network.role == 'host') ? 1 : 2;
 			if (evaluation.Win(gameCore.network.opponentPos, player, gameCore.network.opponentFlag, gameCore.network.localFlag)) {
-				gameCore.winner = player == 1 ? "lost" : "won";
+				gameCore.winner = 'opponent';
 				return true;
 			} else {
 				return false;
 			}
 		},
 		CheckForLocalWin: function() {
+			debugger;
 			player = (gameCore.network.role == 'host') ? 2 : 1;
 			if (evaluation.Win(gameCore.network.localPos, player, gameCore.network.opponentFlag, gameCore.network.localFlag)) {
-				gameCore.winner = player == 1 ? "lost" : "won";
+				gameCore.winner = 'local';
 				return true;
 			} else {
 				return false;
 			}
-		}
-	},
+		},
+		EndNetworkGame: function(){
+			gameCore.gameOver = true;	// Lock the board from player input
+
+			if (gameCore.winner == "local") {
+				console.log("YOU WON!");
+				BoardGUI.showWinModal();
+			}
+			else if (gameCore.winner == "opponent"){
+				console.log("YOU LOST!");
+				BoardGUI.showLoseModal();
+			}
+			else
+				console.log("IT'S A TIE!");
+			}
+		},
 	board: {
 		nodes: [],
 		links: [],
@@ -366,7 +382,7 @@ var gameCore = {
 
 				cloak.message('turnDone', [from, to]);
 				if (gameCore.network.CheckForLocalWin(gameCore.network.localPos)) {
-					gameCore.EndGame();
+					gameCore.EndNetworkGame();
 				}
 			} else {
 				console.log("it is not your turn idiot.");
