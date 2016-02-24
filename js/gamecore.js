@@ -281,7 +281,7 @@ var gameCore = {
 		console.log("Open positions: " + gameCore.dec2bin(openPositions));
 
 		// Return if the move selected is adjacent to the selected piece, and free of other pieces.
-		return (openPositions & to) > 0;
+		return (openPositions & to) >= 0;
 	},
 	// Adds the specified move to the history list.
 	AddMoveToHistory: function(move) {
