@@ -256,7 +256,7 @@ var Network = {
           if (members.length > 1) {
             if(gameCore.turn == gameCore.team){
               BoardGUI.setBoardHeaderElement("Your Turn");
-              gameCore.BoardGUI.hideWaitingModal();  
+              BoardGUI.hideWaitingModal();  
             } else {
               BoardGUI.setBoardHeaderElement("Their Turn");
             }
