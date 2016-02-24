@@ -8,4 +8,8 @@ muonApp.controller('NewGameCtrl', function ($scope, $stateParams) {
 	$scope.setAIGoesFirst = function(choice){
 		gameCore.AIGoesFirst = choice;
 	}
+
+	$scope.setTeam = function(team){
+		gameCore.humanteam = team;
+	}
 });

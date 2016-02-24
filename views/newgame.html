@@ -5,11 +5,15 @@
 <h1 class="view-heading">Team</h1>
 <div class="dif-container">
   <div class="button-wrap">
-    <input type="radio" name="team-select" id="muon-button" checked="checked" class="hidden radio-label"/>
+    <input type="radio" name="team-select" id="muon-button" checked="checked" 
+    ng-click="setTeam('muon')"
+    class="hidden radio-label"/>
     <label for="muon-button" class="button-label">
       <h1>Muon</h1>
     </label>
-    <input type="radio" name="team-select" id="antimuon-button" class="hidden radio-label"/>
+    <input type="radio" name="team-select" id="antimuon-button" 
+    ng-click="setTeam('antimuon')"
+    class="hidden radio-label"/>
     <label for="antimuon-button" class="button-label">
       <h1>Antimuon</h1>
     </label>
@@ -19,11 +23,11 @@
 <h1 class="view-heading">Difficulty</h1>
 <div class="dif-container">
   <div class="button-wrap">
-    <input type="radio" name="difficulty-select" id="easy-button" checked="checked" ng-click="setAILevel(5)" class="hidden radio-label"/>
+    <input type="radio" name="difficulty-select" id="easy-button" ng-click="setAILevel(5)" class="hidden radio-label"/>
     <label for="easy-button" class="button-label">
       <h1>Easy</h1>
     </label>
-    <input type="radio" name="difficulty-select" id="med-button" ng-click="setAILevel(7)" class="hidden radio-label"/>
+    <input type="radio" name="difficulty-select" id="med-button" checked="checked" ng-click="setAILevel(7)" class="hidden radio-label"/>
     <label for="med-button" class="button-label">
       <h1>Medium</h1>
     </label>

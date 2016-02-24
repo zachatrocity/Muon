@@ -15,6 +15,7 @@ var gameCore = {
 	// The flags for P1 and P2 for if they can can create a triangle in their starting quadrant
 	playerOneFlag: true,
 	playerTwoFlag: true,
+	humanteam: '',
 	// Flag for the current player's turn
 	player1Turn: true,
 	// Maximum moves to keep track of
