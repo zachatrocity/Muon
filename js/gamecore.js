@@ -319,13 +319,14 @@ var gameCore = {
 
 	//USE ONLY FOR NETWORK MOVE
 	MakeOpponentMove: function(from, to){ 
+		debugger;
 		var bitFrom = convert.intToBit(from);
 		var bitTo = convert.intToBit(to);
 		var inputFrom =  convert.bitToStandard(bitFrom);
 		var inputTo = convert.bitToStandard(bitTo);
 		console.log("opponent moved from " + inputFrom + " to " + inputTo);
 		// Perform move
-		gameCore.p1Pos ^= bitFrom ^ bitTo;
+		gameCore.p2Pos ^= bitFrom ^ bitTo;
 		gameCore.AddMoveToHistory(new Move(from, to, "opponent"));
 		gameCore.board.moveMuonTweenFoci(from, to);
 	},
@@ -366,11 +367,11 @@ var gameCore = {
 				if(gameCore.turn == gameCore.team){ //if it is even my turn
 					console.log("Player moved from " + inputFrom + " to " + inputTo);
 					// Perform move
-					gameCore.p2Pos ^= bitFrom ^ bitTo;
+					gameCore.p1Pos ^= bitFrom ^ bitTo;
 					gameCore.board.moveMuonTweenFoci(from, to);
 					cloak.message('turnDone', [from, to]);
 
-					if (gameCore.GameOver(gameCore.p2Pos)) {
+					if (gameCore.GameOver(gameCore.p1Pos)) {
 						gameCore.EndGame();
 					}
 
