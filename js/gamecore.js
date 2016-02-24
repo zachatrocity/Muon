@@ -323,13 +323,19 @@ var gameCore = {
 	// Assumes that the move is passed in the form of bits
 	ValidMove: function(from, to) {
 		// Retrieve the positions adjecent to the selectied piece
+		debugger;
 		var quad = convert.bitToQuad(from);
 		var node = convert.bitToNode(from);
-		var openPositions = gameCore.GetAvailableMoves(quad, node);
+		var openPositions = '';
+		if(gameCore.network.roomid != null){
+			openPositions = gameCore.GetAvailableMoves(from, gameCore.network.opponentPos ^ gameCore.network.localPos ^ 0xFFFFF);
+		} else {
+			openPositions = gameCore.GetAvailableMoves(from, gameCore.p2Pos ^ gameCore.p1Pos ^ 0xFFFFF);
+		}
 		console.log("Open positions: " + gameCore.dec2bin(openPositions));
 
 		// Return if the move selected is adjacent to the selected piece, and free of other pieces.
-		return (openPositions & to) >= 0;
+		return (openPositions & to) > 0;
 	},
 	// Adds the specified move to the history list.
 	AddMoveToHistory: function(move) {
@@ -340,9 +346,10 @@ var gameCore = {
 			gameCore.moveHistory.push(move);
 		}
 	},
-	GetAvailableMoves: function(quad, node) {
-		var temp = evaluation.nodeConnections[quad][node];
-		return ~(gameCore.p1Pos | gameCore.p2Pos) & temp;
+	GetAvailableMoves: function(peice, openPositions) {
+		var quad = convert.bitToQuad(peice)
+		var node = convert.bitToNode(peice)
+		return openPositions&evaluation.nodeConnections[quad][node];
 	},
 	// Moves a piece from one position to another
 	// Assumes that the move is passed in the form of 0-19
