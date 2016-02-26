@@ -50,6 +50,10 @@ https://coolors.co/app/404040-f7f0f0-5490cc-5fad41-067bc2
 #8BBED7
 */
 
+a {
+	outline: 0;
+}
+
 .button {
   display: inline-block;
   position: relative;

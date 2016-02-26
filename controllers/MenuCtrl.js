@@ -1,5 +1,7 @@
 muonApp.controller('MenuCtrl', function ($scope, $stateParams, $state) {
 	
+	document.getElementById('item1').focus();
+	
 	$scope.goToNetworkingPage = function(username){
 		$scope.showNetworkingModal = false;
 		//register username
@@ -13,9 +15,12 @@ muonApp.controller('MenuCtrl', function ($scope, $stateParams, $state) {
 		},1000);
 	}
 
-	$scope.mouse_over = function() {
+	$scope.mouse_over = function(id) {
 		if(Audio.togglesound)
 			Audio.menuOver.play();
+		
+		document.getElementById('item' + id).focus();
+		
  	}
 	
 	$scope.mouse_click = function() {
