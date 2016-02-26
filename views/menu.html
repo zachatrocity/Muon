@@ -6,18 +6,90 @@
 </div>
 <div class="menu-container">
     <div class="main-menu"> 
+        <div class="main-menu-item" id="item1" ng-mouseover="mouse_over()">
+			<a ui-sref="newgame" ng-click="mouse_click()">
+				<div class="item-pointer left">
+					<div class="pointer-inner one"></div>
+					<div class="pointer-inner two"></div>
+					<div class="pointer-inner three"></div>
+				</div>
+				New Game
+				<div class="item-pointer right">
+					<div class="pointer-inner one"></div>
+					<div class="pointer-inner two"></div>
+					<div class="pointer-inner three"></div>
+				</div>
+			</a></div>
         <div class="main-menu-item" ng-mouseover="mouse_over()">
-			<a ui-sref="newgame" ng-click="mouse_click()">New Game</a></div>
+			<a ng-click="showNetworkModal()">
+				<div class="item-pointer left">
+					<div class="pointer-inner one"></div>
+					<div class="pointer-inner two"></div>
+					<div class="pointer-inner three"></div>
+				</div>
+				Network
+				<div class="item-pointer right">
+					<div class="pointer-inner one"></div>
+					<div class="pointer-inner two"></div>
+					<div class="pointer-inner three"></div>
+				</div>
+			</a></div>
         <div class="main-menu-item" ng-mouseover="mouse_over()">
-			<a ng-click="showNetworkModal()">Network</a></div>
+			<a ui-sref="howto" ng-click="mouse_click()">
+				<div class="item-pointer left">
+					<div class="pointer-inner one"></div>
+					<div class="pointer-inner two"></div>
+					<div class="pointer-inner three"></div>
+				</div>
+				Tutorial
+				<div class="item-pointer right">
+					<div class="pointer-inner one"></div>
+					<div class="pointer-inner two"></div>
+					<div class="pointer-inner three"></div>
+				</div>
+			</a></div>
         <div class="main-menu-item" ng-mouseover="mouse_over()">
-			<a ui-sref="howto" ng-click="mouse_click()">Tutorial</a></div>
+			<a ui-sref="options" ng-click="mouse_click()">
+				<div class="item-pointer left">
+					<div class="pointer-inner one"></div>
+					<div class="pointer-inner two"></div>
+					<div class="pointer-inner three"></div>
+				</div>
+				Options
+				<div class="item-pointer right">
+					<div class="pointer-inner one"></div>
+					<div class="pointer-inner two"></div>
+					<div class="pointer-inner three"></div>
+				</div>
+			</a></div>
         <div class="main-menu-item" ng-mouseover="mouse_over()">
-			<a ui-sref="options" ng-click="mouse_click()">Options</a></div>
+			<a ui-sref="about" ng-click="mouse_click()">
+				<div class="item-pointer left">
+					<div class="pointer-inner one"></div>
+					<div class="pointer-inner two"></div>
+					<div class="pointer-inner three"></div>
+				</div>
+				About
+				<div class="item-pointer right">
+					<div class="pointer-inner one"></div>
+					<div class="pointer-inner two"></div>
+					<div class="pointer-inner three"></div>
+				</div>
+			</a></div>
         <div class="main-menu-item" ng-mouseover="mouse_over()">
-			<a ui-sref="about" ng-click="mouse_click()">About</a></div>
-        <div class="main-menu-item" ng-mouseover="mouse_over()">
-			<a ui-sref="quit" ng-click="mouse_click()">Quit</a></div>
+			<a ui-sref="quit" ng-click="mouse_click()">
+				<div class="item-pointer left">
+					<div class="pointer-inner one"></div>
+					<div class="pointer-inner two"></div>
+					<div class="pointer-inner three"></div>
+				</div>
+				Quit
+				<div class="item-pointer right">
+					<div class="pointer-inner one"></div>
+					<div class="pointer-inner two"></div>
+					<div class="pointer-inner three"></div>
+				</div>
+			</a></div>
     </div>
 </div>
 
