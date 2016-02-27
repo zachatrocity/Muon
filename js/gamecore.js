@@ -52,7 +52,6 @@ var gameCore = {
 
 		},
 		CheckForOpponentWin: function() {
-			debugger;
 			player = (gameCore.network.role == 'host') ? 1 : 2;
 			if (evaluation.Win(gameCore.network.opponentPos, player, gameCore.network.opponentFlag, gameCore.network.localFlag)) {
 				gameCore.winner = 'opponent';
@@ -62,7 +61,6 @@ var gameCore = {
 			}
 		},
 		CheckForLocalWin: function() {
-			debugger;
 			player = (gameCore.network.role == 'host') ? 2 : 1;
 			if (evaluation.Win(gameCore.network.localPos, player, gameCore.network.opponentFlag, gameCore.network.localFlag)) {
 				gameCore.winner = 'local';
@@ -91,6 +89,7 @@ var gameCore = {
 		links: [],
 		width: 700,
     	height: 700,
+    	noderadius: 30,
 		foci: 	[{x: 0, y: 0},		{x: 285, y: 0},		//
         				{x: 140, y: 140},				// Quad A
 				{x: 0, y: 285},		{x: 285, y: 285},	//
@@ -111,16 +110,20 @@ var gameCore = {
         activeNodes: null,
         activeLinks: null,
         selectedMuon: null,
-
+        ready: false,
+        antidegreeindex: 0,
         tick: function(e){
         	var k = .1 * e.alpha;
+        	
 
 		    //Push center nodes toward their designated focus.
 		    gameCore.board.nodes.forEach(function(o, i) {
-		      if(typeof o.foci !== "undefined"){
-		        o.y += (gameCore.board.foci[o.foci].y - o.y) * k;
-		        o.x += (gameCore.board.foci[o.foci].x - o.x) * k;
-		      }
+				if(typeof o.foci !== "undefined"){
+					var focix = gameCore.board.foci[o.foci].x;
+					var fociy = gameCore.board.foci[o.foci].y;
+					o.y += (fociy - o.y) * k;
+					o.x += (focix - o.x) * k;
+				}
 		    });
 
 		    // Exit any old gameCore.board.nodes.
@@ -138,6 +141,49 @@ var gameCore = {
 		      .attr("y1", function(d) { return d.source.y; })
 		      .attr("x2", function(d) { return d.target.x; })
 		      .attr("y2", function(d) { return d.target.y; })
+        },
+        beginRotatingSelectedMuon: function(nodesOfMuon, muon, point){
+        	//while its selected keep on rotating
+        	d3.timer(function(){
+        		if(muon == gameCore.board.selectedMuon)
+        		{
+	        		nodesOfMuon
+				    .attr("cx", function(d) {
+						if(d.angle>(2*Math.PI)){
+							d.angle=0;
+						} else if (d.angle < 0){
+							d.angle = (2*Math.PI)
+						}
+
+						d.x = point.x + gameCore.board.noderadius * Math.cos(d.angle)
+						return d.x;
+				    })
+				    .attr("cy", function(d) {
+						d.y = point.y + gameCore.board.noderadius * Math.sin(d.angle)
+						return d.y;
+				    });
+				    
+			    
+				    nodesOfMuon.each(function(d){
+				    	if(!d.antimuon)
+				    		d.angle+=0.05;
+				    	else 
+				    		d.angle -=0.05;
+				    })
+
+				    nodesOfMuon
+				      .attr("cx", function(d) { return d.x; })
+				      .attr("cy", function(d) { return d.y; })
+
+				    gameCore.board.activeLinks
+				      .attr("x1", function(d) { return d.source.x; })
+				      .attr("y1", function(d) { return d.source.y; })
+				      .attr("x2", function(d) { return d.target.x; })
+				      .attr("y2", function(d) { return d.target.y; })
+				} else {
+					return true;
+				}
+        	});
         },
         mousedown: function() {
 			var point = d3.mouse(this);
@@ -190,24 +236,27 @@ var gameCore = {
 		                //select all the nodes around the node we clicked
 		                var startIndex = closestNode.index - (closestNode.index % 3);
 		                //closestNode.selected = true;
+		                gameCore.board.selectedMuon = closestNode.foci;
 		                d3.selectAll(".id" + startIndex + ",.id" + (startIndex + 1) + ",.id" + (startIndex + 2))
 		                    .transition()
 		                    .duration(450)
 		                    .attr("r", 15);
 
-		                gameCore.board.selectedMuon = closestNode.foci;
+		                
                 	}
                 }
             } else if (closestNode && gameCore.BelongsToPlayer(gameCore.p2Pos, closestNode.foci)){
 
 				//select all the nodes around the node we clicked
 				var startIndex = closestNode.index - (closestNode.index % 3);
-				d3.selectAll(".id" + startIndex + ",.id" + (startIndex + 1) + ",.id" + (startIndex + 2))
-					.transition()
-					.duration(450)
-					.attr("r", 15);
-
 				gameCore.board.selectedMuon = closestNode.foci;
+				var nodesRoundFoci = d3.selectAll(".id" + startIndex + ",.id" + (startIndex + 1) + ",.id" + (startIndex + 2))[0];
+				var point = {
+					x: (nodesRoundFoci[0].cx.baseVal.value + nodesRoundFoci[1].cx.baseVal.value + nodesRoundFoci[2].cx.baseVal.value) / 3,
+					y: (nodesRoundFoci[0].cy.baseVal.value + nodesRoundFoci[1].cy.baseVal.value + nodesRoundFoci[2].cy.baseVal.value) / 3
+				};
+				var nodesRoundFoci = d3.selectAll(".id" + startIndex + ",.id" + (startIndex + 1) + ",.id" + (startIndex + 2));
+				gameCore.board.beginRotatingSelectedMuon(nodesRoundFoci, closestNode.foci, point)
 			}
 		},
         refresh: function(){
@@ -245,7 +294,7 @@ var gameCore = {
 			      return d.id % 3 == 0 ? -30 : 0; 
 			    })
 			    .size([gameCore.board.width, gameCore.board.height])
-			    .on("tick", gameCore.board.tick)
+			    .on("tick", gameCore.board.tick)			    
 			    
 			gameCore.board.activeNodes = gameCore.board.boardSVG.selectAll("circle");
 			gameCore.board.activeLinks = gameCore.board.boardSVG.selectAll('.link');
@@ -257,6 +306,7 @@ var gameCore = {
 				gameCore.board.d3force.stop();
 				d3.select(".d3gamepeices").remove();
 			}
+			gameCore.board.ready = false;
 			gameCore.board.nodes = [];
 			gameCore.board.links = [];
 			gameCore.board.boardSVG = null;
@@ -276,10 +326,10 @@ var gameCore = {
 		addNodeAtFoci: function(f,anti){
 		    var i = f * 3
 
-		    gameCore.board.nodes.push({id: i, foci: f, antimuon: anti, selected: false});
-		    gameCore.board.nodes.push({id: i + 1, foci: f, antimuon: anti, selected: false});
+		    gameCore.board.nodes.push({id: i, x:0, y:0, foci: f, antimuon: anti, selected: false, angle: (Math.PI / 2)});
+		    gameCore.board.nodes.push({id: i + 1, x:0, y:0, foci: f, antimuon: anti, selected: false, angle: ((7 * Math.PI) / 6)});
 		    gameCore.board.links.push({source: i, target: i + 1});
-		    gameCore.board.nodes.push({id: i + 2, foci: f, antimuon: anti, selected: false});
+		    gameCore.board.nodes.push({id: i + 2, x:0, y:0, foci: f, antimuon: anti, selected: false, angle: ((11 * Math.PI) / 6)});
 		    gameCore.board.links.push({source: i + 2, target: i + 1});
 		    gameCore.board.links.push({source: i, target: i + 2});
 
@@ -323,7 +373,6 @@ var gameCore = {
 	// Assumes that the move is passed in the form of bits
 	ValidMove: function(from, to) {
 		// Retrieve the positions adjecent to the selectied piece
-		debugger;
 		var quad = convert.bitToQuad(from);
 		var node = convert.bitToNode(from);
 		var openPositions = '';
