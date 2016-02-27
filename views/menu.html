@@ -6,18 +6,91 @@
 </div>
 <div class="menu-container">
     <div class="main-menu"> 
-        <div class="main-menu-item" ng-mouseover="mouse_over()">
-			<a ui-sref="newgame" ng-click="mouse_click()">New Game</a></div>
-        <div class="main-menu-item" ng-mouseover="mouse_over()">
-			<a ng-click="showNetworkModal()">Network</a></div>
-        <div class="main-menu-item" ng-mouseover="mouse_over()">
-			<a ui-sref="howto" ng-click="mouse_click()">Tutorial</a></div>
-        <div class="main-menu-item" ng-mouseover="mouse_over()">
-			<a ui-sref="options" ng-click="mouse_click()">Options</a></div>
-        <div class="main-menu-item" ng-mouseover="mouse_over()">
-			<a ui-sref="about" ng-click="mouse_click()">About</a></div>
-        <div class="main-menu-item" ng-mouseover="mouse_over()">
-			<a ui-sref="quit" ng-click="mouse_click()">Quit</a></div>
+        <div class="main-menu-item" ng-mouseover="mouse_over(1)">
+			<a id="item1" ui-sref="newgame" ng-click="mouse_click()" 
+			ng-keydown="scroll(event)" tabindex="1">
+				<div class="item-pointer left">
+					<div class="pointer-inner one"></div>
+					<div class="pointer-inner two"></div>
+					<div class="pointer-inner three"></div>
+				</div>
+				New Game
+				<div class="item-pointer right">
+					<div class="pointer-inner one"></div>
+					<div class="pointer-inner two"></div>
+					<div class="pointer-inner three"></div>
+				</div>
+			</a></div>
+        <div class="main-menu-item" ng-mouseover="mouse_over(2)">
+			<a id="item2" ng-click="showNetworkModal()" tabindex="2">
+				<div class="item-pointer left">
+					<div class="pointer-inner one"></div>
+					<div class="pointer-inner two"></div>
+					<div class="pointer-inner three"></div>
+				</div>
+				Network
+				<div class="item-pointer right">
+					<div class="pointer-inner one"></div>
+					<div class="pointer-inner two"></div>
+					<div class="pointer-inner three"></div>
+				</div>
+			</a></div>
+        <div class="main-menu-item" ng-mouseover="mouse_over(3)">
+			<a id="item3" ui-sref="howto" ng-click="mouse_click()" tabindex="3">
+				<div class="item-pointer left">
+					<div class="pointer-inner one"></div>
+					<div class="pointer-inner two"></div>
+					<div class="pointer-inner three"></div>
+				</div>
+				Tutorial
+				<div class="item-pointer right">
+					<div class="pointer-inner one"></div>
+					<div class="pointer-inner two"></div>
+					<div class="pointer-inner three"></div>
+				</div>
+			</a></div>
+        <div class="main-menu-item" ng-mouseover="mouse_over(4)">
+			<a id="item4" ui-sref="options" ng-click="mouse_click()" tabindex="4">
+				<div class="item-pointer left">
+					<div class="pointer-inner one"></div>
+					<div class="pointer-inner two"></div>
+					<div class="pointer-inner three"></div>
+				</div>
+				Options
+				<div class="item-pointer right">
+					<div class="pointer-inner one"></div>
+					<div class="pointer-inner two"></div>
+					<div class="pointer-inner three"></div>
+				</div>
+			</a></div>
+        <div class="main-menu-item" ng-mouseover="mouse_over(5)">
+			<a id="item5" ui-sref="about" ng-click="mouse_click()" tabindex="5">
+				<div class="item-pointer left">
+					<div class="pointer-inner one"></div>
+					<div class="pointer-inner two"></div>
+					<div class="pointer-inner three"></div>
+				</div>
+				About
+				<div class="item-pointer right">
+					<div class="pointer-inner one"></div>
+					<div class="pointer-inner two"></div>
+					<div class="pointer-inner three"></div>
+				</div>
+			</a></div>
+        <div class="main-menu-item" ng-mouseover="mouse_over(6)">
+			<a id="item6" ui-sref="quit" ng-click="mouse_click()" tabindex="6">
+				<div class="item-pointer left">
+					<div class="pointer-inner one"></div>
+					<div class="pointer-inner two"></div>
+					<div class="pointer-inner three"></div>
+				</div>
+				Quit
+				<div class="item-pointer right">
+					<div class="pointer-inner one"></div>
+					<div class="pointer-inner two"></div>
+					<div class="pointer-inner three"></div>
+				</div>
+			</a></div>
     </div>
 </div>
 
