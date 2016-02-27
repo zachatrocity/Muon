@@ -110,6 +110,7 @@ var gameCore = {
         activeNodes: null,
         activeLinks: null,
         selectedMuon: null,
+        spinningMuon: null,
         ready: false,
         antidegreeindex: 0,
         tick: function(e){
@@ -166,9 +167,9 @@ var gameCore = {
 			    
 				    nodesOfMuon.each(function(d){
 				    	if(!d.antimuon)
-				    		d.angle+=0.05;
+				    		d.angle+=0.07;
 				    	else 
-				    		d.angle -=0.05;
+				    		d.angle -=0.07;
 				    })
 
 				    nodesOfMuon
@@ -182,6 +183,7 @@ var gameCore = {
 				      .attr("y2", function(d) { return d.target.y; })
 				} else {
 					return true;
+					gameCore.board.selectedMuon = null;
 				}
         	});
         },
@@ -225,7 +227,6 @@ var gameCore = {
 				} else {
 					//unselect all other nodes
 					target.selected = false;
-					d3.selectAll(".id" + target.index).transition().duration(450).attr("r", 10);
 					gameCore.board.selectedMuon = null;
 				}
 			});
@@ -246,17 +247,22 @@ var gameCore = {
                 	}
                 }
             } else if (closestNode && gameCore.BelongsToPlayer(gameCore.p2Pos, closestNode.foci)){
-
+            	
 				//select all the nodes around the node we clicked
-				var startIndex = closestNode.index - (closestNode.index % 3);
-				gameCore.board.selectedMuon = closestNode.foci;
-				var nodesRoundFoci = d3.selectAll(".id" + startIndex + ",.id" + (startIndex + 1) + ",.id" + (startIndex + 2))[0];
-				var point = {
-					x: (nodesRoundFoci[0].cx.baseVal.value + nodesRoundFoci[1].cx.baseVal.value + nodesRoundFoci[2].cx.baseVal.value) / 3,
-					y: (nodesRoundFoci[0].cy.baseVal.value + nodesRoundFoci[1].cy.baseVal.value + nodesRoundFoci[2].cy.baseVal.value) / 3
-				};
-				var nodesRoundFoci = d3.selectAll(".id" + startIndex + ",.id" + (startIndex + 1) + ",.id" + (startIndex + 2));
-				gameCore.board.beginRotatingSelectedMuon(nodesRoundFoci, closestNode.foci, point)
+				if(closestNode.foci == gameCore.board.selectedMuon) { 
+					//its already spinning so unselect it
+					gameCore.board.selectedMuon = null;
+				} else {
+					var startIndex = closestNode.index - (closestNode.index % 3);
+					gameCore.board.selectedMuon = closestNode.foci;
+					var nodesRoundFoci = d3.selectAll(".id" + startIndex + ",.id" + (startIndex + 1) + ",.id" + (startIndex + 2))[0];
+					var point = {
+						x: (nodesRoundFoci[0].cx.baseVal.value + nodesRoundFoci[1].cx.baseVal.value + nodesRoundFoci[2].cx.baseVal.value) / 3,
+						y: (nodesRoundFoci[0].cy.baseVal.value + nodesRoundFoci[1].cy.baseVal.value + nodesRoundFoci[2].cy.baseVal.value) / 3
+					};
+					var nodesRoundFoci = d3.selectAll(".id" + startIndex + ",.id" + (startIndex + 1) + ",.id" + (startIndex + 2));
+					gameCore.board.beginRotatingSelectedMuon(nodesRoundFoci, closestNode.foci, point)
+				}
 			}
 		},
         refresh: function(){
@@ -265,6 +271,46 @@ var gameCore = {
 		    gameCore.board.activeLinks.enter().insert("line", ".node")
 		      .attr("class", "link");
 
+		     
+		    var muongradient = gameCore.board.boardSVG.append("svg:defs")
+			    .append("svg:radialGradient")
+			    .attr("id", "muongradient")
+			    .attr("cx", "50%")
+			    .attr("cy", "50%")
+			    .attr("fx", "50%")
+			    .attr("fy", "50%")
+
+			// Define the gradient colors
+			muongradient.append("svg:stop")
+			    .attr("offset", "10%")
+			    .attr("stop-color", d3.rgb(95,173,65).darker(1))
+			    .attr("stop-opacity", 1);
+
+
+			muongradient.append("svg:stop")
+			    .attr("offset", "100%")
+			    .attr("stop-color", "rgb(95,173,65)")
+			    .attr("stop-opacity", 1);
+
+
+			var antimugradient = gameCore.board.boardSVG.append("svg:defs")
+			    .append("svg:radialGradient")
+			    .attr("id", "antigradient")
+			    .attr("cx", "50%")
+			    .attr("cy", "50%")
+			    .attr("fx", "50%")
+			    .attr("fy", "50%")
+
+			// Define the gradient colors
+			antimugradient.append("svg:stop")
+			    .attr("offset", "10%")
+			    .attr("stop-color", d3.rgb(84,144,204).darker(1))
+			    .attr("stop-opacity", 1);
+			antimugradient.append("svg:stop")
+			    .attr("offset", "100%")
+			    .attr("stop-color", "rgb(84,144,204)")
+			    .attr("stop-opacity", 1);    
+
 
 		    gameCore.board.activeNodes = gameCore.board.activeNodes.data(gameCore.board.nodes);
 		    gameCore.board.activeNodes.enter().append("circle")
@@ -272,8 +318,21 @@ var gameCore = {
 		      .attr("cx", function(d) { return d.x; })
 		      .attr("cy", function(d) { return d.y; })
 		      .attr("r", 10)
-		      .style("fill", function(d) { return (!d.antimuon) ? d3.rgb(95,173,65) :  d3.rgb(84,144,204); })
+		      .style("stroke", function(d) { return (!d.antimuon) ? d3.rgb(85, 165, 55) :  d3.rgb(75, 142, 182); })
+		      .attr('fill', function(d){ return (!d.antimuon) ? 'url(#muongradient)' : 'url(#antigradient)';})
 		      .call(gameCore.board.d3force.drag)
+
+		  //   gameCore.board.activeNodes = gameCore.board.activeNodes.data(gameCore.board.nodes);
+		  //   gameCore.board.activeNodes.enter().append("svg:image")
+			 //    .attr("class", "circle")
+			 //    .attr("xlink:href", "./images/blackfootball.svg")
+			 //    .attr("x", function(d) { return d.x; })
+				// .attr("y", function(d) { return d.y; })
+			 //    .attr("width", "24px")
+			 //    .attr("height", "24px")
+		  //   	.attr("class", function(d) { return "id" + d.id + " node" })
+				// .call(gameCore.board.d3force.drag)
+
 
 		    gameCore.board.d3force.start()
 		},
