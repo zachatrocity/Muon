@@ -1,6 +1,8 @@
 muonApp.controller('MenuCtrl', function ($scope, $stateParams, $state) {
 	
-	document.getElementById('item1').focus();
+	setTimeout(function(){
+		document.getElementById('item1').focus();
+	},0001);
 	
 	$scope.goToNetworkingPage = function(username){
 		$scope.showNetworkingModal = false;
