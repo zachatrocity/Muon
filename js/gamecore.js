@@ -476,7 +476,7 @@ var gameCore = {
 				gameCore.AddMoveToHistory(new Move(from, to, "player"));
 
 				// Remove the flag if they have abandoned their home quad
-				if (evaluation.isHomeQuadEmpty(2, gameCore.p2Pos)); {
+				if (evaluation.isHomeQuadEmpty(2, gameCore.p2Pos)) {
 					gameCore.ChangePlayer2Flag(false);
 					console.log("Play can now win from their home quad");
 				}
@@ -577,7 +577,7 @@ var gameCore = {
 
 aiWorker.onmessage = function(e) {
 	console.log('Message received from worker');
-	console.log("Opponent moved from " + convert.bitToStandard(e.data.from) + " to " + convert.bitToStandard(e.data.to));
+	console.log("Opponent moved from " + convert.bitToStandard(convert.intToBit(e.data.from)) + " to " + convert.bitToStandard(convert.intToBit(e.data.to)));
 	gameCore.p1Pos ^= (convert.intToBit(e.data.from)) ^ (convert.intToBit(e.data.to));
 	gameCore.AddMoveToHistory(new Move(e.data.from, e.data.to, "ai"));
 	gameCore.player1Turn = false; //human turn

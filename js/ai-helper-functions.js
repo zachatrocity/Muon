@@ -277,9 +277,9 @@ var evaluation = {
 		//player is a 1 or 2 that represent the player number.
 		//position is the current position that needs to be checked.
 	isHomeQuadEmpty:function(player, position){
-		if( player == 1 && position&0b00000000001111100000 == 0)
+		if (player == 1 && (position & 0b00000000001111100000) == 0)
 			return true;
-		if( player == 2 && position&0b00000111110000000000 == 0)
+		if (player == 2 && (position & 0b00000111110000000000) == 0)
 			return true;
 		return false;
 	},
