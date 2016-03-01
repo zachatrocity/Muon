@@ -167,7 +167,7 @@ var convert = {
 			case 0b00100000000000000000 : return 17;
 			case 0b00001000000000000000 : return 18;
 			case 0b00010000000000000000 : return 19;
-			default: console.log("Cannot convert from int " + position + " to int");
+			default: console.log("Cannot convert from bit " + position + " to int");
 		}
 	},
 

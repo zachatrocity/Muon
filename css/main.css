@@ -265,6 +265,12 @@ h1.view-heading{
 	bottom: 0;
 }
 
+.menu{
+	position: absolute;
+	right: 140px;
+	bottom: 0;
+}
+
 /*BOARD CSS*/
 
 #boardHeaderText {

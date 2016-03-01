@@ -81,7 +81,7 @@ var gameCore = {
 				BoardGUI.showLoseModal();
 			}
 			else
-				console.log("IT'S A TIE!");
+				console.log("IT'S A DRAW!");
 			}
 		},
 	board: {
@@ -470,10 +470,17 @@ var gameCore = {
 			// If there is no room ID then you are playing against the AI.
 			if(gameCore.network.roomid == null){
 				console.log("Player moved from " + convert.bitToStandard(bitFrom) + " to " + convert.bitToStandard(bitTo));
-				
+
 				// Update the users bit board.
 				gameCore.p2Pos ^= bitFrom ^ bitTo;
 				gameCore.AddMoveToHistory(new Move(from, to, "player"));
+
+				// Remove the flag if they have abandoned their home quad
+				if (evaluation.isHomeQuadEmpty(2, gameCore.p2Pos)); {
+					gameCore.ChangePlayer2Flag(false);
+					console.log("Play can now win from their home quad");
+				}
+
 				gameCore.player1Turn = true; //AIs turn is set to true
 				gameCore.board.moveMuonTweenFoci(from, to);
 				//display.displayBoard(gameCore.p1Pos, gameCore.p2Pos);
@@ -503,7 +510,7 @@ var gameCore = {
 				console.log("it is not your turn idiot.");
 			}
 		} else {
-			console.log("Player attempted an invalid move, from " + bitFrom + " to " + bitTo);
+			console.log("Player attempted an invalid move, from " + convert.bitToStandard(bitFrom) + " to " + convert.bitToStandard(bitTo));
 		}
 	},
 	// Updates the flag for whether or not player 1 can create triangles in their starting quad
@@ -518,7 +525,7 @@ var gameCore = {
 	GameOver: function(position) {
 		player = (position == gameCore.p1Pos ? 1 : 2);
 		if (evaluation.Win(position, player, gameCore.playerOneFlag, gameCore.playerTwoFlag)) {
-			gameCore.winner = player == 1 ? "lost" : "won";
+			gameCore.winner = player == 1 ? "opponent" : "local";
 			return true;
 		} else {
 			return false;
@@ -552,16 +559,16 @@ var gameCore = {
 	//EndGame sets the game board to not be able to be interfered with by the player.
 	EndGame: function() {
 		gameCore.gameOver = true;	// Lock the board from player input
-		if (gameCore.winner == "won") {
+		if (gameCore.winner == "local") {
 			console.log("YOU WON!");
 			BoardGUI.showWinModal();
 		}
-		else if (gameCore.winner == "lost"){
+		else if (gameCore.winner == "opponent"){
 			console.log("YOU LOST!");
 			BoardGUI.showLoseModal();
 		}
 		else
-			console.log("IT'S A TIE!");
+			console.log("IT'S A DRAW!");
 	},
 	dec2bin: function(dec) {
     	return dec.toString(2);
@@ -570,6 +577,7 @@ var gameCore = {
 
 aiWorker.onmessage = function(e) {
 	console.log('Message received from worker');
+	console.log("Opponent moved from " + convert.bitToStandard(e.data.from) + " to " + convert.bitToStandard(e.data.to));
 	gameCore.p1Pos ^= (convert.intToBit(e.data.from)) ^ (convert.intToBit(e.data.to));
 	gameCore.AddMoveToHistory(new Move(e.data.from, e.data.to, "ai"));
 	gameCore.player1Turn = false; //human turn
