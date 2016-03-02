@@ -1,8 +1,30 @@
 muonApp.controller('MenuCtrl', function ($scope, $stateParams, $state) {
 	
-	setTimeout(function(){
-		document.getElementById('item1').focus();
-	},0001);
+	var allLinks = document.getElementsByTagName('a');
+	
+	window.addEventListener('keydown', function(e) {
+		//debugger;
+		var currentIndex = document.activeElement.tabIndex;
+			
+		switch (e.keyCode){
+			// Down/right key
+			case 39: case 40:
+				if (currentIndex == 6 || currentIndex == -1)
+				{
+					currentIndex = 0;
+				}
+				allLinks[currentIndex].focus();
+				break;
+			case 37: case 38:
+				if (currentIndex == 1 || currentIndex == -1)
+				{
+					currentIndex = 7;
+				}
+				allLinks[currentIndex - 2].focus();
+				break;
+		
+		}
+	});
 	
 	$scope.goToNetworkingPage = function(username){
 		$scope.showNetworkingModal = false;
