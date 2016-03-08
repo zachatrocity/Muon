@@ -15,6 +15,7 @@ muonApp.controller('MenuCtrl', function ($scope, $stateParams, $state) {
 				}
 				allLinks[currentIndex].focus();
 				break;
+			// Up/left key
 			case 37: case 38:
 				if (currentIndex == 1 || currentIndex == -1)
 				{
