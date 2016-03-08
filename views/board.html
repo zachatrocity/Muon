@@ -134,8 +134,9 @@
 						ng-init="showNewGameModal = false;" ng-class="{'show-modal-btn': showNewGameModal}" />
 				</div>
 				<div class="col-xs-4">
-					<input type="button" class="modal-btn" ng-click="startNewGame()" value="New Game" 
-						ng-init="showNewGameModal = false;" ng-class="{'show-modal-btn': showNewGameModal}" />
+					<input type="button" class="modal-btn" 
+						ng-click="startNewGame(); showNewGameModal = false;" 
+						value="New Game" ng-class="{'show-modal-btn': showNewGameModal}" />
 				</div>
 			</div>
 		</div>
