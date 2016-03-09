@@ -455,6 +455,8 @@ var gameCore = {
 			gameCore.moveHistory.shift();
 			gameCore.moveHistory.push(move);
 		}
+
+		document.getElementById('moveCountHeader').innerHTML = "Moves: " + gameCore.moveHistory.length;
 	},
 	GetAvailableMoves: function(peice, openPositions) {
 		var quad = convert.bitToQuad(peice)

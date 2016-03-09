@@ -326,14 +326,19 @@ h1.view-heading{
     stroke-width: 2px;
 }
 
-.game-menu-container {
+.game-sidebar{
 	position: absolute;
-	border-radius: 3px;
-  	box-shadow: 0 1px 5px rgba(0, 0, 0, 0.25);
 	top: 50px;
 	right: 50px;
 	width: 200px;
 	text-align: center;
+}
+
+.game-menu-container {
+	
+	border-radius: 3px;
+  	box-shadow: 0 1px 5px rgba(0, 0, 0, 0.25);
+	padding: 1px;
 	background: rgba(174, 174, 174, 0.55);
 }
 

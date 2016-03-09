@@ -70,12 +70,18 @@
 	</ul>
 </div>
 -->
+    <div class="game-sidebar">
+    	
     
-	<div class="game-menu-container">
-		<a ng-click="showQuitModal = true">Main Menu</a>
-		<a ng-click="showNewGameModal = true">New Game</a>
-		<a ui-sref="#">Help</a>
-		<a ng-click="showQuitMuonModal = true">Quit</a>
+		<div class="game-menu-container">
+			<a ng-click="showQuitModal = true">Main Menu</a>
+			<a ng-click="showNewGameModal = true">New Game</a>
+			<a ui-sref="#">Help</a>
+			<a ng-click="showQuitMuonModal = true">Quit</a>
+		</div>
+
+		<h2 id="moveCountHeader">Moves: 0</h2>
+
 	</div>
 
 	<div id="chat" ng-model="chat">
