@@ -122,7 +122,7 @@ var evaluation = {
 		var total = 0;
 		var currentBitBoard = (player == 1 ? bitBoard : bitBoard2);
 		total += this.stolenRealEstate(bitBoard, bitBoard2);
-		// total += this.isHomeQuadEmpty(bitBoard, player) ? 5 : -1;
+		total += this.isHomeQuadEmpty(bitBoard, player) ? 5 : -1;
 		total += this.isHomeQuadEmpty(bitBoard2, player^3) ? -5 : 1;
 		return total;
 	},
@@ -377,8 +377,7 @@ onmessage = function(e) {
 		if(e.data.AiStartingPosition == "bottom"){
 			p1_Position = 0b00000111110000000000;
 			p2_Position = 0b00000000001111100000;
-		}
-		else{
+		} else {
 			p1_Position = 0b00000000001111100000;
 			p2_Position = 0b00000111110000000000; 
 		}
