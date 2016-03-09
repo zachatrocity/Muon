@@ -374,8 +374,14 @@ var makeAIMove = function(){
 onmessage = function(e) {
 	if(e.data.restart === true){
 		console.log("Restarting AI Brain");
-		p1_Position = 0b00000000001111100000;
-		p2_Position = 0b00000111110000000000; 
+		if(e.data.AiStartingPosition == "bottom"){
+			p1_Position = 0b00000111110000000000;
+			p2_Position = 0b00000000001111100000;
+		}
+		else{
+			p1_Position = 0b00000000001111100000;
+			p2_Position = 0b00000111110000000000; 
+		}
 		p1_flag = true;
 		p2_flag = true;
 		AI.currentMoveOptions = [];
