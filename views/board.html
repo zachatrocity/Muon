@@ -92,7 +92,7 @@
 			<a ng-click="showQuitModal = true"><span class="hint--left" data-hint="Forfeit game and exit to the Main Menu">Main Menu</span></a>
 			<a ng-click="proposeDraw()"><span class="hint--left" data-hint="Propose a draw">Draw</span></a>
 			<a ng-click="showNewGameModal = true"><span class="hint--left" data-hint="Forfeit and start a new game">New Game</span></a>
-			<a ui-sref="#"><span class="hint--left" data-hint="Summary of how to play">Help</span></a>
+			<a ng-click="showHelpModal = true"><span class="hint--left" data-hint="Summary of how to play">Help</span></a>
 			<a ng-click="showQuitMuonModal = true"><span class="hint--left" data-hint="Quit game and close">Quit</span></a>
 		</div>
 
@@ -163,6 +163,31 @@
 			</div>
 		</div>
     </div>
+
+
+    <div class="modal" ng-init="showHelpModal = false;"
+		ng-class="{'dim-lights': showHelpModal}">
+		<div class="modal-dialog help-modal" ng-init="showHelpModal = false;"
+			ng-class="{'show-modal': showHelpModal}">
+			
+			<span class="modal-X batch" data-icon='&#xf14e' 
+				ng-click="showHelpModal = false;" 
+				ng-class="{'show-modal-btn': showHelpModal}"></span>
+			
+			<h3 class="modal-prompt">How To Play</h3>
+			<p> </p>
+			
+			<div class="row">
+				<div class="col-xs-4 col-xs-offset-4">
+					<input type="button" class="modal-btn" ng-click="showHelpModal = false;" 
+						value="OK" ng-focus="true"
+						ng-init="showHelpModal = false;" ng-class="{'show-modal-btn': showHelpModal}" />
+				</div>
+			</div>
+		</div>
+    </div>
+
+
 
     <div class="modal" ng-init="showQuitMuonModal = false;"
 		ng-class="{'dim-lights': showQuitMuonModal}">

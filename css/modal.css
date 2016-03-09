@@ -41,6 +41,11 @@
 	color: rgba(0, 0, 0, 1);
 }
 
+.help-modal {
+	min-height: 325px;
+}
+
+
 .dim-lights {
 	visibility: visible;
 }
