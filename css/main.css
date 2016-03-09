@@ -342,9 +342,8 @@ h1.view-heading{
 	background: rgba(174, 174, 174, 0.55);
 }
 
-.game-menu-container a {
+.game-menu-container span {
 	cursor: pointer;
-	text-transform: uppercase;
 	letter-spacing: 2px;
 	font-size: 14px;
 	font-weight: 700;
@@ -357,7 +356,11 @@ h1.view-heading{
 	border-radius: 3px;
 }
 
-.game-menu-container a:hover {
+.game-menut-container span a {
+	text-transform: uppercase;
+}
+
+.game-menu-container span:hover {
 	background: #0569AD;
 }
 

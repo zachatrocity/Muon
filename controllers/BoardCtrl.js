@@ -3,8 +3,17 @@ muonApp.controller('BoardCtrl', function ($scope, $stateParams, $state) {
 	$scope.startNewGame = function(){
 		BoardGUI.hideLoseModal();
 		BoardGUI.hideWinModal();
+		BoardGUI.hideDrawModal();
 		gameCore.RestartGame();
-	}	                
+	}	          
+
+	$scope.proposeDraw = function(){
+		if(gameCore.ProposeDrawToAI()){
+			gameCore.EndGame();
+		} else {
+			console.log('cannot draw at this time');
+		}
+	}      
 	
 	$scope.quitToMenu = function(){
 		$state.go('menu', {});

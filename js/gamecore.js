@@ -421,8 +421,12 @@ var gameCore = {
 	// Called when the player proposes a draw (ONLY TO THE AI)
 	// Draws between networked players are determined if the other accepts
 	ProposeDrawToAI: function() {
-		if (gameCore.moveHistory.length >= gameCore.MAX_HIST)
-			EndGame();
+		if (gameCore.moveHistory.length >= gameCore.MAX_HIST){
+			return true;
+		}
+		else {
+			return false;
+		}
 	},
 	// Determines if the selected node belongs to the current player
 	// This is so the player cannot select a piece that is not theirs
@@ -574,8 +578,10 @@ var gameCore = {
 			console.log("YOU LOST!");
 			BoardGUI.showLoseModal();
 		}
-		else
+		else{
 			console.log("IT'S A DRAW!");
+			BoardGUI.showDrawModal();
+		}
 	},
 	dec2bin: function(dec) {
     	return dec.toString(2);

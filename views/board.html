@@ -57,6 +57,21 @@
 	</div>
 </div>
 
+<div class="modal waiting" id="draw-modal">
+	<div class="modal-dialog">
+		<h3 class="modal-prompt">It's a Draw!</h3>
+		<div class="row">
+			<div class="col-xs-4 col-xs-offset-2">
+				<input type="button" class="modal-btn" ng-click="startNewGame()" value="New Game" />
+			</div>
+			
+			<div class="col-xs-4">
+				<input type="button" class="modal-btn" ng-click="quitToMenu()" value="Main Menu"/>
+			</div>
+		</div>
+	</div>
+</div>
+
 <!--
 <div class="inGameMenu">
 	<ul>
@@ -74,10 +89,11 @@
     	
     
 		<div class="game-menu-container">
-			<a ng-click="showQuitModal = true">Main Menu</a>
-			<a ng-click="showNewGameModal = true">New Game</a>
-			<a ui-sref="#">Help</a>
-			<a ng-click="showQuitMuonModal = true">Quit</a>
+			<a ng-click="showQuitModal = true"><span class="hint--left" data-hint="Forfeit game and exit to the Main Menu">Main Menu</span></a>
+			<a ng-click="proposeDraw()"><span class="hint--left" data-hint="Propose a draw">Draw</span></a>
+			<a ng-click="showNewGameModal = true"><span class="hint--left" data-hint="Forfeit and start a new game">New Game</span></a>
+			<a ui-sref="#"><span class="hint--left" data-hint="Summary of how to play">Help</span></a>
+			<a ng-click="showQuitMuonModal = true"><span class="hint--left" data-hint="Quit game and close">Quit</span></a>
 		</div>
 
 		<h2 id="moveCountHeader">Moves: 0</h2>

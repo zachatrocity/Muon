@@ -172,6 +172,24 @@ var BoardGUI = {
       modal.getElementsByTagName("input")[0].classList.remove("show-modal-btn");
       modal.getElementsByTagName("input")[1].classList.remove("show-modal-btn");
     }
+  },
+  showDrawModal: function(){
+    var modal = document.getElementById("draw-modal")
+    if(modal != null){
+      modal.classList.add("dim-lights");
+      modal.children[0].classList.add("show-modal");
+      modal.getElementsByTagName("input")[0].classList.add("show-modal-btn");
+      modal.getElementsByTagName("input")[1].classList.add("show-modal-btn");
+    }
+  },
+  hideDrawModal: function(){
+    var modal = document.getElementById("draw-modal")
+    if(modal != null){
+      modal.classList.remove("dim-lights");
+      modal.children[0].classList.remove("show-modal");
+      modal.getElementsByTagName("input")[0].classList.remove("show-modal-btn");
+      modal.getElementsByTagName("input")[1].classList.remove("show-modal-btn");
+    }
   }
 }
 
