@@ -31,25 +31,27 @@ muonApp.controller('BoardCtrl', function ($scope, $stateParams, $state) {
 		}
 	}
 
-	if($stateParams.roomid == ''){
-		//local game against AI
-		gameCore.RestartGame(false);
-	} else {
-		if($stateParams.waiting == '1'){
-		//angular.element(boardHeaderText)[0].innerHTML = "Waiting for opponent";
-		document.getElementById('boardHeaderText').innerHTML = "Waiting for opponent";
-		BoardGUI.showWaitingModal();
-		gameCore.network.role = 'host';
-		gameCore.RestartGame(true);
-
+	$scope.gameboardLoaded = function(e){
+		if($stateParams.roomid == ''){
+			//local game against AI
+			gameCore.RestartGame(false);
 		} else {
-			console.log("attempting to join room");
-			cloak.message('joinRoom', $stateParams.roomid);
-			document.getElementById('boardHeaderText').innerHTML = "Their turn";
-			gameCore.network.role = 'client';
+			if($stateParams.waiting == '1'){
+			//angular.element(boardHeaderText)[0].innerHTML = "Waiting for opponent";
+			document.getElementById('boardHeaderText').innerHTML = "Waiting for opponent";
+			BoardGUI.showWaitingModal();
+			gameCore.network.role = 'host';
 			gameCore.RestartGame(true);
-			//client is here
-			//start game
+
+			} else {
+				console.log("attempting to join room");
+				cloak.message('joinRoom', $stateParams.roomid);
+				document.getElementById('boardHeaderText').innerHTML = "Their turn";
+				gameCore.network.role = 'client';
+				gameCore.RestartGame(true);
+				//client is here
+				//start game
+			}
 		}
 	}
 	
