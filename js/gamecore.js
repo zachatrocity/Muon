@@ -374,7 +374,6 @@ var gameCore = {
 			gameCore.board.activeNodes = null;
 			gameCore.board.activeLinks = null;
 			gameCore.board.selectedMuon = null;
-
 			gameCore.p1Pos = 0b00000000001111100000; //top left pieces
 			gameCore.p2Pos = 0b00000111110000000000; //bottom right pieces
 			gameCore.playerOneFlag = true;
@@ -522,6 +521,7 @@ var gameCore = {
 	ChangePlayer2Flag: function(status) {
 		gameCore.playerTwoFlag = status;
 	},
+
 	// Returns 'P' for player won, 'O' for opponent won, and 'N' for no winner
 	GameOver: function(position) {
 		player = (position == gameCore.p1Pos ? 1 : 2);
@@ -532,9 +532,11 @@ var gameCore = {
 			return false;
 		}
 	},
+
 	RestartGame: function(isNetworkGame, role) {
 		gameCore.board.clearBoard();
-	 	gameCore.board.createBoard();	
+	 	gameCore.board.createBoard();
+
 
 	 	if(isNetworkGame){
 	 		if(gameCore.network.role == 'host'){
@@ -549,11 +551,11 @@ var gameCore = {
 	 			gameCore.network.opponentPos = gameCore.network.opponentStartPos = 0b00000111110000000000;
 	 		}
 	 	} else {
-	 		aiWorker.postMessage(
-			{ 
+	 		aiWorker.postMessage({ 
 				'restart': true,
 				'AIStarts': gameCore.AIGoesFirst,
-				'depth': gameCore.AITreeDepth
+				'depth': gameCore.AITreeDepth,
+				'AiStartingPosition': gameCore.humanteam ==  'antimuon' ? 'bottom' : 'top'
 			});
 	 	}
 	},
