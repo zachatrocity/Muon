@@ -14,6 +14,8 @@ win.on('close', function(){
   gui.App.quit();
 })
 
+var LISTENERSET = false;
+
 var easter_egg = new Konami(function() { alert('Konami code!')});
 
 var muonApp = angular.module('muonApp', ["ui.router", "ngAnimate"])
