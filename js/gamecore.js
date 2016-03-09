@@ -145,47 +145,54 @@ var gameCore = {
         },
         beginRotatingSelectedMuon: function(nodesOfMuon, muon, point){
         	//while its selected keep on rotating
-        	d3.timer(function(){
-        		if(muon == gameCore.board.selectedMuon)
-        		{
-	        		nodesOfMuon
-				    .attr("cx", function(d) {
-						if(d.angle>(2*Math.PI)){
-							d.angle=0;
-						} else if (d.angle < 0){
-							d.angle = (2*Math.PI)
-						}
+        	if(gameCore.board.spinningMuon != muon){
+        		gameCore.board.spinningMuon = muon;
+	        	d3.timer(function(){
+	        		if(muon == gameCore.board.selectedMuon)
+	        		{
+		        		nodesOfMuon
+					    .attr("cx", function(d) {
+							if(d.angle>(2*Math.PI)){
+								d.angle=0;
+							} else if (d.angle < 0){
+								d.angle = (2*Math.PI)
+							}
 
-						d.x = point.x + gameCore.board.noderadius * Math.cos(d.angle)
-						return d.x;
-				    })
-				    .attr("cy", function(d) {
-						d.y = point.y + gameCore.board.noderadius * Math.sin(d.angle)
-						return d.y;
-				    });
+							d.x = point.x + gameCore.board.noderadius * Math.cos(d.angle)
+							return d.x;
+					    })
+					    .attr("cy", function(d) {
+							d.y = point.y + gameCore.board.noderadius * Math.sin(d.angle)
+							return d.y;
+					    });
+					    
 				    
-			    
-				    nodesOfMuon.each(function(d){
-				    	if(!d.antimuon)
-				    		d.angle+=0.05;
-				    	else 
-				    		d.angle -=0.05;
-				    })
+					    nodesOfMuon.each(function(d){
+					    	if(!d.antimuon)
+					    		d.angle+=0.05;
+					    	else 
+					    		d.angle -=0.05;
+					    })
 
-				    nodesOfMuon
-				      .attr("cx", function(d) { return d.x; })
-				      .attr("cy", function(d) { return d.y; })
+					    nodesOfMuon
+					      .attr("cx", function(d) { return d.x; })
+					      .attr("cy", function(d) { return d.y; })
 
-				    gameCore.board.activeLinks
-				      .attr("x1", function(d) { return d.source.x; })
-				      .attr("y1", function(d) { return d.source.y; })
-				      .attr("x2", function(d) { return d.target.x; })
-				      .attr("y2", function(d) { return d.target.y; })
-				} else {
-					return true;
-					gameCore.board.selectedMuon = null;
-				}
-        	});
+					    gameCore.board.activeLinks
+					      .attr("x1", function(d) { return d.source.x; })
+					      .attr("y1", function(d) { return d.source.y; })
+					      .attr("x2", function(d) { return d.target.x; })
+					      .attr("y2", function(d) { return d.target.y; })
+					} else {
+						return true;
+						gameCore.board.selectedMuon = null;
+					}
+	        	});
+			} else {
+				//stop rotating the muon
+				gameCore.board.selectedMuon = null;
+				gameCore.board.spinningMuon = null;
+			}
         },
         mousedown: function() {
 			var point = d3.mouse(this);
