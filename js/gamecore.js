@@ -167,9 +167,9 @@ var gameCore = {
 			    
 				    nodesOfMuon.each(function(d){
 				    	if(!d.antimuon)
-				    		d.angle+=0.07;
+				    		d.angle+=0.05;
 				    	else 
-				    		d.angle -=0.07;
+				    		d.angle -=0.05;
 				    })
 
 				    nodesOfMuon
@@ -271,46 +271,7 @@ var gameCore = {
 		    gameCore.board.activeLinks.enter().insert("line", ".node")
 		      .attr("class", "link");
 
-		     
-		    var muongradient = gameCore.board.boardSVG.append("svg:defs")
-			    .append("svg:radialGradient")
-			    .attr("id", "muongradient")
-			    .attr("cx", "50%")
-			    .attr("cy", "50%")
-			    .attr("fx", "50%")
-			    .attr("fy", "50%")
-
-			// Define the gradient colors
-			muongradient.append("svg:stop")
-			    .attr("offset", "10%")
-			    .attr("stop-color", d3.rgb(95,173,65).darker(1))
-			    .attr("stop-opacity", 1);
-
-
-			muongradient.append("svg:stop")
-			    .attr("offset", "100%")
-			    .attr("stop-color", "rgb(95,173,65)")
-			    .attr("stop-opacity", 1);
-
-
-			var antimugradient = gameCore.board.boardSVG.append("svg:defs")
-			    .append("svg:radialGradient")
-			    .attr("id", "antigradient")
-			    .attr("cx", "50%")
-			    .attr("cy", "50%")
-			    .attr("fx", "50%")
-			    .attr("fy", "50%")
-
-			// Define the gradient colors
-			antimugradient.append("svg:stop")
-			    .attr("offset", "10%")
-			    .attr("stop-color", d3.rgb(84,144,204).darker(1))
-			    .attr("stop-opacity", 1);
-			antimugradient.append("svg:stop")
-			    .attr("offset", "100%")
-			    .attr("stop-color", "rgb(84,144,204)")
-			    .attr("stop-opacity", 1);    
-
+		    
 
 		    gameCore.board.activeNodes = gameCore.board.activeNodes.data(gameCore.board.nodes);
 		    gameCore.board.activeNodes.enter().append("circle")
@@ -342,6 +303,46 @@ var gameCore = {
 			    .attr("width", gameCore.board.width)
 			    .attr("height", gameCore.board.height)
 			    .on("mousedown", gameCore.board.mousedown);
+
+
+		    var muongradient = gameCore.board.boardSVG.append("svg:defs")
+			    .append("svg:radialGradient")
+			    .attr("id", "muongradient")
+			    .attr("cx", "50%")
+			    .attr("cy", "50%")
+			    .attr("fx", "50%")
+			    .attr("fy", "50%")
+
+			// Define the gradient colors
+			muongradient.append("svg:stop")
+			    .attr("offset", "10%")
+			    .attr("stop-color", d3.rgb(95,173,65).darker(1))
+			    .attr("stop-opacity", 1);
+
+
+			muongradient.append("svg:stop")
+			    .attr("offset", "100%")
+			    .attr("stop-color", "rgb(95,173,65)")
+			    .attr("stop-opacity", 1);
+
+			var antimugradient = gameCore.board.boardSVG.append("svg:defs")
+			    .append("svg:radialGradient")
+			    .attr("id", "antigradient")
+			    .attr("cx", "50%")
+			    .attr("cy", "50%")
+			    .attr("fx", "50%")
+			    .attr("fy", "50%")
+
+			// Define the gradient colors
+			antimugradient.append("svg:stop")
+			    .attr("offset", "10%")
+			    .attr("stop-color", d3.rgb(84,144,204).darker(1))
+			    .attr("stop-opacity", 1);
+			antimugradient.append("svg:stop")
+			    .attr("offset", "100%")
+			    .attr("stop-color", "rgb(84,144,204)")
+			    .attr("stop-opacity", 1);    
+
 
 			gameCore.board.d3force = d3.layout.force()
 			    .nodes(gameCore.board.nodes)
