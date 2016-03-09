@@ -1,13 +1,13 @@
 muonApp.controller('HowToCtrl', function ($scope, $stateParams) {
 	
 	var fill = d3.scale.category10();
-
+	var width =  window.innerWidth;
 	var nodes = [],
 		links = [],
-		foci = [{x: 100, y: 150}, {x: 1250, y: 150}];
+		foci = [{x: 500 , y: 150}, {x: width - 150, y: 150}];
 
 	var SVG = d3.select(".muon-container").append("svg")
-	    .attr("width", 1200)
+	    .attr("width", width)
 	    .attr("height", 300)
 
 	var force = d3.layout.force()

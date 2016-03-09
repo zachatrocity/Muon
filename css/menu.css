@@ -51,7 +51,7 @@
 	cursor: pointer;
 }
 
-.main-menu-item:hover {
+.main-menu-item:hover, a:focus{
     text-shadow: 0 0 5px #F7F0F0
 }
 
@@ -79,11 +79,11 @@
   visibility: hidden;
 }
 
-.main-menu-item:hover .item-pointer.left{
+.main-menu-item:hover .item-pointer.left, a:focus .item-pointer.left{
     visibility: visible;
 }
 
-.main-menu-item:hover .item-pointer.right{
+.main-menu-item:hover .item-pointer.right, a:focus .item-pointer.right{
     visibility: visible;
 }
 

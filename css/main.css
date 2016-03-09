@@ -50,6 +50,10 @@ https://coolors.co/app/404040-f7f0f0-5490cc-5fad41-067bc2
 #8BBED7
 */
 
+a {
+	outline: 0;
+}
+
 .button {
   display: inline-block;
   position: relative;
@@ -261,6 +265,12 @@ h1.view-heading{
 	bottom: 0;
 }
 
+.menu{
+	position: absolute;
+	right: 140px;
+	bottom: 0;
+}
+
 /*BOARD CSS*/
 
 #boardHeaderText {
@@ -304,7 +314,6 @@ h1.view-heading{
 }
 
 .node {
-  stroke: #636363;
   stroke-width: 2px;
 }
 
