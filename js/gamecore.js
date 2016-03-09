@@ -236,12 +236,14 @@ var gameCore = {
 	            	if(closestNode.antimuon == (gameCore.network.team == 'antimuon' ? 1 : 0)){
 		                //select all the nodes around the node we clicked
 		                var startIndex = closestNode.index - (closestNode.index % 3);
-		                //closestNode.selected = true;
 		                gameCore.board.selectedMuon = closestNode.foci;
-		                d3.selectAll(".id" + startIndex + ",.id" + (startIndex + 1) + ",.id" + (startIndex + 2))
-		                    .transition()
-		                    .duration(450)
-		                    .attr("r", 15);
+						var nodesRoundFoci = d3.selectAll(".id" + startIndex + ",.id" + (startIndex + 1) + ",.id" + (startIndex + 2))[0];
+						var point = {
+							x: (nodesRoundFoci[0].cx.baseVal.value + nodesRoundFoci[1].cx.baseVal.value + nodesRoundFoci[2].cx.baseVal.value) / 3,
+							y: (nodesRoundFoci[0].cy.baseVal.value + nodesRoundFoci[1].cy.baseVal.value + nodesRoundFoci[2].cy.baseVal.value) / 3
+						};
+						var nodesRoundFoci = d3.selectAll(".id" + startIndex + ",.id" + (startIndex + 1) + ",.id" + (startIndex + 2));
+						gameCore.board.beginRotatingSelectedMuon(nodesRoundFoci, closestNode.foci, point)
 
 		                
                 	}
