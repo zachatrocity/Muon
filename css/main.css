@@ -273,6 +273,13 @@ h1.view-heading{
 
 /*BOARD CSS*/
 
+.preload-board {
+	display: none;
+	width: 0;
+	height: 0;
+	background: url(./images/boardElec.gif);
+}
+
 #boardHeaderText {
 	position: absolute;
 	right: 300px;
