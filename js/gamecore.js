@@ -418,11 +418,16 @@ var gameCore = {
 			gameCore.board.addNodeAtFoci(9,0);
 		},
 		moveMuonTweenFoci: function(f1,f2){
-		  gameCore.board.nodes.forEach(function(o, i) {
-		    if (o.foci == f1) {o.foci = f2;}
-		  });
+			//stop rotating the muon
+			gameCore.board.selectedMuon = null;
+			gameCore.board.spinningMuon = null;
 
-		  gameCore.board.refresh();
+
+			gameCore.board.nodes.forEach(function(o, i) {
+				if (o.foci == f1) {o.foci = f2;}
+			});
+
+			gameCore.board.refresh();
 		}        
 	},
 	// Called when the player proposes a draw (ONLY TO THE AI)
