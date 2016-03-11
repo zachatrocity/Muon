@@ -16,6 +16,10 @@ muonApp.controller('MenuCtrl', function ($scope, $stateParams, $state) {
 						currentIndex = 0;
 					}
 					allLinks[currentIndex].focus();
+					
+					if(Audio.togglesound)
+						Audio.menuOver.play();
+					
 					break;
 				// Up/left key
 				case 37: case 38:
@@ -23,7 +27,11 @@ muonApp.controller('MenuCtrl', function ($scope, $stateParams, $state) {
 					{
 						currentIndex = 7;
 					}
-					allLinks[currentIndex - 2].focus();
+					allLinks[currentIndex - 2].focus();	
+					
+					if(Audio.togglesound)	
+						Audio.menuOver.play();
+					
 					break;
 			
 			}
