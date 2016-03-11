@@ -13,7 +13,7 @@ var gameCore = {
 	playerTwoFlag: true,
 	humanteam: '',
 
-	player1Turn: true,	// Flag for the current player's turn
+	AITurn: true,	// Flag for the current player's turn
 	MAX_HIST: 30,		// Maximum moves to keep track of
 	moveHistory: [],	// A history of the moves made by both players
 	winner: "none",		// To display if the local player won or lost
@@ -195,6 +195,7 @@ var gameCore = {
 			}
         },
         mousedown: function() {
+
 			var point = d3.mouse(this);
 			var maxdist = 30
 			var maxFociDist = 80;
@@ -387,7 +388,7 @@ var gameCore = {
 			gameCore.p2Pos = 0b00000111110000000000; //bottom right pieces
 			gameCore.playerOneFlag = true;
 			gameCore.playerTwoFlag = true;
-			gameCore.player1Turn = true;
+			gameCore.AITurn = true;
 			gameCore.moveHistory = [];
 			gameCore.gameOver = false;
 		},
@@ -418,10 +419,10 @@ var gameCore = {
 			gameCore.board.addNodeAtFoci(9,0);
 		},
 		moveMuonTweenFoci: function(f1,f2){
-			//stop rotating the muon
+
+        	//stop rotating the muon
 			gameCore.board.selectedMuon = null;
 			gameCore.board.spinningMuon = null;
-
 
 			gameCore.board.nodes.forEach(function(o, i) {
 				if (o.foci == f1) {o.foci = f2;}
@@ -489,26 +490,28 @@ var gameCore = {
 			
 			// If there is no room ID then you are playing against the AI.
 			if(gameCore.network.roomid == null){
-				console.log("Player moved from " + convert.bitToStandard(bitFrom) + " to " + convert.bitToStandard(bitTo));
+				if(gameCore.AITurn == false){ //if it is human turn
+					console.log("Player moved from " + convert.bitToStandard(bitFrom) + " to " + convert.bitToStandard(bitTo));
 
-				// Update the users bit board.
-				gameCore.p2Pos ^= bitFrom ^ bitTo;
-				gameCore.AddMoveToHistory(new Move(from, to, "player"));
+					// Update the users bit board.
+					gameCore.p2Pos ^= bitFrom ^ bitTo;
+					gameCore.AddMoveToHistory(new Move(from, to, "player"));
 
-				// Remove the flag if they have abandoned their home quad
-				if (evaluation.isHomeQuadEmpty(2, gameCore.p2Pos)) {
-					gameCore.ChangePlayer2Flag(false);
-					console.log("Player can now win from their home quad");
-				}
+					// Remove the flag if they have abandoned their home quad
+					if (evaluation.isHomeQuadEmpty(2, gameCore.p2Pos)) {
+						gameCore.ChangePlayer2Flag(false);
+						console.log("Player can now win from their home quad");
+					}
 
-				gameCore.player1Turn = true; //AIs turn is set to true
-				gameCore.board.moveMuonTweenFoci(from, to);
-				//display.displayBoard(gameCore.p1Pos, gameCore.p2Pos);
-				if (gameCore.GameOver(gameCore.p2Pos)) {
-					gameCore.EndGame();
-				} else {
-					// Make ai move
-					aiWorker.postMessage({ 'from': bitFrom, 'to': bitTo });
+					gameCore.AITurn = true; //AIs turn is set to true
+					gameCore.board.moveMuonTweenFoci(from, to);
+					//display.displayBoard(gameCore.p1Pos, gameCore.p2Pos);
+					if (gameCore.GameOver(gameCore.p2Pos)) {
+						gameCore.EndGame();
+					} else {
+						// Make ai move
+						aiWorker.postMessage({ 'from': bitFrom, 'to': bitTo });
+					}
 				}
 			} 
 			// If there is a room ID then you are playing over network.
@@ -571,6 +574,7 @@ var gameCore = {
 	 			gameCore.network.opponentPos = gameCore.network.opponentStartPos = 0b00000111110000000000;
 	 		}
 	 	} else {
+	 		gameCore.AITurn = gameCore.AIGoesFirst;
 	 		aiWorker.postMessage({ 
 				'restart': true,
 				'AIStarts': gameCore.AIGoesFirst,
@@ -612,7 +616,7 @@ aiWorker.onmessage = function(e) {
 	}
 
 	gameCore.AddMoveToHistory(new Move(e.data.from, e.data.to, "ai"));
-	gameCore.player1Turn = false; //human turn
+	gameCore.AITurn = false; //human turn
 	gameCore.board.moveMuonTweenFoci(e.data.from, e.data.to);
 
 	if (gameCore.GameOver(gameCore.p1Pos)) {
