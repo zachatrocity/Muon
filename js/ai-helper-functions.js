@@ -47,7 +47,7 @@ var display = {
 var boardAspect = {
 	//bitBoard for the player and the quadrant number 0 to 3
 	getQuadBits: function(bitBoard, quadrant){
-		return bitBoard & (0x1F<<(5*quadrant));
+		return (bitBoard >>> (5*quadrant)) & 0x1F;
 	},
 
 	//availabeMoves()
