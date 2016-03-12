@@ -2,7 +2,7 @@ muonApp.controller('BoardCtrl', function ($scope, $stateParams, $state) {
 
 	var timer = 0, seconds = 0, minutes = 0, hours = 0;
 
-	setInterval(function(){
+	var gametimer = setInterval(function(){
 
 		seconds++;
 	    if (seconds >= 60) {
@@ -22,6 +22,10 @@ muonApp.controller('BoardCtrl', function ($scope, $stateParams, $state) {
 		BoardGUI.hideWinModal();
 		BoardGUI.hideDrawModal();
 		gameCore.RestartGame();
+		timer = 0;
+		seconds = 0;
+		minutes = 0;
+		hours = 0;
 	}	          
 
 	$scope.proposeDraw = function(){
@@ -38,6 +42,8 @@ muonApp.controller('BoardCtrl', function ($scope, $stateParams, $state) {
 		if (Network.isConnected){
 			cloak.message('leaveRoom'); 
 		}
+
+		clearInterval(gametimer);
 	}
 	
 	$scope.sendChat = function(){
