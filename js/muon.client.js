@@ -111,6 +111,18 @@ var BoardGUI = {
   setBoardHeaderElement: function(value) {
     document.getElementById('boardHeaderText').innerHTML = value;
   },
+  removeMuonFlag: function(){
+    if(gameCore.playerOneFlag)
+      document.getElementById('board-flags').src = "./images/boardPlacesB.svg"
+    else 
+      document.getElementById('board-flags').src = "./images/boardPlacesN.svg"
+  },
+  removeAntiMuonFlag: function(){
+    if(gameCore.playerTwoFlag)
+      document.getElementById('board-flags').src = "./images/boardPlacesG.svg"
+    else 
+      document.getElementById('board-flags').src = "./images/boardPlacesN.svg"
+  },
   appendChatMessage: function(msg, isMyMessage){
     var messages = document.getElementById("messages");
     if(isMyMessage) //left align

@@ -1,5 +1,22 @@
 muonApp.controller('BoardCtrl', function ($scope, $stateParams, $state) {
 
+	var timer = 0, seconds = 0, minutes = 0, hours = 0;
+
+	setInterval(function(){
+
+		seconds++;
+	    if (seconds >= 60) {
+	        seconds = 0;
+	        minutes++;
+	        if (minutes >= 60) {
+	            minutes = 0;
+	            hours++;
+	        }
+	    }
+
+		document.getElementById("timer").textContent = (minutes > 0) ? minutes + ":" + seconds : seconds;
+	}, 1000);
+
 	$scope.startNewGame = function(){
 		BoardGUI.hideLoseModal();
 		BoardGUI.hideWinModal();

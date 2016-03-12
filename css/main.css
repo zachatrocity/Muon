@@ -40,15 +40,6 @@ https://coolors.co/app/404040-f7f0f0-5490cc-5fad41-067bc2
 	font-style:normal;
 }
 
-/*
-
-#597699
-
-#669BD7
-
-
-#8BBED7
-*/
 
 a {
 	outline: 0;
@@ -149,6 +140,40 @@ img {
   100% {
     background-position: 25% 50%;
   }
+}
+
+.move-count-container{
+	background-color: #4183D7;
+	border-radius: 3px;
+  	box-shadow: 0 1px 5px rgba(0, 0, 0, 0.25);
+}
+
+#moveCountHeader{
+	text-align: left;
+	margin-left: 25px;
+}
+
+#moveCount{
+	text-align: right;
+	margin-right: 25px;
+	margin-top: -15px;
+}
+
+.timer-container{
+	background-color: #4183D7;
+	border-radius: 3px;
+  	box-shadow: 0 1px 5px rgba(0, 0, 0, 0.25);
+}
+
+#timerHeader{
+	text-align: left;
+	margin-left: 25px;
+}
+
+#timer{
+	text-align: right;
+	margin-right: 25px;
+	margin-top: -15px;
 }
 
 #chat{
@@ -301,16 +326,9 @@ h1.view-heading{
   	box-shadow: 0 1px 5px rgba(0, 0, 0, 0.25);
 }
 
-.atom {
-	position: absolute;
-	top: 20%;
-	right: 5%;
-}
 
-.atom  img{
-	z-index: 0;
-	width: 500px;
-	height: 500px;
+#board-flags img{
+	transition: opacity 1s ease-in-out;
 }
 
 .gamepeices {

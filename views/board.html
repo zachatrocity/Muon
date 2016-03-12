@@ -1,90 +1,76 @@
 <!-- views/board.html -->
 
-<body>
-<h2 id="boardHeaderText"></h2>
+	<h2 id="boardHeaderText"></h2>
 
 
-<div class="gameboard">
-    <img src="./images/boardElec.gif" sb-load="gameboardLoaded($event)">
-</div>
-<div class="gameboard">
-    <img src="./images/boardPlacesA.svg">
-</div>
-<div class="gamepeices">
-  
-</div>
-
-<div class="modal waiting" id="waiting_modal">
-	<div class="modal-dialog">
-		<h3 class="modal-prompt">Waiting for opponent...</h3>
-		</br>
-		<div class="loader">
-			<div class="inner one"></div>
-			<div class="inner two"></div>
-			<div class="inner three"></div>
-		</div>
-
+	<div class="gameboard">
+	    <img src="./images/boardElec.gif" sb-load="gameboardLoaded($event)">
 	</div>
-</div>
+	<div class="gameboard">
+	    <img id="board-flags" src="./images/boardPlacesA.svg">
+	</div>
+	<div class="gamepeices">
+	  
+	</div>
 
-<div class="modal waiting" id="win-modal">
-	<div class="modal-dialog">
-		<h3 class="modal-prompt">You Won!</h3>
-		<div class="row">
-			<div class="col-xs-4 col-xs-offset-2">
-				<input type="button" class="modal-btn" ng-click="startNewGame()" value="New Game" />
+	<div class="modal waiting" id="waiting_modal">
+		<div class="modal-dialog">
+			<h3 class="modal-prompt">Waiting for opponent...</h3>
+			</br>
+			<div class="loader">
+				<div class="inner one"></div>
+				<div class="inner two"></div>
+				<div class="inner three"></div>
 			</div>
-			
-			<div class="col-xs-4">
-				<input type="button" class="modal-btn" ng-click="quitToMenu()" value="Main Menu"/>
-			</div>
+
 		</div>
 	</div>
-</div>
 
-<div class="modal waiting" id="lose-modal">
-	<div class="modal-dialog">
-		<h3 class="modal-prompt">You Lost!</h3>
-		<div class="row">
-			<div class="col-xs-4 col-xs-offset-2">
-				<input type="button" class="modal-btn" ng-click="startNewGame()" value="New Game" />
-			</div>
-			
-			<div class="col-xs-4">
-				<input type="button" class="modal-btn" ng-click="quitToMenu()" value="Main Menu"/>
+	<div class="modal waiting" id="win-modal">
+		<div class="modal-dialog">
+			<h3 class="modal-prompt">You Won!</h3>
+			<div class="row">
+				<div class="col-xs-4 col-xs-offset-2">
+					<input type="button" class="modal-btn" ng-click="startNewGame()" value="New Game" />
+				</div>
+				
+				<div class="col-xs-4">
+					<input type="button" class="modal-btn" ng-click="quitToMenu()" value="Main Menu"/>
+				</div>
 			</div>
 		</div>
 	</div>
-</div>
 
-<div class="modal waiting" id="draw-modal">
-	<div class="modal-dialog">
-		<h3 class="modal-prompt">It's a Draw!</h3>
-		<div class="row">
-			<div class="col-xs-4 col-xs-offset-2">
-				<input type="button" class="modal-btn" ng-click="startNewGame()" value="New Game" />
-			</div>
-			
-			<div class="col-xs-4">
-				<input type="button" class="modal-btn" ng-click="quitToMenu()" value="Main Menu"/>
+	<div class="modal waiting" id="lose-modal">
+		<div class="modal-dialog">
+			<h3 class="modal-prompt">You Lost!</h3>
+			<div class="row">
+				<div class="col-xs-4 col-xs-offset-2">
+					<input type="button" class="modal-btn" ng-click="startNewGame()" value="New Game" />
+				</div>
+				
+				<div class="col-xs-4">
+					<input type="button" class="modal-btn" ng-click="quitToMenu()" value="Main Menu"/>
+				</div>
 			</div>
 		</div>
 	</div>
-</div>
 
-<!--
-<div class="inGameMenu">
-	<ul>
-		<li class="button">Menu
-			<ul>
-				<a ng-click="showQuitModal = true"><li>Main Menu</li></a>
-				<a ng-click="showNewGameModal = true"><li>New Game</li></a>
-				<a ui-sref="#"><li>Hint</li></a>
-			</ul>
-		</li>
-	</ul>
-</div>
--->
+	<div class="modal waiting" id="draw-modal">
+		<div class="modal-dialog">
+			<h3 class="modal-prompt">It's a Draw!</h3>
+			<div class="row">
+				<div class="col-xs-4 col-xs-offset-2">
+					<input type="button" class="modal-btn" ng-click="startNewGame()" value="New Game" />
+				</div>
+				
+				<div class="col-xs-4">
+					<input type="button" class="modal-btn" ng-click="quitToMenu()" value="Main Menu"/>
+				</div>
+			</div>
+		</div>
+	</div>
+
     <div class="game-sidebar">
     	
     
@@ -96,7 +82,15 @@
 			<a ng-click="showQuitMuonModal = true"><span class="hint--left" data-hint="Quit game and close">Quit</span></a>
 		</div>
 
-		<h2 id="moveCountHeader">Moves: 0</h2>
+		<div class="move-count-container">
+			<h3 id="moveCountHeader">Moves</h3>
+			<h1 id="moveCount">0</h1>
+		</div>
+
+		<div class="timer-container">
+			<h3 id="timerHeader">Time</h3>
+			<h1 id="timer">0</h1>
+		</div>
 
 	</div>
 
@@ -106,7 +100,7 @@
 		</ul>
 		<form id="chat-form" ng-submit="sendChat()">
 			<span class='batch' data-icon='&#xf139'></span>
-		    <input id="chat-text" ng-model="chatText" autofocus>
+		    <input id="chat-text" ng-model="chatText" maxlength="255" autofocus>
 		    <input id="chat-enter" type="submit" class="button" value="send">
 		</form>
 	</div>
@@ -213,4 +207,3 @@
 			</div>
 		</div>
     </div>
-</body>

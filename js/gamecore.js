@@ -16,6 +16,7 @@ var gameCore = {
 	AITurn: true,	// Flag for the current player's turn
 	MAX_HIST: 30,		// Maximum moves to keep track of
 	moveHistory: [],	// A history of the moves made by both players
+	moveCount: 0,
 	winner: "none",		// To display if the local player won or lost
 	gameOver: false,	// Stop allowing the selection of muons if true
 	AIGoesFirst:false,
@@ -390,6 +391,7 @@ var gameCore = {
 			gameCore.playerTwoFlag = true;
 			gameCore.AITurn = true;
 			gameCore.moveHistory = [];
+			gameCore.moveCount = 0;
 			gameCore.gameOver = false;
 		},
 		addNodeAtFoci: function(f,anti){
@@ -473,7 +475,7 @@ var gameCore = {
 			gameCore.moveHistory.push(move);
 		}
 
-		document.getElementById('moveCountHeader').innerHTML = "Moves: " + gameCore.moveHistory.length;
+		document.getElementById('moveCount').innerHTML = gameCore.moveCount++;
 	},
 	GetAvailableMoves: function(peice, openPositions) {
 		var quad = convert.bitToQuad(peice)
@@ -539,10 +541,16 @@ var gameCore = {
 	// Updates the flag for whether or not player 1 can create triangles in their starting quad
 	ChangePlayer1Flag: function(status) {
 		gameCore.playerOneFlag = status;
+		if(!status){
+			BoardGUI.removeAntiMuonFlag();
+		}
 	},
 	// Updates the flag for whether or not player 2 can create triangles in their starting quad
 	ChangePlayer2Flag: function(status) {
 		gameCore.playerTwoFlag = status;
+		if(!status){
+			BoardGUI.removeMuonFlag();
+		}
 	},
 
 	// Returns 'P' for player won, 'O' for opponent won, and 'N' for no winner
