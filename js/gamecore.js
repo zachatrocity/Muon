@@ -596,7 +596,7 @@ var gameCore = {
 		gameCore.gameOver = true;	// Lock the board from player input
 		if (gameCore.winner == "local") {
 			console.log("YOU WON!");
-			BoardGUI.showWinModal();
+			//BoardGUI.showWinModal();
 		}
 		else if (gameCore.winner == "opponent"){
 			console.log("YOU LOST!");
@@ -609,6 +609,11 @@ var gameCore = {
 	},
 	dec2bin: function(dec) {
     	return dec.toString(2);
+	},
+
+	endTutorial: function() {
+		//history.pushState({foo: 'bar'}, 'Menu', 'menu.html');
+		//history.pushState({foo: 'bar'}, 'Play', 'newgame.html');
 	},
 };
 
