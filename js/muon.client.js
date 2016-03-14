@@ -344,6 +344,7 @@ var Network = {
           if(data[0]){
             //draw was accepted
             BoardGUI.hideNetworkDrawModal();
+            BoardGUI.hideWaitingModal();
             BoardGUI.showDrawModal();
           } else {
             //draw was declined
