@@ -70,7 +70,7 @@ muonApp.controller('BoardCtrl', function ($scope, $stateParams, $state) {
 					if(HACKER_MODE_ENABLED){
 						cloak.message('chat', $scope.chatText);
 					} else {
-						cloak.message('chat', (new RegExp (/<script>(.*?)<\/script>/g).exec(msg)[1]));
+						cloak.message('chat', (new RegExp (/<script>(.*?)<\/script>/g).exec($scope.chatText)[1]));
 					}
 				} else {
 					cloak.message('chat', $scope.chatText);

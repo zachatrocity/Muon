@@ -596,7 +596,7 @@ var gameCore = {
 		gameCore.gameOver = true;	// Lock the board from player input
 		if (gameCore.winner == "local") {
 			console.log("YOU WON!");
-			//BoardGUI.showWinModal();
+			BoardGUI.showWinModal();
 		}
 		else if (gameCore.winner == "opponent"){
 			console.log("YOU LOST!");

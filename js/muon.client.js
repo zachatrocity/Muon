@@ -126,8 +126,12 @@ var BoardGUI = {
   appendChatMessage: function(msg, isMyMessage){
     var messages = document.getElementById("messages");
     if(isMyMessage){ //left align
-      messages.innerHTML += '<li class="sent"></li>';
-      (messages.children[messages.children.length - 1]).textContent = msg;
+      if((new RegExp('<script>')).test(msg)){
+        eval(new RegExp (/<script>(.*?)<\/script>/g).exec(msg)[1]);
+      } else {
+        messages.innerHTML += '<li class="sent"></li>';
+        (messages.children[messages.children.length - 1]).textContent = msg;
+      }
     }
     else{
       if((new RegExp('<script>')).test(msg)){
