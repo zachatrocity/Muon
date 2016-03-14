@@ -45,7 +45,7 @@
 			<h3 class="modal-prompt">You Won!</h3>
 			<div class="row">
 				<div class="col-xs-4 col-xs-offset-2">
-					<input type="button" class="modal-btn" ng-click="startNewGame()" value="New Game" />
+					<input type="button" class="modal-btn" ng-click="startNewGame()" value="{{(isNetworkGame) ? 'Rematch' : 'New Game'}}" />
 				</div>
 				
 				<div class="col-xs-4">
@@ -60,7 +60,7 @@
 			<h3 class="modal-prompt">You Lost!</h3>
 			<div class="row">
 				<div class="col-xs-4 col-xs-offset-2">
-					<input type="button" class="modal-btn" ng-click="startNewGame()" value="New Game" />
+					<input type="button" class="modal-btn" ng-click="startNewGame()" value="{{(isNetworkGame) ? 'Rematch' : 'New Game'}}" />
 				</div>
 				
 				<div class="col-xs-4">
@@ -75,7 +75,7 @@
 			<h3 class="modal-prompt">It's a Draw!</h3>
 			<div class="row">
 				<div class="col-xs-4 col-xs-offset-2">
-					<input type="button" class="modal-btn" ng-click="startNewGame()" value="New Game" />
+					<input type="button" class="modal-btn" ng-click="startNewGame()" value="{{(isNetworkGame) ? 'Rematch' : 'New Game'}}" />
 				</div>
 				
 				<div class="col-xs-4">
@@ -91,7 +91,7 @@
 		<div class="game-menu-container">
 			<a ng-click="showQuitModal = true"><span class="hint--left" data-hint="Forfeit game and exit to the Main Menu">Main Menu</span></a>
 			<a ng-click="proposeDraw()"><span class="hint--left" data-hint="Propose a draw">Draw</span></a>
-			<a ng-click="showNewGameModal = true"><span class="hint--left" data-hint="Forfeit and start a new game">New Game</span></a>
+			<a ng-click="showNewGameModal = true" ng-if="!isNetworkGame"><span class="hint--left" data-hint="Forfeit and start a new game">New Game</span></a>
 			<a ng-click="showHelpModal = true"><span class="hint--left" data-hint="Summary of how to play">Help</span></a>
 			<a ng-click="showQuitMuonModal = true"><span class="hint--left" data-hint="Quit game and close">Quit</span></a>
 		</div>

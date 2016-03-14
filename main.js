@@ -16,7 +16,8 @@ win.on('close', function(){
 
 var LISTENERSET = false;
 
-var easter_egg = new Konami(function() { alert('Konami code!')});
+var HACKER_MODE_ENABLED = false;
+var easter_egg = new Konami(function() { alert('Hacker mode enabled.'); HACKER_MODE_ENABLED = true;});
 
 var muonApp = angular.module('muonApp', ["ui.router", "ngAnimate"])
     muonApp.config(function($stateProvider, $urlRouterProvider){

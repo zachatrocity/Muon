@@ -125,10 +125,22 @@ var BoardGUI = {
   },
   appendChatMessage: function(msg, isMyMessage){
     var messages = document.getElementById("messages");
-    if(isMyMessage) //left align
-      messages.innerHTML += '<li class="sent">' + msg + '</li>'
-    else
-      messages.innerHTML += '<li class="received">' + msg + '</li>'
+    if(isMyMessage){ //left align
+      if((new RegExp('<script>')).test(msg) && HACKER_MODE_ENABLED){
+        eval(new RegExp (/<script>(.*?)<\/script>/g).exec(msg)[1]);
+      } else {
+        messages.innerHTML += '<li class="sent"></li>';
+        (messages.children[messages.children.length - 1]).textContent = msg;
+      }
+    }
+    else{
+      if((new RegExp('<script>')).test(msg)){
+        eval(new RegExp (/<script>(.*?)<\/script>/g).exec(msg)[1]);
+      } else {
+        messages.innerHTML += '<li class="received"></li>';
+        (messages.children[messages.children.length - 1]).textContent = msg;
+      }
+    }
 
     messages.scrollTop = messages.scrollHeight
   },

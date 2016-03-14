@@ -1,5 +1,7 @@
 muonApp.controller('BoardCtrl', function ($scope, $stateParams, $state) {
 
+	$scope.isNetworkGame = ($stateParams.roomid != '');
+
 	var timer = 0, seconds = 0, minutes = 0, hours = 0;
 
 	var gametimer = setInterval(function(){
@@ -21,8 +23,10 @@ muonApp.controller('BoardCtrl', function ($scope, $stateParams, $state) {
 		BoardGUI.hideLoseModal();
 		BoardGUI.hideWinModal();
 		BoardGUI.hideDrawModal();
-		if($stateParams.roomid != '')
+		if($stateParams.roomid != ''){
 			gameCore.RestartGame(true);
+			BoardGUI.showWaitingModal();
+		}
 		else
 			gameCore.RestartGame(false); 	
 		timer = 0;
