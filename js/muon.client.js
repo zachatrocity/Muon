@@ -202,6 +202,24 @@ var BoardGUI = {
       modal.getElementsByTagName("input")[0].classList.remove("show-modal-btn");
       modal.getElementsByTagName("input")[1].classList.remove("show-modal-btn");
     }
+  },
+  showNetworkDrawModal: function(){
+    var modal = document.getElementById("network_draw_modal")
+    if(modal != null){
+      modal.classList.add("dim-lights");
+      modal.children[0].classList.add("show-modal");
+      modal.getElementsByTagName("input")[0].classList.add("show-modal-btn");
+      modal.getElementsByTagName("input")[1].classList.add("show-modal-btn");
+    }
+  },
+  hideNetworkDrawModal: function(){
+    var modal = document.getElementById("network_draw_modal")
+    if(modal != null){
+      modal.classList.remove("dim-lights");
+      modal.children[0].classList.remove("show-modal");
+      modal.getElementsByTagName("input")[0].classList.remove("show-modal-btn");
+      modal.getElementsByTagName("input")[1].classList.remove("show-modal-btn");
+    }
   }
 }
 
@@ -313,7 +331,24 @@ var Network = {
         },
 
         'proposeDrawResponse': function(data){
-          console.log("opponent would like to draw");
+          if(cloak.username == data[0]){
+            console.log("you proposed a draw");
+            BoardGUI.showWaitingModal();
+          } else {
+            console.log("opponent would like to draw");
+            BoardGUI.showNetworkDrawModal();
+          }
+        },
+
+        'respondToDrawResponse':function(data){
+          if(data[0]){
+            //draw was accepted
+            BoardGUI.hideNetworkDrawModal();
+            BoardGUI.showDrawModal();
+          } else {
+            //draw was declined
+            BoardGUI.hideWaitingModal();
+          }
         }
 
       },

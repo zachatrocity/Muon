@@ -22,7 +22,21 @@
 				<div class="inner two"></div>
 				<div class="inner three"></div>
 			</div>
+		</div>
+	</div>
 
+	<div class="modal waiting" id="network_draw_modal">
+		<div class="modal-dialog">
+			<h3 class="modal-prompt">Your opponent would like to draw. Do you accept?</h3>
+			<div class="row">
+				<div class="col-xs-4 col-xs-offset-2">
+					<input type="button" class="modal-btn" ng-click="respondToDraw(true)" value="Accept" />
+				</div>
+				
+				<div class="col-xs-4">
+					<input type="button" class="modal-btn" ng-click="respondToDraw(false)" value="Decline"/>
+				</div>
+			</div>
 		</div>
 	</div>
 

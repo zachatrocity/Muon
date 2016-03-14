@@ -39,6 +39,11 @@ muonApp.controller('BoardCtrl', function ($scope, $stateParams, $state) {
 				console.log('cannot draw at this time');
 			}
 		}
+	}
+
+	$scope.respondToDraw = function(accept){
+		cloak.message('respondToDraw',accept);
+		BoardGUI.hideNetworkDrawModal();
 	}      
 	
 	$scope.quitToMenu = function(){
