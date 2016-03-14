@@ -44,9 +44,15 @@
     <script type="text/javascript" src="./controllers/BoardCtrl.js"></script>
   </head>
   <body>
-    <!-- <div class="videocontainer">
-        <video src="./images/Splash_Screen.mp4" type="video/mp4" controls></video>
-    </div> -->
+	
+	<div id="introCont" class="videocontainer">
+        <video id="intro" src="./videos/MuonIntro.mp4" type="video/mp4" onended="hideIntro()"></video>
+    </div>
+  
+    <div id="splashCont" class="videocontainer">
+        <video id="splash" src="./videos/Splash_Screen.mp4" type="video/mp4" onended="hideSplash()" autoplay></video>
+    </div>
+	
     <div id="particles-js"></div>
           
     <div ui-view></div>

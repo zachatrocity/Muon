@@ -19,9 +19,39 @@ var LISTENERSET = false;
 var HACKER_MODE_ENABLED = false;
 var easter_egg = new Konami(function() { alert('Hacker mode enabled.'); HACKER_MODE_ENABLED = true;});
 
+window.addEventListener("click", hideSplash);
+window.addEventListener("keydown", hideSplash);
+
+function hideSplash() {
+	var splashCont = document.getElementById("splashCont");
+	var splashVid = document.getElementById("splash");
+	if (splashVid.ended == false)
+	{
+		splashVid.pause();
+	}
+	splashCont.style.visibility = "hidden";
+	window.removeEventListener("click", hideSplash);
+	window.removeEventListener("keydown", hideSplash);
+	window.addEventListener("click", hideIntro);
+	window.addEventListener("keydown", hideIntro);
+	document.getElementById("intro").play();
+}
+
+function hideIntro() {
+	var introCont = document.getElementById("introCont");
+	var introVid = document.getElementById("intro");
+	if (introVid.ended == false)
+	{
+		introVid.pause();
+	}
+	window.removeEventListener("click", hideIntro);
+	window.removeEventListener("keydown", hideIntro);
+	introCont.style.visibility = "hidden";
+}
+
 var muonApp = angular.module('muonApp', ["ui.router", "ngAnimate"])
     muonApp.config(function($stateProvider, $urlRouterProvider){
-      
+	  
       // For any unmatched url, send to /menu
       //ANGULAR UI ROUTER
       $urlRouterProvider.otherwise("/")
@@ -201,7 +231,7 @@ var muonApp = angular.module('muonApp', ["ui.router", "ngAnimate"])
       },
       "retina_detect": true
     });  
-
+	
   //load/create the options
 
   db.get('music_enabled', function(err, resp) {
