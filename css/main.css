@@ -248,6 +248,11 @@ img {
 	text-align: right;
 }
 
+.system {
+	text-align: center;
+	color: #881820;
+}
+
 ul{
     list-style-type: none;
 }

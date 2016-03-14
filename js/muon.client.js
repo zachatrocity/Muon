@@ -144,6 +144,11 @@ var BoardGUI = {
 
     messages.scrollTop = messages.scrollHeight
   },
+  appendSystemMessage: function(msg){
+    var messages = document.getElementById("messages");
+    messages.innerHTML += '<li class="system"></li>';
+    (messages.children[messages.children.length - 1]).textContent = msg;
+  },
   clearChatMessages: function(){
     document.getElementById("messages").innerHTML = '';
   },
@@ -361,6 +366,7 @@ var Network = {
           } else {
             //draw was declined
             BoardGUI.hideWaitingModal();
+            BoardGUI.appendSystemMessage("Opponant declined to draw.");
           }
         }
 
