@@ -310,8 +310,11 @@ var Network = {
         'performOpponentMove': function(data) {
           console.log('opponent moved!!!!!!', data);
           gameCore.network.MakeOpponentMove(data[0], data[1]);
-        }
+        },
 
+        'proposeDrawResponse': function(data){
+          console.log("opponent would like to draw");
+        }
 
       },
       serverEvents: {

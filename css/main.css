@@ -122,6 +122,7 @@ body {
 	background-size: 200% 200%;
 	height: 100%;
 	width: 100%;
+	cursor: default;
 	/*-webkit-animation: background 6s ease infinite;
 	-webkit-animation-direction: alternate;*/
 }

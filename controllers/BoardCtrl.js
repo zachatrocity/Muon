@@ -29,10 +29,15 @@ muonApp.controller('BoardCtrl', function ($scope, $stateParams, $state) {
 	}	          
 
 	$scope.proposeDraw = function(){
-		if(gameCore.ProposeDrawToAI()){
-			gameCore.EndGame();
+		if($stateParams.roomid != ''){
+			//propose draw over the network
+			cloak.message('proposeDraw');
 		} else {
-			console.log('cannot draw at this time');
+			if(gameCore.ProposeDrawToAI()){
+				gameCore.EndGame();
+			} else {
+				console.log('cannot draw at this time');
+			}
 		}
 	}      
 	
