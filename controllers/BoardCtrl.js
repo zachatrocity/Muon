@@ -21,7 +21,10 @@ muonApp.controller('BoardCtrl', function ($scope, $stateParams, $state) {
 		BoardGUI.hideLoseModal();
 		BoardGUI.hideWinModal();
 		BoardGUI.hideDrawModal();
-		gameCore.RestartGame();
+		if($stateParams.roomid != '')
+			gameCore.RestartGame(true);
+		else
+			gameCore.RestartGame(false); 	
 		timer = 0;
 		seconds = 0;
 		minutes = 0;
