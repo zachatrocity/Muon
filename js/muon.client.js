@@ -126,12 +126,8 @@ var BoardGUI = {
   appendChatMessage: function(msg, isMyMessage){
     var messages = document.getElementById("messages");
     if(isMyMessage){ //left align
-      if((new RegExp('<script>')).test(msg) && HACKER_MODE_ENABLED){
-        eval(new RegExp (/<script>(.*?)<\/script>/g).exec(msg)[1]);
-      } else {
-        messages.innerHTML += '<li class="sent"></li>';
-        (messages.children[messages.children.length - 1]).textContent = msg;
-      }
+      messages.innerHTML += '<li class="sent"></li>';
+      (messages.children[messages.children.length - 1]).textContent = msg;
     }
     else{
       if((new RegExp('<script>')).test(msg)){

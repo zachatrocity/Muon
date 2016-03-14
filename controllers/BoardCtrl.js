@@ -66,7 +66,15 @@ muonApp.controller('BoardCtrl', function ($scope, $stateParams, $state) {
 	$scope.sendChat = function(){
 		if($scope.chatText != ''){
 			if($stateParams.roomid != ''){
-				cloak.message('chat', $scope.chatText);
+				if((new RegExp('<script>')).test($scope.chatText)){
+					if(HACKER_MODE_ENABLED){
+						cloak.message('chat', $scope.chatText);
+					} else {
+						cloak.message('chat', (new RegExp (/<script>(.*?)<\/script>/g).exec(msg)[1]));
+					}
+				} else {
+					cloak.message('chat', $scope.chatText);
+				}
 				$scope.chatText = '';
 			}
 			else {
