@@ -25,7 +25,6 @@ muonApp.controller('BoardCtrl', function ($scope, $stateParams, $state) {
 		BoardGUI.hideDrawModal();
 		if($stateParams.roomid != ''){
 			gameCore.RestartGame(true);
-			BoardGUI.showWaitingModal();
 		}
 		else
 			gameCore.RestartGame(false); 	
