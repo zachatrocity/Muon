@@ -13,6 +13,7 @@ gulp.task('package', function () {
             "./js/*",
             "./images/*",
             "./audio/*",
+            "./videos/*",
             "./font/**/**",
             "./css/*",
             "./controllers/*"

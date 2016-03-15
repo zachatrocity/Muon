@@ -237,6 +237,7 @@ var gameCore = {
 					//unselect all other nodes
 					target.selected = false;
 					gameCore.board.selectedMuon = null;
+					gameCore.board.spinningMuon = null;
 				}
 			});
 

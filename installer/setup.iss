@@ -66,7 +66,7 @@ Source: "..\build\Muon\win32\Muon.exe"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\build\Muon\win32\libGLESv2.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\build\Muon\win32\libEGL.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\build\Muon\win32\icudtl.dat"; DestDir: "{app}"; Flags: ignoreversion
-Source: "..\build\Muon\win32\ffmpegsumo.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: ".\ffmpegsumo.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\build\Muon\win32\d3dcompiler_47.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\images\muonIcon.ico"; DestDir: "{app}"; Flags: ignoreversion
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
