@@ -430,6 +430,8 @@ var gameCore = {
 				if (o.foci == f1) {o.foci = f2;}
 			});
 
+			Audio.playRandomMove();
+
 			gameCore.board.refresh();
 		}        
 	},

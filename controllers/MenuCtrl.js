@@ -60,7 +60,7 @@ muonApp.controller('MenuCtrl', function ($scope, $stateParams, $state) {
  	}
 	
 	$scope.mouse_click = function() {
-		// if(Audio.togglesound)
-		// 	Audio.menuSelect.play();
+		if(Audio.togglesound)
+			Audio.menuSelect.play();
 	}
 })
