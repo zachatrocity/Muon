@@ -153,12 +153,12 @@ var BoardGUI = {
     document.getElementById("messages").innerHTML = '';
   },
   hideAllModals: function(){
-    hideWaitingModal();
-    hideWinModal();
-    hideLoseModal();
-    hideDrawModal();
-    hideNetworkDrawModal();
-    hideNetworkRematchModal();
+    BoardGUI.hideWaitingModal();
+    BoardGUI.hideWinModal();
+    BoardGUI.hideLoseModal();
+    BoardGUI.hideDrawModal();
+    BoardGUI.hideNetworkDrawModal();
+    BoardGUI.hideNetworkRematchModal();
   },
   showWaitingModal: function(){
     var modal = document.getElementById("waiting_modal")
