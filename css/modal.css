@@ -51,41 +51,14 @@
 }
 
 .modal-btn {
-	position: relative;
-	visibility: hidden;
-	opacity: 0;
-	cursor: pointer;
-	padding: 15px 25px;
-	margin-top: 20px;
 	-webkit-transition: visibility 0s 0.5s, opacity 0s;
 	transition: visibility 0s 0.5s, opacity 0s;
 	-webkit-transition-timing-function: ease-out;
-	display: inline-block;
-	padding: 10px 15px;
-	min-width: 150px;
-	background: rgb(84,144,204);
-	border-radius: 4px;
-	border: solid 2px #636363;
-	cursor: pointer;
-	text-transform: uppercase;
-	letter-spacing: 2px;
-	font-size: 14px;
-	font-weight: 700;
-	outline: none;
-}
-
-.modal-btn:hover {
-  background: #0569AD;
-}
-
-.modal-btn:active {
-  background: #0569AD;
-  box-shadow: 0 0px #111;
-  top: 4px;
 }
 
 .modal-btn:disabled {
-	background: #0569AD;	
+	background: #0569AD;
+	color: black;	
 }
 
 .modal-X {

@@ -30,11 +30,11 @@
 			<h3 class="modal-prompt">Your opponent would like to draw. Do you accept?</h3>
 			<div class="row">
 				<div class="col-xs-4 col-xs-offset-2">
-					<input type="button" class="modal-btn" ng-click="respondToDraw(true)" value="Accept" />
+					<input type="button" class="modal-btn button" ng-click="respondToDraw(true)" value="Accept" />
 				</div>
 				
 				<div class="col-xs-4">
-					<input type="button" class="modal-btn" ng-click="respondToDraw(false)" value="Decline"/>
+					<input type="button" class="modal-btn button" ng-click="respondToDraw(false)" value="Decline"/>
 				</div>
 			</div>
 		</div>
@@ -45,11 +45,11 @@
 			<h3 class="modal-prompt">Your opponent would like to rematch. Do you accept?</h3>
 			<div class="row">
 				<div class="col-xs-4 col-xs-offset-2">
-					<input type="button" class="modal-btn" ng-click="respondToRematch(true)" value="Accept" />
+					<input type="button" class="modal-btn button" ng-click="respondToRematch(true)" value="Accept" />
 				</div>
 				
 				<div class="col-xs-4">
-					<input type="button" class="modal-btn" ng-click="respondToRematch(false)" value="Decline"/>
+					<input type="button" class="modal-btn button" ng-click="respondToRematch(false)" value="Decline"/>
 				</div>
 			</div>
 		</div>
@@ -60,11 +60,11 @@
 			<h3 class="modal-prompt">You Won!</h3>
 			<div class="row">
 				<div class="col-xs-4 col-xs-offset-2">
-					<input type="button" class="modal-btn" ng-click="(isNetworkGame) ? proposeRematch() : startNewGame()" value="{{(isNetworkGame) ? 'Rematch' : 'New Game'}}" />
+					<input type="button" class="modal-btn button" ng-click="(isNetworkGame) ? proposeRematch() : startNewGame()" value="{{(isNetworkGame) ? 'Rematch' : 'New Game'}}" />
 				</div>
 				
 				<div class="col-xs-4">
-					<input type="button" class="modal-btn" ng-click="quitToMenu()" value="Main Menu"/>
+					<input type="button" class="modal-btn button" ng-click="quitToMenu()" value="Main Menu"/>
 				</div>
 			</div>
 		</div>
@@ -75,11 +75,11 @@
 			<h3 class="modal-prompt">You Lost!</h3>
 			<div class="row">
 				<div class="col-xs-4 col-xs-offset-2">
-					<input type="button" class="modal-btn" ng-click="(isNetworkGame) ? proposeRematch() : startNewGame()" value="{{(isNetworkGame) ? 'Rematch' : 'New Game'}}" />
+					<input type="button" class="modal-btn button" ng-click="(isNetworkGame) ? proposeRematch() : startNewGame()" value="{{(isNetworkGame) ? 'Rematch' : 'New Game'}}" />
 				</div>
 				
 				<div class="col-xs-4">
-					<input type="button" class="modal-btn" ng-click="quitToMenu()" value="Main Menu"/>
+					<input type="button" class="modal-btn button" ng-click="quitToMenu()" value="Main Menu"/>
 				</div>
 			</div>
 		</div>
@@ -90,11 +90,11 @@
 			<h3 class="modal-prompt">It's a Draw!</h3>
 			<div class="row">
 				<div class="col-xs-4 col-xs-offset-2">
-					<input type="button" class="modal-btn" ng-click="(isNetworkGame) ? proposeRematch() : startNewGame()" value="{{(isNetworkGame) ? 'Rematch' : 'New Game'}}" />
+					<input type="button" class="modal-btn button" ng-click="(isNetworkGame) ? proposeRematch() : startNewGame()" value="{{(isNetworkGame) ? 'Rematch' : 'New Game'}}" />
 				</div>
 				
 				<div class="col-xs-4">
-					<input type="button" class="modal-btn" ng-click="quitToMenu()" value="Main Menu"/>
+					<input type="button" class="modal-btn button" ng-click="quitToMenu()" value="Main Menu"/>
 				</div>
 			</div>
 		</div>
@@ -106,7 +106,7 @@
 		<div class="game-menu-container">
 			<a ng-click="showQuitModal = true"><span class="hint--left" data-hint="Forfeit game and exit to the Main Menu">Main Menu</span></a>
 			<a ng-click="proposeDraw()"><span class="hint--left" data-hint="Propose a draw">Draw</span></a>
-			<a ng-click="showNewGameModal = true" ng-if="!isNetworkGame"><span class="hint--left" data-hint="Forfeit and start a new game">New Game</span></a>
+			<a ng-click="showNewGameModal = true" ng-show="!isNetworkGame"><span class="hint--left" data-hint="Forfeit and start a new game">New Game</span></a>
 			<a ng-click="showHelpModal = true"><span class="hint--left" data-hint="Summary of how to play">Help</span></a>
 			<a ng-click="showQuitMuonModal = true"><span class="hint--left" data-hint="Quit game and close">Quit</span></a>
 		</div>
@@ -148,13 +148,13 @@
 			
 			<div class="row">
 				<div class="col-xs-4 col-xs-offset-2">
-					<input type="button" class="modal-btn" ng-click="showQuitModal = false;" 
+					<input type="button" class="modal-btn button" ng-click="showQuitModal = false;" 
 						value="Cancel" ng-focus="true"
 						ng-init="showQuitModal = false;" ng-class="{'show-modal-btn': showQuitModal}" />
 				</div>
 				
 				<div class="col-xs-4">
-					<input type="button" class="modal-btn" ng-click="quitToMenu()" value="Continue" 
+					<input type="button" class="modal-btn button" ng-click="quitToMenu()" value="Continue" 
 						ng-init="showQuitModal = false;" ng-class="{'show-modal-btn': showQuitModal}" />
 				</div>
 			</div>
@@ -174,12 +174,12 @@
 			
 			<div class="row">
 				<div class="col-xs-4 col-xs-offset-2">
-					<input type="button" class="modal-btn" ng-click="showNewGameModal = false;" 
+					<input type="button" class="modal-btn button" ng-click="showNewGameModal = false;" 
 						value="Cancel"
 						ng-init="showNewGameModal = false;" ng-class="{'show-modal-btn': showNewGameModal}" />
 				</div>
 				<div class="col-xs-4">
-					<input type="button" class="modal-btn" 
+					<input type="button" class="modal-btn button" 
 						ng-click="startNewGame(); showNewGameModal = false;" 
 						value="New Game" ng-class="{'show-modal-btn': showNewGameModal}" />
 				</div>
@@ -204,7 +204,7 @@
 			
 			<div class="row">
 				<div class="col-xs-4 col-xs-offset-4">
-					<input type="button" class="modal-btn" ng-click="showHelpModal = false;" 
+					<input type="button" class="modal-btn button" ng-click="showHelpModal = false;" 
 						value="OK" ng-focus="true"
 						ng-init="showHelpModal = false;" ng-class="{'show-modal-btn': showHelpModal}" />
 				</div>
@@ -227,12 +227,12 @@
 			
 			<div class="row">
 				<div class="col-xs-4 col-xs-offset-2">
-					<input type="button" class="modal-btn" ng-click="showQuitMuonModal = false;" 
+					<input type="button" class="modal-btn button" ng-click="showQuitMuonModal = false;" 
 						value="Cancel"
 						ng-init="showQuitMuonModal = false;" ng-class="{'show-modal-btn': showQuitMuonModal}" />
 				</div>
 				<div class="col-xs-4">
-					<input type="button" class="modal-btn" ui-sref="quit" value="Quit" 
+					<input type="button" class="modal-btn button" ui-sref="quit" value="Quit" 
 						ng-init="showQuitMuonModal = false;" ng-class="{'show-modal-btn': showQuitMuonModal}" />
 				</div>
 			</div>

@@ -376,13 +376,14 @@ h1.view-heading{
 .game-menu-container span {
 	cursor: pointer;
 	letter-spacing: 2px;
+	box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
 	font-size: 14px;
 	font-weight: 700;
 	margin: 10px;
 	padding: 10px;
 	display: block;
 	height: 20px;
-	background-color: #067BC2;
+	background-color: #4183D7;
 	border-bottom: solid #404040 1px;
 	border-radius: 3px;
 }
@@ -392,7 +393,13 @@ h1.view-heading{
 }
 
 .game-menu-container span:hover {
-	background: #0569AD;
+	background: #2c75d2;
+}
+
+.game-menu-container span:active {
+	-webkit-transform: translateY(2px);
+	transform: translateY(2px);
+	box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
 }
 
 /*HELP PAGE CSS*/

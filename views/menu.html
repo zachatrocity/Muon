@@ -106,22 +106,22 @@
 		<h3 class="modal-prompt">Please enter a username:</h3>
 
 		<form name="usernameForm">
-		<!-- <a ng-click="joinLobby(username)">Join Lobby</a> -->
 		<div class="row">
-			<div class="col-xs-12"><input type="text" ng-model="username" 
+			<div class="col-xs-12">
+			<input type="text" ng-model="username" 
 			id="usernameInput"
 			class="modal-txt-box" ng-enter="goToNetworkingPage(username)"
 			ng-class="{'show-modal-txt-box': showNetworkingModal}" required/></div>
 		</div>
 		<div class="row">
 				<div class="col-xs-4 col-xs-offset-2">
-					<input type="button" class="modal-btn" value="Connect" 
+					<input type="button" class="modal-btn button" value="Connect" 
 					ng-class="{'show-modal-btn': showNetworkingModal}" 
 					ng-click="goToNetworkingPage(username)"
 					ng-disabled="usernameForm.$invalid"/>
 				</div>
 				<div class="col-xs-4">
-					<input type="button" class="modal-btn" ng-click="showNetworkingModal = false;" 
+					<input type="button" class="modal-btn button" ng-click="showNetworkingModal = false;" 
 					value="Cancel" ng-class="{'show-modal-btn': showNetworkingModal}" />
 				</div>
 		</div>
