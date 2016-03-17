@@ -301,8 +301,9 @@ var evaluation = {
 		return stolenSpace;
 	},
 
-	Win:function(bitBoard, player, homeFlag){
-		//var homeFlag = player == 1  ? f1 : f2;
+	Win:function(bitBoard, player, f1, f2){
+		var homeFlag = player == 1  ? f1 : f2;
+
 		var quad = boardAspect.getQuadBits(bitBoard, 0);
 		var bits = bitManip.BitCount(quad);
 		if(!(quad == 0b01110 || quad == 0b10101) && bits >= 3)

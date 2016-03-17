@@ -310,12 +310,6 @@ var gameCore = {
 		    gameCore.board.d3force.start()
 		},
 		createBoard: function(){
-			if (gameCore.humanteam == "antimuon") {
-				var temp = gameCore.p1Pos;
-				gameCore.p1Pos = gameCore.p2Pos;
-				gameCore.p2Pos = temp;
-			}
-
 			gameCore.board.boardSVG = d3.select(".gamepeices").append("svg")
 				.attr("class", "d3gamepeices")
 			    .attr("width", gameCore.board.width)
@@ -508,14 +502,8 @@ var gameCore = {
 					gameCore.p2Pos ^= bitFrom ^ bitTo;
 					gameCore.AddMoveToHistory(new Move(from, to, "player"));
 
-					// Record of if the player is in control of the muons or antimuons
-					var pos = 2;
 					// Remove the flag if they have abandoned their home quad
-					if (gameCore.humanteam == "antimuon") {
-						pos = 1
-					}
-
-					if (evaluation.isHomeQuadEmpty(pos, gameCore.p2Pos)) {
+					if (evaluation.isHomeQuadEmpty(2, gameCore.p2Pos)) {
 						gameCore.ChangePlayer2Flag(false);
 						console.log("Player can now win from their home quad");
 					}
@@ -570,20 +558,9 @@ var gameCore = {
 
 	// Returns 'P' for player won, 'O' for opponent won, and 'N' for no winner
 	GameOver: function(position) {
-		homeFlag = position == gameCore.p2Pos ? gameCore.playerTwoFlag : gameCore.playerOneFlag;
-		var player;
-		if (position == gameCore.p2Pos && gameCore.humanteam == "muon") {
-			player = 2;
-		} else if (position == gameCore.p2Pos && gameCore.humanteam == "antimuon") {
-			player = 1;
-		} else if (position == gameCore.p1Pos && gameCore.humanteam == "muon") {
-			player = 1;
-		} else if (position == gameCore.p1Pos && gameCore.humanteam == "antimuon") {
-			player = 2;
-		}
-
-		if (evaluation.Win(position, player, homeFlag)) {
-			gameCore.winner = position == gameCore.p1Pos ? "opponent" : "local";
+		player = (position == gameCore.p1Pos ? 1 : 2);
+		if (evaluation.Win(position, player, gameCore.playerOneFlag, gameCore.playerTwoFlag)) {
+			gameCore.winner = player == 1 ? "opponent" : "local";
 			return true;
 		} else {
 			return false;
@@ -649,8 +626,7 @@ aiWorker.onmessage = function(e) {
 	gameCore.p1Pos ^= (convert.intToBit(e.data.from)) ^ (convert.intToBit(e.data.to));
 
 	// Remove the flag if they have abandoned their home quad
-	pos = gameCore.humanteam == "muon" ? 1 : 2;
-	if (evaluation.isHomeQuadEmpty(pos, gameCore.p1Pos)) {
+	if (evaluation.isHomeQuadEmpty(1, gameCore.p1Pos)) {
 		gameCore.ChangePlayer1Flag(false);
 		console.log("AI can now win from their home quad");
 	}
