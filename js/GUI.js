@@ -123,15 +123,53 @@ var BoardGUI = {
   },
   removeMuonFlag: function(){
     if(gameCore.playerOneFlag)
-      document.getElementById('board-flags').src = "./images/boardPlacesB.svg"
+	{
+		var flags = document.getElementById('place-cont');
+		var flagsUnderlay = document.getElementById('place-under-cont');
+		document.getElementById('board-flags-underlay').src = "./images/boardPlacesB.svg";
+		addClass(flags, "fade-out");
+		addClass(flagsUnderlay, "fade-in");
+		setTimeout(function() {
+			document.getElementById('board-flags').src = "./images/boardPlacesB.svg";
+			flags.className = "gameboard";
+			document.getElementById('board-flags-underlay').src = "./images/boardPlacesN.svg";
+			flagsUnderlay.className = "gameboard";
+		}, 1000)
+	}
     else 
-      document.getElementById('board-flags').src = "./images/boardPlacesN.svg"
+	{
+		var flags = document.getElementById('place-cont');
+		addClass(flags, "fade-out");
+		setTimeout(function() {
+			document.getElementById('board-flags').src = "./images/boardPlacesN.svg";
+			flags.className = "gameboard";
+		}, 1000)
+	}
   },
   removeAntiMuonFlag: function(){
     if(gameCore.playerTwoFlag)
-      document.getElementById('board-flags').src = "./images/boardPlacesG.svg"
+      {
+		var flags = document.getElementById('place-cont');
+		var flagsUnderlay = document.getElementById('place-under-cont');
+		document.getElementById('board-flags-underlay').src = "./images/boardPlacesG.svg";
+		addClass(flags, "fade-out");
+		addClass(flagsUnderlay, "fade-in");
+		setTimeout(function() {
+			document.getElementById('board-flags').src = "./images/boardPlacesG.svg";
+			flags.className = "gameboard";
+			document.getElementById('board-flags-underlay').src = "./images/boardPlacesN.svg";
+			flagsUnderlay.className = "gameboard";
+		}, 1000)
+	}
     else 
-      document.getElementById('board-flags').src = "./images/boardPlacesN.svg"
+	{
+		var flags = document.getElementById('place-cont');
+		addClass(flags, "fade-out");
+		setTimeout(function() {
+			document.getElementById('board-flags').src = "./images/boardPlacesN.svg";
+			flags.className = "gameboard";
+		}, 1000)
+	}
   },
   appendChatMessage: function(msg, isMyMessage){
     var messages = document.getElementById("messages");

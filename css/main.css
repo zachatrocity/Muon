@@ -333,6 +333,23 @@ h1.view-heading{
   	box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
 }
 
+.places {
+	opacity: 1;
+	transition: opacity 1s ease-in-out;
+}
+
+.places-under {
+	opacity: 0;
+	transition: opacity 0.1s ease-in-out;
+}
+
+.fade-out {
+	opacity: 0;
+}
+
+.fade-in {
+	opacity: 1;
+}
 
 #board-flags img{
 	transition: opacity 1s ease-in-out;
