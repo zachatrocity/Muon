@@ -159,7 +159,7 @@ var BoardGUI = {
     hideDrawModal();
     hideNetworkDrawModal();
     hideNetworkRematchModal();
-  }
+  },
   showWaitingModal: function(){
     var modal = document.getElementById("waiting_modal")
     if(modal != null){
