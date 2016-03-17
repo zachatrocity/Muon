@@ -23,7 +23,7 @@ muonApp.controller('BoardCtrl', function ($scope, $stateParams, $state) {
 		BoardGUI.hideLoseModal();
 		BoardGUI.hideWinModal();
 		BoardGUI.hideDrawModal();
-		if($stateParams.roomid != ''){
+		if($scope.isNetworkGame){
 			gameCore.RestartGame(true);
 		}
 		else
@@ -32,7 +32,11 @@ muonApp.controller('BoardCtrl', function ($scope, $stateParams, $state) {
 		seconds = 0;
 		minutes = 0;
 		hours = 0;
-	}	          
+	}	     
+
+	$scope.proposeRematch = function(){
+		cloak.message('proposeRematch');
+	}     
 
 	$scope.proposeDraw = function(){
 		if($stateParams.roomid != ''){
@@ -49,6 +53,11 @@ muonApp.controller('BoardCtrl', function ($scope, $stateParams, $state) {
 
 	$scope.respondToDraw = function(accept){
 		cloak.message('respondToDraw',accept);
+		BoardGUI.hideNetworkDrawModal();
+	}
+
+	$scope.respondToRematch = function(accept){
+		cloak.message('respondToRematch',accept);
 		BoardGUI.hideNetworkDrawModal();
 	}      
 	

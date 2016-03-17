@@ -40,12 +40,27 @@
 		</div>
 	</div>
 
+	<div class="modal waiting" id="network_rematch_modal">
+		<div class="modal-dialog">
+			<h3 class="modal-prompt">Your opponent would like to rematch. Do you accept?</h3>
+			<div class="row">
+				<div class="col-xs-4 col-xs-offset-2">
+					<input type="button" class="modal-btn" ng-click="respondToRematch(true)" value="Accept" />
+				</div>
+				
+				<div class="col-xs-4">
+					<input type="button" class="modal-btn" ng-click="respondToRematch(false)" value="Decline"/>
+				</div>
+			</div>
+		</div>
+	</div>
+
 	<div class="modal waiting" id="win-modal">
 		<div class="modal-dialog">
 			<h3 class="modal-prompt">You Won!</h3>
 			<div class="row">
 				<div class="col-xs-4 col-xs-offset-2">
-					<input type="button" class="modal-btn" ng-click="startNewGame()" value="{{(isNetworkGame) ? 'Rematch' : 'New Game'}}" />
+					<input type="button" class="modal-btn" ng-click="{{(isNetworkGame) ? proposeRematch() : startNewGame()" value="{{(isNetworkGame) ? 'Rematch' : 'New Game'}}" />
 				</div>
 				
 				<div class="col-xs-4">
@@ -60,7 +75,7 @@
 			<h3 class="modal-prompt">You Lost!</h3>
 			<div class="row">
 				<div class="col-xs-4 col-xs-offset-2">
-					<input type="button" class="modal-btn" ng-click="startNewGame()" value="{{(isNetworkGame) ? 'Rematch' : 'New Game'}}" />
+					<input type="button" class="modal-btn" ng-click="{{(isNetworkGame) ? proposeRematch() : startNewGame()" value="{{(isNetworkGame) ? 'Rematch' : 'New Game'}}" />
 				</div>
 				
 				<div class="col-xs-4">
@@ -75,7 +90,7 @@
 			<h3 class="modal-prompt">It's a Draw!</h3>
 			<div class="row">
 				<div class="col-xs-4 col-xs-offset-2">
-					<input type="button" class="modal-btn" ng-click="startNewGame()" value="{{(isNetworkGame) ? 'Rematch' : 'New Game'}}" />
+					<input type="button" class="modal-btn" ng-click="{{(isNetworkGame) ? proposeRematch() : startNewGame()" value="{{(isNetworkGame) ? 'Rematch' : 'New Game'}}" />
 				</div>
 				
 				<div class="col-xs-4">
