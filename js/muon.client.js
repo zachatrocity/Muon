@@ -118,12 +118,11 @@ var Network = {
         'respondToDrawResponse':function(data){
           if(data[0]){
             //draw was accepted
-            BoardGUI.hideNetworkDrawModal();
-            BoardGUI.hideWaitingModal();
+            BoardGUI.hideAllModals();
             BoardGUI.showDrawModal();
           } else {
             //draw was declined
-            BoardGUI.hideWaitingModal();
+            BoardGUI.hideAllModals();
             BoardGUI.appendSystemMessage("Opponant declined to draw.");
           }
         },
@@ -131,6 +130,7 @@ var Network = {
         'proposeRematchResponse': function(data){
           if(cloak.username == data[0]){
             console.log("you proposed a Rematch");
+            BoardGUI.hideAllModals();
             BoardGUI.showWaitingModal();
           } else {
             console.log("opponent would like to Rematch");
@@ -141,11 +141,10 @@ var Network = {
         'respondToRematchResponse':function(data){
           if(data[0]){
             //Rematch was accepted
-            BoardGUI.hideNetworkRematchModal();
-            BoardGUI.hideWaitingModal();
+            BoardGUI.hideAllModals();
           } else {
             //Rematch was declined
-            BoardGUI.hideWaitingModal();
+            BoardGUI.hideAllModals();
             BoardGUI.appendSystemMessage("Opponant declined to Rematch.");
           }
         }

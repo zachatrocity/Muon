@@ -20,9 +20,7 @@ muonApp.controller('BoardCtrl', function ($scope, $stateParams, $state) {
 	}, 1000);
 
 	$scope.startNewGame = function(){
-		BoardGUI.hideLoseModal();
-		BoardGUI.hideWinModal();
-		BoardGUI.hideDrawModal();
+		BoardGUI.hideAllModals();
 		if($scope.isNetworkGame){
 			gameCore.RestartGame(true);
 		}
@@ -53,12 +51,12 @@ muonApp.controller('BoardCtrl', function ($scope, $stateParams, $state) {
 
 	$scope.respondToDraw = function(accept){
 		cloak.message('respondToDraw',accept);
-		BoardGUI.hideNetworkDrawModal();
+		BoardGUI.hideAllModals();
 	}
 
 	$scope.respondToRematch = function(accept){
 		cloak.message('respondToRematch',accept);
-		BoardGUI.hideNetworkDrawModal();
+		BoardGUI.hideAllModals();
 	}      
 	
 	$scope.quitToMenu = function(){
