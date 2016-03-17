@@ -110,6 +110,7 @@ var Network = {
             console.log("you proposed a draw");
             BoardGUI.showWaitingModal();
           } else {
+            BoardGUI.hideAllModals();
             console.log("opponent would like to draw");
             BoardGUI.showNetworkDrawModal();
           }
@@ -133,6 +134,7 @@ var Network = {
             BoardGUI.hideAllModals();
             BoardGUI.showWaitingModal();
           } else {
+            BoardGUI.hideAllModals();
             console.log("opponent would like to Rematch");
             BoardGUI.showNetworkRematchModal();
           }
