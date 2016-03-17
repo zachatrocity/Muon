@@ -2,21 +2,19 @@ muonApp.controller('BoardCtrl', function ($scope, $stateParams, $state) {
 
 	$scope.isNetworkGame = ($stateParams.roomid != '');
 
-	var timer = 0, seconds = 0, minutes = 0, hours = 0;
-
 	var gametimer = setInterval(function(){
 
-		seconds++;
-	    if (seconds >= 60) {
-	        seconds = 0;
-	        minutes++;
-	        if (minutes >= 60) {
-	            minutes = 0;
-	            hours++;
+		BoardGUI.timer.seconds++;
+	    if (BoardGUI.timer.seconds >= 60) {
+	        BoardGUI.timer.seconds = 0;
+	        BoardGUI.timer.minutes++;
+	        if (BoardGUI.timer.minutes >= 60) {
+	            BoardGUI.timer.minutes = 0;
+	            BoardGUI.timer.hours++;
 	        }
 	    }
 
-		document.getElementById("timer").textContent = (minutes > 0) ? minutes + ":" + seconds : seconds;
+		document.getElementById("timer").textContent = (BoardGUI.timer.minutes > 0) ? BoardGUI.timer.minutes + ":" + BoardGUI.timer.seconds : BoardGUI.timer.seconds;
 	}, 1000);
 
 	$scope.startNewGame = function(){
@@ -26,10 +24,6 @@ muonApp.controller('BoardCtrl', function ($scope, $stateParams, $state) {
 		}
 		else
 			gameCore.RestartGame(false); 	
-		timer = 0;
-		seconds = 0;
-		minutes = 0;
-		hours = 0;
 	}	     
 
 	$scope.proposeRematch = function(){

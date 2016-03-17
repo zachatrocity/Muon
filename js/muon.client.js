@@ -79,7 +79,8 @@ var Network = {
           if (members.length > 1) {
             if(gameCore.network.turn == gameCore.network.team){
               BoardGUI.setBoardHeaderElement("Your Turn");
-              BoardGUI.hideWaitingModal();  
+              BoardGUI.hideWaitingModal(); 
+              BoardGUI.timer.reset(); 
             } else {
               BoardGUI.setBoardHeaderElement("Their Turn");
             }
@@ -144,6 +145,7 @@ var Network = {
           if(data[0]){
             //Rematch was accepted
             BoardGUI.hideAllModals();
+            BoardGUI.timer.reset();
           } else {
             //Rematch was declined
             BoardGUI.hideAllModals();
