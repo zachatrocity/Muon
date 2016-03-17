@@ -33,6 +33,7 @@ muonApp.controller('BoardCtrl', function ($scope, $stateParams, $state) {
 	}	     
 
 	$scope.proposeRematch = function(){
+		$scope.startNewGame();
 		cloak.message('proposeRematch');
 	}     
 
@@ -55,6 +56,9 @@ muonApp.controller('BoardCtrl', function ($scope, $stateParams, $state) {
 	}
 
 	$scope.respondToRematch = function(accept){
+		if(accept)
+			$scope.startNewGame(); 
+
 		cloak.message('respondToRematch',accept);
 		BoardGUI.hideAllModals();
 	}      
