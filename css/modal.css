@@ -108,3 +108,7 @@
 .dim-lights-waiting {
 	visibility: visible;
 }
+
+.help-modal-text {
+	margin: 20px;
+}

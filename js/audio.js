@@ -46,6 +46,7 @@ var Audio = {
     background: _background,
     togglesound: true,
     playRandomMove: function(){
-      Audio.move.play(_.shuffle(_.keys(Audio.move.sprite()))[_.random(0,7)]);
+      if(Audio.togglesound)
+        Audio.move.play(_.shuffle(_.keys(Audio.move.sprite()))[_.random(0,7)]);
     }
 };

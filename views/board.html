@@ -104,11 +104,11 @@
     	
     
 		<div class="game-menu-container">
-			<a ng-click="showQuitModal = true"><span class="hint--left" data-hint="Forfeit game and exit to the Main Menu">Main Menu</span></a>
-			<a ng-click="proposeDraw()"><span class="hint--left" data-hint="Propose a draw">Draw</span></a>
-			<a ng-click="showNewGameModal = true" ng-show="!isNetworkGame"><span class="hint--left" data-hint="Forfeit and start a new game">New Game</span></a>
-			<a ng-click="showHelpModal = true"><span class="hint--left" data-hint="Summary of how to play">Help</span></a>
-			<a ng-click="showQuitMuonModal = true"><span class="hint--left" data-hint="Quit game and close">Quit</span></a>
+			<a ng-click="showQuitModal = true"><span data-balloon-length="medium" data-balloon-pos="left" data-balloon="Forfeit game and exit to the Main Menu">Main Menu</span></a>
+			<a ng-click="proposeDraw()"><span data-balloon-length="medium" data-balloon-pos="left" data-balloon="Propose a draw">Draw</span></a>
+			<a ng-click="showNewGameModal = true" ng-show="!isNetworkGame"><span data-balloon-length="medium" data-balloon-pos="left" data-balloon="Forfeit and start a new game">New Game</span></a>
+			<a ng-click="showHelpModal = true"><span data-balloon-length="medium" data-balloon-pos="left" data-balloon="Summary of how to play">Help</span></a>
+			<a ng-click="showQuitMuonModal = true"><span data-balloon-length="medium" data-balloon-pos="left" data-balloon="Quit game and close">Quit</span></a>
 		</div>
 
 		<div class="move-count-container">
@@ -198,8 +198,8 @@
 				ng-class="{'show-modal-btn': showHelpModal}"></span>
 			
 			<h3 class="modal-prompt">How To Play</h3>
-			<p> 
-				Move your muons (or anti-muons) from your initial quadrant to form a triangle in any one of the other three pyramid quadrants. The first player to create a triangle of 3 muons inside one of the quadrants, wins the game. Once you have cleared all 5 of your muons our of your initial quadrant, you can win by forming a trangle in your home quadrant aswell.
+			<p class="help-modal-text"> 
+				Move your muons (or anti-muons) from your initial quadrant to form a triangle in any one of the other three pyramid quadrants. The first player to create a triangle of 3 muons inside one of the quadrants, wins the game. Once you have cleared all 5 of your muons out of your initial quadrant, you can win by forming a trangle in your home quadrant aswell.
 			</p>
 			
 			<div class="row">
