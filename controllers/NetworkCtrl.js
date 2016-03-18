@@ -1,7 +1,8 @@
 muonApp.controller('NetworkCtrl', function ($scope, $stateParams) {
 
 	if(!Network.isConnected)
-		cloak.run(packjson.serverurl);
+		cloak.run('http://162.243.116.44:8090');
+		//cloak.run(packjson.serverurl);
 
 	$scope.$on('$viewContentLoaded', function(){
 		setTimeout(function(){ 
