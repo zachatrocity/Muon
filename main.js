@@ -1,18 +1,23 @@
 'use strict';
 // Load native UI library
-var gui = require('nw.gui'); 
-var packjson = require('./package.json');
+if(typeof require == 'function'){
+  var gui = require('nw.gui'); 
+  var packjson = require('./package.json');
+}
 
-// Get the current window
-var win = gui.Window.get();
-win.showDevTools();
+if(gui != null){
+  // Get the current window
+  var win = gui.Window.get();
+  win.showDevTools();
+  win.on('close', function(){
+    this.hide();
+    gui.App.quit();
+  })
+}
 
 var db = new PouchDB('optionsdb', {adapter: 'websql'});
 
-win.on('close', function(){
-  this.hide();
-  gui.App.quit();
-})
+
 
 var LISTENERSET = false;
 
