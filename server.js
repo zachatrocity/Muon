@@ -12,6 +12,6 @@ app.get('/', function (req, res) {
   res.sendFile('index.html')
 })
 
-app.listen(1337, function() {
+app.listen(3333, function() {
   console.log('listening');
 });
