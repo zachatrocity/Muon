@@ -122,54 +122,12 @@ var BoardGUI = {
     document.getElementById('boardHeaderText').innerHTML = value;
   },
   removeMuonFlag: function(){
-    if(gameCore.playerOneFlag)
-	{
-		var flags = document.getElementById('place-cont');
-		var flagsUnderlay = document.getElementById('place-under-cont');
-		document.getElementById('board-flags-underlay').src = "./images/boardPlacesB.svg";
-		addClass(flags, "fade-out");
-		addClass(flagsUnderlay, "fade-in");
-		setTimeout(function() {
-			document.getElementById('board-flags').src = "./images/boardPlacesB.svg";
-			flags.className = "gameboard";
-			document.getElementById('board-flags-underlay').src = "./images/boardPlacesN.svg";
-			flagsUnderlay.className = "gameboard";
-		}, 1000)
-	}
-    else 
-	{
-		var flags = document.getElementById('place-cont');
-		addClass(flags, "fade-out");
-		setTimeout(function() {
-			document.getElementById('board-flags').src = "./images/boardPlacesN.svg";
-			flags.className = "gameboard";
-		}, 1000)
-	}
+	var flagG = document.getElementById("flagG");
+	flagG.classList.add("fade-out");
   },
   removeAntiMuonFlag: function(){
-    if(gameCore.playerTwoFlag)
-      {
-		var flags = document.getElementById('place-cont');
-		var flagsUnderlay = document.getElementById('place-under-cont');
-		document.getElementById('board-flags-underlay').src = "./images/boardPlacesG.svg";
-		addClass(flags, "fade-out");
-		addClass(flagsUnderlay, "fade-in");
-		setTimeout(function() {
-			document.getElementById('board-flags').src = "./images/boardPlacesG.svg";
-			flags.className = "gameboard";
-			document.getElementById('board-flags-underlay').src = "./images/boardPlacesN.svg";
-			flagsUnderlay.className = "gameboard";
-		}, 1000)
-	}
-    else 
-	{
-		var flags = document.getElementById('place-cont');
-		addClass(flags, "fade-out");
-		setTimeout(function() {
-			document.getElementById('board-flags').src = "./images/boardPlacesN.svg";
-			flags.className = "gameboard";
-		}, 1000)
-	}
+    var flagB = document.getElementById("flagB");
+	flagB.classList.add("fade-out");
   },
   appendChatMessage: function(msg, isMyMessage){
     var messages = document.getElementById("messages");

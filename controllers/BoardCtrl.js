@@ -19,6 +19,8 @@ muonApp.controller('BoardCtrl', function ($scope, $stateParams, $state) {
 
 	$scope.startNewGame = function(){
 		BoardGUI.hideAllModals();
+		document.getElementById("flagB").classList.remove("fade-out");
+		document.getElementById("flagG").classList.remove("fade-out");
 		if($scope.isNetworkGame){
 			gameCore.RestartGame(true);
 		}
