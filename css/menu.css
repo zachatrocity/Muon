@@ -14,10 +14,10 @@
 
 @-webkit-keyframes logo-glow {
   from {
-    text-shadow: 0 0 5px #F7F0F0, 0 0 10px #F7F0F0, 0 0 15px #F7F0F0, 0 0 20px #F7F0F0, 0 0 30px #F7F0F0, 0 0 40px #F7F0F0, 0 0 50px #F7F0F0, 0 0 60px #F7F0F0;
+    text-shadow: 0 0 5px #47CFFF, 0 0 10px #47CFFF, 0 0 15px #47CFFF, 0 0 20px #47CFFF, 0 0 30px #47CFFF, 0 0 40px #47CFFF, 0 0 50px #47CFFF, 0 0 60px #47CFFF;
   }
   to {
-    text-shadow: 0 0 5px #F7F0F0, 0 0 10px #F7F0F0, 0 0 15px #F7F0F0, 0 0 20px #F7F0F0, 0 0 30px #F7F0F0, 0 0 35px #F7F0F0, 0 0 45px #F7F0F0;
+    text-shadow: 0 0 5px #47CFFF, 0 0 10px #47CFFF, 0 0 15px #47CFFF, 0 0 20px #47CFFF, 0 0 30px #47CFFF, 0 0 35px #47CFFF, 0 0 45px #47CFFF;
   }
 }
 
@@ -51,15 +51,21 @@
 	cursor: pointer;
 }
 
+.main-menu-item a {
+	color: black;
+	text-shadow: 0 0 10px #47CFFF;
+}
+
 a:focus{
-    text-shadow: 0 0 5px #F7F0F0
+	color: black;
+    text-shadow: 0 0 15px #47CFFF;
 }
 
 .item-pointer.left {
   position: relative;
   float: left;
   margin-top: -5px;
-  right: -10px;
+  right: 10px;
   width: 32px;
   height: 32px;
   border-radius: 50%;
@@ -71,7 +77,7 @@ a:focus{
   position: relative;
   float: right;
   margin-top: -5px;
-  left: -10px;
+  left: 10px;
   width: 32px;
   height: 32px;
   border-radius: 50%;
@@ -99,21 +105,21 @@ a:focus .item-pointer.right{
   left: 0%;
   top: 0%;
   -webkit-animation: rotate-one 1s linear infinite;
-  border-bottom: 3px solid #EFEFFA;
+  border-bottom: 3px solid #47CFFF;
 }
 
 .pointer-inner.two {
   right: 0%;
   top: 0%;
   -webkit-animation: rotate-two 1s linear infinite;
-  border-right: 3px solid #EFEFFA;
+  border-right: 3px solid #47CFFF;
 }
 
 .pointer-inner.three {
   right: 0%;
   bottom: 0%;
   -webkit-animation: rotate-three 1s linear infinite;
-  border-top: 3px solid #EFEFFA;
+  border-top: 3px solid #47CFFF;
 }
 
 @-webkit-keyframes rotate-one {
