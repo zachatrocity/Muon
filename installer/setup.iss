@@ -1,6 +1,6 @@
 ; Installer Variables
 #define AppName "Muon"
-#define AppVersion "Dev 0.0.0.2"
+#define AppVersion "Beta 0.0.0.4"
 #define AppPublisher "Colossity"
 #define AppURL "https://github.com/zachatrocity/Muon"
 #define AppExeName "Muon.exe"
@@ -20,12 +20,14 @@ AppUpdatesURL={#AppURL}
 
 ; Make the Installer nicer and Minimalistic
 WizardImageFile=.\muon.bmp
+WizardSmallImageFile=.\smallmuon.bmp
 WindowResizable=no
 
-; Don't ask for a install folder (it goes into \Users\Username\AppData\Roaming\Popcorn Time\, which doesn't require admin privileges)
+; Don't ask for a install folder (it goes into \Users\Username\AppData\Roaming\Muon\, which doesn't require admin privileges)
 UsePreviousAppDir=no
 DefaultDirName={userappdata}\Muon
 DisableDirPage=yes
+
 
 ; No Start Menu Folder picker (It's always created)
 DefaultGroupName={#AppName}
@@ -37,9 +39,9 @@ DisableFinishedPage=no
 DisableWelcomePage=no
 
 ; No UAC crap
-PrivilegesRequired=lowest
+PrivilegesRequired=none
 ; Put the uninstaller in the same folder, or else it'll go into Program Files, which requires Admin Privileges
-UninstallFilesDir={app}
+UninstallFilesDir={pf}\Muon
 
 ; Use the same language as the user (or ask otherwise)
 ShowLanguageDialog=auto
@@ -84,3 +86,47 @@ Name: "{commondesktop}\{#AppName}"; WorkingDir: "{app}"; Filename: "{app}\Muon.e
 ; Run the app after installing
 Filename: "{app}\Muon.exe"; Description: "{cm:LaunchProgram,{#StringChange(AppName, '&', '&&')}}"; Flags: nowait postinstall skipifsilent runminimized
 
+[Code]
+
+var
+  OptionPage: TInputOptionWizardPage;
+
+procedure InitializeWizard();
+begin
+  OptionPage :=
+    CreateInputOptionPage(
+      wpWelcome,
+      'Choose installation options', 'Who should this application be installed for?',
+      'Please select whether you wish to make this software available for all users or just yourself.',
+      True, False);
+
+  OptionPage.Add('&Anyone who uses this computer');
+  OptionPage.Add('&Only for me');
+
+  if IsAdminLoggedOn then
+  begin
+    OptionPage.Values[0] := True;
+  end
+    else
+  begin
+    OptionPage.Values[1] := True;
+    OptionPage.CheckListBox.ItemEnabled[0] := False;
+  end;
+end;
+
+function NextButtonClick(CurPageID: Integer): Boolean;
+begin
+  if CurPageID = OptionPage.ID then
+  begin
+    if OptionPage.Values[1] then
+    begin
+      // override the default installation to program files ({pf})
+      WizardForm.DirEdit.Text := ExpandConstant('{userappdata}\Muon')
+    end
+      else
+    begin
+      WizardForm.DirEdit.Text := ExpandConstant('{pf}\Muon');
+    end;
+  end;
+  Result := True;
+end;
