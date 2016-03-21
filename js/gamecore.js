@@ -14,6 +14,8 @@ var gameCore = {
 	humanteam: '',
 	opponentTeam: '',
 	pvp: false,
+	aiStart: 0,
+	aiEnd: 0,
 
 	AITurn: true,	// Flag for the current player's turn
 	MAX_HIST: 40,		// Maximum moves to keep track of
@@ -533,6 +535,7 @@ var gameCore = {
 						gameCore.EndGame();
 					}
 					else if (!gameCore.pvp) {
+						gameCore.aiStart = new Date().getTime();
 						// Make ai move
 						aiWorker.postMessage({ 'from': bitFrom, 'to': bitTo });
 					}
@@ -655,10 +658,13 @@ aiWorker.onmessage = function(e) {
 	}
 
 	gameCore.AddMoveToHistory(new Move(e.data.from, e.data.to, "ai"));
-	gameCore.AITurn = false; //human turn
-	gameCore.board.moveMuonTweenFoci(e.data.from, e.data.to);
+	
+	gameCore.aiEnd = new Date().getTime();
+	setTimeout(gameCore.board.moveMuonTweenFoci.bind(null, e.data.from, e.data.to), 3000 - (gameCore.aiEnd - gameCore.aiStart));
 
 	if (gameCore.GameOver(gameCore.p1Pos)) {
 		gameCore.EndGame();
 	}
+
+	gameCore.AITurn = false; //human turn
 };
