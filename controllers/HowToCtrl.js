@@ -2,13 +2,14 @@ muonApp.controller('HowToCtrl', function ($scope, $stateParams) {
 	
 	var fill = d3.scale.category10();
 	var width =  window.innerWidth;
+	var frac = (width / 2) / 2;
 	var nodes = [],
 		links = [],
-		foci = [{x: 400 , y: 150}, {x: width - 150, y: 150}];
+		foci = [{x: 500, y: 200}, {x: 500, y: 450}];
 
 	var SVG = d3.select(".muon-container").append("svg")
-	    .attr("width", width)
-	    .attr("height", 300)
+	    .attr("width", 600)
+	    .attr("height", window.innerHeight)
 
 	var force = d3.layout.force()
 	    .nodes(nodes)
@@ -87,12 +88,14 @@ muonApp.controller('HowToCtrl', function ($scope, $stateParams) {
     var stepTwo = document.getElementById('stepTwo');
     var stepThree = document.getElementById('stepThree');
     var playerOne = Typer(stepOne, ['This is a Muon']);
-    var playerTwo = Typer(stepTwo, ['This is a Anti-muon']);
+    var playerTwo = Typer(stepTwo, ['This is an Anti-muon']);
     var playerThree = Typer(stepThree, ['Muons and Anti-muons are fighting against each other inside of atoms to form matter, or anti-matter.']);
     
-    playerOne.play(function(){
-    	playerTwo.play(function(){
-    		playerThree.play();
-    	})
-  	});
+    setTimeout(function(){
+	    playerOne.play(function(){
+	    	playerTwo.play(function(){
+	    		playerThree.play();
+	    	})
+	  	});
+	}, 1500);
 });

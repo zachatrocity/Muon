@@ -115,12 +115,6 @@ var BoardGUI = {
       BoardGUI.timer.hours = 0;
     }
   },
-  getBoardHeaderElement: function() {
-    return document.getElementById('boardHeaderText');
-  },
-  setBoardHeaderElement: function(value) {
-    document.getElementById('boardHeaderText').innerHTML = value;
-  },
   removeMuonFlag: function(){
 	var flagG = document.getElementById("flagG");
 	flagG.classList.add("fade-out");

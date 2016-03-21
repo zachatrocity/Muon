@@ -370,6 +370,14 @@ h1.view-heading{
 	text-align: center;
 }
 
+.game-stats{
+	position: absolute;
+	top: 32px;
+	right: 275px;
+	width: 200px;
+	text-align: center;
+}
+
 .game-menu-container {
 	
 	border-radius: 3px;

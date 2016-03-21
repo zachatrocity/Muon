@@ -21,6 +21,11 @@
 	transition: all 0.5s;
 }
 
+.help-back{
+	position: absolute;
+	right: 280px;
+	bottom: 0;
+}
 
 @-webkit-keyframes item-glow {
   from {

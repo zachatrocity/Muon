@@ -101,7 +101,7 @@ muonApp.controller('BoardCtrl', function ($scope, $stateParams, $state) {
 		} else {
 			if($stateParams.waiting == '1'){
 			//angular.element(boardHeaderText)[0].innerHTML = "Waiting for opponent";
-			document.getElementById('boardHeaderText').innerHTML = "Waiting for opponent";
+			BoardGUI.appendSystemMessage("Waiting for opponent");
 			BoardGUI.showWaitingModal();
 			gameCore.network.role = 'host';
 			gameCore.RestartGame(true);
@@ -109,7 +109,7 @@ muonApp.controller('BoardCtrl', function ($scope, $stateParams, $state) {
 			} else {
 				console.log("attempting to join room");
 				cloak.message('joinRoom', $stateParams.roomid);
-				document.getElementById('boardHeaderText').innerHTML = "Their turn";
+				BoardGUI.appendSystemMessage("Their turn");
 				gameCore.network.role = 'client';
 				gameCore.RestartGame(true);
 				//client is here
