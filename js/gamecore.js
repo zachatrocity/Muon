@@ -16,7 +16,6 @@ var gameCore = {
 	pvp: false,
 	aiStart: 0,
 	aiEnd: 0,
-
 	AITurn: true,	// Flag for the current player's turn
 	MAX_HIST: 40,		// Maximum moves to keep track of
 	moveHistory: [],	// A history of the moves made by both players
@@ -27,6 +26,20 @@ var gameCore = {
 
 	AIGoesFirst:false,
 	AITreeDepth: 7,
+	tutorial:{
+		IS_TUTORIAL: false,
+		index: 0,
+		quadCleared: function(){
+		    var stepTwo = document.getElementById('stepTwo');
+			var playerTwo = Typer(stepTwo, ['Nice work! Hit next to continue']);
+			playerTwo.play();
+		},
+		tutorialWin: function(){
+			var stepTwo = document.getElementById('stepTwo');
+			var playerTwo = Typer(stepTwo, ['Great job! You have finished the tutorial.']);
+			playerTwo.play();
+		}
+	},
 	network: {
 		team: '',
 		turn: '',
@@ -392,6 +405,7 @@ var gameCore = {
 			gameCore.AITurn = true;
 			gameCore.moveHistory = [];
 			gameCore.moveCount = 0;
+			gameCore.tutorial.IS_TUTORIAL = false;
 			gameCore.gameOver = false;
 		},
 		addNodeAtFoci: function(f,anti){
@@ -499,6 +513,23 @@ var gameCore = {
 		var bitTo = convert.intToBit(to);
 
 		if (gameCore.ValidMove(bitFrom, bitTo)) {
+			//is tutoral
+			if(gameCore.tutorial.IS_TUTORIAL){
+				gameCore.p2Pos ^= bitFrom ^ bitTo;
+				gameCore.board.moveMuonTweenFoci(from, to);
+				if (evaluation.isHomeQuadEmpty(2, gameCore.p2Pos)) {
+					gameCore.ChangePlayer2Flag(false);
+					if(gameCore.tutorial.index == 0)
+						gameCore.tutorial.quadCleared();
+				}
+
+				if (gameCore.GameOver(gameCore.p2Pos)) {
+					if(gameCore.tutorial.index == 1)
+						gameCore.tutorial.tutorialWin();
+				}
+				
+				return;
+			}
 			
 			// If there is no room ID then you are playing against the AI.
 			if(gameCore.network.roomid == null) {
@@ -639,8 +670,8 @@ var gameCore = {
 	},
 
 	endTutorial: function() {
-		//history.pushState({foo: 'bar'}, 'Menu', 'menu.html');
-		//history.pushState({foo: 'bar'}, 'Play', 'newgame.html');
+		// history.pushState({foo: 'bar'}, 'Menu', 'menu.html');
+		// history.pushState({foo: 'bar'}, 'Play', 'newgame.html');
 	},
 };
 

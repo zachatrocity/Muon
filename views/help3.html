@@ -1,12 +1,31 @@
 <!-- views/help2.html -->
-<h1 class="view-heading">How To Play</h1>
-<div class="help-container">
-	<div class="row">
-		<div class="col-xs-6">Image of all the muons out of their home quad</div>
-		<div class="col-xs-6">Image of a triangle in their home quad</div>
+<div class="help-container row">
+	<div class="col-xs-7">
+		<div id="board-componant" class="gameboard">
+		    <img src="./images/boardElec.gif" sb-load="gameboardLoaded($event)">
+		</div>
+		<div id="flagG" class="gameboard flag">
+		    <img src="./images/flagG.svg">
+		</div>
+		<div id="flagB" class="gameboard flag">
+		    <img src="./images/flagB.svg">
+		</div>
+		<div class="gameboard">
+		    <img src="./images/boardPlaces.svg">
+		</div>
+		<div class="gamepeices gameboard">
+		  
+		</div>
 	</div>
-	<div class="row">
-		<div class="col-xs-12"><h2>But muons can only gain control of the atom from their starting quadrant after they empty it.</h2></div>
+	<div class="col-xs-5">
+		<div id="stepContainer" class="text-container" style="
+			margin-top: 45%;
+			padding-right: 10%;
+		">
+			<div id="stepOne"></div>
+			<br><br>
+			<div id="stepTwo"></div>
+		</div>
 	</div>
 </div>
 <div class="back">

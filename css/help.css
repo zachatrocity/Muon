@@ -6,4 +6,27 @@
 
 .help-container{
 	cursor: default;
+	color: rgb(95,173,65);
+}
+
+#stepContainer{
+	text-align: left;
+	font-size: 1.35em;
+}
+
+.glow {
+	-webkit-animation: item-glow 1.5s ease-in-out infinite alternate;
+	-webkit-transition: all 0.5s;
+	-moz-transition: all 0.5s;
+	transition: all 0.5s;
+}
+
+
+@-webkit-keyframes item-glow {
+  from {
+    box-shadow: 0 0 5px #47CFFF, 0 0 10px #47CFFF, 0 0 15px #47CFFF, 0 0 20px #47CFFF, 0 0 30px #47CFFF, 0 0 40px #47CFFF, 0 0 50px #47CFFF, 0 0 60px #47CFFF;
+  }
+  to {
+    box-shadow: 0 0 5px #47CFFF, 0 0 10px #47CFFF, 0 0 15px #47CFFF, 0 0 20px #47CFFF, 0 0 30px #47CFFF, 0 0 35px #47CFFF, 0 0 45px #47CFFF;
+  }
 }
