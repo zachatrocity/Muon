@@ -9,9 +9,11 @@ var Move = function(f, t, p) {
 var gameCore = {
 	p1Pos: 0b00000000001111100000, //Top left pieces
 	p2Pos: 0b00000111110000000000, //Bottom right pieces
-	playerOneFlag: true,
-	playerTwoFlag: true,
+	playerOneFlag: true, // The AI/Opponent
+	playerTwoFlag: true, // The human/local
 	humanteam: '',
+	opponentTeam: '',
+	pvp: false,
 
 	AITurn: true,	// Flag for the current player's turn
 	MAX_HIST: 40,		// Maximum moves to keep track of
@@ -118,7 +120,6 @@ var gameCore = {
         antidegreeindex: 0,
         tick: function(e){
         	var k = .1 * e.alpha;
-        	
 
 		    //Push center nodes toward their designated focus.
 		    gameCore.board.nodes.forEach(function(o, i) {
@@ -255,13 +256,13 @@ var gameCore = {
 							y: (nodesRoundFoci[0].cy.baseVal.value + nodesRoundFoci[1].cy.baseVal.value + nodesRoundFoci[2].cy.baseVal.value) / 3
 						};
 						var nodesRoundFoci = d3.selectAll(".id" + startIndex + ",.id" + (startIndex + 1) + ",.id" + (startIndex + 2));
-						gameCore.board.beginRotatingSelectedMuon(nodesRoundFoci, closestNode.foci, point)
-
-		                
+						gameCore.board.beginRotatingSelectedMuon(nodesRoundFoci, closestNode.foci, point)		                
                 	}
                 }
-            } else if (closestNode && gameCore.BelongsToPlayer(gameCore.p2Pos, closestNode.foci)){
-            	
+            // If the node belongs to the player, or we're doing pass and play and it's the other guy's turn and it belongs to them
+            } else if (closestNode && (!gameCore.pvp && !gameCore.AITurn && gameCore.BelongsToPlayer(gameCore.p2Pos, closestNode.foci)
+             || gameCore.pvp && !gameCore.AITurn && gameCore.BelongsToPlayer(gameCore.p2Pos, closestNode.foci)
+             || gameCore.pvp && gameCore.AITurn && gameCore.BelongsToPlayer(gameCore.p1Pos, closestNode.foci))) {
 				//select all the nodes around the node we clicked
 				if(closestNode.foci == gameCore.board.selectedMuon) { 
 					//its already spinning so unselect it
@@ -285,8 +286,6 @@ var gameCore = {
 		    gameCore.board.activeLinks.enter().insert("line", ".node")
 		      .attr("class", "link");
 
-		    
-
 		    gameCore.board.activeNodes = gameCore.board.activeNodes.data(gameCore.board.nodes);
 		    gameCore.board.activeNodes.enter().append("circle")
 		      .attr("class", function(d) { return "id" + d.id + " node" })
@@ -308,7 +307,6 @@ var gameCore = {
 		  //   	.attr("class", function(d) { return "id" + d.id + " node" })
 				// .call(gameCore.board.d3force.drag)
 
-
 		    gameCore.board.d3force.start()
 		},
 		createBoard: function(){
@@ -317,7 +315,6 @@ var gameCore = {
 			    .attr("width", gameCore.board.width)
 			    .attr("height", gameCore.board.height)
 			    .on("mousedown", gameCore.board.mousedown);
-
 
 		    var muongradient = gameCore.board.boardSVG.append("svg:defs")
 			    .append("svg:radialGradient")
@@ -332,7 +329,6 @@ var gameCore = {
 			    .attr("offset", "10%")
 			    .attr("stop-color", d3.rgb(95,173,65).darker(1))
 			    .attr("stop-opacity", 1);
-
 
 			muongradient.append("svg:stop")
 			    .attr("offset", "100%")
@@ -356,7 +352,6 @@ var gameCore = {
 			    .attr("offset", "100%")
 			    .attr("stop-color", "rgb(84,144,204)")
 			    .attr("stop-opacity", 1);    
-
 
 			gameCore.board.d3force = d3.layout.force()
 			    .nodes(gameCore.board.nodes)
@@ -490,9 +485,9 @@ var gameCore = {
 
 		document.getElementById('moveCount').innerHTML = gameCore.moveCount++;
 	},
-	GetAvailableMoves: function(peice, openPositions) {
-		var quad = convert.bitToQuad(peice)
-		var node = convert.bitToNode(peice)
+	GetAvailableMoves: function(piece, openPositions) {
+		var quad = convert.bitToQuad(piece)
+		var node = convert.bitToNode(piece)
 		return openPositions&evaluation.nodeConnections[quad][node];
 	},
 	// Moves a piece from one position to another
@@ -504,32 +499,45 @@ var gameCore = {
 		if (gameCore.ValidMove(bitFrom, bitTo)) {
 			
 			// If there is no room ID then you are playing against the AI.
-			if(gameCore.network.roomid == null){
-				if(gameCore.AITurn == false){ //if it is human turn
+			if(gameCore.network.roomid == null) {
+				if(true) {//(gameCore.pvp && gameCore.AITurn) || (!gameCore.pvp && !gameCore.AITurn)) { //if it is human turn
 					console.log("Player moved from " + convert.bitToStandard(bitFrom) + " to " + convert.bitToStandard(bitTo));
 					gameCore.attemptedDraw = false;
 
 					// Update the users bit board.
-					gameCore.p2Pos ^= bitFrom ^ bitTo;
-					gameCore.AddMoveToHistory(new Move(from, to, "player"));
+					if (gameCore.BelongsToPlayer(gameCore.p1Pos, from)) {
+						gameCore.p1Pos ^= bitFrom ^ bitTo;
+						gameCore.AddMoveToHistory(new Move(from, to, "opponent"));
 
-					// Remove the flag if they have abandoned their home quad
-					if (evaluation.isHomeQuadEmpty(2, gameCore.p2Pos)) {
-						gameCore.ChangePlayer2Flag(false);
-						console.log("Player can now win from their home quad");
+						// Remove the flag if they have abandoned their home quad
+						if (evaluation.isHomeQuadEmpty(1, gameCore.p1Pos)) {
+							gameCore.ChangePlayer1Flag(false);
+							console.log("Player 2 can now win from their home quad");
+						}
+					}
+					else {
+						gameCore.p2Pos ^= bitFrom ^ bitTo;
+						gameCore.AddMoveToHistory(new Move(from, to, "player"));
+
+						// Remove the flag if they have abandoned their home quad
+						if (evaluation.isHomeQuadEmpty(2, gameCore.p2Pos)) {
+							gameCore.ChangePlayer2Flag(false);
+							console.log("Player can now win from their home quad");
+						}
 					}
 
-					gameCore.AITurn = true; //AIs turn is set to true
+					gameCore.AITurn = !gameCore.AITurn; //AIs turn is set to true
 					gameCore.board.moveMuonTweenFoci(from, to);
-					//display.displayBoard(gameCore.p1Pos, gameCore.p2Pos);
+					
 					if (gameCore.GameOver(gameCore.p2Pos)) {
 						gameCore.EndGame();
-					} else {
+					}
+					else if (!gameCore.pvp) {
 						// Make ai move
 						aiWorker.postMessage({ 'from': bitFrom, 'to': bitTo });
 					}
 				}
-			} 
+			}
 			// If there is a room ID then you are playing over network.
 			else if(gameCore.network.turn == gameCore.network.team) { // If it's the the users turn.
 				console.log("Player moved from " + convert.bitToStandard(bitFrom) + " to " + convert.bitToStandard(bitTo));
@@ -611,11 +619,11 @@ var gameCore = {
 	EndGame: function() {
 		gameCore.gameOver = true;	// Lock the board from player input
 		if (gameCore.winner == "local") {
-			console.log("YOU WON!");
+			console.log("PLAYER 2 WON!");
 			BoardGUI.showWinModal();
 		}
 		else if (gameCore.winner == "opponent"){
-			console.log("YOU LOST!");
+			console.log("PLAYER 1 WON!");
 			BoardGUI.showLoseModal();
 		}
 		else{
