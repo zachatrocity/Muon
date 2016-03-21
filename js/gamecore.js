@@ -14,11 +14,13 @@ var gameCore = {
 	humanteam: '',
 
 	AITurn: true,	// Flag for the current player's turn
-	MAX_HIST: 30,		// Maximum moves to keep track of
+	MAX_HIST: 40,		// Maximum moves to keep track of
 	moveHistory: [],	// A history of the moves made by both players
 	moveCount: 0,
 	winner: "none",		// To display if the local player won or lost
 	gameOver: false,	// Stop allowing the selection of muons if true
+	attemptedDraw: false,
+
 	AIGoesFirst:false,
 	AITreeDepth: 7,
 	network: {
@@ -439,12 +441,20 @@ var gameCore = {
 	// Called when the player proposes a draw (ONLY TO THE AI)
 	// Draws between networked players are determined if the other accepts
 	ProposeDrawToAI: function() {
-		if (gameCore.moveHistory.length >= gameCore.MAX_HIST){
-			return true;
+		draw = false;
+		if (!gameCore.attemptedDraw) {
+			// Will only have a chance to accept a draw after 40 moves
+			if (gameCore.moveHistory.length >= gameCore.MAX_HIST){
+				prob = gameCore.moveCount - (gameCore.MAX_HIST - 1);
+				console.log("Draw probability: " + prob + "%");
+				num = Math.floor(Math.random() * 100) + 1;
+				if (num <= prob){
+					draw = true;
+				}
+				gameCore.attemptedDraw = true;
+			}
 		}
-		else {
-			return false;
-		}
+		return draw;
 	},
 	// Determines if the selected node belongs to the current player
 	// This is so the player cannot select a piece that is not theirs
@@ -497,6 +507,7 @@ var gameCore = {
 			if(gameCore.network.roomid == null){
 				if(gameCore.AITurn == false){ //if it is human turn
 					console.log("Player moved from " + convert.bitToStandard(bitFrom) + " to " + convert.bitToStandard(bitTo));
+					gameCore.attemptedDraw = false;
 
 					// Update the users bit board.
 					gameCore.p2Pos ^= bitFrom ^ bitTo;
@@ -625,6 +636,8 @@ var gameCore = {
 aiWorker.onmessage = function(e) {
 	console.log('Message received from worker');
 	console.log("Opponent moved from " + convert.bitToStandard(convert.intToBit(e.data.from)) + " to " + convert.bitToStandard(convert.intToBit(e.data.to)));
+	gameCore.attemptedDraw = false;
+	
 	gameCore.p1Pos ^= (convert.intToBit(e.data.from)) ^ (convert.intToBit(e.data.to));
 
 	// Remove the flag if they have abandoned their home quad
