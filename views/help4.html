@@ -1,11 +1,31 @@
 <!-- views/help2.html -->
-<h1 class="view-heading">How To Play</h1>
-<div class="help-container">
-	<div class="row">
-		<div class="col-xs-12">Image of game in play goes here</div>
+<div class="help-container row">
+	<div class="col-xs-7">
+		<div id="board-componant" class="gameboard">
+		    <img src="./images/boardElec.gif" sb-load="gameboardLoaded($event)">
+		</div>
+		<div id="flagG" class="gameboard flag">
+		    <img src="./images/flagG.svg">
+		</div>
+		<div id="flagB" class="gameboard flag">
+		    <img src="./images/flagB.svg">
+		</div>
+		<div class="gameboard">
+		    <img src="./images/boardPlaces.svg">
+		</div>
+		<div class="gamepeices gameboard">
+		  
+		</div>
 	</div>
-	<div class="row">
-		<div class="col-xs-12">Try to gain control of the atom by moving the muons accross the board. But remember, the anti-muons will be trying to gain control of the atmom, too! So try to block them from creating a link of three particles while you move to claim the atom yourself!</div>
+	<div class="col-xs-5">
+		<div id="stepContainer" class="text-container" style="
+			margin-top: 45%;
+			padding-right: 10%;
+		">
+			<div id="stepOne"></div>
+			<br><br>
+			<div id="stepTwo"></div>
+		</div>
 	</div>
 </div>
 <div class="back">

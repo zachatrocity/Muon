@@ -1,7 +1,5 @@
 .logo {
 	-webkit-animation: logo-glow 1.5s ease-in-out infinite alternate;
-	-moz-animation: logo-glow 1.5s ease-in-out infinite alternate;
-	animation: logo-glow 1.5s ease-in-out infinite alternate;
 	-webkit-transition: all 0.5s;
 	-moz-transition: all 0.5s;
 	transition: all 0.5s;

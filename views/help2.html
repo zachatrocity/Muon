@@ -1,26 +1,30 @@
 <!-- views/help2.html -->
-<h1 class="view-heading">How To Play</h1>
 <div class="row help-container" >
-	<div class="col-xs-6">
-		<div class="gameboard" style="
-		    margin-top: 10%;
-		    position: relative;
-		    left: 0%;
-		    transform: none;
-		">
-		    <img src="./images/triangle.png">
+	<div class="col-xs-7">
+		<div id="board-componant" class="gameboard">
+		    <img src="./images/boardElec.gif" sb-load="gameboardLoaded($event)">
 		</div>
-		<div class="gamepeices muon-container">
+		<div id="flagG" class="gameboard flag">
+		    <img src="./images/flagG.svg">
+		</div>
+		<div id="flagB" class="gameboard flag">
+		    <img src="./images/flagB.svg">
+		</div>
+		<div class="gameboard">
+		    <img src="./images/boardPlaces.svg">
+		</div>
+		<div class="gamepeices gameboard">
 		  
 		</div>
 	</div>
-	<div class="col-xs-6">
-		<div class="text-container" style="
-			margin-top: 20%;
+	<div class="col-xs-5">
+		<div id="stepContainer" class="text-container" style="
+			margin-top: 35%;
 			padding-right: 10%;
 		">
-			<h1>This is inside of an atom. The atom is made up of four sections called quadrants.</h1>
-			<h1>Muons will gain control of the atom if they form a link of 3 in the shape of a triangle in any of the 4 quadrants that make up the atom</h1>
+			<div id="stepOne"></div>
+			<br><br>
+			<div id="stepTwo"></div>
 		</div>
 	</div>
 </div>

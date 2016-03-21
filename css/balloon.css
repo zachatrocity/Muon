@@ -15,6 +15,7 @@
     background: #383838;
     border-radius: 4px;
     color: #fff;
+    text-transform: capitalize;
     content: attr(data-balloon);
     font-size: 10px;
     padding: .5em 1em;
