@@ -20,6 +20,7 @@ var gameCore = {
 	MAX_HIST: 40,		// Maximum moves to keep track of
 	moveHistory: [],	// A history of the moves made by both players
 	moveCount: 0,
+	drawProb: 0,
 	winner: "none",		// To display if the local player won or lost
 	gameOver: false,	// Stop allowing the selection of muons if true
 	attemptedDraw: false,
@@ -328,8 +329,8 @@ var gameCore = {
 		    gameCore.board.d3force.start()
 		},
 		createBoard: function(){
-			gameCore.board.boardSVG = d3.select(".gamepeices").append("svg")
-				.attr("class", "d3gamepeices")
+			gameCore.board.boardSVG = d3.select(".gamepieces").append("svg")
+				.attr("class", "d3gamepieces")
 			    .attr("width", gameCore.board.width)
 			    .attr("height", gameCore.board.height)
 			    .on("mousedown", gameCore.board.mousedown);
@@ -391,7 +392,7 @@ var gameCore = {
 		clearBoard: function(){
 			if(gameCore.board.d3force != null){
 				gameCore.board.d3force.stop();
-				d3.select(".d3gamepeices").remove();
+				d3.select(".d3gamepieces").remove();
 			}
 			gameCore.board.ready = false;
 			gameCore.board.nodes = [];
@@ -456,17 +457,20 @@ var gameCore = {
 	// Draws between networked players are determined if the other accepts
 	ProposeDrawToAI: function() {
 		draw = false;
+		// Will only allow draw possibility if it's the first this turn
 		if (!gameCore.attemptedDraw) {
 			// Will only have a chance to accept a draw after 40 moves
-			if (gameCore.moveHistory.length >= gameCore.MAX_HIST){
-				prob = gameCore.moveCount - (gameCore.MAX_HIST - 1);
-				console.log("Draw probability: " + prob + "%");
+			if (gameCore.moveCount >= gameCore.MAX_HIST) {
+				console.log("Draw probability: " + gameCore.drawProb + "%");
 				num = Math.floor(Math.random() * 100) + 1;
-				if (num <= prob){
+				if (num <= gameCore.drawProb){
 					draw = true;
 				}
 				gameCore.attemptedDraw = true;
 			}
+		}
+		else {
+			console.log("You have already attempted a draw this turn");
 		}
 		return draw;
 	},
@@ -502,7 +506,7 @@ var gameCore = {
 			gameCore.moveHistory.push(move);
 		}
 
-		document.getElementById('moveCount').innerHTML = gameCore.moveCount++;
+		document.getElementById('moveCount').innerHTML = ++gameCore.moveCount;
 	},
 	GetAvailableMoves: function(piece, openPositions) {
 		var quad = convert.bitToQuad(piece)
@@ -536,49 +540,52 @@ var gameCore = {
 			
 			// If there is no room ID then you are playing against the AI.
 			if(gameCore.network.roomid == null) {
-				if(true) {//(gameCore.pvp && gameCore.AITurn) || (!gameCore.pvp && !gameCore.AITurn)) { //if it is human turn
-					console.log("Player moved from " + convert.bitToStandard(bitFrom) + " to " + convert.bitToStandard(bitTo));
-					gameCore.attemptedDraw = false;
+				//(gameCore.pvp && gameCore.AITurn) || (!gameCore.pvp && !gameCore.AITurn)) { //if it is human turn
+				console.log("Player moved from " + convert.bitToStandard(bitFrom) + " to " + convert.bitToStandard(bitTo));
+				gameCore.attemptedDraw = false;
 
-					// Update the users bit board.
-					if (gameCore.BelongsToPlayer(gameCore.AIPos, from)) {
-						gameCore.AIPos ^= bitFrom ^ bitTo;
-						gameCore.AddMoveToHistory(new Move(from, to, "opponent"));
+				// Update the users bit board.
+				if (gameCore.BelongsToPlayer(gameCore.AIPos, from)) {
+					gameCore.AIPos ^= bitFrom ^ bitTo;
+					gameCore.AddMoveToHistory(new Move(from, to, "opponent"));
 
-						// Remove the flag if they have abandoned their home quad
-						if (evaluation.isHomeQuadEmpty(gameCore.AIPlayerNumber, gameCore.AIPos)) {
-							if(gameCore.AIPlayerNumber == 2)
-								gameCore.ChangePlayer2Flag(false);
-							else
-								gameCore.ChangePlayer1Flag(false);
-							console.log("Player 1 can now win from their home quad");
-						}
+					// Remove the flag if they have abandoned their home quad
+					if (evaluation.isHomeQuadEmpty(gameCore.AIPlayerNumber, gameCore.AIPos)) {
+						if(gameCore.AIPlayerNumber == 2)
+							gameCore.ChangePlayer2Flag(false);
+						else
+							gameCore.ChangePlayer1Flag(false);
+						console.log("Player 1 can now win from their home quad");
 					}
-					else {
-						gameCore.HUPos ^= bitFrom ^ bitTo;
-						gameCore.AddMoveToHistory(new Move(from, to, "player"));
+				}
+				else {
+					gameCore.HUPos ^= bitFrom ^ bitTo;
+					gameCore.AddMoveToHistory(new Move(from, to, "player"));
 
-						// Remove the flag if they have abandoned their home quad
-						if (evaluation.isHomeQuadEmpty(gameCore.HUPlayerNumber, gameCore.HUPos)) {
-							if(gameCore.HUPlayerNumber == 2)
-								gameCore.ChangePlayer2Flag(false);
-							else
-								gameCore.ChangePlayer1Flag(false);
-							console.log("Player can now win from their home quad");
-						}
+					// Remove the flag if they have abandoned their home quad
+					if (evaluation.isHomeQuadEmpty(gameCore.HUPlayerNumber, gameCore.HUPos)) {
+						if(gameCore.HUPlayerNumber == 2)
+							gameCore.ChangePlayer2Flag(false);
+						else
+							gameCore.ChangePlayer1Flag(false);
+						console.log("Player can now win from their home quad");
 					}
+				}
 
-					gameCore.AITurn = !gameCore.AITurn; //AIs turn is set to true
-					gameCore.board.moveMuonTweenFoci(from, to);
-					
-					if (gameCore.GameOver(gameCore.HUPos)) {
-						gameCore.EndGame();
-					}
-					else if (!gameCore.pvp) {
-						// Make ai move
+				if (gameCore.moveCount >= gameCore.MAX_HIST) {
+					gameCore.drawProb++;
+				}
 
-						aiWorker.postMessage({ 'from': bitFrom, 'to': bitTo });
-					}
+				gameCore.AITurn = !gameCore.AITurn; //AIs turn is set to true
+				gameCore.board.moveMuonTweenFoci(from, to);
+				
+				if (gameCore.GameOver(gameCore.HUPos)) {
+					gameCore.EndGame();
+				}
+				else if (!gameCore.pvp) {
+					// Make ai move
+
+					aiWorker.postMessage({ 'from': bitFrom, 'to': bitTo });
 				}
 			}
 			// If there is a room ID then you are playing over network.
@@ -644,13 +651,13 @@ var gameCore = {
 
 
 	 	if(isNetworkGame){
-	 		if(gameCore.network.role == 'host'){
-	 			//then i'm the bottom right peices
+	 		if(gameCore.network.role == 'host') {
+	 			//then i'm the bottom right pieces
 	 			gameCore.network.localPos = gameCore.network.localStartPos = 0b00000111110000000000;
 	 			//my opponent is up top
 	 			gameCore.network.opponentPos = gameCore.network.opponentStartPos = 0b00000000001111100000;
-	 		} else if(gameCore.network.role =='client'){
-	 			//then i'm the top peices
+	 		} else if(gameCore.network.role =='client') {
+	 			//then i'm the top pieces
 	 			gameCore.network.localPos = gameCore.network.localStartPos = 0b00000000001111100000;
 	 			//my opponent is below
 	 			gameCore.network.opponentPos = gameCore.network.opponentStartPos = 0b00000111110000000000;
@@ -722,11 +729,11 @@ aiWorker.onmessage = function(e) {
 			gameCore.ChangePlayer1Flag(false);
 		console.log("AI can now win from their home quad");
 	}
-
-	gameCore.AddMoveToHistory(new Move(e.data.from, e.data.to, "ai"));
 	
 	//gameCore.aiEnd = new Date().getTime();
-	
+	gameCore.AddMoveToHistory(new Move(e.data.from, e.data.to, "ai"));
+
+	// Don't move the AI piece if less than 3 seconds have passed
 	if(gameCore.AITreeDepth <= 7){
 		setTimeout(function(){
 			gameCore.board.moveMuonTweenFoci(e.data.from, e.data.to)
@@ -735,10 +742,12 @@ aiWorker.onmessage = function(e) {
 		gameCore.board.moveMuonTweenFoci(e.data.from, e.data.to)
 	}
 
-
 	if (gameCore.GameOver(gameCore.AIPos)) {
 		gameCore.EndGame();
 	}
 
+	if (gameCore.moveCount >= gameCore.MAX_HIST) {
+		gameCore.drawProb++;
+	}
 	gameCore.AITurn = false; //human turn
 };
