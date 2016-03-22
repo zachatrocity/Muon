@@ -1,5 +1,6 @@
 muonApp.controller('NewGameCtrl', function ($scope, $stateParams) {
 	gameCore.AIGoesFirst = false;
+	gameCore.humanteam = 'muon';
 
 	$scope.setAILevel = function(depth){
 		gameCore.AITreeDepth = depth;
