@@ -1,7 +1,7 @@
-var p1_Position = 0b00000000001111100000; //Always the AI
-var p2_Position = 0b00000111110000000000; //Always the other player
-var p1_flag = true;
-var p2_flag = true;
+var AI_position = 0b00000000001111100000; //Always the AI
+var HU_position = 0b00000111110000000000; //Always the other player
+var AI_flag = true;
+var HU_flag = true;
 var BITMASK = 0xFFFFF;
 
 //For now this only stores losses
@@ -162,13 +162,16 @@ var AI = {
 	'bestMovePredicted':[],
 	'maxDepth':-1,
 	'bSearchPv':true,
+	'startingPos': '',
+	'AIPlayerNumber': 0,
+	'HUPlayerNumber': 0,
 
 	DeepPVSAI:function(alpha, beta, depth, p1_board, p2_board, f1, f2){
 		//Check for a win condition. If the win is close to the top of the tree it's worth more.
-		if(evaluation.Win(p2_board, 2, f1, f2))
+		if(evaluation.Win(p2_board, AI.HUPlayerNumber, f1, f2))
 			return ~(100 * (depth + 1)) + 1;
 		if(depth == 0)
-			return ~(evaluation.stateValue(p1_board, p2_board, f1, f2, 2)) + 1
+			return ~(evaluation.stateValue(p1_board, p2_board, f1, f2, AI.HUPlayerNumber)) + 1
 
 		//Get and loop through all the players pieces.
 		var allPieces = p1_board;
@@ -213,10 +216,10 @@ var AI = {
 
 	DeepPVSHU:function(alpha, beta, depth, p1_board, p2_board, f1, f2){
 		//Check for a win condition. If the win is close to the top of the tree it's worth more.
-		if(evaluation.Win(p1_board, 1, f1, f2))
+		if(evaluation.Win(p1_board, AI.AIPlayerNumber, f1, f2))
 			return ~(100 * (depth + 1)) + 1;
 		if(depth == 0)
-			return ~(evaluation.stateValue(p1_board, p2_board, f1, f2, 1)) + 1
+			return ~(evaluation.stateValue(p1_board, p2_board, f1, f2, AI.AIPlayerNumber)) + 1
 
 		//Get and loop through all the players pieces.
 		var allPieces = p2_board;
@@ -258,7 +261,7 @@ var AI = {
 		// if(piece){
 		// 	b1 = p1_board^piece;
 		// 	f1 = (evaluation.isHomeQuadEmpty(b1, 1) ? false : true);
-		// 	alpha = -AI.DeepPVSHU(~beta+1, ~alpha+1, depth-1, b1, p2_board, f1, p2_flag);
+		// 	alpha = -AI.DeepPVSHU(~beta+1, ~alpha+1, depth-1, b1, p2_board, f1, HU_flag);
 		// 	AI.currentMoveOptions[0] = {start: piece&p1_board, end: ~p1_board&piece, value:alpha};
 		// 	allPieces = (~piece)&p1_board;
 		// }
@@ -271,9 +274,9 @@ var AI = {
 			for(nextMove = bitManip.getLSB(moves); moves != 0; nextMove = bitManip.getLSB(moves)){
 
 				b1 = p1_board^piece^nextMove;
-				f1 = p1_flag ? !evaluation.isHomeQuadEmpty(b1, 1) : p1_flag;
+				f1 = AI_flag ? !evaluation.isHomeQuadEmpty(b1, 1) : AI_flag;
 				
-				score = -AI.DeepPVSHU(~beta+1, ~alpha+1, depth-1, b1, p2_board, f1, p2_flag);
+				score = -AI.DeepPVSHU(~beta+1, ~alpha+1, depth-1, b1, p2_board, f1, HU_flag);
 
 				AI.currentMoveOptions[(AI.currentMoveOptions).length] = {start: piece, end: nextMove, value:score};
 				// if(score >= beta)
@@ -290,26 +293,26 @@ var AI = {
 	},
 }
 
-var updateBoardp2 = function(start, end){
+var updateHumanBoard = function(start, end){
 	//Make and save player twos move.
-	p2_Position ^= start^end;
+	HU_position ^= start^end;
 
 	//remove the flag if needed.
-	if(evaluation.isHomeQuadEmpty(p2_Position, 2))
-		p2_flag = false;
+	if(evaluation.isHomeQuadEmpty(HU_position, AI.HUPlayerNumber))
+		HU_flag = false;
 
 	//reset best first move options.
-	AI.bestMovePredicted = AI.nextMoveOption['x' + p2_Position + 'y' + p1_Position] || [];
+	AI.bestMovePredicted = AI.nextMoveOption['x' + HU_position + 'y' + AI_position] || [];
 	AI.nextMoveOption = [];
 }
 
-var updateBoardp1 = function(start, end){
+var updateAIBoard = function(start, end){
 	//Make and save player ones move.
-	p1_Position ^= start^end;
+	AI_position ^= start^end;
 
 	//remove the flag if needed.
-	if(evaluation.isHomeQuadEmpty(p1_Position, 1))
-		p1_flag = false;
+	if(evaluation.isHomeQuadEmpty(AI_position, AI.AIPlayerNumber))
+		AI_flag = false;
 
 	//reset current move options.
 	AI.currentMoveOptions = [];
@@ -318,12 +321,12 @@ var updateBoardp1 = function(start, end){
 var moves = 0;
 var totalTime = 0;
 var makeMoveAgainstAI = function(start, end, HumanMovesFirst){
-	updateBoardp2(start, end); // Human move
+	updateHumanBoard(start, end); // Human move
 	var t0 = Date.now();
 
-	if(!evaluation.Win(p2_Position, 2, p1_flag, p2_flag)){
+	if(!evaluation.Win(HU_position, AI.HUPlayerNumber, AI_flag, HU_flag)){
 		var t0 = Date.now();
-		AI.pvs(-1000, 1000, AI.maxDepth, p1_Position, p2_Position);
+		AI.pvs(-1000, 1000, AI.maxDepth, AI_position, HU_position);
 
 		moves++;
 		totalTime += (Date.now() -t0);
@@ -341,15 +344,15 @@ var makeMoveAgainstAI = function(start, end, HumanMovesFirst){
 
 		var s = convert.bitToInt(AI.currentMoveOptions[indexOfBestMove].start);
 		var e = convert.bitToInt(AI.currentMoveOptions[indexOfBestMove].end);
-		updateBoardp1(AI.currentMoveOptions[indexOfBestMove].start, AI.currentMoveOptions[indexOfBestMove].end);
-		var w = evaluation.Win(p1_Position, 1, p1_flag, p2_flag);
+		updateAIBoard(AI.currentMoveOptions[indexOfBestMove].start, AI.currentMoveOptions[indexOfBestMove].end);
+		var w = evaluation.Win(AI_position, AI.AIPlayerNumber, AI_flag, HU_flag);
 	}
 	return({'from': s, 'to': e, 'AiWin': w});
 }
 
 var makeAIMove = function(){
 	var t0 = Date.now();
-	AI.pvs(-1000, 1000, AI.maxDepth, p1_Position, p2_Position);
+	AI.pvs(-1000, 1000, AI.maxDepth, AI_position, HU_position);
 
 	moves++;
 	totalTime += (Date.now() -t0);
@@ -367,7 +370,7 @@ var makeAIMove = function(){
 
 	var s = convert.bitToInt(AI.currentMoveOptions[indexOfBestMove].start);
 	var e = convert.bitToInt(AI.currentMoveOptions[indexOfBestMove].end);
-	updateBoardp1(AI.currentMoveOptions[indexOfBestMove].start, AI.currentMoveOptions[indexOfBestMove].end);
+	updateAIBoard(AI.currentMoveOptions[indexOfBestMove].start, AI.currentMoveOptions[indexOfBestMove].end);
 	return({'from': s, 'to': e});
 }
 
@@ -375,14 +378,20 @@ onmessage = function(e) {
 	if(e.data.restart === true){
 		console.log("Restarting AI Brain");
 		if(e.data.AiStartingPosition == "bottom"){
-			p1_Position = 0b00000111110000000000;
-			p2_Position = 0b00000000001111100000;
+			AI_position = 0b00000111110000000000;
+			HU_position = 0b00000000001111100000;
+			AI.startingPos = 'bottom';
+			AI.HUPlayerNumber = 1;
+			AI.AIPlayerNumber = 2;
 		} else {
-			p1_Position = 0b00000000001111100000;
-			p2_Position = 0b00000111110000000000; 
+			AI_position = 0b00000000001111100000;
+			HU_position = 0b00000111110000000000; 
+			AI.startingPos = 'top';
+			AI.AIPlayerNumber = 1;
+			AI.HUPlayerNumber = 2;
 		}
-		p1_flag = true;
-		p2_flag = true;
+		AI_flag = true;
+		HU_flag = true;
 		AI.currentMoveOptions = [];
 		AI.nextMoveOption = [];
 		AI.bestMovePredicted = [];
