@@ -124,7 +124,10 @@ var gameCore = {
                 
 				{x: 0, y: 415},		{x: 285, y: 415},	//
          				{x: 140, y: 560},				// Quad C
-				{x: 0, y: 700},		{x: 285, y: 700}],	//
+				{x: 0, y: 700},		{x: 285, y: 700},   //
+						
+						{x: 333, y: 333},			//
+				{x: 233, y: 433},{x: 433, y: 433}],	//WIN ANIMATION POSITIONS
         boardSVG: null,
         d3force: null,
         activeNodes: null,
