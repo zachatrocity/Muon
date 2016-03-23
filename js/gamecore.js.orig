@@ -329,8 +329,8 @@ var gameCore = {
 		    gameCore.board.d3force.start()
 		},
 		createBoard: function(){
-			gameCore.board.boardSVG = d3.select(".gamepeices").append("svg")
-				.attr("class", "d3gamepeices")
+			gameCore.board.boardSVG = d3.select(".gamepieces").append("svg")
+				.attr("class", "d3gamepieces")
 			    .attr("width", gameCore.board.width)
 			    .attr("height", gameCore.board.height)
 			    .on("mousedown", gameCore.board.mousedown);
@@ -392,7 +392,7 @@ var gameCore = {
 		clearBoard: function(){
 			if(gameCore.board.d3force != null){
 				gameCore.board.d3force.stop();
-				d3.select(".d3gamepeices").remove();
+				d3.select(".d3gamepieces").remove();
 			}
 			gameCore.board.ready = false;
 			gameCore.board.nodes = [];
@@ -631,12 +631,12 @@ var gameCore = {
 
 	 	if(isNetworkGame){
 	 		if(gameCore.network.role == 'host'){
-	 			//then i'm the bottom right peices
+	 			//then i'm the bottom right pieces
 	 			gameCore.network.localPos = gameCore.network.localStartPos = 0b00000111110000000000;
 	 			//my opponent is up top
 	 			gameCore.network.opponentPos = gameCore.network.opponentStartPos = 0b00000000001111100000;
 	 		} else if(gameCore.network.role =='client'){
-	 			//then i'm the top peices
+	 			//then i'm the top pieces
 	 			gameCore.network.localPos = gameCore.network.localStartPos = 0b00000000001111100000;
 	 			//my opponent is below
 	 			gameCore.network.opponentPos = gameCore.network.opponentStartPos = 0b00000111110000000000;

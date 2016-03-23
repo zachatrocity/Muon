@@ -41,7 +41,7 @@ muonApp.controller('BoardCtrl', function ($scope, $stateParams, $state) {
 			if(gameCore.ProposeDrawToAI()){
 				gameCore.EndGame();
 			} else {
-				console.log('cannot draw at this time');
+				console.log('Proposal was denied');
 			}
 		}
 	}

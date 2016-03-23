@@ -51,10 +51,10 @@ var boardAspect = {
 	},
 
 	//availabeMoves()
-		//peice is a bit representation of any peice on the board.
-	availabeMoves:function(peice,openPositions){
-		var quad = convert.bitToQuad(peice)
-		var node = convert.bitToNode(peice)
+		//piece is a bit representation of any piece on the board.
+	availabeMoves:function(piece,openPositions){
+		var quad = convert.bitToQuad(piece)
+		var node = convert.bitToNode(piece)
 		return openPositions&evaluation.nodeConnections[quad][node];
 	},
 }
@@ -292,11 +292,11 @@ var evaluation = {
 
 	stolenRealEstate:function(bitBoard, bitBoard2){
 		var stolenSpace = 0
-		for(var peice = bitManip.getLSB(bitBoard); bitBoard!=0; peice = bitManip.getLSB(bitBoard)){
-			var connections = this.nodeConnections[convert.bitToQuad(peice)][convert.bitToNode(peice)];
-			var adjacentOpponentPeices = connections&bitBoard2;
-			stolenSpace += bitManip.BitCount(adjacentOpponentPeices);
-			bitBoard ^= peice;
+		for(var piece = bitManip.getLSB(bitBoard); bitBoard!=0; piece = bitManip.getLSB(bitBoard)){
+			var connections = this.nodeConnections[convert.bitToQuad(piece)][convert.bitToNode(piece)];
+			var adjacentOpponentpieces = connections&bitBoard2;
+			stolenSpace += bitManip.BitCount(adjacentOpponentpieces);
+			bitBoard ^= piece;
 		}
 		return stolenSpace;
 	},

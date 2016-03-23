@@ -323,9 +323,11 @@ h1.view-heading{
 	top: 50%;
 	left: 30%;
 	transform: translate(-50%, -50%);
+	transition: opacity 1s ease-in-out;
 }
 
 .gameboard img {
+	transition: opacity 1s ease-in-out;
 	z-index: 0;
 	width: 700px;
 	height: 700px;
@@ -340,9 +342,9 @@ h1.view-heading{
 
 .fade-out {
 	opacity: 0;
-}n
+}
 
-.gamepeices {
+.gamepieces {
 	position: absolute;
 	top: 50%;
 	left: 30%;
