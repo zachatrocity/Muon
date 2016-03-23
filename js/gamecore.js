@@ -127,8 +127,8 @@ var gameCore = {
          				{x: 140, y: 560},				// Quad C
 				{x: 0, y: 700},		{x: 285, y: 700},   //
 						
-						{x: 333, y: 333},			//
-				{x: 233, y: 433},{x: 433, y: 433}],	//WIN ANIMATION POSITIONS
+						{x: 350, y: 240},			//
+				{x: 223, y: 460},{x: 477, y: 460}],	//WIN ANIMATION POSITIONS
         boardSVG: null,
         d3force: null,
         activeNodes: null,
@@ -303,7 +303,7 @@ var gameCore = {
 
 		    gameCore.board.activeLinks = gameCore.board.activeLinks.data(gameCore.board.links);
 		    gameCore.board.activeLinks.enter().insert("line", ".node")
-		      .attr("class", "link");
+		      .attr("class", function(d) { return "linkid" + d.linkid + " link" });
 
 		    gameCore.board.activeNodes = gameCore.board.activeNodes.data(gameCore.board.nodes);
 		    gameCore.board.activeNodes.enter().append("circle")
@@ -417,10 +417,10 @@ var gameCore = {
 
 		    gameCore.board.nodes.push({id: i, x:0, y:0, foci: f, antimuon: anti, selected: false, angle: (Math.PI / 2)});
 		    gameCore.board.nodes.push({id: i + 1, x:0, y:0, foci: f, antimuon: anti, selected: false, angle: ((7 * Math.PI) / 6)});
-		    gameCore.board.links.push({source: i, target: i + 1});
+		    gameCore.board.links.push({source: i, target: i + 1, linkid: i});
 		    gameCore.board.nodes.push({id: i + 2, x:0, y:0, foci: f, antimuon: anti, selected: false, angle: ((11 * Math.PI) / 6)});
-		    gameCore.board.links.push({source: i + 2, target: i + 1});
-		    gameCore.board.links.push({source: i, target: i + 2});
+		    gameCore.board.links.push({source: i + 2, target: i + 1, linkid: i});
+		    gameCore.board.links.push({source: i, target: i + 2, linkid: i});
 
 		    gameCore.board.refresh();
 		},
@@ -451,7 +451,27 @@ var gameCore = {
 			Audio.playRandomMove();
 
 			gameCore.board.refresh();
-		}        
+		},
+		moveMuonsToWinFoci: function(f1,f2,f3){
+			//f1,f2,f3 are the foci to move from
+
+			//fade out board
+			var gameboards = _.filter(d3.selectAll('.gameboard')[0], function(d){ return !d.classList.contains('gamepieces')})
+			_.each(gameboards, function(g){g.classList.add('fade-out')})
+
+			//move f1,f2,f3 and fade out other mouns
+			gameCore.board.nodes.forEach(function(o, i) {
+				if (o.foci == f1) {o.foci = 20; return;}
+				if (o.foci == f2) {o.foci = 21; return;}
+				if (o.foci == f3) {o.foci = 22; return;}
+
+				//fade out all the other muons
+				d3.selectAll('.linkid' + o.id).transition().style('opacity', '0');
+				d3.select('.id' + o.id).transition().style('opacity', '0');
+			});
+
+			gameCore.board.refresh();
+		}            
 	},
 	// Called when the player proposes a draw (ONLY TO THE AI)
 	// Draws between networked players are determined if the other accepts

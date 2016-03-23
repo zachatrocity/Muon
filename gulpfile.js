@@ -19,7 +19,7 @@ gulp.task('package', function () {
             "./controllers/*"
         ], // use the glob format
         platforms: ['win','osx'],
-        version: '0.12.3',
+        version: '0.13.0',
         winIco: "./images/muonIcon.ico"
     });
 
