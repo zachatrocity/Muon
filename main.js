@@ -86,10 +86,10 @@ var muonApp = angular.module('muonApp', ["ui.router", "ngAnimate"])
             controller: "HowToCtrl"
         })
 
-        .state('help2', {
-            url: "/help2",
-            templateUrl: "views/help2.html",
-            controller: "HowTo2Ctrl"
+        .state('helpBoardAndUI', {
+            url: "/helpBoardAndUI",
+            templateUrl: "views/helpBoardAndUI.html",
+            controller: "helpBoardAndUICtrl"
         })
 
         .state('help3', {
@@ -102,6 +102,12 @@ var muonApp = angular.module('muonApp', ["ui.router", "ngAnimate"])
             url: "/help4",
             templateUrl: "views/help4.html",
             controller: "HowTo4Ctrl"
+        })
+
+        .state('help5', {
+            url: "/help5",
+            templateUrl: "views/help5.html",
+            controller: "HowTo5Ctrl"
         })
 
         .state('options', {

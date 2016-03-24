@@ -62,6 +62,8 @@ muonApp.controller('BoardCtrl', function ($scope, $stateParams, $state) {
 	$scope.quitToMenu = function(){
 		$state.go('menu', {});
 		console.log('leaving room');
+		$stateParams.roomid = '';
+		gameCore.network.roomid = null;
 		if (Network.isConnected){
 			cloak.message('leaveRoom'); 
 		}
@@ -109,7 +111,7 @@ muonApp.controller('BoardCtrl', function ($scope, $stateParams, $state) {
 			} else {
 				console.log("attempting to join room");
 				cloak.message('joinRoom', $stateParams.roomid);
-				BoardGUI.appendSystemMessage("Their turn");
+				BoardGUI.setBoardHeader("Theirs");
 				gameCore.network.role = 'client';
 				gameCore.RestartGame(true);
 				//client is here

@@ -449,6 +449,13 @@ var gameCore = {
 			});
 
 			Audio.playRandomMove();
+			
+			if(gameCore.network.roomid == null){
+				if(!gameCore.AITurn)
+					BoardGUI.setBoardHeader("Yours");
+				else 
+					BoardGUI.setBoardHeader("Theirs");
+			}
 
 			gameCore.board.refresh();
 		},
@@ -684,6 +691,12 @@ var gameCore = {
 	 		}
 	 	} else {
 	 		gameCore.AITurn = gameCore.AIGoesFirst;
+
+	 		if(gameCore.AITurn){
+	 			BoardGUI.setBoardHeader("Theirs");
+	 		} else {
+	 			BoardGUI.setBoardHeader("Yours");
+	 		}
 
 	 		if(gameCore.humanteam == 'muon'){
 				gameCore.AIPos = 0b00000000001111100000; //top left pieces AI

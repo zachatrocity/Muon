@@ -78,11 +78,11 @@ var Network = {
 
           if (members.length > 1) {
             if(gameCore.network.turn == gameCore.network.team){
-              BoardGUI.appendSystemMessage("Your Turn");
+              BoardGUI.setBoardHeader("Yours");
               BoardGUI.hideWaitingModal(); 
               BoardGUI.timer.reset(); 
             } else {
-              BoardGUI.appendSystemMessage("Their Turn");
+              BoardGUI.setBoardHeader("Theirs");
             }
           }
         },

@@ -112,11 +112,15 @@
 			<h3 id="timerHeader">Time</h3>
 			<h1 id="timer">0</h1>
 		</div>
+
+		<div class="move-count-container">
+			<h3 id="moveCountHeader">Turn</h3>
+			<h1 id="moveIndicatorHeader">Yours</h1>
+		</div>
 	</div>
 
 
     <div class="game-sidebar">
-    
 		<div class="game-menu-container">
 			<a ng-click="showQuitModal = true"><span data-balloon-length="medium" data-balloon-pos="left" data-balloon="Forfeit game and exit to the Main Menu">Main Menu</span></a>
 			<a ng-click="proposeDraw()"><span data-balloon-length="medium" data-balloon-pos="left" data-balloon="Propose a draw">Draw</span></a>
@@ -124,9 +128,6 @@
 			<a ng-click="showHelpModal = true"><span data-balloon-length="medium" data-balloon-pos="left" data-balloon="Summary of how to play">Help</span></a>
 			<a ng-click="showQuitMuonModal = true"><span data-balloon-length="medium" data-balloon-pos="left" data-balloon="Quit game and close">Quit</span></a>
 		</div>
-
-		
-
 	</div>
 
 	<div id="chat" ng-model="chat">
