@@ -48,7 +48,7 @@ muonApp.controller('helpBoardAndUICtrl', function ($scope, $stateParams, $state)
       } else if(index == 4){
         playerFive.stop()
         playerFour.play();
-        document.getElementById("stats_slide").classList.remove('fade-out');
+        document.getElementById("stats_slide").classList.add('fade-out');
       } else {
         $state.go('howto', {});
       }

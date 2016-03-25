@@ -22,6 +22,10 @@
 	transition: opacity 1s ease-in-out;
 }
 
+#stats_slide{
+	transition: opacity 1s ease-in-out;
+}
+
 .glow {
 	-webkit-animation: item-glow 1.5s ease-in-out infinite alternate;
 	-webkit-transition: all 0.5s;
