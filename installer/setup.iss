@@ -1,6 +1,6 @@
 ; Installer Variables
 #define AppName "Muon"
-#define AppVersion "Beta 0.0.0.4"
+#define AppVersion "Beta 0.0.0.5"
 #define AppPublisher "Colossity"
 #define AppURL "https://github.com/zachatrocity/Muon"
 #define AppExeName "Muon.exe"
@@ -25,7 +25,7 @@ WindowResizable=no
 
 ; Don't ask for a install folder (it goes into \Users\Username\AppData\Roaming\Muon\, which doesn't require admin privileges)
 UsePreviousAppDir=no
-DefaultDirName={userappdata}\Muon
+DefaultDirName={code:GetDefaultDirName}
 DisableDirPage=yes
 
 
@@ -41,7 +41,7 @@ DisableWelcomePage=no
 ; No UAC crap
 PrivilegesRequired=none
 ; Put the uninstaller in the same folder, or else it'll go into Program Files, which requires Admin Privileges
-UninstallFilesDir={pf}\Muon
+UninstallFilesDir={code:GetDefaultDirName}
 
 ; Use the same language as the user (or ask otherwise)
 ShowLanguageDialog=auto
@@ -88,45 +88,14 @@ Filename: "{app}\Muon.exe"; Description: "{cm:LaunchProgram,{#StringChange(AppNa
 
 [Code]
 
-var
-  OptionPage: TInputOptionWizardPage;
-
-procedure InitializeWizard();
+function GetDefaultDirName(Param: string): string;
 begin
-  OptionPage :=
-    CreateInputOptionPage(
-      wpWelcome,
-      'Choose installation options', 'Who should this application be installed for?',
-      'Please select whether you wish to make this software available for all users or just yourself.',
-      True, False);
-
-  OptionPage.Add('&Anyone who uses this computer');
-  OptionPage.Add('&Only for me');
-
   if IsAdminLoggedOn then
   begin
-    OptionPage.Values[0] := True;
+    Result := ExpandConstant('{pf}\Muon');
   end
     else
   begin
-    OptionPage.Values[1] := True;
-    OptionPage.CheckListBox.ItemEnabled[0] := False;
+    Result := ExpandConstant('{userappdata}\Muon');
   end;
-end;
-
-function NextButtonClick(CurPageID: Integer): Boolean;
-begin
-  if CurPageID = OptionPage.ID then
-  begin
-    if OptionPage.Values[1] then
-    begin
-      // override the default installation to program files ({pf})
-      WizardForm.DirEdit.Text := ExpandConstant('{userappdata}\Muon')
-    end
-      else
-    begin
-      WizardForm.DirEdit.Text := ExpandConstant('{pf}\Muon');
-    end;
-  end;
-  Result := True;
 end;

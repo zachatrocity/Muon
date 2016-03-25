@@ -1,0 +1,70 @@
+<!-- views/help2.html -->
+<div class="row help-container" >
+	<div class="col-xs-7">
+		<div id="board-componant" class="gameboard">
+		    <img src="./images/boardElec.gif" sb-load="gameboardLoaded($event)">
+		</div>
+		<div id="flagG" class="gameboard flag">
+		    <img src="./images/flagG.svg">
+		</div>
+		<div id="flagB" class="gameboard flag">
+		    <img src="./images/flagB.svg">
+		</div>
+		<div class="gameboard">
+		    <img src="./images/boardPlaces.svg">
+		</div>
+		<div class="gamepieces gameboard">
+		  
+		</div>
+	</div>
+	<div class="col-xs-5">
+		<div id="stepContainer" class="text-container" style="
+			margin-top: 60%;
+			padding-right: 10%;
+		">
+			<div id="stepOne"></div>
+		</div>
+
+		<div id="stats_slide" class="game-stats fade-out" style="color: black;">
+			<div class="move-count-container">
+				<h3 id="moveCountHeader">Moves</h3>
+				<h1 id="moveCount">0</h1>
+			</div>
+
+			<div class="timer-container">
+				<h3 id="timerHeader">Time</h3>
+				<h1 id="timer">0</h1>
+			</div>
+
+			<div class="move-count-container">
+				<h3 id="moveCountHeader">Turn</h3>
+				<h1 id="moveIndicatorHeader">Yours</h1>
+			</div>
+		</div>
+
+		<div id="menu_slide" class="game-sidebar fade-out">
+			<div class="game-menu-container">
+				<a ng-click="showQuitModal = true"><span data-balloon-length="medium" data-balloon-pos="left" data-balloon="Forfeit game and exit to the Main Menu">Main Menu</span></a>
+				<a ng-click="proposeDraw()"><span data-balloon-length="medium" data-balloon-pos="left" data-balloon="Propose a draw">Draw</span></a>
+				<a ng-click="showNewGameModal = true" ng-show="!isNetworkGame"><span data-balloon-length="medium" data-balloon-pos="left" data-balloon="Forfeit and start a new game">New Game</span></a>
+				<a ng-click="showHelpModal = true"><span data-balloon-length="medium" data-balloon-pos="left" data-balloon="Summary of how to play">Help</span></a>
+				<a ng-click="showQuitMuonModal = true"><span data-balloon-length="medium" data-balloon-pos="left" data-balloon="Quit game and close">Quit</span></a>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="help-back">
+	<a class="button" ng-click="prev_slide()">
+		<span class='batch' data-icon='&#xf14a'></span> Back
+	</a>
+</div>
+<div class="menu">
+	<a class="button" ui-sref="menu">
+		Menu <span class='batch' data-icon='&#xF0A9'></span>
+	</a>
+</div>
+<div class="next">
+	<a class="button" ng-click="next_slide()">
+		Next <span class='batch' data-icon='&#xf14b'></span>
+	</a>
+</div>

@@ -14,6 +14,14 @@
 	font-size: 1.35em;
 }
 
+#stepOne{
+	transition: opacity 1s ease-in-out;
+}
+
+#menu_slide{
+	transition: opacity 1s ease-in-out;
+}
+
 .glow {
 	-webkit-animation: item-glow 1.5s ease-in-out infinite alternate;
 	-webkit-transition: all 0.5s;

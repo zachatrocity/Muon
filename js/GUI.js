@@ -152,6 +152,11 @@ var BoardGUI = {
   clearChatMessages: function(){
     document.getElementById("messages").innerHTML = '';
   },
+  setBoardHeader: function(str){
+    var header = document.getElementById("moveIndicatorHeader")
+    if(header != undefined)
+      header.innerHTML = str;
+  },
   hideAllModals: function(){
     BoardGUI.hideWaitingModal();
     BoardGUI.hideWinModal();

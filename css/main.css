@@ -144,6 +144,8 @@ img {
   }
 }
 
+
+
 .move-count-container{
 	background-color: #4183D7;
 	border-radius: 3px;
@@ -178,10 +180,16 @@ img {
 	margin-top: -15px;
 }
 
+#moveIndicatorHeader{
+	text-align: right;
+	margin-right: 25px;
+	margin-top: -15px;
+}
+
 #chat{
 	font-size: 0.8em;
 	height : 30%;
-	width  : 400px;
+	width  : 425px;
 	float  : right;
 	position : absolute;
 	bottom: 50px;
@@ -270,8 +278,35 @@ a:hover{
 
 h1.view-heading{
 	cursor: default;
-	text-shadow: 1px 1px 1px #BDBDBD;
+	-webkit-transition: all 0.5s;
+	-moz-transition: all 0.5s;
+	transition: all 0.5s;
+	font-size: 2em;
+	cursor: default;
+	position: relative;
+	width: 30%; 
+	margin: 0 auto;
+	margin-top: 50px;
+	margin-bottom: 10px;
 }
+
+h1.view-heading:nth-child(odd){
+	-webkit-animation: heading-glow 0.9s ease-in infinite alternate;
+}
+
+h1.view-heading:nth-child(even){
+	-webkit-animation: heading-glow 1.3s ease-in infinite alternate;
+}
+
+@-webkit-keyframes heading-glow {
+  from {
+    text-shadow: 0 0 5px #47CFFF, 0 0 10px #47CFFF, 0 0 15px #47CFFF, 0 0 20px #47CFFF, 0 0 30px #47CFFF, 0 0 40px #47CFFF, 0 0 50px #47CFFF, 0 0 60px #47CFFF;
+  }
+  to {
+    text-shadow: 0 0 5px #47CFFF, 0 0 10px #47CFFF, 0 0 15px #47CFFF, 0 0 20px #47CFFF, 0 0 30px #47CFFF, 0 0 35px #47CFFF, 0 0 45px #47CFFF;
+  }
+}
+
 
 #particles-js{ 
 	position:absolute;
@@ -323,9 +358,11 @@ h1.view-heading{
 	top: 50%;
 	left: 30%;
 	transform: translate(-50%, -50%);
+	transition: opacity 1s ease-in-out;
 }
 
 .gameboard img {
+	transition: opacity 1s ease-in-out;
 	z-index: 0;
 	width: 700px;
 	height: 700px;
@@ -340,7 +377,7 @@ h1.view-heading{
 
 .fade-out {
 	opacity: 0;
-}n
+}
 
 .gamepieces {
 	position: absolute;
@@ -368,6 +405,7 @@ h1.view-heading{
 	right: 50px;
 	width: 200px;
 	text-align: center;
+	height: 250px;
 }
 
 .game-stats{
@@ -375,7 +413,13 @@ h1.view-heading{
 	top: 32px;
 	right: 275px;
 	width: 200px;
+	height: 250px;
 	text-align: center;
+}
+
+.game-stats div{
+	height: 65px;
+	margin-bottom: 27.5px;
 }
 
 .game-menu-container {
@@ -395,7 +439,6 @@ h1.view-heading{
 	margin: 10px;
 	padding: 10px;
 	display: block;
-	height: 20px;
 	background-color: #4183D7;
 	border-bottom: solid #404040 1px;
 	border-radius: 3px;

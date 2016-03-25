@@ -13,7 +13,7 @@
     "title": "Muon",
     "icon": "images/muonIcon.ico",
     "toolbar": false,
-    "fullscreen": true
+    "fullscreen": false
   },
   "options":{
     "music_enabled": true
