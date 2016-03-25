@@ -7,12 +7,12 @@ var BITMASK = 0xFFFFF;
 //For now this only stores losses
 var transposition = {
 	'table':[],
-	add:function(b1,b2,f1,f2,p,score){
-		var state = b1.toString(2) + b2.toString(2) + (f1?1:0) + (f2?1:0) + (p==1?0:1);
+	add:function(b1,b2,AI_tempFlag,HU_tempFlag,p,score){
+		var state = b1.toString(2) + b2.toString(2) + (AI_tempFlag?1:0) + (HU_tempFlag?1:0) + (p==1?0:1);
 		transposition.table[state] = score;
 	},
-	get:function(b1,b2,f1,f2,p){
-		var state = b1.toString(2) + b2.toString(2) + (f1 ? 1:0) + (f2 ? 1:0) + (p==1?0:1);
+	get:function(b1,b2,AI_tempFlag,HU_tempFlag,p){
+		var state = b1.toString(2) + b2.toString(2) + (AI_tempFlag ? 1:0) + (HU_tempFlag ? 1:0) + (p==1?0:1);
 		if(transposition.table.indexOf(state) == -1)
 			return false;
 		return transposition.table[state];
@@ -29,6 +29,7 @@ var boardAspect = {
 	availabeMoves:function(piece,openPositions){
 		var quad = convert.bitToQuad(piece)
 		var node = convert.bitToNode(piece)
+
 		return openPositions&evaluation.nodeConnections[quad][node];
 	},
 }
@@ -118,7 +119,7 @@ var evaluation = {
 		return false;
 	},
 
-	stateValue:function(bitBoard, bitBoard2, f1, f2, player){
+	stateValue:function(bitBoard, bitBoard2, AI_tempFlag, HU_tempFlag, player){
 		var total = 0;
 		var currentBitBoard = (player == 1 ? bitBoard : bitBoard2);
 		total += this.stolenRealEstate(bitBoard, bitBoard2);
@@ -138,11 +139,13 @@ var evaluation = {
 		return stolenSpace;
 	},
 
-	Win:function(bitBoard, player, f1, f2){
-		var homeFlag = player == 1  ? f1 : f2;
+	Win:function(bitBoard, player, AI_tempFlag, HU_tempFlag){
+		var homeFlag = player == 1  ? AI_tempFlag : HU_tempFlag;
 		var quad = boardAspect.getQuadBits(bitBoard, 0);
-		if(!(quad == 14 || quad == 21) && bitManip.BitCount(quad) >= 3)
+		if(!(quad == 14 || quad == 21) && bitManip.BitCount(quad) >= 3){
+			debugger;
 			return true;
+		}
 		quad = boardAspect.getQuadBits(bitBoard, 1);
 		if(!(homeFlag && player == 1) && !(quad == 14 || quad == 21) && bitManip.BitCount(quad) >= 3)
 			return true;
@@ -166,40 +169,32 @@ var AI = {
 	'AIPlayerNumber': 0,
 	'HUPlayerNumber': 0,
 
-	DeepPVSAI:function(alpha, beta, depth, p1_board, p2_board, f1, f2){
+	DeepPVSAI:function(alpha, beta, depth, AI_position, HU_position, AI_tempFlag, HU_tempFlag){
 		//Check for a win condition. If the win is close to the top of the tree it's worth more.
-		if(evaluation.Win(p2_board, AI.HUPlayerNumber, f1, f2))
+		if(evaluation.Win(HU_position, AI.HUPlayerNumber, AI_tempFlag, HU_tempFlag))
 			return ~(100 * (depth + 1)) + 1;
 		if(depth == 0)
-			return ~(evaluation.stateValue(p1_board, p2_board, f1, f2, AI.HUPlayerNumber)) + 1
+			return ~(evaluation.stateValue(AI_position, HU_position, AI_tempFlag, HU_tempFlag, AI.HUPlayerNumber)) + 1
 
 		//Get and loop through all the players pieces.
-		var allPieces = p1_board;
+		var allPieces = AI_position;
 		var allSpaces, moves, b1, score, piece, nextMove;
 
 		for(piece = bitManip.getLSB(allPieces); allPieces != 0; piece = bitManip.getLSB(allPieces)){
-			allSpaces = p1_board^p2_board^BITMASK;
+			allSpaces = AI_position^HU_position^BITMASK;
 			moves = boardAspect.availabeMoves(piece, allSpaces);
 
 			//Get and loop through all the moves a piece can make.
 			for(nextMove = bitManip.getLSB(moves); moves != 0; nextMove = bitManip.getLSB(moves)){
-				b1 = p1_board^piece^nextMove;
-				f1 = f1 ? !evaluation.isHomeQuadEmpty(b1,1) : f1
+				b1 = AI_position^piece^nextMove;
+				AI_tempFlag = AI_tempFlag ? !evaluation.isHomeQuadEmpty(b1,1) : AI_tempFlag
 				if(AI.bSearchPv)
-					score = -AI.DeepPVSHU(~beta+1, ~alpha+1, depth-1, b1, p2_board, f1, f2);
+					score = -AI.DeepPVSHU(~beta+1, ~alpha+1, depth-1, b1, HU_position, AI_tempFlag, HU_tempFlag);
 				else{
-					score = -AI.DeepPVSHU(~alpha, ~alpha+1, depth-1, b1, p2_board, f1, f2);
+					score = -AI.DeepPVSHU(~alpha, ~alpha+1, depth-1, b1, HU_position, AI_tempFlag, HU_tempFlag);
 					if(score > alpha)
-						score = -AI.DeepPVSHU(~beta+1, ~alpha+1, depth-1, b1, p2_board, f1, f2);
+						score = -AI.DeepPVSHU(~beta+1, ~alpha+1, depth-1, b1, HU_position, AI_tempFlag, HU_tempFlag);
 				}
-
-				// if(depth == AI.maxDepth - 2){ // Setup bestfirst search move options.
-				// 	var state = 'x' + p2_board + 'y' + p1_board
-				// 	AI.nextMoveOption[state] = AI.nextMoveOption[state] || {'start':piece, 'end':nextMove, 'score':score};
-				// 	if(AI.nextMoveOption[state].score < score){
-				// 		AI.nextMoveOption[state] = {'start':piece, 'end':nextMove, 'score':score}
-				// 	}
-				// }
 
 				if(score >= beta)
 					return beta;
@@ -214,30 +209,30 @@ var AI = {
 		return alpha;
 	},
 
-	DeepPVSHU:function(alpha, beta, depth, p1_board, p2_board, f1, f2){
+	DeepPVSHU:function(alpha, beta, depth, AI_position, HU_position, AI_tempFlag, HU_tempFlag){
 		//Check for a win condition. If the win is close to the top of the tree it's worth more.
-		if(evaluation.Win(p1_board, AI.AIPlayerNumber, f1, f2))
+		if(evaluation.Win(AI_position, AI.AIPlayerNumber, AI_tempFlag, HU_tempFlag))
 			return ~(100 * (depth + 1)) + 1;
 		if(depth == 0)
-			return ~(evaluation.stateValue(p1_board, p2_board, f1, f2, AI.AIPlayerNumber)) + 1
+			return ~(evaluation.stateValue(AI_position, HU_position, AI_tempFlag, HU_tempFlag, AI.AIPlayerNumber)) + 1
 
 		//Get and loop through all the players pieces.
-		var allPieces = p2_board;
+		var allPieces = HU_position;
 		var piece, allSpaces, moves, nextMove, b2, score;
 		for(piece = bitManip.getLSB(allPieces); allPieces != 0; piece = bitManip.getLSB(allPieces)){
-			allSpaces = p1_board^p2_board^BITMASK;
+			allSpaces = AI_position^HU_position^BITMASK;
 			moves = boardAspect.availabeMoves(piece, allSpaces);
 
 			//Get and loop through all the moves the piece can make.
 			for(nextMove = bitManip.getLSB(moves); moves != 0; nextMove = bitManip.getLSB(moves)){
-				b2 = p2_board^piece^nextMove;
-				f2 = f2 ? !evaluation.isHomeQuadEmpty(b2, 2) : f2
+				b2 = HU_position^piece^nextMove;
+				HU_tempFlag = HU_tempFlag ? !evaluation.isHomeQuadEmpty(b2, 2) : HU_tempFlag
 				if(AI.bSearchPv)
-					score = -AI.DeepPVSAI(~beta+1, ~alpha+1, depth-1, p1_board, b2, f1, f2);
+					score = -AI.DeepPVSAI(~beta+1, ~alpha+1, depth-1, AI_position, b2, AI_tempFlag, HU_tempFlag);
 				else{
-					score = -AI.DeepPVSAI(~alpha, ~alpha+1, depth-1, p1_board, b2, f1, f2);
+					score = -AI.DeepPVSAI(~alpha, ~alpha+1, depth-1, AI_position, b2, AI_tempFlag, HU_tempFlag);
 					if(score > alpha)
-						score = -AI.DeepPVSAI(~beta+1, ~alpha+1, depth-1, p1_board, b2, f1, f2);
+						score = -AI.DeepPVSAI(~beta+1, ~alpha+1, depth-1, AI_position, b2, AI_tempFlag, HU_tempFlag);
 				}
 				if(score >= beta)
 					return beta;
@@ -253,38 +248,23 @@ var AI = {
 		return alpha;
 	},
 
-	pvs:function(alpha, beta, depth, p1_board, p2_board){
-		var allPieces = p1_board;
-		var piece, moves, nextMove, b1,f1,score;
-
-		//var piece = AI.bestMovePredicted.move || false;
-		// if(piece){
-		// 	b1 = p1_board^piece;
-		// 	f1 = (evaluation.isHomeQuadEmpty(b1, 1) ? false : true);
-		// 	alpha = -AI.DeepPVSHU(~beta+1, ~alpha+1, depth-1, b1, p2_board, f1, HU_flag);
-		// 	AI.currentMoveOptions[0] = {start: piece&p1_board, end: ~p1_board&piece, value:alpha};
-		// 	allPieces = (~piece)&p1_board;
-		// }
+	pvs:function(alpha, beta, depth, AI_position, HU_position){
+		var allPieces = AI_position;
+		var piece, moves, nextMove, b1,AI_tempFlag,score;
 
 		//loop through all the AIs pieces
 		for(piece = bitManip.getLSB(allPieces); allPieces != 0; piece = bitManip.getLSB(allPieces)){
-			moves = boardAspect.availabeMoves(piece, (p1_board^p2_board^BITMASK));
+			moves = boardAspect.availabeMoves(piece, (AI_position^HU_position^BITMASK));
 
 			//loop through all the moves that piece can make.
 			for(nextMove = bitManip.getLSB(moves); moves != 0; nextMove = bitManip.getLSB(moves)){
 
-				b1 = p1_board^piece^nextMove;
-				f1 = AI_flag ? !evaluation.isHomeQuadEmpty(b1, 1) : AI_flag;
+				b1 = AI_position^piece^nextMove;
+				AI_tempFlag = AI_flag ? !evaluation.isHomeQuadEmpty(b1, 1) : AI_flag;
 				
-				score = -AI.DeepPVSHU(~beta+1, ~alpha+1, depth-1, b1, p2_board, f1, HU_flag);
+				score = -AI.DeepPVSHU(~beta+1, ~alpha+1, depth-1, b1, HU_position, AI_tempFlag, HU_flag);
 
 				AI.currentMoveOptions[(AI.currentMoveOptions).length] = {start: piece, end: nextMove, value:score};
-				// if(score >= beta)
-				// 	return beta;
-				// if(score > alpha){
-				// 	alpha = score;
-				// 	AI.bSearchPv = false;
-				// }
 				moves ^= nextMove
 			}
 
@@ -375,6 +355,7 @@ var makeAIMove = function(){
 }
 
 onmessage = function(e) {
+	debugger;
 	if(e.data.restart === true){
 		console.log("Restarting AI Brain");
 		if(e.data.AiStartingPosition == "bottom"){
