@@ -125,6 +125,7 @@
 			<a ng-click="showQuitModal = true"><span data-balloon-length="medium" data-balloon-pos="left" data-balloon="Forfeit game and exit to the Main Menu">Main Menu</span></a>
 			<a ng-click="proposeDraw()"><span data-balloon-length="medium" data-balloon-pos="left" data-balloon="Propose a draw">Draw</span></a>
 			<a ng-click="showNewGameModal = true" ng-show="!isNetworkGame"><span data-balloon-length="medium" data-balloon-pos="left" data-balloon="Forfeit and start a new game">New Game</span></a>
+			<a ng-click="showOptionsModal = true"><span data-balloon-length="medium" data-balloon-pos="left" data-balloon="Change sound options">Options</span></a>
 			<a ng-click="showHelpModal = true"><span data-balloon-length="medium" data-balloon-pos="left" data-balloon="Summary of how to play">Help</span></a>
 			<a ng-click="showQuitMuonModal = true"><span data-balloon-length="medium" data-balloon-pos="left" data-balloon="Quit game and close">Quit</span></a>
 		</div>
@@ -141,7 +142,7 @@
 		</form>
 	</div>
 
-	
+	<!-- Main menu modal -->
     <div class="modal" ng-init="showQuitModal = false;"
 		ng-class="{'dim-lights': showQuitModal}">
 		<div class="modal-dialog" ng-init="showQuitModal = false;"
@@ -168,6 +169,7 @@
 		</div>
     </div>
 
+	<!-- New game modal -->
     <div class="modal" ng-init="showNewGameModal = false;"
 		ng-class="{'dim-lights': showNewGameModal}">
 		<div class="modal-dialog" ng-init="showNewGameModal = false;"
@@ -193,8 +195,33 @@
 			</div>
 		</div>
     </div>
+	
+	<!-- Options modal -->
+	<div class="modal options-modal" ng-init="showOptionsModal = false;"
+		ng-class="{'dim-lights': showOptionsModal}">
+		<div class="modal-dialog" ng-init="showOptionsModal = false;"
+			ng-class="{'show-modal options-modal': showOptionsModal}">
+			
+			<span class="modal-X batch" data-icon='&#xf14e' 
+				ng-click="showOptionsModal = false;" 
+				ng-class="{'show-modal-btn': showOptionsModal}"></span>
+			
+			<h3 class="modal-prompt">Options</h3>
+			
+			<div ng-controller="OptionsCtrl">
+				<a class="button modal-btn modal-options-btn" id="mute-musicbtn" ng-click="toggleMusic()">Mute Music
+					&nbsp<span class='batch' data-icon='&#xf03b'></span>
+				</a>
+			
+		
+				<a class="button modal-btn modal-options-btn" id="mute-soundbtn" ng-click="toggleSound()">Mute SoundFX
+					&nbsp<span class='batch' data-icon='&#xf03b'></span>
+				</a>
+			</div>
+		</div>
+    </div>
 
-
+	<!-- Help modal -->
     <div class="modal" ng-init="showHelpModal = false;"
 		ng-class="{'dim-lights': showHelpModal}">
 		<div class="modal-dialog help-modal" ng-init="showHelpModal = false;"
@@ -206,7 +233,7 @@
 			
 			<h3 class="modal-prompt">How To Play</h3>
 			<p class="help-modal-text"> 
-				Move your muons (or anti-muons) from your initial quadrant to form a triangle in any one of the other three pyramid quadrants. The first player to create a triangle of 3 muons inside one of the quadrants, wins the game. Once you have cleared all 5 of your muons out of your initial quadrant, you can win by forming a trangle in your home quadrant aswell.
+				Move your muons (or anti-muons) from your initial quadrant to form a triangle in any one of the other three pyramid quadrants. The first player to create a triangle of 3 muons inside one of the quadrants, wins the game. Once you have cleared all 5 of your muons out of your initial quadrant, you can win by forming a triangle in your home quadrant as well.
 			</p>
 			
 			<div class="row">
@@ -219,8 +246,7 @@
 		</div>
     </div>
 
-
-
+	<!-- Quit game modal -->
     <div class="modal" ng-init="showQuitMuonModal = false;"
 		ng-class="{'dim-lights': showQuitMuonModal}">
 		<div class="modal-dialog" ng-init="showQuitMuonModal = false;"
