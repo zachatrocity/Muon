@@ -386,6 +386,13 @@ h1.view-heading:nth-child(even){
 	transform: translate(-50%, -50%);
 }
 
+.winAnimation {
+	position: absolute;
+	top: 50%;
+	left: 30%;
+	transform: translate(-50%, -50%);
+}
+
 .node {
   stroke-width: 2px;
 }

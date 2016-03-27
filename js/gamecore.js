@@ -127,8 +127,8 @@ var gameCore = {
          				{x: 140, y: 560},				// Quad C
 				{x: 0, y: 700},		{x: 285, y: 700},   //
 						
-						{x: 350, y: 240},			//
-				{x: 223, y: 460},{x: 477, y: 460}],	//WIN ANIMATION POSITIONS
+						{x: 345, y: 225},			//
+				{x: 200, y: 480},{x: 500, y: 480}],	//WIN ANIMATION POSITIONS
         boardSVG: null,
         d3force: null,
         activeNodes: null,
@@ -459,8 +459,17 @@ var gameCore = {
 
 			gameCore.board.refresh();
 		},
-		moveMuonsToWinFoci: function(f1,f2,f3){
+		moveMuonsToWinFoci: function(f1,f2,f3, muon){
 			//f1,f2,f3 are the foci to move from
+			var player = document.getElementById("winAnim");
+			if (muon)
+			{
+				player.src = "./videos/muonWin.mp4";
+			}
+			else
+			{
+				player.src = "./videos/antiWin.mp4";
+			}
 
 			//fade out board
 			var gameboards = _.filter(d3.selectAll('.gameboard')[0], function(d){ return !d.classList.contains('gamepieces')})
@@ -476,6 +485,8 @@ var gameCore = {
 				d3.selectAll('.linkid' + o.id).transition().style('opacity', '0');
 				d3.select('.id' + o.id).transition().style('opacity', '0');
 			});
+
+			player.play()
 
 			gameCore.board.refresh();
 		}            
