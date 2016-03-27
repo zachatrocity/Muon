@@ -461,6 +461,11 @@ var gameCore = {
 		},
 		moveMuonsToWinFoci: function(f1,f2,f3, muon){
 			//f1,f2,f3 are the foci to move from
+			document.addEventListener("click", gameCore.endAnimation);
+
+			// Prevent user from clicking any menu buttons during animation
+			document.getElementById("menu-hide").style.zIndex = 2;
+
 			var player = document.getElementById("winAnim");
 			if (muon)
 			{
@@ -486,10 +491,10 @@ var gameCore = {
 				d3.select('.id' + o.id).transition().style('opacity', '0');
 			});
 
-			player.play()
+			player.play();
 
 			gameCore.board.refresh();
-		}            
+		}
 	},
 	// Called when the player proposes a draw (ONLY TO THE AI)
 	// Draws between networked players are determined if the other accepts
@@ -756,6 +761,10 @@ var gameCore = {
 		// history.pushState({foo: 'bar'}, 'Menu', 'menu.html');
 		// history.pushState({foo: 'bar'}, 'Play', 'newgame.html');
 	},
+	endAnimation: function(){
+		gameCore.EndGame();
+		document.removeEventListener("click", gameCore.endAnimation);
+	}
 };
 
 aiWorker.onmessage = function(e) {

@@ -415,8 +415,13 @@ h1.view-heading:nth-child(even){
 	height: 250px;
 }
 
+#menu-hide {
+	z-index: 0;
+}
+
 .game-stats{
 	position: absolute;
+	z-index: 1;
 	top: 32px;
 	right: 275px;
 	width: 200px;

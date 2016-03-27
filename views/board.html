@@ -1,7 +1,7 @@
 <!-- views/board.html -->
-
+	
 	<div class="winAnimation">
-		<video id="winAnim" src="./videos/MuonWin.mp4" type="video/mp4"></video>
+		<video id="winAnim" src="./videos/MuonWin.mp4" type="video/mp4" onended="gameCore.endAnimation()"></video>
 	</div>
 	<div class="gameboard">
 	    <img src="./images/boardElec.gif" sb-load="gameboardLoaded($event)">
@@ -16,7 +16,6 @@
 	    <img src="./images/boardPlaces.svg">
 	</div>
 	<div class="gamepieces gameboard">	
-	  
 	</div>
 
 	<div class="modal waiting" id="waiting_modal">
@@ -31,6 +30,7 @@
 		</div>
 	</div>
 
+	<!-- Draw proposal modal-->
 	<div class="modal waiting" id="network_draw_modal">
 		<div class="modal-dialog">
 			<h3 class="modal-prompt">Your opponent would like to draw. Do you accept?</h3>
@@ -46,6 +46,7 @@
 		</div>
 	</div>
 
+	<!-- Rematch proposal modal -->
 	<div class="modal waiting" id="network_rematch_modal">
 		<div class="modal-dialog">
 			<h3 class="modal-prompt">Your opponent would like to rematch. Do you accept?</h3>
@@ -61,6 +62,7 @@
 		</div>
 	</div>
 
+	<!-- Win modal -->
 	<div class="modal waiting" id="win-modal">
 		<div class="modal-dialog">
 			<h3 class="modal-prompt">You Won!</h3>
@@ -76,6 +78,7 @@
 		</div>
 	</div>
 
+	<!-- Lose modal -->
 	<div class="modal waiting" id="lose-modal">
 		<div class="modal-dialog">
 			<h3 class="modal-prompt">You Lost!</h3>
@@ -91,6 +94,7 @@
 		</div>
 	</div>
 
+	<!-- Draw modal -->
 	<div class="modal waiting" id="draw-modal">
 		<div class="modal-dialog">
 			<h3 class="modal-prompt">It's a Draw!</h3>
@@ -124,6 +128,7 @@
 	</div>
 
 
+	<div class="game-sidebar" id="menu-hide"></div>
     <div class="game-sidebar">
 		<div class="game-menu-container">
 			<a ng-click="showQuitModal = true"><span data-balloon-length="medium" data-balloon-pos="left" data-balloon="Forfeit game and exit to the Main Menu">Main Menu</span></a>
@@ -156,7 +161,7 @@
 				ng-click="showQuitModal = false;" 
 				ng-class="{'show-modal-btn': showQuitModal}"></span>
 			
-			<h3 class="modal-prompt">Are you sure you wish to return to the Main Menu?</h3>
+			<h3 class="modal-prompt">Are you sure you want to return to the Main Menu?</h3>
 			
 			<div class="row">
 				<div class="col-xs-4 col-xs-offset-2">
