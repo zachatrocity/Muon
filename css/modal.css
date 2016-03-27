@@ -45,6 +45,9 @@
 	min-height: 325px;
 }
 
+.options-modal {
+	min-height: 325px;
+}
 
 .dim-lights {
 	visibility: visible;
@@ -59,6 +62,10 @@
 .modal-btn:disabled {
 	background: #0569AD;
 	color: black;	
+}
+
+.modal-options-btn {
+	min-width: 250px;
 }
 
 .modal-X {
