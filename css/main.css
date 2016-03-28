@@ -276,25 +276,24 @@ a:hover{
 	/*text-shadow: 2px 2px 2px #000;*/
 }
 
-h1.view-heading{
+.view-heading{
 	cursor: default;
 	-webkit-transition: all 0.5s;
 	-moz-transition: all 0.5s;
 	transition: all 0.5s;
-	font-size: 2em;
 	cursor: default;
 	position: relative;
-	width: 30%; 
+	width: 50%; 
 	margin: 0 auto;
 	margin-top: 50px;
 	margin-bottom: 10px;
 }
 
-h1.view-heading:nth-child(odd){
+.view-heading:nth-child(odd){
 	-webkit-animation: heading-glow 0.9s ease-in infinite alternate;
 }
 
-h1.view-heading:nth-child(even){
+.view-heading:nth-child(even){
 	-webkit-animation: heading-glow 1.3s ease-in infinite alternate;
 }
 
@@ -386,6 +385,13 @@ h1.view-heading:nth-child(even){
 	transform: translate(-50%, -50%);
 }
 
+.winAnimation {
+	position: absolute;
+	top: 50%;
+	left: 30%;
+	transform: translate(-50%, -50%);
+}
+
 .node {
   stroke-width: 2px;
 }
@@ -408,8 +414,13 @@ h1.view-heading:nth-child(even){
 	height: 250px;
 }
 
+#menu-hide {
+	z-index: 0;
+}
+
 .game-stats{
 	position: absolute;
+	z-index: 1;
 	top: 32px;
 	right: 275px;
 	width: 200px;

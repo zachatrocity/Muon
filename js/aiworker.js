@@ -143,7 +143,6 @@ var evaluation = {
 		var homeFlag = player == 1  ? AI_tempFlag : HU_tempFlag;
 		var quad = boardAspect.getQuadBits(bitBoard, 0);
 		if(!(quad == 14 || quad == 21) && bitManip.BitCount(quad) >= 3){
-			debugger;
 			return true;
 		}
 		quad = boardAspect.getQuadBits(bitBoard, 1);
@@ -355,7 +354,6 @@ var makeAIMove = function(){
 }
 
 onmessage = function(e) {
-	debugger;
 	if(e.data.restart === true){
 		console.log("Restarting AI Brain");
 		if(e.data.AiStartingPosition == "bottom"){

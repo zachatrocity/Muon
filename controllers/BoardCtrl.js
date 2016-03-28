@@ -19,13 +19,29 @@ muonApp.controller('BoardCtrl', function ($scope, $stateParams, $state) {
 
 	$scope.startNewGame = function(){
 		BoardGUI.hideAllModals();
+		// Display the flags again
 		document.getElementById("flagB").classList.remove("fade-out");
 		document.getElementById("flagG").classList.remove("fade-out");
+
+		// Display the board again
+		var gameboards = _.filter(d3.selectAll('.gameboard')[0], function(d){ return !d.classList.contains('gamepieces')})
+			_.each(gameboards, function(g){g.classList.remove('fade-out')})
+
 		if($scope.isNetworkGame){
 			gameCore.RestartGame(true);
 		}
 		else
 			gameCore.RestartGame(false); 	
+
+		// Check to see if the win animation is still playing
+		var winAnimation = document.getElementById("winAnim");
+		if (!winAnimation.ended)
+		{
+			winAnimation.pause();
+		}
+
+		document.getElementById("menu-hide").style.zIndex = 0;
+
 	}	     
 
 	$scope.proposeRematch = function(){

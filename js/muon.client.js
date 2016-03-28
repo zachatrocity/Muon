@@ -169,6 +169,10 @@ var Network = {
           console.log('RESUMING!!');
         },
 
+        'error': function() {
+          console.log('timeout error');
+        },
+
         'lobbyMemberJoined': function(user) {
           console.log('lobby member joined', user);
           cloak.message('listUsers');
@@ -198,8 +202,9 @@ var Network = {
 
         'roomMemberLeft': function(user) {
           console.log('room member left', user);
-          cloak.message('leaveRoom');
-          console.log('Removing you from the room because the other player disconnected.');
+          //cloak.message('leaveRoom');
+          console.log('other player disconnected.');
+          BoardGUI.showDisconnectModal()
         },
 
         'begin': function() {

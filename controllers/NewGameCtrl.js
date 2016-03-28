@@ -13,4 +13,12 @@ muonApp.controller('NewGameCtrl', function ($scope, $stateParams) {
 	$scope.setTeam = function(team){
 		gameCore.humanteam = team;
 	}
+
+	$scope.setSinglePlayer = function(){
+		gameCore.pvp = false;
+	}
+
+	$scope.setPvp = function(){
+		gameCore.pvp = true;
+	}
 });

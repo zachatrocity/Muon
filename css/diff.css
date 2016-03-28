@@ -2,14 +2,34 @@
   margin: 100px;
 }
 
+#two-player, #one-player {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	width: 500px;
+	margin: 0;
+	transform: translateY(-50%);
+	margin-left: -250px;
+	display: none;
+}
+
 .diff-container {
-  height: 100%;
-  min-height: 100%;
-  margin: 0 auto;
+	margin: 0 auto;
+}
+
+.start-container {
+	position: absolute;
+	right: 0;
+	bottom: 0;
 }
 
 input[type="radio"]{
   margin: 2px;
+}
+
+.toggle-one:checked ~ #one-player,
+.toggle-two:checked ~ #two-player {
+	display: block;
 }
 
 .button-label {
@@ -49,6 +69,9 @@ input[type="radio"]{
     padding: 0em 1em 3px;
     margin: 0.25em;
   }
+}
+.playerbtn {
+	margin-top: 20px;
 }
 
 #easy-button:checked + .button-label {
@@ -96,6 +119,23 @@ input[type="radio"]{
   color: #e2e2e2;
 }
 
+#one-button:checked + .button-label {
+  background: #2ECC71;
+  color: #efefef;
+}
+#one-button:checked + .button-label:hover {
+  background: #29b765;
+  color: #e2e2e2;
+}
+
+#two-button:checked + .button-label {
+  background: #2ECC71;
+  color: #efefef;
+}
+#two-button:checked + .button-label:hover {
+  background: #29b765;
+  color: #e2e2e2;
+}
 
 #you-button:checked + .button-label {
   background: #2ECC71;
@@ -106,7 +146,6 @@ input[type="radio"]{
   color: #e2e2e2;
 }
 
-
 #ai-button:checked + .button-label {
   background: #2ECC71;
   color: #efefef;
@@ -116,7 +155,41 @@ input[type="radio"]{
   color: #e2e2e2;
 }
 
+#muon-button-2p:checked + .button-label {
+  background: #2ECC71;
+  color: #efefef;
+}
+#muon-button-2p:checked + .button-label:hover {
+  background: #29b765;
+  color: #e2e2e2;
+}
 
+#antimuon-button-2p:checked + .button-label {
+  background: #2ECC71;
+  color: #efefef;
+}
+#antimuon-button-2p:checked + .button-label:hover {
+  background: #29b765;
+  color: #e2e2e2;
+}
+
+#firstP-button:checked + .button-label {
+  background: #2ECC71;
+  color: #efefef;
+}
+#firstP-button:checked + .button-label:hover {
+  background: #29b765;
+  color: #e2e2e2;
+}
+
+#secondP-button:checked + .button-label {
+  background: #2ECC71;
+  color: #efefef;
+}
+#secondP-button:checked + .button-label:hover {
+  background: #29b765;
+  color: #e2e2e2;
+}
 
 .hidden {
   display: none;

@@ -22,6 +22,31 @@ muonApp.controller('OptionsCtrl', function ($scope, $stateParams) {
 		}
 	})
 
+	db.get('network_username').then(function(doc) {
+		if(document.getElementById("usernameInput") != null){
+			if(doc.title){
+				document.getElementById("usernameInput").value = doc.title;
+			} else {
+				document.getElementById("usernameInput").value = '';
+			}
+		}
+	})
+
+	$scope.saveUsername = function(username){
+		db.get('network_username').then(function(doc) {
+			return db.put({
+				_id: 'network_username',
+				_rev: doc._rev,
+				title: username
+			});
+		}).then(function(response) {
+		  // handle response
+		  console.log('username updated');
+		}).catch(function (err) {
+		  console.log(err);
+		});
+	}
+
 	$scope.toggleMusic = function() {
 		
 		var muteText = document.getElementById("mute-musicbtn").innerHTML;

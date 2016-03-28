@@ -38,17 +38,38 @@ muonApp.controller('MenuCtrl', function ($scope, $stateParams, $state) {
 		});
 	}
 	
-	$scope.goToNetworkingPage = function(username){
+	$scope.saveNetworkingUsername = function(username){
 		$scope.showNetworkingModal = false;
-		//register username
+		//save username
+		db.get('network_username').then(function(doc) {
+			return db.put({
+				_id: 'network_username',
+				_rev: doc._rev,
+				title: username
+			});
+		}).then(function(response) {
+		  // handle response
+		  console.log('username updated');
+		}).catch(function (err) {
+		  console.log(err);
+		});
+
+		//go to network
 		$state.go('network', {'username':username});
 	}
 
 	$scope.showNetworkModal = function(){
-		$scope.showNetworkingModal = true;
-		setTimeout(function(){
-			document.getElementById('usernameInput').focus();
-		},1000);
+
+		db.get('network_username').then(function(doc) {
+			if(doc.title && doc.title != ''){ //if there is a username then go to networking
+				$state.go('network', {'username':doc.title});
+			} else { //else create a new one
+				$scope.showNetworkingModal = true;
+				setTimeout(function(){
+					document.getElementById('usernameInput').focus();
+				},1000);		
+			}
+		})
 	}
 
 	$scope.mouse_over = function(id) {

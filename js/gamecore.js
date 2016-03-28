@@ -127,8 +127,8 @@ var gameCore = {
          				{x: 140, y: 560},				// Quad C
 				{x: 0, y: 700},		{x: 285, y: 700},   //
 						
-						{x: 350, y: 240},			//
-				{x: 223, y: 460},{x: 477, y: 460}],	//WIN ANIMATION POSITIONS
+						{x: 345, y: 225},			//
+				{x: 200, y: 480},{x: 500, y: 480}],	//WIN ANIMATION POSITIONS
         boardSVG: null,
         d3force: null,
         activeNodes: null,
@@ -157,8 +157,8 @@ var gameCore = {
 		    gameCore.board.activeLinks.exit().remove();
 
 		    gameCore.board.activeNodes
-		      .attr("cx", function(d) { return d.x; })
-		      .attr("cy", function(d) { return d.y; })
+		    	.attr("cx", function(d) { return d.x = Math.max(6, Math.min(gameCore.board.width - 6, d.x)); })
+        		.attr("cy", function(d) { return d.y = Math.max(6, Math.min(gameCore.board.height - 6, d.y)); });
 
 		    gameCore.board.activeLinks
 		      .attr("x1", function(d) { return d.source.x; })
@@ -459,8 +459,22 @@ var gameCore = {
 
 			gameCore.board.refresh();
 		},
-		moveMuonsToWinFoci: function(f1,f2,f3){
+		moveMuonsToWinFoci: function(f1,f2,f3, muon){
 			//f1,f2,f3 are the foci to move from
+			document.addEventListener("click", gameCore.endAnimation);
+
+			// Prevent user from clicking any menu buttons during animation
+			document.getElementById("menu-hide").style.zIndex = 2;
+
+			var player = document.getElementById("winAnim");
+			if (muon)
+			{
+				player.src = "./videos/muonWin.mp4";
+			}
+			else
+			{
+				player.src = "./videos/antiWin.mp4";
+			}
 
 			//fade out board
 			var gameboards = _.filter(d3.selectAll('.gameboard')[0], function(d){ return !d.classList.contains('gamepieces')})
@@ -477,8 +491,68 @@ var gameCore = {
 				d3.select('.id' + o.id).transition().style('opacity', '0');
 			});
 
+			setTimeout(function(){
+				gameCore.board.rotateMuonAtFoci(20);
+				gameCore.board.rotateMuonAtFoci(21);
+				gameCore.board.rotateMuonAtFoci(22);
+			},1750)
+
+			player.play();
+
 			gameCore.board.refresh();
-		}            
+		},
+		rotateMuonAtFoci: function(foci) {
+			var nodesAtFoci = gameCore.board.getMuonNodesAtFoci(foci);
+			var point = {
+							x: (nodesAtFoci[0].x + nodesAtFoci[1].x + nodesAtFoci[2].x) / 3,
+							y: (nodesAtFoci[0].y + nodesAtFoci[1].y + nodesAtFoci[2].y) / 3
+						};
+			var nodesOfMuon = d3.selectAll(".id" + nodesAtFoci[0].id + ",.id" + nodesAtFoci[1].id + ",.id" + nodesAtFoci[2].id);
+			d3.timer(function(){
+        		nodesOfMuon
+			    .attr("cx", function(d) {
+					if(d.angle>(2*Math.PI)){
+						d.angle=0;
+					} else if (d.angle < 0){
+						d.angle = (2*Math.PI)
+					}
+
+					d.x = point.x + gameCore.board.noderadius * Math.cos(d.angle)
+					return d.x;
+			    })
+			    .attr("cy", function(d) {
+					d.y = point.y + gameCore.board.noderadius * Math.sin(d.angle)
+					return d.y;
+			    });
+			    
+		    
+			    nodesOfMuon.each(function(d){
+			    	if(!d.antimuon)
+			    		d.angle+=0.05;
+			    	else 
+			    		d.angle -=0.05;
+			    })
+
+			    nodesOfMuon
+			      .attr("cx", function(d) { return d.x; })
+			      .attr("cy", function(d) { return d.y; })
+
+			    gameCore.board.activeLinks
+			      .attr("x1", function(d) { return d.source.x; })
+			      .attr("y1", function(d) { return d.source.y; })
+			      .attr("x2", function(d) { return d.target.x; })
+			      .attr("y2", function(d) { return d.target.y; })
+	    	});
+		},
+		getMuonNodesAtFoci: function(foci){
+			var result = [];
+			gameCore.board.nodes.forEach(function(target) {
+				if(target.foci == foci)
+					result.push(target);
+			});
+
+			return result;
+		}
 	},
 	// Called when the player proposes a draw (ONLY TO THE AI)
 	// Draws between networked players are determined if the other accepts
@@ -745,6 +819,10 @@ var gameCore = {
 		// history.pushState({foo: 'bar'}, 'Menu', 'menu.html');
 		// history.pushState({foo: 'bar'}, 'Play', 'newgame.html');
 	},
+	endAnimation: function(){
+		gameCore.EndGame();
+		document.removeEventListener("click", gameCore.endAnimation);
+	}
 };
 
 aiWorker.onmessage = function(e) {
