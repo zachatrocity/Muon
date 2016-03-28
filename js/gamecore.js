@@ -37,7 +37,7 @@ var gameCore = {
 		},
 		tutorialWin: function(){
 			var stepTwo = document.getElementById('stepTwo');
-			var playerTwo = Typer(stepTwo, ['Great job! You have finished the tutorial.']);
+			var playerTwo = Typer(stepTwo, ['Great job! However, when you play for real, the anti-muons will be fighting back!']);
 			playerTwo.play();
 		}
 	},
