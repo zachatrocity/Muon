@@ -169,6 +169,10 @@ var Network = {
           console.log('RESUMING!!');
         },
 
+        'error': function() {
+          console.log('timeout error');
+        },
+
         'lobbyMemberJoined': function(user) {
           console.log('lobby member joined', user);
           cloak.message('listUsers');
