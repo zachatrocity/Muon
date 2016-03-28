@@ -111,7 +111,7 @@ var gameCore = {
 		width: 700,
     	height: 700,
     	noderadius: 30,
-		foci: 	[{x: 0, y: 0},		{x: 285, y: 0},		//
+		foci: 	[{x: 0, y: 10},		{x: 285, y: 10},		//
         				{x: 140, y: 140},				// Quad A
 				{x: 0, y: 285},		{x: 285, y: 285},	//
 
@@ -119,7 +119,7 @@ var gameCore = {
         				{x: 560, y: 560},				// Quad D
 				{x: 415, y: 700},	{x: 700, y: 700},	//
                 
-				{x: 415, y: 0},		{x: 700, y: 0},		//
+				{x: 415, y: 10},		{x: 700, y: 10},		//
       					{x: 560, y: 140},				// Quad B
 				{x: 415, y: 285},	{x: 700, y: 285},	//
                 
@@ -221,7 +221,7 @@ var gameCore = {
 
 			var point = d3.mouse(this);
 			var maxdist = 30
-			var maxFociDist = 80;
+			var maxFociDist = 90;
 
 			if (gameCore.gameOver)
 				return

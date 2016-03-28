@@ -21,4 +21,15 @@ muonApp.controller('NewGameCtrl', function ($scope, $stateParams) {
 	$scope.setPvp = function(){
 		gameCore.pvp = true;
 	}
+
+	$scope.toggleswitch = function($event){
+		var indicator = document.getElementById('switch_selector');
+		
+		if($event.target.classList.contains('right')){
+			indicator.classList.add('right');
+		} else {
+			indicator.classList.remove('right');
+		}
+	}
+
 });

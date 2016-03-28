@@ -17,6 +17,16 @@ muonApp.controller('BoardCtrl', function ($scope, $stateParams, $state) {
 		document.getElementById("timer").textContent = (BoardGUI.timer.minutes > 0) ? BoardGUI.timer.minutes + ":" + BoardGUI.timer.seconds : BoardGUI.timer.seconds;
 	}, 1000);
 
+	$scope.mouse_over = function(id) {
+		if(Audio.togglesound)
+			Audio.menuOver.play();
+ 	}
+	
+	$scope.mouse_click = function() {
+		if(Audio.togglesound)
+			Audio.menuSelect.play();
+	}
+
 	$scope.startNewGame = function(){
 		BoardGUI.hideAllModals();
 		// Display the flags again
@@ -74,7 +84,11 @@ muonApp.controller('BoardCtrl', function ($scope, $stateParams, $state) {
 		cloak.message('respondToRematch',accept);
 		BoardGUI.hideAllModals();
 	}      
-	
+		
+	$scope.returnToLobby = function(){
+		$state.go('network', {'username':cloak.username});
+	}
+
 	$scope.quitToMenu = function(){
 		$state.go('menu', {});
 		console.log('leaving room');
@@ -88,7 +102,7 @@ muonApp.controller('BoardCtrl', function ($scope, $stateParams, $state) {
 	}
 	
 	$scope.sendChat = function(){
-		if($scope.chatText != ''){
+		if($scope.chatText != '' && $scope.chatText != undefined){
 			if($stateParams.roomid != ''){
 				if((new RegExp('<script>')).test($scope.chatText)){
 					if(HACKER_MODE_ENABLED){
@@ -103,11 +117,11 @@ muonApp.controller('BoardCtrl', function ($scope, $stateParams, $state) {
 			}
 			else {
 				//chat against the AI
-				BoardGUI.appendChatMessage($scope.chatText, true);
+				BoardGUI.appendAIChatMessage($scope.chatText, true);
 				$scope.chatText = '';
 				var category = aichat[_.shuffle(_.keys(aichat))[0]];
 				var randex = Math.floor(Math.random() * category.length) + 0;
-				BoardGUI.appendChatMessage(category[randex], false);
+				BoardGUI.appendAIChatMessage(category[randex], false);
 			}
 		}
 	}

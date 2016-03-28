@@ -14,6 +14,19 @@ class="hidden radio-label toggle-two"/>
 	<h1>Two Players</h1>
 </label>
 
+
+<div class="switch">
+  <input name="player-number" id="one-button" type="radio" id="optionone" checked="checked" 
+  class="hidden radio-label toggle-one">
+  <label for="one-button" ng-click="toggleswitch($event); setSinglePlayer();">1 Player</label>
+  
+  <input name="player-number" id="two-button" type="radio" id="optiontwo" 
+  class="hidden radio-label toggle-two">
+  <label for="two-button" class="right" ng-click="toggleswitch($event); setPvp();">2 Player</label>
+  
+  <span aria-hidden="true" id="switch_selector"></span>
+</div>
+
 <div id="one-player" class="gamesettings">
 	<h1 class="view-heading">Team</h1>
 	<div class="diff-container">
@@ -116,6 +129,6 @@ class="hidden radio-label toggle-two"/>
 
 <div class="back">
 	<a class="button" ui-sref="menu">
-		<span class='batch' data-icon='&#xf14a'></span> Back
+		<span class='batch' data-icon='&#xf14a'></span> Menu
 	</a>
 </div>

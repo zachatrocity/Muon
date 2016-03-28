@@ -5,3 +5,13 @@
 .button.optionsbtn {
 	top: 0px;
 }
+
+.options_container{
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.options_child{
+	
+}

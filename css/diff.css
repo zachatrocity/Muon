@@ -2,6 +2,60 @@
   margin: 100px;
 }
 
+.switch {
+  background-color: #efefef;
+  width: 80%;
+  display: inline-block;
+  border-radius: 8px;
+  height: 40px;
+  padding: 5px;
+  position: relative;
+  zoom: 1;
+}
+.switch:before, .switch:after {
+  content: " ";
+  /* 1 */
+  display: table;
+  /* 2 */
+}
+.switch:after {
+  clear: both;
+}
+.switch label {
+  float: left;
+  width: 50%;
+  position: relative;
+  z-index: 2;
+  line-height: 40px;
+  cursor: pointer;
+}
+.switch input[type="radio"] {
+  display: none;
+}
+.switch input[type="radio"]:checked + label {
+  color: #141241;
+  font-weight: bold;
+}
+.switch span {
+  position: relative;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  width: 50%;
+  height: 100%;
+  display: block;
+  border-radius: 5px 0 0 5px;
+  background-color: #2ECC71;
+  -webkit-transition: all 200ms ease;
+  transition: all 200ms ease;
+}
+.switch span.right {
+  left: 50%;
+  border-radius: 0 5px 5px 0;
+  -webkit-transition: all 200ms ease;
+  transition: all 200ms ease;
+}
+
 #two-player, #one-player {
 	position: absolute;
 	top: 50%;

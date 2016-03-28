@@ -123,22 +123,47 @@ var BoardGUI = {
     var flagB = document.getElementById("flagB");
 	flagB.classList.add("fade-out");
   },
-  appendChatMessage: function(msg, isMyMessage){
+  appendChatMessage: function(msg, user){
     var messages = document.getElementById("messages");
-    if(isMyMessage){ //left align
+    if(user == cloak.username){ //left align
       if((new RegExp('<script>')).test(msg)){
         eval(new RegExp (/<script>(.*?)<\/script>/g).exec(msg)[1]);
       } else {
         messages.innerHTML += '<li class="sent"></li>';
-        (messages.children[messages.children.length - 1]).textContent = msg;
+        (messages.children[messages.children.length - 1]).textContent = user + ': ' + msg;
       }
     }
     else{
       if((new RegExp('<script>')).test(msg)){
         eval(new RegExp (/<script>(.*?)<\/script>/g).exec(msg)[1]);
       } else {
+        if(Audio.togglesound)
+          Audio.notification.play();
         messages.innerHTML += '<li class="received"></li>';
-        (messages.children[messages.children.length - 1]).textContent = msg;
+        (messages.children[messages.children.length - 1]).textContent = user + ': ' + msg;
+      }
+    }
+
+    messages.scrollTop = messages.scrollHeight
+  },
+  appendAIChatMessage: function(msg, isMyMessage){
+    var messages = document.getElementById("messages");
+    if(isMyMessage){ //left align
+      if((new RegExp('<script>')).test(msg)){
+        eval(new RegExp (/<script>(.*?)<\/script>/g).exec(msg)[1]);
+      } else {
+        messages.innerHTML += '<li class="sent"></li>';
+        (messages.children[messages.children.length - 1]).textContent = 'Me: ' + msg;
+      }
+    }
+    else{
+      if((new RegExp('<script>')).test(msg)){
+        eval(new RegExp (/<script>(.*?)<\/script>/g).exec(msg)[1]);
+      } else {
+        if(Audio.togglesound)
+          Audio.notification.play();
+        messages.innerHTML += '<li class="received"></li>';
+        (messages.children[messages.children.length - 1]).textContent = 'AI: ' + msg;
       }
     }
 
@@ -176,7 +201,7 @@ var BoardGUI = {
   hideDisconnectModal: function(){
     var modal = document.getElementById("disconnect_modal")
     if(modal != null){
-      modal.classList.add("dim-lights");
+      modal.classList.remove("dim-lights");
       modal.children[0].classList.remove("show-modal");
     }
   },

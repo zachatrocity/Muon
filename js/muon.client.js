@@ -68,7 +68,7 @@ var Network = {
           //chat received
           //data[0] is the message and data[1] is the username that sent it
           console.log(data[0]);
-          BoardGUI.appendChatMessage(data[0], (data[1] == cloak.username));
+          BoardGUI.appendChatMessage(data[0], data[1]);
         },
 
         'refreshRoomResponse': function(members){

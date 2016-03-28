@@ -30,6 +30,10 @@ var _loser = new Howl({
   urls: ['audio/loser.wav']
 });
 
+var _notification = new Howl({
+  urls: ['audio/notification.ogg']
+});
+
 var _background = new Howl({
   urls: ['audio/hive.ogg'],
   loop: true,
@@ -44,6 +48,7 @@ var Audio = {
     winner: _winner,
     loser: _loser,
     background: _background,
+    notification: _notification,
     togglesound: true,
     playRandomMove: function(){
       if(Audio.togglesound)
