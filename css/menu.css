@@ -59,6 +59,11 @@ a:focus{
     text-shadow: 0 0 15px #47CFFF;
 }
 
+.username-tip{
+  font-size: 10px;
+  margin-top: -10px;
+}
+
 .item-pointer.left {
   position: relative;
   float: left;

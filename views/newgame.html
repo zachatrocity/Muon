@@ -1,13 +1,14 @@
 <!-- views/newgame.html -->
 
 
-<input type="radio" name="player-number" id="one-button" checked="checked" 
+<input type="radio" name="player-number" id="one-button" ng-click="setSinglePlayer()" checked="checked" 
 class="hidden radio-label toggle-one"/>
 <label for="one-button" class="button-label playerbtn">
 	<h1>One Player</h1>
 </label>
 
 <input type="radio" name="player-number" id="two-button" 
+ng-click="setPvp()"
 class="hidden radio-label toggle-two"/>
 <label for="two-button" class="button-label playerbtn">
 	<h1>Two Players</h1>
@@ -70,7 +71,7 @@ class="hidden radio-label toggle-two"/>
 </div>
 
 <div id="two-player" class="gamesettings two-player-content">
-	<h1 class="view-heading">First Player's Team</h1>
+	<h1 class="view-heading">Player One's Team</h1>
 	<div class="diff-container">
 		<div class="button-wrap">
 			<input type="radio" name="team-select-2p" id="muon-button-2p" checked="checked" 

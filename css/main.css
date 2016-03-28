@@ -276,12 +276,11 @@ a:hover{
 	/*text-shadow: 2px 2px 2px #000;*/
 }
 
-h1.view-heading{
+.view-heading{
 	cursor: default;
 	-webkit-transition: all 0.5s;
 	-moz-transition: all 0.5s;
 	transition: all 0.5s;
-	font-size: 2em;
 	cursor: default;
 	position: relative;
 	width: 50%; 
@@ -290,11 +289,11 @@ h1.view-heading{
 	margin-bottom: 10px;
 }
 
-h1.view-heading:nth-child(odd){
+.view-heading:nth-child(odd){
 	-webkit-animation: heading-glow 0.9s ease-in infinite alternate;
 }
 
-h1.view-heading:nth-child(even){
+.view-heading:nth-child(even){
 	-webkit-animation: heading-glow 1.3s ease-in infinite alternate;
 }
 

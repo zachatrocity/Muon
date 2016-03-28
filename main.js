@@ -284,6 +284,24 @@ var muonApp = angular.module('muonApp', ["ui.router", "ngAnimate"])
       Audio.togglesound = resp.title;
     }
   });
+
+  db.get('network_username', function(err, resp) {
+    if (err) {
+       //does not exists so create
+      db.put({
+        _id: 'network_username',
+        title: ''
+      }).then(function (response) {
+      // handle response
+        console.log(response);
+      }).catch(function (err) {
+        console.log(err);
+      });
+     } else {
+      console.log("network_username: " + resp.title);
+    }
+  });
+
 })
 
 muonApp.directive('ngEnter', function () {

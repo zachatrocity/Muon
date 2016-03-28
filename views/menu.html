@@ -103,21 +103,22 @@
 		ng-click="showNetworkingModal = false;" 
 		ng-class="{'show-modal-btn': showNetworkingModal}"></span>
 		
-		<h3 class="modal-prompt">Please enter a username:</h3>
+		<h3 class="modal-prompt">Please enter a username</h3>
+		<p class="username-tip">You can change it later from in the options.</p>
 
 		<form name="usernameForm">
 		<div class="row">
 			<div class="col-xs-12">
 			<input type="text" ng-model="username" 
-			id="usernameInput"
-			class="modal-txt-box" ng-enter="goToNetworkingPage(username)"
+			id="usernameInput" maxlength="13"
+			class="modal-txt-box" ng-enter="saveNetworkingUsername(username)"
 			ng-class="{'show-modal-txt-box': showNetworkingModal}" required/></div>
 		</div>
 		<div class="row">
 				<div class="col-xs-4 col-xs-offset-2">
 					<input type="button" class="modal-btn button" value="Connect" 
 					ng-class="{'show-modal-btn': showNetworkingModal}" 
-					ng-click="goToNetworkingPage(username)"
+					ng-click="saveNetworkingUsername(username)"
 					ng-disabled="usernameForm.$invalid"/>
 				</div>
 				<div class="col-xs-4">
