@@ -7,12 +7,12 @@ var BITMASK = 0xFFFFF;
 //For now this only stores losses
 var transposition = {
 	'table':[],
-	add:function(b1,b2,AI_tempFlag,HU_tempFlag,p,score){
-		var state = b1.toString(2) + b2.toString(2) + (AI_tempFlag?1:0) + (HU_tempFlag?1:0) + (p==1?0:1);
+	add:function(b1,b2,AI_tempFlag,HU_tempFlag,score){
+		var state = b1.toString(2) + b2.toString(2) + (AI_tempFlag?1:0) + (HU_tempFlag?1:0);
 		transposition.table[state] = score;
 	},
-	get:function(b1,b2,AI_tempFlag,HU_tempFlag,p){
-		var state = b1.toString(2) + b2.toString(2) + (AI_tempFlag ? 1:0) + (HU_tempFlag ? 1:0) + (p==1?0:1);
+	get:function(b1,b2,AI_tempFlag,HU_tempFlag){
+		var state = b1.toString(2) + b2.toString(2) + (AI_tempFlag ? 1:0) + (HU_tempFlag ? 1:0);
 		if(transposition.table.indexOf(state) == -1)
 			return false;
 		return transposition.table[state];
@@ -120,12 +120,12 @@ var evaluation = {
 	},
 
 	stateValue:function(bitBoard, bitBoard2, AI_tempFlag, HU_tempFlag, player){
-		var total = 0;
-		var currentBitBoard = (player == 1 ? bitBoard : bitBoard2);
-		total += this.stolenRealEstate(bitBoard, bitBoard2);
-		total += this.isHomeQuadEmpty(bitBoard, player) ? 5 : -1;
-		total += this.isHomeQuadEmpty(bitBoard2, player^3) ? -5 : 1;
-		return total;
+	var total = 0;
+	var currentBitBoard = (player == 1 ? bitBoard : bitBoard2);
+	total += this.stolenRealEstate(bitBoard, bitBoard2);
+	total += this.isHomeQuadEmpty(bitBoard, AI.AIPlayerNumber) ? 5 : -1;
+	total += this.isHomeQuadEmpty(bitBoard2, AI.HUPlayerNumber) ? -5 : 1;
+	return total;
 	},
 
 	stolenRealEstate:function(bitBoard, bitBoard2){
@@ -142,10 +142,8 @@ var evaluation = {
 	Win:function(bitBoard, player, AI_tempFlag, HU_tempFlag){
 		var homeFlag = player == 1  ? AI_tempFlag : HU_tempFlag;
 		var quad = boardAspect.getQuadBits(bitBoard, 0);
-		if(!(quad == 14 || quad == 21) && bitManip.BitCount(quad) >= 3){
-			debugger;
+		if(!(quad == 14 || quad == 21) && bitManip.BitCount(quad) >= 3)
 			return true;
-		}
 		quad = boardAspect.getQuadBits(bitBoard, 1);
 		if(!(homeFlag && player == 1) && !(quad == 14 || quad == 21) && bitManip.BitCount(quad) >= 3)
 			return true;
@@ -165,7 +163,6 @@ var AI = {
 	'bestMovePredicted':[],
 	'maxDepth':-1,
 	'bSearchPv':true,
-	'startingPos': '',
 	'AIPlayerNumber': 0,
 	'HUPlayerNumber': 0,
 
@@ -187,7 +184,8 @@ var AI = {
 			//Get and loop through all the moves a piece can make.
 			for(nextMove = bitManip.getLSB(moves); moves != 0; nextMove = bitManip.getLSB(moves)){
 				b1 = AI_position^piece^nextMove;
-				AI_tempFlag = AI_tempFlag ? !evaluation.isHomeQuadEmpty(b1,1) : AI_tempFlag
+				AI_tempFlag = AI_tempFlag ? !evaluation.isHomeQuadEmpty(b1,AI.AIPlayerNumber) : AI_tempFlag
+
 				if(AI.bSearchPv)
 					score = -AI.DeepPVSHU(~beta+1, ~alpha+1, depth-1, b1, HU_position, AI_tempFlag, HU_tempFlag);
 				else{
@@ -226,7 +224,7 @@ var AI = {
 			//Get and loop through all the moves the piece can make.
 			for(nextMove = bitManip.getLSB(moves); moves != 0; nextMove = bitManip.getLSB(moves)){
 				b2 = HU_position^piece^nextMove;
-				HU_tempFlag = HU_tempFlag ? !evaluation.isHomeQuadEmpty(b2, 2) : HU_tempFlag
+				HU_tempFlag = HU_tempFlag ? !evaluation.isHomeQuadEmpty(b2, AI.HUPlayerNumber) : HU_tempFlag
 				if(AI.bSearchPv)
 					score = -AI.DeepPVSAI(~beta+1, ~alpha+1, depth-1, AI_position, b2, AI_tempFlag, HU_tempFlag);
 				else{
@@ -260,14 +258,13 @@ var AI = {
 			for(nextMove = bitManip.getLSB(moves); moves != 0; nextMove = bitManip.getLSB(moves)){
 
 				b1 = AI_position^piece^nextMove;
-				AI_tempFlag = AI_flag ? !evaluation.isHomeQuadEmpty(b1, 1) : AI_flag;
+				AI_tempFlag = AI_flag ? !evaluation.isHomeQuadEmpty(b1, AI.AIPlayerNumber) : AI_flag;
 				
 				score = -AI.DeepPVSHU(~beta+1, ~alpha+1, depth-1, b1, HU_position, AI_tempFlag, HU_flag);
 
 				AI.currentMoveOptions[(AI.currentMoveOptions).length] = {start: piece, end: nextMove, value:score};
 				moves ^= nextMove
 			}
-
 			allPieces ^= piece
 		}
 	},
@@ -302,15 +299,9 @@ var moves = 0;
 var totalTime = 0;
 var makeMoveAgainstAI = function(start, end, HumanMovesFirst){
 	updateHumanBoard(start, end); // Human move
-	var t0 = Date.now();
-
 	if(!evaluation.Win(HU_position, AI.HUPlayerNumber, AI_flag, HU_flag)){
-		var t0 = Date.now();
 		AI.pvs(-1000, 1000, AI.maxDepth, AI_position, HU_position);
-
 		moves++;
-		totalTime += (Date.now() -t0);
-		console.log("moves: " + moves + " time: " + totalTime);
 
 		var indexOfBestMove;
 		var bestScore = -Infinity;
@@ -331,12 +322,8 @@ var makeMoveAgainstAI = function(start, end, HumanMovesFirst){
 }
 
 var makeAIMove = function(){
-	var t0 = Date.now();
 	AI.pvs(-1000, 1000, AI.maxDepth, AI_position, HU_position);
-
 	moves++;
-	totalTime += (Date.now() -t0);
-	console.log("moves: " + moves + " time: " + totalTime);
 
 	var indexOfBestMove;
 	var bestScore = -Infinity;
@@ -355,19 +342,16 @@ var makeAIMove = function(){
 }
 
 onmessage = function(e) {
-	debugger;
 	if(e.data.restart === true){
 		console.log("Restarting AI Brain");
 		if(e.data.AiStartingPosition == "bottom"){
 			AI_position = 0b00000111110000000000;
 			HU_position = 0b00000000001111100000;
-			AI.startingPos = 'bottom';
-			AI.HUPlayerNumber = 1;
 			AI.AIPlayerNumber = 2;
+			AI.HUPlayerNumber = 1;
 		} else {
 			AI_position = 0b00000000001111100000;
-			HU_position = 0b00000111110000000000; 
-			AI.startingPos = 'top';
+			HU_position = 0b00000111110000000000;
 			AI.AIPlayerNumber = 1;
 			AI.HUPlayerNumber = 2;
 		}
