@@ -159,11 +159,26 @@ var BoardGUI = {
   },
   hideAllModals: function(){
     BoardGUI.hideWaitingModal();
+    BoardGUI.hideDisconnectModal();
     BoardGUI.hideWinModal();
     BoardGUI.hideLoseModal();
     BoardGUI.hideDrawModal();
     BoardGUI.hideNetworkDrawModal();
     BoardGUI.hideNetworkRematchModal();
+  },
+  showDisconnectModal: function(){
+    var modal = document.getElementById("disconnect_modal")
+    if(modal != null){
+      modal.classList.add("dim-lights");
+      modal.children[0].classList.add("show-modal");
+    }
+  },
+  hideDisconnectModal: function(){
+    var modal = document.getElementById("disconnect_modal")
+    if(modal != null){
+      modal.classList.add("dim-lights");
+      modal.children[0].classList.remove("show-modal");
+    }
   },
   showWaitingModal: function(){
     var modal = document.getElementById("waiting_modal")
