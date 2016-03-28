@@ -1,60 +1,117 @@
 <!-- views/newgame.html -->
+
+
+<input type="radio" name="player-number" id="one-button" checked="checked" 
+class="hidden radio-label toggle-one"/>
+<label for="one-button" class="button-label playerbtn">
+	<h1>One Player</h1>
+</label>
+
+<input type="radio" name="player-number" id="two-button" 
+class="hidden radio-label toggle-two"/>
+<label for="two-button" class="button-label playerbtn">
+	<h1>Two Players</h1>
+</label>
+
+<div id="one-player" class="gamesettings">
+	<h1 class="view-heading">Team</h1>
+	<div class="diff-container">
+	  <div class="button-wrap">
+		<input type="radio" name="team-select" id="muon-button" checked="checked" 
+		ng-click="setTeam('muon')"
+		class="hidden radio-label"/>
+		<label for="muon-button" class="button-label">
+		  <h1>Muon</h1>
+		</label>
+		<input type="radio" name="team-select" id="antimuon-button" 
+		ng-click="setTeam('antimuon')"
+		class="hidden radio-label"/>
+		<label for="antimuon-button" class="button-label">
+		  <h1>Antimuon</h1>
+		</label>
+	  </div>
+	</div>
+
+	<h1 class="view-heading">Difficulty</h1>
+	<div class="diff-container">
+	  <div class="button-wrap">
+		<input type="radio" name="difficulty-select" id="easy-button" ng-click="setAILevel(5)" class="hidden radio-label"/>
+		<label for="easy-button" class="button-label">
+		  <h1>Easy</h1>
+		</label>
+		<input type="radio" name="difficulty-select" id="med-button" checked="checked" ng-click="setAILevel(7)" class="hidden radio-label"/>
+		<label for="med-button" class="button-label">
+		  <h1>Medium</h1>
+		</label>
+		<input type="radio" name="difficulty-select" id="hard-button" ng-click="setAILevel(9)" class="hidden radio-label"/>
+		<label for="hard-button" class="button-label">
+		  <h1>Hard</h1>
+		</label>
+	  </div>
+	</div>
+
+	<h1 class="view-heading">First Move</h1>
+	<div class="diff-container">
+	  <div class="button-wrap">
+		<input type="radio" name="move-select" id="you-button" checked="checked" 
+		ng-click="setAIGoesFirst(false)"
+		class="hidden radio-label"/>
+		<label for="you-button" class="button-label">
+		  <h1>You</h1>
+		</label>
+		<input type="radio" name="move-select" id="ai-button" 
+		ng-click="setAIGoesFirst(true)"
+		class="hidden radio-label"/>
+		<label for="ai-button" class="button-label">
+		  <h1>AI</h1>
+		</label>
+	  </div>
+	</div>
+</div>
+
+<div id="two-player" class="gamesettings two-player-content">
+	<h1 class="view-heading">First Player's Team</h1>
+	<div class="diff-container">
+		<div class="button-wrap">
+			<input type="radio" name="team-select-2p" id="muon-button-2p" checked="checked" 
+			ng-click="setTeam('muon')"
+			class="hidden radio-label"/>
+			<label for="muon-button-2p" class="button-label">
+				<h1>Muon</h1>
+			</label>
+			<input type="radio" name="team-select-2p" id="antimuon-button-2p" 
+			ng-click="setTeam('antimuon')"
+			class="hidden radio-label"/>
+			<label for="antimuon-button-2p" class="button-label">
+				<h1>Antimuon</h1>
+			</label>
+		</div>
+	</div>
+	
+	<h1 class="view-heading">First Move</h1>
+	<div class="diff-container">
+		<div class="button-wrap">
+			<input type="radio" name="move-select-2p" id="firstP-button" checked="checked" 
+			ng-click="setAIGoesFirst(false)"
+			class="hidden radio-label"/>
+			<label for="firstP-button" class="button-label">
+				<h1>Muon</h1>
+			</label>
+			<input type="radio" name="move-select-2p" id="secondP-button" 
+			ng-click="setAIGoesFirst(true)"
+			class="hidden radio-label"/>
+			<label for="secondP-button" class="button-label">
+				<h1>Antimuon</h1>
+			</label>	
+		</div>
+	</div>
+</div>
+
 <div class="gamesettings">
-<h1 class="view-heading">Team</h1>
-<div class="dif-container">
-  <div class="button-wrap">
-    <input type="radio" name="team-select" id="muon-button" checked="checked" 
-    ng-click="setTeam('muon')"
-    class="hidden radio-label"/>
-    <label for="muon-button" class="button-label">
-      <h1>Muon</h1>
-    </label>
-    <input type="radio" name="team-select" id="antimuon-button" 
-    ng-click="setTeam('antimuon')"
-    class="hidden radio-label"/>
-    <label for="antimuon-button" class="button-label">
-      <h1>Antimuon</h1>
-    </label>
-  </div>
+	<div class="start-container">
+		<a class="button" ui-sref="board">Start</a>
+	</div>
 </div>
-
-<h1 class="view-heading">Difficulty</h1>
-<div class="dif-container">
-  <div class="button-wrap">
-    <input type="radio" name="difficulty-select" id="easy-button" ng-click="setAILevel(5)" class="hidden radio-label"/>
-    <label for="easy-button" class="button-label">
-      <h1>Easy</h1>
-    </label>
-    <input type="radio" name="difficulty-select" id="med-button" checked="checked" ng-click="setAILevel(7)" class="hidden radio-label"/>
-    <label for="med-button" class="button-label">
-      <h1>Medium</h1>
-    </label>
-    <input type="radio" name="difficulty-select" id="hard-button" ng-click="setAILevel(9)" class="hidden radio-label"/>
-    <label for="hard-button" class="button-label">
-      <h1>Hard</h1>
-    </label>
-  </div>
-</div>
-
-<h1 class="view-heading">First Move</h1>
-<div class="dif-container">
-  <div class="button-wrap">
-    <input type="radio" name="move-select" id="you-button" checked="checked" 
-    ng-click="setAIGoesFirst(false)"
-    class="hidden radio-label"/>
-    <label for="you-button" class="button-label">
-      <h1>You</h1>
-    </label>
-    <input type="radio" name="move-select" id="ai-button" 
-    ng-click="setAIGoesFirst(true)"
-    class="hidden radio-label"/>
-    <label for="ai-button" class="button-label">
-      <h1>AI</h1>
-    </label>
-  </div>
-</div>
-</div>
-<a class="button" ui-sref="board">Start</a>
 
 <div class="back">
 	<a class="button" ui-sref="menu">
