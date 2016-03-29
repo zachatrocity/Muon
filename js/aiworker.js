@@ -139,6 +139,14 @@ var evaluation = {
 		return stolenSpace;
 	},
 
+	positioning:function(bitBoard, bitBoard2){
+		for(var i = 0; i < 4; i++){
+			quadValueBitBoard = boardAspect.getQuadBits(bitBoard, quadrant);
+			quadValueBitBoard2 = boardAspect.getQuadBits(bitBoard2, quadrant);
+			
+		}
+	},
+
 	Win:function(bitBoard, player, AI_tempFlag, HU_tempFlag){
 		var homeFlag = player == 1  ? AI_tempFlag : HU_tempFlag;
 		var quad = boardAspect.getQuadBits(bitBoard, 0);
