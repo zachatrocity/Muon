@@ -245,6 +245,7 @@ a:hover{
 	cursor: default;
 	position: relative;
 	width: 50%; 
+	text-align: left;
 	margin: 0 auto;
 	margin-top: 50px;
 	color: #efefef;

@@ -37,11 +37,11 @@ muonApp.controller('NewGameCtrl', function ($scope, $stateParams) {
 		var pvpmovesettings = document.getElementById('pvpmovesettings').children;
 		if(!choice){
 			pvpmovesettings[0].classList.remove('gray');
-			pvpmovesettings[0].classList.add('blue');
+			pvpmovesettings[0].classList.add('green');
 			pvpmovesettings[1].classList.remove('blue');
 			pvpmovesettings[1].classList.add('gray');
 		} else {
-			pvpmovesettings[0].classList.remove('blue');
+			pvpmovesettings[0].classList.remove('green');
 			pvpmovesettings[0].classList.add('gray');
 			pvpmovesettings[1].classList.remove('gray');
 			pvpmovesettings[1].classList.add('blue');
