@@ -3,6 +3,7 @@ var HU_position = 0b00000111110000000000; //Always the other player
 var AI_flag = true;
 var HU_flag = true;
 var BITMASK = 0xFFFFF;
+var gameHist = [];
 
 //For now this only stores losses
 var transposition = {
@@ -123,8 +124,9 @@ var evaluation = {
 		var total = 0;
 		var currentBitBoard = (player == 1 ? bitBoard : bitBoard2);
 		total += this.stolenRealEstate(bitBoard, bitBoard2);
-		total += this.isHomeQuadEmpty(bitBoard, AI.AIPlayerNumber) ? 5 : -1;
-		total += this.isHomeQuadEmpty(bitBoard2, AI.HUPlayerNumber) ? -5 : 1;
+		total += this.isHomeQuadEmpty(bitBoard, AI.AIPlayerNumber) ? 3 : 0;
+		total += this.isHomeQuadEmpty(bitBoard2, AI.HUPlayerNumber) ? -3 : 0;
+		total += this.positioning(bitBoard, bitBoard2);
 		return total;
 	},
 
@@ -139,12 +141,21 @@ var evaluation = {
 		return stolenSpace;
 	},
 
-	positioning:function(bitBoard, bitBoard2){
-		for(var i = 0; i < 4; i++){
-			quadValueBitBoard = boardAspect.getQuadBits(bitBoard, quadrant);
-			quadValueBitBoard2 = boardAspect.getQuadBits(bitBoard2, quadrant);
-			
+	positioning:function(AIpos, HUpos){4
+		var value = 0;
+		for(var quadrant = 0; quadrant < 4; quadrant++){
+			quadValueAIpos = boardAspect.getQuadBits(AIpos, quadrant);
+			quadValueHUpos = boardAspect.getQuadBits(HUpos, quadrant);
+			if(quadValueAIpos & 0b00001 == 0b00001)
+				value -= 50;
+			else if(quadValueAIpos == 0b10000 && quadValueHUpos == 0b01010)
+				value -= 3;
+			else if(quadValueAIpos == 0b01010 && quadValueHUpos == 0b10000)
+				value += 3;
+			else if(quadValueAIpos == 0b10101 && quadValueHUpos == 0b01010)
+				value -= 100;
 		}
+		return value;
 	},
 
 	Win:function(bitBoard, player, AI_tempFlag, HU_tempFlag){
@@ -312,14 +323,19 @@ var makeMoveAgainstAI = function(start, end, HumanMovesFirst){
 		moves++;
 
 		var indexOfBestMove;
+		var bestMoves = [];
 		var bestScore = -Infinity;
 		for (var i = 0; i < AI.currentMoveOptions.length; i++){
 			if(AI.currentMoveOptions[i].value > bestScore){
 				bestScore = AI.currentMoveOptions[i].value;
-				indexOfBestMove = i;
+				//indexOfBestMove = i;
 			}
-			//else if == then pick random value
 		}
+		for (var i = 0; i < AI.currentMoveOptions.length; i++)
+			if(AI.currentMoveOptions[i].value == bestScore)
+				bestMoves[bestMoves.length] = i;
+
+		indexOfBestMove = bestMoves[Date.now() % bestMoves.length];
 
 		var s = convert.bitToInt(AI.currentMoveOptions[indexOfBestMove].start);
 		var e = convert.bitToInt(AI.currentMoveOptions[indexOfBestMove].end);
