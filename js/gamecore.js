@@ -92,10 +92,9 @@ var gameCore = {
 		},
 		EndNetworkGame: function(){
 			gameCore.gameOver = true;	// Lock the board from player input
-			debugger;
 			if (gameCore.winner == "local") {
 				console.log("YOU WON!");
-				var foci = evaluation.Win(gameCore.network.opponentPos, player, gameCore.network.opponentFlag, gameCore.network.localFlag);
+				var foci = evaluation.Win(gameCore.network.localPos, player, gameCore.network.opponentFlag, gameCore.network.localFlag);
 				if(gameCore.network.team = 'muon')
 					gameCore.board.moveMuonsToWinFoci(foci[0],foci[1],foci[2],true);
 				else
