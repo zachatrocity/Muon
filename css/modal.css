@@ -54,15 +54,16 @@
 }
 
 .modal-btn {
+	margin: 0;
 	-webkit-transition: visibility 0s 0.5s, opacity 0s;
 	transition: visibility 0s 0.5s, opacity 0s;
 	-webkit-transition-timing-function: ease-out;
 }
-
+/*
 .modal-btn:disabled {
 	background: #0569AD;
 	color: black;	
-}
+}*/
 
 .modal-options-btn {
 	min-width: 250px;
