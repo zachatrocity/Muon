@@ -27,10 +27,12 @@
 }*/
 span.button{
   position: relative;
+  pointer-events: none;
   left: 50%;
   top: -45px;
   z-index: 2;
 }
+
 .button{
 	display: inline-block;
 	position: relative;
@@ -38,29 +40,65 @@ span.button{
 	transition: 0.3s;
 	border: none;
 	cursor: pointer;
-  fill: #0000e3;
+  fill: #5bdeff;
 }
 
-.button .red {
-  fill: #ee0000;
+.red {
+  fill: #ff4720;
 }
 
-svg.button:before{
-  text-transform: capitalize;
-    content: "start";
-    font-size: 10px;
-    padding: .5em 1em;
-    position: absolute;
-    white-space: nowrap;
+.red [id^="buttoncorner"] {
+  fill: #ff4720;
+}
+
+.red:hover #buttonbase{
+  fill: #bf3518;
+}
+
+.green {
+  fill: #5bff6a;
+}
+
+.green [id^="buttoncorner"] {
+  fill: #5bff6a;
+}
+
+.green:hover #buttonbase{
+  fill: #47bf53;
+}
+
+.blue {
+  fill: #5bdeff;
+}
+
+.blue [id^="buttoncorner"] {
+  fill: #5bdeff;
+}
+
+.blue:hover #buttonbase{
+  fill: #4486bf;
+}
+
+#buttonbase{
+  opacity: 0.5;
 }
 
 [id^="buttoncorner"] {
 	transition: 0.5s;
+  opacity:0.5;
+  fill-opacity:1;
+  stroke:none;
+  stroke-width:1;
+  stroke-linecap:butt;
+  stroke-linejoin:miter;
+  stroke-miterlimit:4;
+  stroke-dasharray:none;
+  stroke-opacity:1
 }
 
-svg:hover #buttonbase{
+/*svg:hover #buttonbase{
   fill: #000ee3;
-}
+}*/
 
 svg:hover #buttoncornerone {
 	transform: translate(5px, 5px);

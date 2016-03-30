@@ -50,12 +50,12 @@
 }
 
 .main-menu-item a {
-	color: black;
+	color: #fff;
 	text-shadow: 0 0 10px #47CFFF;
 }
 
 a:focus{
-	color: black;
+	color: #efefef;
     text-shadow: 0 0 15px #47CFFF;
 }
 
