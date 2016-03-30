@@ -15,55 +15,71 @@
 <div id="one-player" class="gamesettings">
 	<h1 class="view-heading">Team</h1>
 	<div class="diff-container">
-	  <div class="button-wrap">
-		<input type="radio" name="team-select" id="muon-button" checked="checked" 
-		ng-click="setTeam('muon')"
-		class="hidden radio-label"/>
-		<label for="muon-button" class="button-label">
-		  <h1>Muon</h1>
-		</label>
-		<input type="radio" name="team-select" id="antimuon-button" 
-		ng-click="setTeam('antimuon')"
-		class="hidden radio-label"/>
-		<label for="antimuon-button" class="button-label">
-		  <h1>Antimuon</h1>
-		</label>
-	  </div>
+		<svg class="button green" width="170" height="70" viewBox="0 0 170 70" ng-click="setTeam('muon')">
+			<path style="stroke-miEterlimit:4" d="M10 15h40l10-4.99998h100v20.00002l-5 10v20H10z" id="buttonbase" opacity=".64855077"/>
+			<path d="M0 .00002h10V2H2v8.00002H0z" id="buttoncornerone"/>
+			<path d="M170-.00004V10h-2V1.99996h-8v-2z" id="buttoncornertwo"/>
+			<path d="M0 70.00004h10v-2H2v-8H0z" id="buttoncornerthree"/>
+			<path d="M170 70.00004h-10v-2h8v-8h2z" id="buttoncornerfour"/>
+			<text fill="black" x="85" y="40" text-anchor="middle">Muon</text>
+		</svg>
+		<svg class="button blue" width="170" height="70" viewBox="0 0 170 70" ng-click="setTeam('antimuon')">
+			<path style="stroke-miEterlimit:4" d="M10 15h40l10-4.99998h100v20.00002l-5 10v20H10z" id="buttonbase" opacity=".64855077"/>
+			<path d="M0 .00002h10V2H2v8.00002H0z" id="buttoncornerone"/>
+			<path d="M170-.00004V10h-2V1.99996h-8v-2z" id="buttoncornertwo"/>
+			<path d="M0 70.00004h10v-2H2v-8H0z" id="buttoncornerthree"/>
+			<path d="M170 70.00004h-10v-2h8v-8h2z" id="buttoncornerfour"/>
+			<text fill="black" x="85" y="40" text-anchor="middle">Antimuon</text>
+		</svg>
 	</div>
 
 	<h1 class="view-heading">Difficulty</h1>
 	<div class="diff-container">
-	  <div class="button-wrap">
-		<input type="radio" name="difficulty-select" id="easy-button" ng-click="setAILevel(3)" class="hidden radio-label"/>
-		<label for="easy-button" class="button-label">
-		  <h1>Easy</h1>
-		</label>
-		<input type="radio" name="difficulty-select" id="med-button" checked="checked" ng-click="setAILevel(5)" class="hidden radio-label"/>
-		<label for="med-button" class="button-label">
-		  <h1>Medium</h1>
-		</label>
-		<input type="radio" name="difficulty-select" id="hard-button" ng-click="setAILevel(7)" class="hidden radio-label"/>
-		<label for="hard-button" class="button-label">
-		  <h1>Hard</h1>
-		</label>
-	  </div>
+		<svg class="button green" width="170" height="70" viewBox="0 0 170 70" ng-click="setAILevel(3)">
+			<path style="stroke-miEterlimit:4" d="M10 15h40l10-4.99998h100v20.00002l-5 10v20H10z" id="buttonbase" opacity=".64855077"/>
+			<path d="M0 .00002h10V2H2v8.00002H0z" id="buttoncornerone"/>
+			<path d="M170-.00004V10h-2V1.99996h-8v-2z" id="buttoncornertwo"/>
+			<path d="M0 70.00004h10v-2H2v-8H0z" id="buttoncornerthree"/>
+			<path d="M170 70.00004h-10v-2h8v-8h2z" id="buttoncornerfour"/>
+			<text fill="black" x="85" y="40" text-anchor="middle">Easy</text>
+		</svg>
+		<svg class="button blue" width="170" height="70" viewBox="0 0 170 70" ng-click="setAILevel(5)">
+			<path style="stroke-miEterlimit:4" d="M10 15h40l10-4.99998h100v20.00002l-5 10v20H10z" id="buttonbase" opacity=".64855077"/>
+			<path d="M0 .00002h10V2H2v8.00002H0z" id="buttoncornerone"/>
+			<path d="M170-.00004V10h-2V1.99996h-8v-2z" id="buttoncornertwo"/>
+			<path d="M0 70.00004h10v-2H2v-8H0z" id="buttoncornerthree"/>
+			<path d="M170 70.00004h-10v-2h8v-8h2z" id="buttoncornerfour"/>
+			<text fill="black" x="85" y="40" text-anchor="middle">Medium</text>
+		</svg>
+		<svg class="button red" width="170" height="70" viewBox="0 0 170 70" ng-click="setAILevel(7)">
+			<path style="stroke-miEterlimit:4" d="M10 15h40l10-4.99998h100v20.00002l-5 10v20H10z" id="buttonbase" opacity=".64855077"/>
+			<path d="M0 .00002h10V2H2v8.00002H0z" id="buttoncornerone"/>
+			<path d="M170-.00004V10h-2V1.99996h-8v-2z" id="buttoncornertwo"/>
+			<path d="M0 70.00004h10v-2H2v-8H0z" id="buttoncornerthree"/>
+			<path d="M170 70.00004h-10v-2h8v-8h2z" id="buttoncornerfour"/>
+			<text fill="black" x="85" y="40" text-anchor="middle">Hard</text>
+		</svg>
 	</div>
 
 	<h1 class="view-heading">First Move</h1>
 	<div class="diff-container">
 	  <div class="button-wrap">
-		<input type="radio" name="move-select" id="you-button" checked="checked" 
-		ng-click="setAIGoesFirst(false)"
-		class="hidden radio-label"/>
-		<label for="you-button" class="button-label">
-		  <h1>You</h1>
-		</label>
-		<input type="radio" name="move-select" id="ai-button" 
-		ng-click="setAIGoesFirst(true)"
-		class="hidden radio-label"/>
-		<label for="ai-button" class="button-label">
-		  <h1>AI</h1>
-		</label>
+		<svg class="button blue" width="170" height="70" viewBox="0 0 170 70" ng-click="setAIGoesFirst(false)">
+			<path style="stroke-miEterlimit:4" d="M10 15h40l10-4.99998h100v20.00002l-5 10v20H10z" id="buttonbase" opacity=".64855077"/>
+			<path d="M0 .00002h10V2H2v8.00002H0z" id="buttoncornerone"/>
+			<path d="M170-.00004V10h-2V1.99996h-8v-2z" id="buttoncornertwo"/>
+			<path d="M0 70.00004h10v-2H2v-8H0z" id="buttoncornerthree"/>
+			<path d="M170 70.00004h-10v-2h8v-8h2z" id="buttoncornerfour"/>
+			<text fill="black" x="85" y="40" text-anchor="middle">You</text>
+		</svg>
+		<svg class="button blue" width="170" height="70" viewBox="0 0 170 70" ng-click="setAIGoesFirst(true)">
+			<path style="stroke-miEterlimit:4" d="M10 15h40l10-4.99998h100v20.00002l-5 10v20H10z" id="buttonbase" opacity=".64855077"/>
+			<path d="M0 .00002h10V2H2v8.00002H0z" id="buttoncornerone"/>
+			<path d="M170-.00004V10h-2V1.99996h-8v-2z" id="buttoncornertwo"/>
+			<path d="M0 70.00004h10v-2H2v-8H0z" id="buttoncornerthree"/>
+			<path d="M170 70.00004h-10v-2h8v-8h2z" id="buttoncornerfour"/>
+			<text fill="black" x="85" y="40" text-anchor="middle">AI</text>
+		</svg>
 	  </div>
 	</div>
 </div>
@@ -71,135 +87,70 @@
 <div id="two-player" class="gamesettings two-player-content">
 	<h1 class="view-heading">Player One's Team</h1>
 	<div class="diff-container">
-		<div class="button-wrap">
-			<input type="radio" name="team-select-2p" id="muon-button-2p" checked="checked" 
-			ng-click="setTeam('muon')"
-			class="hidden radio-label"/>
-			<label for="muon-button-2p" class="button-label">
-				<h1>Muon</h1>
-			</label>
-			<input type="radio" name="team-select-2p" id="antimuon-button-2p" 
-			ng-click="setTeam('antimuon')"
-			class="hidden radio-label"/>
-			<label for="antimuon-button-2p" class="button-label">
-				<h1>Antimuon</h1>
-			</label>
-		</div>
+			<svg class="button green" width="170" height="70" viewBox="0 0 170 70" ng-click="setTeam('muon')">
+				<path style="stroke-miEterlimit:4" d="M10 15h40l10-4.99998h100v20.00002l-5 10v20H10z" id="buttonbase" opacity=".64855077"/>
+				<path d="M0 .00002h10V2H2v8.00002H0z" id="buttoncornerone"/>
+				<path d="M170-.00004V10h-2V1.99996h-8v-2z" id="buttoncornertwo"/>
+				<path d="M0 70.00004h10v-2H2v-8H0z" id="buttoncornerthree"/>
+				<path d="M170 70.00004h-10v-2h8v-8h2z" id="buttoncornerfour"/>
+				<text fill="black" x="85" y="40" text-anchor="middle">Muon</text>
+			</svg>
+			<svg class="button blue" width="170" height="70" viewBox="0 0 170 70" ng-click="setTeam('antimuon')">
+				<path style="stroke-miEterlimit:4" d="M10 15h40l10-4.99998h100v20.00002l-5 10v20H10z" id="buttonbase" opacity=".64855077"/>
+				<path d="M0 .00002h10V2H2v8.00002H0z" id="buttoncornerone"/>
+				<path d="M170-.00004V10h-2V1.99996h-8v-2z" id="buttoncornertwo"/>
+				<path d="M0 70.00004h10v-2H2v-8H0z" id="buttoncornerthree"/>
+				<path d="M170 70.00004h-10v-2h8v-8h2z" id="buttoncornerfour"/>
+				<text fill="black" x="85" y="40" text-anchor="middle">Antimuon</text>
+			</svg>
 	</div>
 	
 	<h1 class="view-heading">First Move</h1>
 	<div class="diff-container">
-		<div class="button-wrap">
-			<input type="radio" name="move-select-2p" id="firstP-button" checked="checked" 
-			ng-click="setAIGoesFirst(false)"
-			class="hidden radio-label"/>
-			<label for="firstP-button" class="button-label">
-				<h1>Muon</h1>
-			</label>
-			<input type="radio" name="move-select-2p" id="secondP-button" 
-			ng-click="setAIGoesFirst(true)"
-			class="hidden radio-label"/>
-			<label for="secondP-button" class="button-label">
-				<h1>Antimuon</h1>
-			</label>	
-		</div>
+			<svg class="button green" width="170" height="70" viewBox="0 0 170 70" ng-click="setAIGoesFirst(false)">
+				<path style="stroke-miEterlimit:4" d="M10 15h40l10-4.99998h100v20.00002l-5 10v20H10z" id="buttonbase" opacity=".64855077"/>
+				<path d="M0 .00002h10V2H2v8.00002H0z" id="buttoncornerone"/>
+				<path d="M170-.00004V10h-2V1.99996h-8v-2z" id="buttoncornertwo"/>
+				<path d="M0 70.00004h10v-2H2v-8H0z" id="buttoncornerthree"/>
+				<path d="M170 70.00004h-10v-2h8v-8h2z" id="buttoncornerfour"/>
+				<text fill="black" x="85" y="40" text-anchor="middle">Muon</text>
+			</svg>	
+			<svg class="button blue" width="170" height="70" viewBox="0 0 170 70" ng-click="setAIGoesFirst(true)">
+				<path style="stroke-miEterlimit:4" d="M10 15h40l10-4.99998h100v20.00002l-5 10v20H10z" id="buttonbase" opacity=".64855077"/>
+				<path d="M0 .00002h10V2H2v8.00002H0z" id="buttoncornerone"/>
+				<path d="M170-.00004V10h-2V1.99996h-8v-2z" id="buttoncornertwo"/>
+				<path d="M0 70.00004h10v-2H2v-8H0z" id="buttoncornerthree"/>
+				<path d="M170 70.00004h-10v-2h8v-8h2z" id="buttoncornerfour"/>
+				<text fill="black" x="85" y="40" text-anchor="middle">Antimuon</text>
+			</svg>	
 	</div>
 </div>
 
 <div class="gamesettings">
 	<div class="start-container">
 		<!-- <div class="button" ui-sref="board">Start</button> -->
-		<span class="button">Start</span>
-		<svg class="button red" ui-sref="board"
-		   xmlns:dc="http://purl.org/dc/elements/1.1/"
-		   xmlns:cc="http://creativecommons.org/ns#"
-		   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-		   xmlns:svg="http://www.w3.org/2000/svg"
-		   xmlns="http://www.w3.org/2000/svg"
-		   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
-		   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-		   width="170"
-		   height="70"
-		   viewBox="0 0 170 70.000001"
-		   id="svg2"
-		   version="1.1"
-		   inkscape:version="0.91 r13725"
-		   sodipodi:docname="button_short.svg">
-		  <defs
-		     id="defs4" />
-		  <sodipodi:namedview
-		     id="base"
-		     pagecolor="#ffffff"
-		     bordercolor="#666666"
-		     borderopacity="1.0"
-		     inkscape:pageopacity="0.0"
-		     inkscape:pageshadow="2"
-		     inkscape:zoom="3.959798"
-		     inkscape:cx="88.360069"
-		     inkscape:cy="21.617955"
-		     inkscape:document-units="px"
-		     inkscape:current-layer="layer1"
-		     showgrid="false"
-		     units="px"
-		     inkscape:window-width="1366"
-		     inkscape:window-height="705"
-		     inkscape:window-x="-8"
-		     inkscape:window-y="-8"
-		     inkscape:window-maximized="1" />
-		  <metadata
-		     id="metadata7">
-		    <rdf:RDF>
-		      <cc:Work
-		         rdf:about="">
-		        <dc:format>image/svg+xml</dc:format>
-		        <dc:type
-		           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-		        <dc:title></dc:title>
-		      </cc:Work>
-		    </rdf:RDF>
-		  </metadata>
-		  <g
-		     inkscape:label="Layer 1"
-		     inkscape:groupmode="layer"
-		     id="layer1"
-		     transform="translate(0,-982.36216)">
-		    <path
-		       style="opacity:0.64855077;fill-opacity:1;stroke:none;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miEterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-		       d="m 10,997.36216 40,0 10,-4.99998 100,0 0,20.00002 -5,10 0,20 -145,0 z"
-		       id="buttonbase"
-		       inkscape:connector-curvature="0"
-		       sodipodi:nodetypes="ccccccccc" /> 
-		    <path
-		       style="opacity:0.64855077;fill:#0000e3;fill-opacity:1;stroke:none;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-		       d="m 0,982.36218 10,0 0,1.99998 -8,0 0,8.00002 -2,0 z"
-		       id="buttoncornerone"
-		       inkscape:connector-curvature="0"
-		       sodipodi:nodetypes="ccccccc" />
-		    <path
-		       style="opacity:0.64855077;fill:#0000e3;fill-opacity:1;stroke:none;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-		       d="m 170,982.36212 0,10.00004 -2,0 0,-8.00004 -8,0 0,-2 z"
-		       id="buttoncornertwo"
-		       inkscape:connector-curvature="0"
-		       sodipodi:nodetypes="ccccccc" />
-		    <path
-		       style="opacity:0.64855077;fill:#0000e3;fill-opacity:1;stroke:none;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-		       d="m 0,1052.3622 10,0 0,-2 -8,0 0,-8 -2,0 z"
-		       id="buttoncornerthree"
-		       inkscape:connector-curvature="0"
-		       sodipodi:nodetypes="ccccccc" />
-		    <path
-		       style="opacity:0.64855077;fill:#0000e3;fill-opacity:1;stroke:none;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-		       d="m 170,1052.3622 -10,0 0,-2 8,0 0,-8 2,0 z"
-		       id="buttoncornerfour"
-		       inkscape:connector-curvature="0"
-		       sodipodi:nodetypes="ccccccc" />
-		  </g>
+		<!-- <span class="button">Start</span> -->
+		<svg class="button" ui-sref="board" width="170" height="70" viewBox="0 0 170 70">
+			<path style="stroke-miEterlimit:4" d="M10 15h40l10-4.99998h100v20.00002l-5 10v20H10z" id="buttonbase" opacity=".64855077"/>
+			<path d="M0 .00002h10V2H2v8.00002H0z" id="buttoncornerone"/>
+			<path d="M170-.00004V10h-2V1.99996h-8v-2z" id="buttoncornertwo"/>
+			<path d="M0 70.00004h10v-2H2v-8H0z" id="buttoncornerthree"/>
+			<path d="M170 70.00004h-10v-2h8v-8h2z" id="buttoncornerfour"/>
+			<text fill="black" x="85" y="40" text-anchor="middle">Start</text>
 		</svg>
 	</div>
 </div>
 
 <div class="back">
-	<button type="button" class="button" ui-sref="menu">
+	<!-- <button type="button" class="button" ui-sref="menu">
 		<span class='batch' data-icon='&#xf14a'></span> Menu
-	</button>
+	</button> -->
+	<svg class="button red" ui-sref="menu" width="170" height="70" viewBox="0 0 170 70">
+		<path style="stroke-miEterlimit:4" d="M10 15h40l10-4.99998h100v20.00002l-5 10v20H10z" id="buttonbase" opacity=".64855077"/>
+		<path d="M0 .00002h10V2H2v8.00002H0z" id="buttoncornerone"/>
+		<path d="M170-.00004V10h-2V1.99996h-8v-2z" id="buttoncornertwo"/>
+		<path d="M0 70.00004h10v-2H2v-8H0z" id="buttoncornerthree"/>
+		<path d="M170 70.00004h-10v-2h8v-8h2z" id="buttoncornerfour"/>
+		<text fill="black" x="85" y="40" text-anchor="middle">Menu</text>
+	</svg>
 </div>

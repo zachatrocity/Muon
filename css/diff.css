@@ -4,6 +4,7 @@
 
 .switch {
   background-color: #efefef;
+  opacity: 0.8;
   width: 80%;
   display: inline-block;
   border-radius: 8px;
@@ -46,7 +47,8 @@
   height: 100%;
   display: block;
   border-radius: 5px 0 0 5px;
-  background-color: #2ECC71;
+  opacity: 0.8;
+  background-color: #47bf53;
   -webkit-transition: all 200ms ease;
   transition: all 200ms ease;
 }
@@ -58,18 +60,16 @@
 }
 
 #two-player, #one-player {
-	position: absolute;
-	top: 50%;
-	left: 50%;
-	width: 500px;
 	margin: 0;
-	transform: translateY(-50%);
-	margin-left: -250px;
 	display: none;
 }
 
 .diff-container {
-	margin: 0 auto;
+  margin:0;
+	align-items: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
 }
 
 .start-container {
