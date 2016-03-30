@@ -326,6 +326,7 @@ var makeMoveAgainstAI = function(start, end, HumanMovesFirst){
 		updateAIBoard(AI.currentMoveOptions[indexOfBestMove].start, AI.currentMoveOptions[indexOfBestMove].end);
 		var w = evaluation.Win(AI_position, AI.AIPlayerNumber, AI_flag, HU_flag);
 	}
+
 	return({'from': s, 'to': e, 'AiWin': w});
 }
 

@@ -306,23 +306,51 @@ var evaluation = {
 
 		var quad = boardAspect.getQuadBits(bitBoard, 0);
 		var bits = bitManip.BitCount(quad);
-		if(!(quad == 0b01110 || quad == 0b10101) && bits >= 3)
-			return true;
+		if(!(quad == 0b01110 || quad == 0b10101) && bits >= 3){
+			var foci = [];
+			for (var i = 0; i < 5; i++) {
+				if(((1 << i) & quad) != 0)
+					foci[foci.length] =  convert.bitToInt(((1 << i) & quad) << 0);
+			};
+			console.log(foci);
+			return foci;
+		}
 
 		quad = boardAspect.getQuadBits(bitBoard, 1);
 		bits = bitManip.BitCount(quad);
-		if(!(homeFlag && player == 1) && !(quad == 0b01110 || quad == 0b10101) && bits >= 3)
-			return true;
+		if(!(homeFlag && player == 1) && !(quad == 0b01110 || quad == 0b10101) && bits >= 3){
+			var foci = [];
+			for (var i = 0; i < 5; i++) {
+				if(((1 << i) & quad) != 0)
+					foci[foci.length] =  convert.bitToInt(((1 << i) & quad) << 5);
+			};
+			console.log(foci);
+			return foci;
+		}
 
 		quad = boardAspect.getQuadBits(bitBoard, 2);
 		bits = bitManip.BitCount(quad);
-		if(!(homeFlag && player == 2) && !(quad == 0b01110 || quad == 0b10101) && bits >= 3)
-			return true;
+		if(!(homeFlag && player == 2) && !(quad == 0b01110 || quad == 0b10101) && bits >= 3){
+			var foci = [];
+			for (var i = 0; i < 5; i++) {
+				if(((1 << i) & quad) != 0)
+					foci[foci.length] =  convert.bitToInt(((1 << i) & quad) << 10);
+			};
+			console.log(foci);
+			return foci;
+		}
 
 		quad = boardAspect.getQuadBits(bitBoard, 3);
 		bits = bitManip.BitCount(quad);
-		if(!(quad == 0b01110 || quad == 0b10101) && bits >= 3)
-			return true;
+		if(!(quad == 0b01110 || quad == 0b10101) && bits >= 3){
+			var foci = [];
+			for (var i = 0; i < 5; i++) {
+				if(((1 << i) & quad) != 0)
+					foci[foci.length] =  convert.bitToInt(((1 << i) & quad) << 15);
+			};
+			console.log(foci);
+			return foci;
+		}
 
 		return false;
 	},

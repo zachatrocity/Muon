@@ -342,6 +342,7 @@ var makeMoveAgainstAI = function(start, end, HumanMovesFirst){
 		updateAIBoard(AI.currentMoveOptions[indexOfBestMove].start, AI.currentMoveOptions[indexOfBestMove].end);
 		var w = evaluation.Win(AI_position, AI.AIPlayerNumber, AI_flag, HU_flag);
 	}
+	
 	return({'from': s, 'to': e, 'AiWin': w});
 }
 
@@ -350,14 +351,19 @@ var makeAIMove = function(){
 	moves++;
 
 	var indexOfBestMove;
-	var bestScore = -Infinity;
-	for (var i = 0; i < AI.currentMoveOptions.length; i++){
-		if(AI.currentMoveOptions[i].value > bestScore){
-			bestScore = AI.currentMoveOptions[i].value;
-			indexOfBestMove = i;
+		var bestMoves = [];
+		var bestScore = -Infinity;
+		for (var i = 0; i < AI.currentMoveOptions.length; i++){
+			if(AI.currentMoveOptions[i].value > bestScore){
+				bestScore = AI.currentMoveOptions[i].value;
+				//indexOfBestMove = i;
+			}
 		}
-		//else if == then pick random value
-	}
+		for (var i = 0; i < AI.currentMoveOptions.length; i++)
+			if(AI.currentMoveOptions[i].value == bestScore)
+				bestMoves[bestMoves.length] = i;
+
+		indexOfBestMove = bestMoves[Date.now() % bestMoves.length];
 
 	var s = convert.bitToInt(AI.currentMoveOptions[indexOfBestMove].start);
 	var e = convert.bitToInt(AI.currentMoveOptions[indexOfBestMove].end);
