@@ -13,8 +13,7 @@ muonApp.controller('BoardCtrl', function ($scope, $stateParams, $state) {
 	            BoardGUI.timer.hours++;
 	        }
 	    }
-
-		document.getElementById("timer").textContent = (BoardGUI.timer.minutes > 0) ? BoardGUI.timer.minutes + ":" + BoardGUI.timer.seconds : BoardGUI.timer.seconds;
+		document.getElementById("timer").textContent = (BoardGUI.timer.minutes > 0) ? (BoardGUI.timer.minutes > 9 ? BoardGUI.timer.minutes : "0" + BoardGUI.timer.minutes) + ":" + (BoardGUI.timer.seconds > 9 ? BoardGUI.timer.seconds : "0" + BoardGUI.timer.seconds) : (BoardGUI.timer.seconds > 9 ? BoardGUI.timer.seconds : "0" + BoardGUI.timer.seconds);
 	}, 1000);
 
 	$scope.mouse_over = function(id) {
