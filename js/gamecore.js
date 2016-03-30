@@ -92,14 +92,24 @@ var gameCore = {
 		},
 		EndNetworkGame: function(){
 			gameCore.gameOver = true;	// Lock the board from player input
-
+			debugger;
 			if (gameCore.winner == "local") {
 				console.log("YOU WON!");
-				BoardGUI.showWinModal();
+				var foci = evaluation.Win(gameCore.network.opponentPos, player, gameCore.network.opponentFlag, gameCore.network.localFlag);
+				if(gameCore.network.team = 'muon')
+					gameCore.board.moveMuonsToWinFoci(foci[0],foci[1],foci[2],true);
+				else
+					gameCore.board.moveMuonsToWinFoci(foci[0],foci[1],foci[2],false);
+				gameCore.board.gameOverModal = BoardGUI.showWinModal;
 			}
 			else if (gameCore.winner == "opponent"){
 				console.log("YOU LOST!");
-				BoardGUI.showLoseModal();
+				var foci = evaluation.Win(gameCore.network.opponentPos, player, gameCore.network.opponentFlag, gameCore.network.localFlag);
+				if(gameCore.network.team = 'muon')
+					gameCore.board.moveMuonsToWinFoci(foci[0],foci[1],foci[2],false);
+				else
+					gameCore.board.moveMuonsToWinFoci(foci[0],foci[1],foci[2],true);
+				gameCore.board.gameOverModal = BoardGUI.showLoseModal;
 			}
 			else
 				console.log("IT'S A DRAW!");
@@ -111,6 +121,7 @@ var gameCore = {
 		width: 700,
     	height: 700,
     	noderadius: 30,
+    	winningFoci: null,
 		foci: 	[{x: 0, y: 10},		{x: 285, y: 10},		//
         				{x: 140, y: 140},				// Quad A
 				{x: 0, y: 285},		{x: 285, y: 285},	//
@@ -733,8 +744,8 @@ var gameCore = {
 			player = gameCore.AIPlayerNumber;
 		else
 			player = gameCore.HUPlayerNumber;
-
-		if (evaluation.Win(position, player, gameCore.playerOneFlag, gameCore.playerTwoFlag)) {
+		gameCore.board.winningFoci = evaluation.Win(position, player, gameCore.playerOneFlag, gameCore.playerTwoFlag);
+		if (gameCore.board.winningFoci) {
 			if(gameCore.network.roomid != null)
 				gameCore.winner = player == 1 ? "opponent" : "local";
 			else {
@@ -799,12 +810,29 @@ var gameCore = {
 	EndGame: function() {
 		gameCore.gameOver = true;	// Lock the board from player input
 		if (gameCore.winner == "local" || gameCore.winner == "human") {
-			console.log("PLAYER 2 WON!");
-			BoardGUI.showWinModal();
+			setTimeout(function(){
+				var foci = gameCore.board.winningFoci;
+				if(foci){
+					if(gameCore.humanteam == 'muon')
+						gameCore.board.moveMuonsToWinFoci(foci[0],foci[1],foci[2],true);
+					else
+						gameCore.board.moveMuonsToWinFoci(foci[0],foci[1],foci[2],false);
+				}
+
+				gameCore.board.gameOverModal = BoardGUI.showWinModal;
+			}, 2000);
 		}
 		else if (gameCore.winner == "opponent" || gameCore.winner == "ai"){
-			console.log("PLAYER 1 WON!");
-			BoardGUI.showLoseModal();
+			setTimeout(function(){
+				var foci = gameCore.board.winningFoci;
+				if(foci){
+					if(gameCore.humanteam == 'muon')
+						gameCore.board.moveMuonsToWinFoci(foci[0],foci[1],foci[2],false);
+					else
+						gameCore.board.moveMuonsToWinFoci(foci[0],foci[1],foci[2],true);
+				}
+				gameCore.board.gameOverModal = BoardGUI.showLoseModal;
+			}, 2000);
 		}
 		else{
 			console.log("IT'S A DRAW!");
@@ -820,7 +848,7 @@ var gameCore = {
 		// history.pushState({foo: 'bar'}, 'Play', 'newgame.html');
 	},
 	endAnimation: function(){
-		gameCore.EndGame();
+		gameCore.board.gameOverModal();
 		document.removeEventListener("click", gameCore.endAnimation);
 	}
 };
