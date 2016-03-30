@@ -13,29 +13,9 @@
 </div>
 
 <div id="one-player" class="gamesettings">
-	<h1 class="view-heading">Team</h1>
-	<div class="diff-container">
-		<svg class="button green" width="170" height="70" viewBox="0 0 170 70" ng-click="setTeam('muon')">
-			<path style="stroke-miEterlimit:4" d="M10 15h40l10-4.99998h100v20.00002l-5 10v20H10z" id="buttonbase" opacity=".64855077"/>
-			<path d="M0 .00002h10V2H2v8.00002H0z" id="buttoncornerone"/>
-			<path d="M170-.00004V10h-2V1.99996h-8v-2z" id="buttoncornertwo"/>
-			<path d="M0 70.00004h10v-2H2v-8H0z" id="buttoncornerthree"/>
-			<path d="M170 70.00004h-10v-2h8v-8h2z" id="buttoncornerfour"/>
-			<text fill="black" x="85" y="40" text-anchor="middle">Muon</text>
-		</svg>
-		<svg class="button blue" width="170" height="70" viewBox="0 0 170 70" ng-click="setTeam('antimuon')">
-			<path style="stroke-miEterlimit:4" d="M10 15h40l10-4.99998h100v20.00002l-5 10v20H10z" id="buttonbase" opacity=".64855077"/>
-			<path d="M0 .00002h10V2H2v8.00002H0z" id="buttoncornerone"/>
-			<path d="M170-.00004V10h-2V1.99996h-8v-2z" id="buttoncornertwo"/>
-			<path d="M0 70.00004h10v-2H2v-8H0z" id="buttoncornerthree"/>
-			<path d="M170 70.00004h-10v-2h8v-8h2z" id="buttoncornerfour"/>
-			<text fill="black" x="85" y="40" text-anchor="middle">Antimuon</text>
-		</svg>
-	</div>
-
 	<h1 class="view-heading">Difficulty</h1>
-	<div class="diff-container">
-		<svg class="button green" width="170" height="70" viewBox="0 0 170 70" ng-click="setAILevel(3)">
+	<div id="diffsettings" class="diff-container">
+		<svg class="button gray greenhover" width="170" height="70" viewBox="0 0 170 70" ng-click="setAILevel(3)">
 			<path style="stroke-miEterlimit:4" d="M10 15h40l10-4.99998h100v20.00002l-5 10v20H10z" id="buttonbase" opacity=".64855077"/>
 			<path d="M0 .00002h10V2H2v8.00002H0z" id="buttoncornerone"/>
 			<path d="M170-.00004V10h-2V1.99996h-8v-2z" id="buttoncornertwo"/>
@@ -43,7 +23,7 @@
 			<path d="M170 70.00004h-10v-2h8v-8h2z" id="buttoncornerfour"/>
 			<text fill="black" x="85" y="40" text-anchor="middle">Easy</text>
 		</svg>
-		<svg class="button blue" width="170" height="70" viewBox="0 0 170 70" ng-click="setAILevel(5)">
+		<svg class="button blue bluehover" width="170" height="70" viewBox="0 0 170 70" ng-click="setAILevel(5)">
 			<path style="stroke-miEterlimit:4" d="M10 15h40l10-4.99998h100v20.00002l-5 10v20H10z" id="buttonbase" opacity=".64855077"/>
 			<path d="M0 .00002h10V2H2v8.00002H0z" id="buttoncornerone"/>
 			<path d="M170-.00004V10h-2V1.99996h-8v-2z" id="buttoncornertwo"/>
@@ -51,7 +31,7 @@
 			<path d="M170 70.00004h-10v-2h8v-8h2z" id="buttoncornerfour"/>
 			<text fill="black" x="85" y="40" text-anchor="middle">Medium</text>
 		</svg>
-		<svg class="button red" width="170" height="70" viewBox="0 0 170 70" ng-click="setAILevel(7)">
+		<svg class="button gray redhover" width="170" height="70" viewBox="0 0 170 70" ng-click="setAILevel(7)">
 			<path style="stroke-miEterlimit:4" d="M10 15h40l10-4.99998h100v20.00002l-5 10v20H10z" id="buttonbase" opacity=".64855077"/>
 			<path d="M0 .00002h10V2H2v8.00002H0z" id="buttoncornerone"/>
 			<path d="M170-.00004V10h-2V1.99996h-8v-2z" id="buttoncornertwo"/>
@@ -61,10 +41,29 @@
 		</svg>
 	</div>
 
+	<h1 class="view-heading">Team</h1>
+	<div id="teamsettings" class="diff-container">
+		<svg class="button green greenhover" width="170" height="70" viewBox="0 0 170 70" ng-click="setTeam('muon')">
+			<path style="stroke-miEterlimit:4" d="M10 15h40l10-4.99998h100v20.00002l-5 10v20H10z" id="buttonbase" opacity=".64855077"/>
+			<path d="M0 .00002h10V2H2v8.00002H0z" id="buttoncornerone"/>
+			<path d="M170-.00004V10h-2V1.99996h-8v-2z" id="buttoncornertwo"/>
+			<path d="M0 70.00004h10v-2H2v-8H0z" id="buttoncornerthree"/>
+			<path d="M170 70.00004h-10v-2h8v-8h2z" id="buttoncornerfour"/>
+			<text fill="black" x="85" y="40" text-anchor="middle">Muon</text>
+		</svg>
+		<svg class="button gray bluehover" width="170" height="70" viewBox="0 0 170 70" ng-click="setTeam('antimuon')">
+			<path style="stroke-miEterlimit:4" d="M10 15h40l10-4.99998h100v20.00002l-5 10v20H10z" id="buttonbase" opacity=".64855077"/>
+			<path d="M0 .00002h10V2H2v8.00002H0z" id="buttoncornerone"/>
+			<path d="M170-.00004V10h-2V1.99996h-8v-2z" id="buttoncornertwo"/>
+			<path d="M0 70.00004h10v-2H2v-8H0z" id="buttoncornerthree"/>
+			<path d="M170 70.00004h-10v-2h8v-8h2z" id="buttoncornerfour"/>
+			<text fill="black" x="85" y="40" text-anchor="middle">Antimuon</text>
+		</svg>
+	</div>
+
 	<h1 class="view-heading">First Move</h1>
-	<div class="diff-container">
-	  <div class="button-wrap">
-		<svg class="button blue" width="170" height="70" viewBox="0 0 170 70" ng-click="setAIGoesFirst(false)">
+	<div id="movesettings" class="diff-container">
+		<svg class="button blue bluehover" width="170" height="70" viewBox="0 0 170 70" ng-click="setAIGoesFirst(false)">
 			<path style="stroke-miEterlimit:4" d="M10 15h40l10-4.99998h100v20.00002l-5 10v20H10z" id="buttonbase" opacity=".64855077"/>
 			<path d="M0 .00002h10V2H2v8.00002H0z" id="buttoncornerone"/>
 			<path d="M170-.00004V10h-2V1.99996h-8v-2z" id="buttoncornertwo"/>
@@ -72,7 +71,7 @@
 			<path d="M170 70.00004h-10v-2h8v-8h2z" id="buttoncornerfour"/>
 			<text fill="black" x="85" y="40" text-anchor="middle">You</text>
 		</svg>
-		<svg class="button blue" width="170" height="70" viewBox="0 0 170 70" ng-click="setAIGoesFirst(true)">
+		<svg class="button gray bluehover" width="170" height="70" viewBox="0 0 170 70" ng-click="setAIGoesFirst(true)">
 			<path style="stroke-miEterlimit:4" d="M10 15h40l10-4.99998h100v20.00002l-5 10v20H10z" id="buttonbase" opacity=".64855077"/>
 			<path d="M0 .00002h10V2H2v8.00002H0z" id="buttoncornerone"/>
 			<path d="M170-.00004V10h-2V1.99996h-8v-2z" id="buttoncornertwo"/>
@@ -80,34 +79,33 @@
 			<path d="M170 70.00004h-10v-2h8v-8h2z" id="buttoncornerfour"/>
 			<text fill="black" x="85" y="40" text-anchor="middle">AI</text>
 		</svg>
-	  </div>
 	</div>
 </div>
 
 <div id="two-player" class="gamesettings two-player-content">
 	<h1 class="view-heading">Player One's Team</h1>
-	<div class="diff-container">
-			<svg class="button green" width="170" height="70" viewBox="0 0 170 70" ng-click="setTeam('muon')">
-				<path style="stroke-miEterlimit:4" d="M10 15h40l10-4.99998h100v20.00002l-5 10v20H10z" id="buttonbase" opacity=".64855077"/>
-				<path d="M0 .00002h10V2H2v8.00002H0z" id="buttoncornerone"/>
-				<path d="M170-.00004V10h-2V1.99996h-8v-2z" id="buttoncornertwo"/>
-				<path d="M0 70.00004h10v-2H2v-8H0z" id="buttoncornerthree"/>
-				<path d="M170 70.00004h-10v-2h8v-8h2z" id="buttoncornerfour"/>
-				<text fill="black" x="85" y="40" text-anchor="middle">Muon</text>
-			</svg>
-			<svg class="button blue" width="170" height="70" viewBox="0 0 170 70" ng-click="setTeam('antimuon')">
-				<path style="stroke-miEterlimit:4" d="M10 15h40l10-4.99998h100v20.00002l-5 10v20H10z" id="buttonbase" opacity=".64855077"/>
-				<path d="M0 .00002h10V2H2v8.00002H0z" id="buttoncornerone"/>
-				<path d="M170-.00004V10h-2V1.99996h-8v-2z" id="buttoncornertwo"/>
-				<path d="M0 70.00004h10v-2H2v-8H0z" id="buttoncornerthree"/>
-				<path d="M170 70.00004h-10v-2h8v-8h2z" id="buttoncornerfour"/>
-				<text fill="black" x="85" y="40" text-anchor="middle">Antimuon</text>
-			</svg>
+	<div id="pvpteamset" class="diff-container">
+		<svg class="button green greenhover" width="170" height="70" viewBox="0 0 170 70" ng-click="setPvpTeam('muon')">
+			<path style="stroke-miEterlimit:4" d="M10 15h40l10-4.99998h100v20.00002l-5 10v20H10z" id="buttonbase" opacity=".64855077"/>
+			<path d="M0 .00002h10V2H2v8.00002H0z" id="buttoncornerone"/>
+			<path d="M170-.00004V10h-2V1.99996h-8v-2z" id="buttoncornertwo"/>
+			<path d="M0 70.00004h10v-2H2v-8H0z" id="buttoncornerthree"/>
+			<path d="M170 70.00004h-10v-2h8v-8h2z" id="buttoncornerfour"/>
+			<text fill="black" x="85" y="40" text-anchor="middle">Muon</text>
+		</svg>
+		<svg class="button gray bluehover" width="170" height="70" viewBox="0 0 170 70" ng-click="setPvpTeam('antimuon')">
+			<path style="stroke-miEterlimit:4" d="M10 15h40l10-4.99998h100v20.00002l-5 10v20H10z" id="buttonbase" opacity=".64855077"/>
+			<path d="M0 .00002h10V2H2v8.00002H0z" id="buttoncornerone"/>
+			<path d="M170-.00004V10h-2V1.99996h-8v-2z" id="buttoncornertwo"/>
+			<path d="M0 70.00004h10v-2H2v-8H0z" id="buttoncornerthree"/>
+			<path d="M170 70.00004h-10v-2h8v-8h2z" id="buttoncornerfour"/>
+			<text fill="black" x="85" y="40" text-anchor="middle">Antimuon</text>
+		</svg>
 	</div>
 	
 	<h1 class="view-heading">First Move</h1>
-	<div class="diff-container">
-			<svg class="button green" width="170" height="70" viewBox="0 0 170 70" ng-click="setAIGoesFirst(false)">
+	<div id="pvpmovesettings" class="diff-container">
+			<svg class="button green greenhover" width="170" height="70" viewBox="0 0 170 70" ng-click="setPvpGoesFirst(false)">
 				<path style="stroke-miEterlimit:4" d="M10 15h40l10-4.99998h100v20.00002l-5 10v20H10z" id="buttonbase" opacity=".64855077"/>
 				<path d="M0 .00002h10V2H2v8.00002H0z" id="buttoncornerone"/>
 				<path d="M170-.00004V10h-2V1.99996h-8v-2z" id="buttoncornertwo"/>
@@ -115,7 +113,7 @@
 				<path d="M170 70.00004h-10v-2h8v-8h2z" id="buttoncornerfour"/>
 				<text fill="black" x="85" y="40" text-anchor="middle">Muon</text>
 			</svg>	
-			<svg class="button blue" width="170" height="70" viewBox="0 0 170 70" ng-click="setAIGoesFirst(true)">
+			<svg class="button gray bluehover" width="170" height="70" viewBox="0 0 170 70" ng-click="setPvpGoesFirst(true)">
 				<path style="stroke-miEterlimit:4" d="M10 15h40l10-4.99998h100v20.00002l-5 10v20H10z" id="buttonbase" opacity=".64855077"/>
 				<path d="M0 .00002h10V2H2v8.00002H0z" id="buttoncornerone"/>
 				<path d="M170-.00004V10h-2V1.99996h-8v-2z" id="buttoncornertwo"/>
@@ -130,7 +128,7 @@
 	<div class="start-container">
 		<!-- <div class="button" ui-sref="board">Start</button> -->
 		<!-- <span class="button">Start</span> -->
-		<svg class="button" ui-sref="board" width="170" height="70" viewBox="0 0 170 70">
+		<svg class="button green" ui-sref="board" width="170" height="70" viewBox="0 0 170 70">
 			<path style="stroke-miEterlimit:4" d="M10 15h40l10-4.99998h100v20.00002l-5 10v20H10z" id="buttonbase" opacity=".64855077"/>
 			<path d="M0 .00002h10V2H2v8.00002H0z" id="buttoncornerone"/>
 			<path d="M170-.00004V10h-2V1.99996h-8v-2z" id="buttoncornertwo"/>
@@ -145,7 +143,7 @@
 	<!-- <button type="button" class="button" ui-sref="menu">
 		<span class='batch' data-icon='&#xf14a'></span> Menu
 	</button> -->
-	<svg class="button red" ui-sref="menu" width="170" height="70" viewBox="0 0 170 70">
+	<svg class="button blue" ui-sref="menu" width="170" height="70" viewBox="0 0 170 70">
 		<path style="stroke-miEterlimit:4" d="M10 15h40l10-4.99998h100v20.00002l-5 10v20H10z" id="buttonbase" opacity=".64855077"/>
 		<path d="M0 .00002h10V2H2v8.00002H0z" id="buttoncornerone"/>
 		<path d="M170-.00004V10h-2V1.99996h-8v-2z" id="buttoncornertwo"/>

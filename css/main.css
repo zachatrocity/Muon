@@ -112,9 +112,7 @@ img {
 
 
 .move-count-container{
-	background-color: #4183D7;
-	border-radius: 3px;
-  	box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+	background-image: url(../images/stats_background.svg);
 }
 
 #moveCountHeader{
@@ -129,9 +127,7 @@ img {
 }
 
 .timer-container{
-	background-color: #4183D7;
-	border-radius: 3px;
-  	box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+	background-image: url(../images/stats_background.svg);
 }
 
 #timerHeader{
@@ -249,6 +245,7 @@ a:hover{
 	cursor: default;
 	position: relative;
 	width: 50%; 
+	text-align: left;
 	margin: 0 auto;
 	margin-top: 50px;
 	color: #efefef;

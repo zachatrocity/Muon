@@ -55,6 +55,22 @@ span.button{
   fill: #bf3518;
 }
 
+.redhover:hover #buttonbase{
+  fill: #bf3518;
+}
+
+.gray {
+  fill: #aaa;
+}
+
+.gray [id^="buttoncorner"] {
+  fill: #aaa;
+}
+
+.greenhover:hover #buttonbase{
+  fill: #47bf53;
+}
+
 .green {
   fill: #5bff6a;
 }
@@ -76,6 +92,10 @@ span.button{
 }
 
 .blue:hover #buttonbase{
+  fill: #4486bf;
+}
+
+.bluehover:hover #buttonbase{
   fill: #4486bf;
 }
 
