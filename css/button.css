@@ -1,0 +1,79 @@
+/*.button {
+  display: inline-block;
+  position: relative;
+  margin: 15px 30px;
+  width: 170px;
+  height: 70px;
+  /*padding: 15px;
+  border-radius: 0.25em;
+  background: #4183D7;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+  background-image: url('../images/button_short.svg');
+  background-repeat: no-repeat;
+  -webkit-background-size: cover;
+  -webkit-transition: 0.3s;
+  background-color: rgba(0, 0, 0, 0);
+  transition: 0.3s;
+  border: none;
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-size: 14px;
+  font-weight: 700;
+  outline: none;
+  /*min-width: 100px;
+  -webkit-transition: none;
+  transition: none;
+}*/
+span.button{
+  position: relative;
+  left: 50%;
+  top: -45px;
+  z-index: 2;
+}
+.button{
+	display: inline-block;
+	position: relative;
+	margin: 15px 30px;
+	transition: 0.3s;
+	border: none;
+	cursor: pointer;
+  fill: #0000e3;
+}
+
+.button .red {
+  fill: #ee0000;
+}
+
+svg.button:before{
+  text-transform: capitalize;
+    content: "start";
+    font-size: 10px;
+    padding: .5em 1em;
+    position: absolute;
+    white-space: nowrap;
+}
+
+[id^="buttoncorner"] {
+	transition: 0.5s;
+}
+
+svg:hover #buttonbase{
+  fill: #000ee3;
+}
+
+svg:hover #buttoncornerone {
+	transform: translate(5px, 5px);
+}
+
+svg:hover #buttoncornertwo {
+	transform: translate(-5px, 5px);
+}
+
+svg:hover #buttoncornerthree {
+	transform: translate(5px, -5px);
+}
+
+svg:hover #buttoncornerfour {
+	transform: translate(-5px, -5px);
+}
