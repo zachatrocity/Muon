@@ -30,7 +30,7 @@ https://coolors.co/app/404040-f7f0f0-5490cc-5fad41-067bc2
 /*Batch icons*/
 
 @font-face{
-	font-family:Batch;
+	font-family: Batch;
 	src:url('../font/Batch/batch-icons-webfont.eot');
 	src:url('../font/Batch/batch-icons-webfont.eot?#iefix') format('embedded-opentype'),
 	  url('../font/Batch/batch-icons-webfont.woff') format('woff'),
@@ -51,7 +51,7 @@ html {
 }
 
 .batch {
-	font-family:"Batch"; 
+	font-family:"Batch", "Orbitron"; 
 }
 
 .batch:before {
