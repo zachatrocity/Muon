@@ -155,9 +155,10 @@ img {
 	position : absolute;
 	bottom: 50px;
 	right: 50px;
-	background: rgba(174, 174, 174, 0.55);
+	background-image: url(../images/chat_background.svg);
+	/*background: rgba(174, 174, 174, 0.55);
 	border-radius: 3px;
-  	box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+  	box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);*/
 	transition: .3s;
 }
 
@@ -201,7 +202,7 @@ img {
 }
  
 #messages::-webkit-scrollbar-thumb {
-  background: #666;
+  background: white;
   border-radius: 20px;
 }
 
@@ -410,7 +411,6 @@ a:hover{
 	font-size: 14px;
 	font-weight: 700;
 	margin: -15px;
-	padding-top: 1px;
 	display: block;
 	text-transform: uppercase;
 }

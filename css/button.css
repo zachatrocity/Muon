@@ -43,6 +43,13 @@ span.button{
   fill: #5bdeff;
 }
 
+.modal-btn {
+  margin: 0px;
+  -webkit-transition: visibility 0s 0.5s, opacity 0s;
+  transition: visibility 0s 0.5s, opacity 0s;
+  -webkit-transition-timing-function: ease-out;
+}
+
 .red {
   fill: #ff4720;
 }
