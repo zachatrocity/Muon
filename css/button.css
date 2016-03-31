@@ -135,3 +135,19 @@ svg:hover #buttoncornerthree {
 svg:hover #buttoncornerfour {
 	transform: translate(-5px, -5px);
 }
+
+svg:active #buttoncornerone {
+	transform: translate(7px, 7px);
+}
+
+svg:active #buttoncornertwo {
+	transform: translate(-7px, 7px);
+}
+
+svg:active #buttoncornerthree {
+	transform: translate(7px, -7px);
+}
+
+svg:active #buttoncornerfour {
+	transform: translate(-7px, -7px);
+}
