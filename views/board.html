@@ -146,11 +146,56 @@
 	<div class="game-sidebar" id="menu-hide"></div>
     <div class="game-sidebar">
 		<div class="game-menu-container">
-			<a ng-click="showQuitModal = true; mouse_click();" ng-mouseover="mouse_over()"><span data-balloon-length="medium" data-balloon-pos="left" data-balloon="Forfeit game and exit to the Main Menu">Main Menu</span></a>
-			<a ng-click="proposeDraw(); mouse_click();" ng-mouseover="mouse_over()"><span data-balloon-length="medium" data-balloon-pos="left" data-balloon="Propose a draw">Draw</span></a>
-			<a ng-click="showNewGameModal = true; mouse_click();" ng-mouseover="mouse_over()" ng-show="!isNetworkGame"><span data-balloon-length="medium" data-balloon-pos="left" data-balloon="Forfeit and start a new game">New Game</span></a>
-			<a ng-click="showOptionsModal = true; mouse_click();" ng-mouseover="mouse_over()"><span data-balloon-length="medium" data-balloon-pos="left" data-balloon="Change sound options">Options</span></a>
-			<a ng-click="showHelpModal = true; mouse_click();" ng-mouseover="mouse_over()"><span data-balloon-length="medium" data-balloon-pos="left" data-balloon="Summary of how to play">Help</span></a>
+			<span data-balloon-length="medium" data-balloon-pos="left" data-balloon="Forfeit game and exit to the Main Menu">
+			<svg class="button blue bluehover" width="170" height="70" viewBox="0 0 170 70" ng-click="showQuitModal = true; mouse_click();" ng-mouseover="mouse_over()">
+				<path style="stroke-miEterlimit:4" d="M10 15h40l10-4.99998h100v20.00002l-5 10v20H10z" id="buttonbase" opacity=".64855077"/>
+				<path d="M0 .00002h10V2H2v8.00002H0z" id="buttoncornerone"/>
+				<path d="M170-.00004V10h-2V1.99996h-8v-2z" id="buttoncornertwo"/>
+				<path d="M0 70.00004h10v-2H2v-8H0z" id="buttoncornerthree"/>
+				<path d="M170 70.00004h-10v-2h8v-8h2z" id="buttoncornerfour"/>
+				<text fill="black" x="85" y="40" text-anchor="middle" >Main Menu</text>
+			</svg>
+			</span>
+			<span data-balloon-length="medium" data-balloon-pos="left" data-balloon="Propose a draw">
+			<svg class="button blue bluehover" width="170" height="70" viewBox="0 0 170 70" ng-click="proposeDraw(); mouse_click();" ng-mouseover="mouse_over()">>
+				<path style="stroke-miEterlimit:4" d="M10 15h40l10-4.99998h100v20.00002l-5 10v20H10z" id="buttonbase" opacity=".64855077"/>
+				<path d="M0 .00002h10V2H2v8.00002H0z" id="buttoncornerone"/>
+				<path d="M170-.00004V10h-2V1.99996h-8v-2z" id="buttoncornertwo"/>
+				<path d="M0 70.00004h10v-2H2v-8H0z" id="buttoncornerthree"/>
+				<path d="M170 70.00004h-10v-2h8v-8h2z" id="buttoncornerfour"/>
+				<text fill="black" x="85" y="40" text-anchor="middle" >Draw</text>
+			</svg>
+			</span>
+			<span data-balloon-length="medium" data-balloon-pos="left" data-balloon="Propose a draw">
+			<svg class="button blue bluehover" width="170" height="70" viewBox="0 0 170 70" ng-click="showNewGameModal = true; mouse_click();" ng-mouseover="mouse_over()" ng-show="!isNetworkGame">
+				<path style="stroke-miEterlimit:4" d="M10 15h40l10-4.99998h100v20.00002l-5 10v20H10z" id="buttonbase" opacity=".64855077"/>
+				<path d="M0 .00002h10V2H2v8.00002H0z" id="buttoncornerone"/>
+				<path d="M170-.00004V10h-2V1.99996h-8v-2z" id="buttoncornertwo"/>
+				<path d="M0 70.00004h10v-2H2v-8H0z" id="buttoncornerthree"/>
+				<path d="M170 70.00004h-10v-2h8v-8h2z" id="buttoncornerfour"/>
+				<text fill="black" x="85" y="40" text-anchor="middle" >New Game</text>
+			</svg>
+			</span>
+			<span data-balloon-length="medium" data-balloon-pos="left" data-balloon="Change sound options">
+			<svg class="button blue bluehover" width="170" height="70" viewBox="0 0 170 70" ng-click="showOptionsModal = true; mouse_click();" ng-mouseover="mouse_over()">
+				<path style="stroke-miEterlimit:4" d="M10 15h40l10-4.99998h100v20.00002l-5 10v20H10z" id="buttonbase" opacity=".64855077"/>
+				<path d="M0 .00002h10V2H2v8.00002H0z" id="buttoncornerone"/>
+				<path d="M170-.00004V10h-2V1.99996h-8v-2z" id="buttoncornertwo"/>
+				<path d="M0 70.00004h10v-2H2v-8H0z" id="buttoncornerthree"/>
+				<path d="M170 70.00004h-10v-2h8v-8h2z" id="buttoncornerfour"/>
+				<text fill="black" x="85" y="40" text-anchor="middle" >Options</text>
+			</svg>
+			</span>
+			<span data-balloon-length="medium" data-balloon-pos="left" data-balloon="Summary of how to play">
+			<svg class="button blue bluehover" width="170" height="70" viewBox="0 0 170 70" ng-click="showHelpModal = true; mouse_click();" ng-mouseover="mouse_over()">
+				<path style="stroke-miEterlimit:4" d="M10 15h40l10-4.99998h100v20.00002l-5 10v20H10z" id="buttonbase" opacity=".64855077"/>
+				<path d="M0 .00002h10V2H2v8.00002H0z" id="buttoncornerone"/>
+				<path d="M170-.00004V10h-2V1.99996h-8v-2z" id="buttoncornertwo"/>
+				<path d="M0 70.00004h10v-2H2v-8H0z" id="buttoncornerthree"/>
+				<path d="M170 70.00004h-10v-2h8v-8h2z" id="buttoncornerfour"/>
+				<text fill="black" x="85" y="40" text-anchor="middle" >Help</text>
+			</svg>
+			</span>
 			<!-- <a ng-click="showQuitMuonModal = true"><span data-balloon-length="medium" data-balloon-pos="left" data-balloon="Quit game and close">Quit</span></a> -->
 		</div>
 	</div>

@@ -306,7 +306,7 @@ a:hover{
 	display: none;
 	width: 0;
 	height: 0;
-	background: url(./images/boardElec.gif);
+	background: url(../images/boardElec.gif);
 }
 
 #boardHeaderText {
@@ -399,30 +399,23 @@ a:hover{
 .game-menu-container {
 	
 	border-radius: 3px;
-  	box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+  	/*box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);*/
 	padding: 1px;
-	background: rgba(174, 174, 174, 0.55);
+	/*background: rgba(174, 174, 174, 0.55);*/
 }
 
 .game-menu-container span {
 	cursor: pointer;
 	letter-spacing: 2px;
-	box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
 	font-size: 14px;
 	font-weight: 700;
-	margin: 10px;
-	padding: 10px;
+	margin: -15px;
+	padding-top: 1px;
 	display: block;
-	background-color: #4183D7;
-	border-bottom: solid #404040 1px;
-	border-radius: 3px;
-}
-
-.game-menu-container a {
 	text-transform: uppercase;
 }
 
-.game-menu-container span:hover {
+/*.game-menu-container span:hover {
 	background: #2c75d2;
 }
 
@@ -430,5 +423,5 @@ a:hover{
 	-webkit-transform: translateY(2px);
 	transform: translateY(2px);
 	box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
-}
+}*/
 
