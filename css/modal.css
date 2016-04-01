@@ -34,8 +34,8 @@
     opacity:1;
 	visibility: visible;
 	width: 600px;
-	min-height: 325px;
-	color: rgba(0, 0, 0, 1);
+	min-height: 200px;
+	color: rgba(255, 255, 255, 1);
 }
 
 .help-modal {
@@ -75,14 +75,13 @@
 }
 
 .modal-X:hover {
-	color: #404040;
+	color: #909090;
 }
 
 .show-modal-btn {
 	visibility: visible;
 	opacity: 1;
 }
-
 .modal-prompt {
 	margin-top: 50px;
 }
