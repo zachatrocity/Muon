@@ -166,11 +166,11 @@ var evaluation = {
 			quadValueAIpos = boardAspect.getQuadBits(AIpos, 0);
 			quadValueHUpos = boardAspect.getQuadBits(HUpos, 0);
 			if(quadValueAIpos == 0b00000 && quadValueHUpos == 0b10010)
-				alue -= 5
+				value -= 5
 			quadValueAIpos = boardAspect.getQuadBits(AIpos, 3);
 			quadValueHUpos = boardAspect.getQuadBits(HUpos, 3);
 			if(quadValueAIpos == 0b00000 && quadValueHUpos == 0b11000)
-				alue -= 5
+				value -= 5
 		}
 
 		// Easy needs extra functionality
