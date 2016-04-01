@@ -149,13 +149,15 @@ img {
 
 #chat{
 	font-size: 0.8em;
-	height : 30%;
+	height : 235px;
 	width  : 425px;
 	float  : right;
 	position : absolute;
 	bottom: 50px;
 	right: 50px;
 	background-image: url(../images/chat_background.svg);
+	background-repeat: no-repeat;
+	-webkit-background-size: cover;
 	/*background: rgba(174, 174, 174, 0.55);
 	border-radius: 3px;
   	box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);*/
