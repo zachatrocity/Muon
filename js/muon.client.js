@@ -196,6 +196,7 @@ var Network = {
         },
 
         'roomMemberJoined': function(user) {
+          BoardGUI.hideAllModals();
           console.log('room member joined', user);
           cloak.message('refreshRoom');
         },
