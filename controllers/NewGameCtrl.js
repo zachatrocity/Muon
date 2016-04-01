@@ -6,15 +6,15 @@ muonApp.controller('NewGameCtrl', function ($scope, $stateParams) {
 
 	$scope.setAILevel = function(depth){
 		var difset = document.getElementById('diffsettings').children;
-
-		if(depth == 3){
+		var medium = 5
+		if(depth < medium){
 			difset[0].classList.remove('gray')
 			difset[0].classList.add('green')
 			difset[1].classList.add('gray')
 			difset[1].classList.remove('blue')
 			difset[2].classList.add('gray')
 			difset[2].classList.remove('red')
-		} else if(depth == 5) {
+		} else if(depth == medium) {
 			difset[0].classList.add('gray')
 			difset[0].classList.remove('green')
 			difset[1].classList.remove('gray')

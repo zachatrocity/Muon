@@ -111,51 +111,89 @@ var evaluation = {
 		[0b01110000000000000000,0b10101000100000000000,0b11011000000000000000,0b10101000000100000000,0b01110100001000010000]  //quad 3 node 0,1,2,3,4
 	],
 
+	//For testing how well evaluations are working
+	'nodesVisited':0,
+	'totalVisited':0,
+	'numberOfMove':0,
+	'maxNodes':0,
+
 	//return true if the players home quadrant is empty.
 	isHomeQuadEmpty:function(bitBoard, player){
 		if(player == 2 && (bitBoard&0b111110000000000) == 0)
-			return true;
+			return 3;
 		if(player == 1 && (bitBoard&0b1111100000) == 0)
-			return true;
+			return 3;
 		return false;
 	},
 
 	stateValue:function(bitBoard, bitBoard2, AI_tempFlag, HU_tempFlag, player){
-		var total = 0;
-		var currentBitBoard = (player == 1 ? bitBoard : bitBoard2);
-		total += this.stolenRealEstate(bitBoard, bitBoard2);
-		total += this.isHomeQuadEmpty(bitBoard, AI.AIPlayerNumber) ? 3 : 0;
-		total += this.isHomeQuadEmpty(bitBoard2, AI.HUPlayerNumber) ? -3 : 0;
-		total += this.positioning(bitBoard, bitBoard2);
-		return total;
+		return( this.stolenRealEstate(bitBoard, bitBoard2)
+			+ ( AI.maxDepth < 7 ? 
+				this.positioning(bitBoard, bitBoard2) :
+				this.isHomeQuadEmpty(bitBoard, AI.AIPlayerNumber)
+				)
+			)
 	},
 
 	stolenRealEstate:function(bitBoard, bitBoard2){
-		var stolenSpace = 0
-		for(var piece = bitManip.getLSB(bitBoard); bitBoard!=0; piece = bitManip.getLSB(bitBoard)){
-			var connections = this.nodeConnections[convert.bitToQuad(piece)][convert.bitToNode(piece)];
-			var adjacentOpponentpieces = connections&bitBoard2;
+		var stolenSpace = 0;
+		var connections, adjacentOpponentpieces, piece;
+		for(piece = bitManip.getLSB(bitBoard); bitBoard!=0; piece = bitManip.getLSB(bitBoard)){
+			connections = this.nodeConnections[convert.bitToQuad(piece)][convert.bitToNode(piece)];
+			adjacentOpponentpieces = connections&bitBoard2;
 			stolenSpace += bitManip.BitCount(adjacentOpponentpieces);
 			bitBoard ^= piece;
 		}
 		return stolenSpace;
 	},
 
-	positioning:function(AIpos, HUpos){4
+	//Only needed for search depth < 7 layers because of 
+	positioning:function(AIpos, HUpos){
 		var value = 0;
-		for(var quadrant = 0; quadrant < 4; quadrant++){
-			quadValueAIpos = boardAspect.getQuadBits(AIpos, quadrant);
-			quadValueHUpos = boardAspect.getQuadBits(HUpos, quadrant);
-			if(quadValueAIpos & 0b00001 == 0b00001)
-				value -= 50;
-			else if(quadValueAIpos == 0b10000 && quadValueHUpos == 0b01010)
-				value -= 3;
-			else if(quadValueAIpos == 0b01010 && quadValueHUpos == 0b10000)
-				value += 3;
-			else if(quadValueAIpos == 0b10101 && quadValueHUpos == 0b01010)
-				value -= 100;
+		//AI on top
+		if(AI.AIPlayerNumber == 1){
+			quadValueAIpos = boardAspect.getQuadBits(AIpos, 0);
+			quadValueHUpos = boardAspect.getQuadBits(HUpos, 0);
+			if(quadValueAIpos == 0b00000 && quadValueHUpos == 0b00011)
+				value = -5
+			quadValueAIpos = boardAspect.getQuadBits(AIpos, 3);
+			quadValueHUpos = boardAspect.getQuadBits(HUpos, 3);
+			if(quadValueAIpos == 0b00000 && quadValueHUpos == 0b01001)
+				value = -5
+		}
+		//AI on bottom
+		else {
+			quadValueAIpos = boardAspect.getQuadBits(AIpos, 0);
+			quadValueHUpos = boardAspect.getQuadBits(HUpos, 0);
+			if(quadValueAIpos == 0b00000 && quadValueHUpos == 0b10010)
+				value = -5
+			quadValueAIpos = boardAspect.getQuadBits(AIpos, 3);
+			quadValueHUpos = boardAspect.getQuadBits(HUpos, 3);
+			if(quadValueAIpos == 0b00000 && quadValueHUpos == 0b11000)
+				value = -5
+		}
+
+		// Easy needs extra functionality
+		if(AI.maxDepth == 1){
+			for (var i = 0; i < 4; i++) {
+				var quadValueAIpos = boardAspect.getQuadBits(AIpos, i);
+				value += quadValueAIpos&0b00100 == 0b00100 ? 2 : 0
+			}
+			var home = boardAspect.getQuadBits(AIpos, AI.AIPlayerNumber);
+			var leftHome = bitManip.BitCount(home);
+			value -= leftHome > 2 ? leftHome : 0;
 		}
 		return value;
+	},
+
+	quickReturn:function(AIpos){
+		var x = AIpos&0b00001000010000100001
+		if(x != 0){
+			x = (x<<1)+(x<<2)+(x<<3);
+			if(x != 0b00000000000111000000 && x != 0b00000011100000000000)
+				return true;
+		}
+		return false;
 	},
 
 	Win:function(bitBoard, player, AI_tempFlag, HU_tempFlag){
@@ -189,8 +227,10 @@ var AI = {
 		//Check for a win condition. If the win is close to the top of the tree it's worth more.
 		if(evaluation.Win(HU_position, AI.HUPlayerNumber, AI_tempFlag, HU_tempFlag))
 			return ~(100 * (depth + 1)) + 1;
-		if(depth == 0)
-			return ~(evaluation.stateValue(AI_position, HU_position, AI_tempFlag, HU_tempFlag, AI.HUPlayerNumber)) + 1
+		if(evaluation.quickReturn(AI_position))
+			return 7;
+
+		//evaluation.nodesVisited++;
 
 		//Get and loop through all the players pieces.
 		var allPieces = AI_position;
@@ -212,7 +252,6 @@ var AI = {
 					if(score > alpha)
 						score = -AI.DeepPVSHU(~beta+1, ~alpha+1, depth-1, b1, HU_position, AI_tempFlag, HU_tempFlag);
 				}
-
 				if(score >= beta)
 					return beta;
 				if(score > alpha){
@@ -230,8 +269,12 @@ var AI = {
 		//Check for a win condition. If the win is close to the top of the tree it's worth more.
 		if(evaluation.Win(AI_position, AI.AIPlayerNumber, AI_tempFlag, HU_tempFlag))
 			return ~(100 * (depth + 1)) + 1;
+		if(evaluation.quickReturn(AI_position))
+			return 7;
 		if(depth == 0)
 			return ~(evaluation.stateValue(AI_position, HU_position, AI_tempFlag, HU_tempFlag, AI.AIPlayerNumber)) + 1
+
+		//evaluation.nodesVisited++;
 
 		//Get and loop through all the players pieces.
 		var allPieces = HU_position;
@@ -305,6 +348,8 @@ var updateHumanBoard = function(start, end){
 var updateAIBoard = function(start, end){
 	//Make and save player ones move.
 	AI_position ^= start^end;
+	evaluation.numberOfMove++;
+	console.log(evaluation.totalVisited / evaluation.numberOfMove)
 
 	//remove the flag if needed.
 	if(evaluation.isHomeQuadEmpty(AI_position, AI.AIPlayerNumber))
@@ -314,27 +359,20 @@ var updateAIBoard = function(start, end){
 	AI.currentMoveOptions = [];
 }
 
-var moves = 0;
-var totalTime = 0;
 var makeMoveAgainstAI = function(start, end, HumanMovesFirst){
 	updateHumanBoard(start, end); // Human move
 	if(!evaluation.Win(HU_position, AI.HUPlayerNumber, AI_flag, HU_flag)){
 		AI.pvs(-1000, 1000, AI.maxDepth, AI_position, HU_position);
-		moves++;
 
 		var indexOfBestMove;
 		var bestMoves = [];
 		var bestScore = -Infinity;
-		for (var i = 0; i < AI.currentMoveOptions.length; i++){
-			if(AI.currentMoveOptions[i].value > bestScore){
+		for (var i = 0; i < AI.currentMoveOptions.length; i++)
+			if(AI.currentMoveOptions[i].value > bestScore)
 				bestScore = AI.currentMoveOptions[i].value;
-				//indexOfBestMove = i;
-			}
-		}
 		for (var i = 0; i < AI.currentMoveOptions.length; i++)
 			if(AI.currentMoveOptions[i].value == bestScore)
 				bestMoves[bestMoves.length] = i;
-
 		indexOfBestMove = bestMoves[Date.now() % bestMoves.length];
 
 		var s = convert.bitToInt(AI.currentMoveOptions[indexOfBestMove].start);
@@ -343,31 +381,32 @@ var makeMoveAgainstAI = function(start, end, HumanMovesFirst){
 		var w = evaluation.Win(AI_position, AI.AIPlayerNumber, AI_flag, HU_flag);
 	}
 	
+	console.log('nodesVisited ' + evaluation.nodesVisited);
+	evaluation.nodesVisited = 0;
 	return({'from': s, 'to': e, 'AiWin': w});
 }
 
 var makeAIMove = function(){
 	AI.pvs(-1000, 1000, AI.maxDepth, AI_position, HU_position);
-	moves++;
 
 	var indexOfBestMove;
 		var bestMoves = [];
 		var bestScore = -Infinity;
-		for (var i = 0; i < AI.currentMoveOptions.length; i++){
-			if(AI.currentMoveOptions[i].value > bestScore){
+		for (var i = 0; i < AI.currentMoveOptions.length; i++)
+			if(AI.currentMoveOptions[i].value > bestScore)
 				bestScore = AI.currentMoveOptions[i].value;
-				//indexOfBestMove = i;
-			}
-		}
 		for (var i = 0; i < AI.currentMoveOptions.length; i++)
 			if(AI.currentMoveOptions[i].value == bestScore)
 				bestMoves[bestMoves.length] = i;
-
 		indexOfBestMove = bestMoves[Date.now() % bestMoves.length];
 
 	var s = convert.bitToInt(AI.currentMoveOptions[indexOfBestMove].start);
 	var e = convert.bitToInt(AI.currentMoveOptions[indexOfBestMove].end);
 	updateAIBoard(AI.currentMoveOptions[indexOfBestMove].start, AI.currentMoveOptions[indexOfBestMove].end);
+
+	// console.log('nodesVisited ' + evaluation.nodesVisited);
+	// evaluation.totalVisited += evaluation.nodesVisited;
+	// evaluation.nodesVisited = 0;
 	return({'from': s, 'to': e});
 }
 
@@ -391,6 +430,7 @@ onmessage = function(e) {
 		AI.nextMoveOption = [];
 		AI.bestMovePredicted = [];
 		AI.maxDepth = e.data.depth;
+
 		if(e.data.AIStarts === true){
 			var workerResult = makeAIMove();
 			postMessage(workerResult);
