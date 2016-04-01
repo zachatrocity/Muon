@@ -120,19 +120,19 @@ var evaluation = {
 	//return true if the players home quadrant is empty.
 	isHomeQuadEmpty:function(bitBoard, player){
 		if(player == 2 && (bitBoard&0b111110000000000) == 0)
-			return 3;
+			return true;
 		if(player == 1 && (bitBoard&0b1111100000) == 0)
-			return 3;
+			return true;
 		return false;
 	},
 
 	stateValue:function(bitBoard, bitBoard2, AI_tempFlag, HU_tempFlag, player){
-		return( this.stolenRealEstate(bitBoard, bitBoard2)
-			+ ( AI.maxDepth < 7 ? 
-				this.positioning(bitBoard, bitBoard2) :
-				this.isHomeQuadEmpty(bitBoard, AI.AIPlayerNumber)
-				)
-			)
+		value = 0;
+		value += this.stolenRealEstate(bitBoard, bitBoard2);
+		value += AI.maxDepth <= 5 ? this.positioning(bitBoard, bitBoard2) : 0;
+		value += this.isHomeQuadEmpty(bitBoard2, AI.HUPlayerNumber) ? 3 : 0;
+		value -= this.isHomeQuadEmpty(bitBoard, AI.AIPlayerNumber) ? 3 : 0;
+		return value;
 	},
 
 	stolenRealEstate:function(bitBoard, bitBoard2){
@@ -155,22 +155,22 @@ var evaluation = {
 			quadValueAIpos = boardAspect.getQuadBits(AIpos, 0);
 			quadValueHUpos = boardAspect.getQuadBits(HUpos, 0);
 			if(quadValueAIpos == 0b00000 && quadValueHUpos == 0b00011)
-				value = -5
+				value -= 5
 			quadValueAIpos = boardAspect.getQuadBits(AIpos, 3);
 			quadValueHUpos = boardAspect.getQuadBits(HUpos, 3);
 			if(quadValueAIpos == 0b00000 && quadValueHUpos == 0b01001)
-				value = -5
+				value -= 5
 		}
 		//AI on bottom
 		else {
 			quadValueAIpos = boardAspect.getQuadBits(AIpos, 0);
 			quadValueHUpos = boardAspect.getQuadBits(HUpos, 0);
 			if(quadValueAIpos == 0b00000 && quadValueHUpos == 0b10010)
-				value = -5
+				alue -= 5
 			quadValueAIpos = boardAspect.getQuadBits(AIpos, 3);
 			quadValueHUpos = boardAspect.getQuadBits(HUpos, 3);
 			if(quadValueAIpos == 0b00000 && quadValueHUpos == 0b11000)
-				value = -5
+				alue -= 5
 		}
 
 		// Easy needs extra functionality
@@ -228,9 +228,9 @@ var AI = {
 		if(evaluation.Win(HU_position, AI.HUPlayerNumber, AI_tempFlag, HU_tempFlag))
 			return ~(100 * (depth + 1)) + 1;
 		if(evaluation.quickReturn(AI_position))
-			return 7;
+			return 15;
 
-		//evaluation.nodesVisited++;
+		evaluation.nodesVisited++;
 
 		//Get and loop through all the players pieces.
 		var allPieces = AI_position;
@@ -270,11 +270,11 @@ var AI = {
 		if(evaluation.Win(AI_position, AI.AIPlayerNumber, AI_tempFlag, HU_tempFlag))
 			return ~(100 * (depth + 1)) + 1;
 		if(evaluation.quickReturn(AI_position))
-			return 7;
+			return 15;
 		if(depth == 0)
 			return ~(evaluation.stateValue(AI_position, HU_position, AI_tempFlag, HU_tempFlag, AI.AIPlayerNumber)) + 1
 
-		//evaluation.nodesVisited++;
+		evaluation.nodesVisited++;
 
 		//Get and loop through all the players pieces.
 		var allPieces = HU_position;
@@ -404,9 +404,9 @@ var makeAIMove = function(){
 	var e = convert.bitToInt(AI.currentMoveOptions[indexOfBestMove].end);
 	updateAIBoard(AI.currentMoveOptions[indexOfBestMove].start, AI.currentMoveOptions[indexOfBestMove].end);
 
-	// console.log('nodesVisited ' + evaluation.nodesVisited);
-	// evaluation.totalVisited += evaluation.nodesVisited;
-	// evaluation.nodesVisited = 0;
+	console.log('nodesVisited ' + evaluation.nodesVisited);
+	evaluation.totalVisited += evaluation.nodesVisited;
+	evaluation.nodesVisited = 0;
 	return({'from': s, 'to': e});
 }
 
