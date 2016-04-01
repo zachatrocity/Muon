@@ -125,6 +125,7 @@ var evaluation = {
 		total += this.stolenRealEstate(bitBoard, bitBoard2);
 		total += this.isHomeQuadEmpty(bitBoard, AI.AIPlayerNumber) ? 5 : -1;
 		total += this.isHomeQuadEmpty(bitBoard2, AI.HUPlayerNumber) ? -5 : 1;
+		total += AI.maxDepth < 7 ? this.positioning(bitBoard,bitBoard2) : 0;
 		return total;
 	},
 
@@ -139,12 +140,42 @@ var evaluation = {
 		return stolenSpace;
 	},
 
-	positioning:function(bitBoard, bitBoard2){
-		for(var i = 0; i < 4; i++){
-			quadValueBitBoard = boardAspect.getQuadBits(bitBoard, quadrant);
-			quadValueBitBoard2 = boardAspect.getQuadBits(bitBoard2, quadrant);
-			
+	//Only needed for search depth < 7 layers because of 
+	positioning:function(AIpos, HUpos){
+		var value = 0;
+		//AI on top
+		if(AI.AIPlayerNumber == 1){
+			quadValueAIpos = boardAspect.getQuadBits(AIpos, 0);
+			quadValueHUpos = boardAspect.getQuadBits(HUpos, 0);
+			if(quadValueAIpos == 0b00000 && quadValueHUpos == 0b00011)
+				value -= 5
+			quadValueAIpos = boardAspect.getQuadBits(AIpos, 3);
+			quadValueHUpos = boardAspect.getQuadBits(HUpos, 3);
+			if(quadValueAIpos == 0b00000 && quadValueHUpos == 0b01001)
+				value -= 5
 		}
+		//AI on bottom
+		else {
+			quadValueAIpos = boardAspect.getQuadBits(AIpos, 0);
+			quadValueHUpos = boardAspect.getQuadBits(HUpos, 0);
+			if(quadValueAIpos == 0b00000 && quadValueHUpos == 0b10010)
+				value -= 5
+			quadValueAIpos = boardAspect.getQuadBits(AIpos, 3);
+			quadValueHUpos = boardAspect.getQuadBits(HUpos, 3);
+			if(quadValueAIpos == 0b00000 && quadValueHUpos == 0b11000)
+				value -= 5
+		}
+		return value;
+	},
+
+	quickReturn:function(AIpos){
+		var x = AIpos&0b00001000010000100001
+		if(x != 0){
+			x = (x<<1)+(x<<2)+(x<<3);
+			if(x != 0b00000000000111000000 && x != 0b00000011100000000000)
+				return true;
+		}
+		return false;
 	},
 
 	Win:function(bitBoard, player, AI_tempFlag, HU_tempFlag){
@@ -178,8 +209,6 @@ var AI = {
 		//Check for a win condition. If the win is close to the top of the tree it's worth more.
 		if(evaluation.Win(HU_position, AI.HUPlayerNumber, AI_tempFlag, HU_tempFlag))
 			return ~(100 * (depth + 1)) + 1;
-		if(depth == 0)
-			return ~(evaluation.stateValue(AI_position, HU_position, AI_tempFlag, HU_tempFlag, AI.HUPlayerNumber)) + 1
 
 		//Get and loop through all the players pieces.
 		var allPieces = AI_position;
@@ -219,6 +248,8 @@ var AI = {
 		//Check for a win condition. If the win is close to the top of the tree it's worth more.
 		if(evaluation.Win(AI_position, AI.AIPlayerNumber, AI_tempFlag, HU_tempFlag))
 			return ~(100 * (depth + 1)) + 1;
+		if(evaluation.quickReturn(AI_position))
+			return 15;
 		if(depth == 0)
 			return ~(evaluation.stateValue(AI_position, HU_position, AI_tempFlag, HU_tempFlag, AI.AIPlayerNumber)) + 1
 
