@@ -472,6 +472,7 @@ var gameCore = {
 		moveMuonsToWinFoci: function(f1,f2,f3, muon){
 			//f1,f2,f3 are the foci to move from
 			document.addEventListener("click", gameCore.endAnimation);
+			console.log("repeat");
 
 			// Prevent user from clicking any menu buttons during animation
 			document.getElementById("menu-hide").style.zIndex = 2;
@@ -480,6 +481,10 @@ var gameCore = {
 			if (muon)
 			{
 				player.src = "./videos/muonWin.mp4";
+			}
+			else if (f1 == -1 && f2 == -1 && f3 == -1) // If all foci are equal to zero, it is a draw
+			{
+				player.src = "./videos/Draw.mp4";
 			}
 			else
 			{
@@ -501,11 +506,14 @@ var gameCore = {
 				d3.select('.id' + o.id).transition().style('opacity', '0');
 			});
 
-			setTimeout(function(){
-				gameCore.board.rotateMuonAtFoci(20);
-				gameCore.board.rotateMuonAtFoci(21);
-				gameCore.board.rotateMuonAtFoci(22);
-			},1750)
+			if (f1 != -1 && f2 != -1 && f3 != -1)
+			{
+				setTimeout(function(){
+					gameCore.board.rotateMuonAtFoci(20);
+					gameCore.board.rotateMuonAtFoci(21);
+					gameCore.board.rotateMuonAtFoci(22);
+				},1750)
+			}
 
 			player.play();
 
@@ -835,6 +843,7 @@ var gameCore = {
 		}
 		else{
 			console.log("IT'S A DRAW!");
+			gameCore.board.moveMuonsToWinFoci(-1,-1,-1,false);
 			BoardGUI.showDrawModal();
 		}
 	},
@@ -847,9 +856,21 @@ var gameCore = {
 		// history.pushState({foo: 'bar'}, 'Play', 'newgame.html');
 	},
 	endAnimation: function(){
-		gameCore.EndGame();
+		if (gameCore.winner == "local" || gameCore.winner == "human")
+		{
+			BoardGUI.showWinModal();
+		}
+		else if (gameCore.winner == "opponent" || gameCore.winner == "ai")
+		{
+			BoardGUI.showLoseModal();
+		}
+		else
+		{
+			BoardGUI.showDrawModal();
+		}
 		document.removeEventListener("click", gameCore.endAnimation);
 		document.getElementById("menu-hide").style.zIndex = 0;
+		document
 	}
 };
 

@@ -18,6 +18,7 @@
 	<div class="gamepieces gameboard">	
 	</div>
 
+	<!-- Waiting modal -->
 	<div class="modal waiting" id="waiting_modal">
 		<div class="modal-dialog">
 			<h3 class="modal-prompt">Waiting for opponent...</h3>
@@ -30,16 +31,31 @@
 		</div>
 	</div>
 
+	<!-- Disconnect modal -->
 	<div class="modal waiting" id="disconnect_modal">
 		<div class="modal-dialog">
 			<h3 class="modal-prompt">Opponent disconnected. Where would you like to go?</h3>
 			<div class="row">
 				<div class="col-xs-4 col-xs-offset-2">
-					<input type="button" ng-mouseover="mouse_over()" class="modal-btn button" ng-click="mouse_click(); returnToLobby()" value="Lobby" />
+					<svg class="button green greenhover modal-btn" width="170" height="70" viewBox="0 0 170 70"  ng-mouseover="mouse_over()" ng-click="mouse_click(); returnToLobby()">
+						<path style="stroke-miEterlimit:4" d="M10 15h40l10-4.99998h100v20.00002l-5 10v20H10z" id="buttonbase" opacity=".64855077"/>
+						<path d="M0 .00002h10V2H2v8.00002H0z" id="buttoncornerone"/>
+						<path d="M170-.00004V10h-2V1.99996h-8v-2z" id="buttoncornertwo"/>
+						<path d="M0 70.00004h10v-2H2v-8H0z" id="buttoncornerthree"/>
+						<path d="M170 70.00004h-10v-2h8v-8h2z" id="buttoncornerfour"/>
+						<text fill="white" x="85" y="40" text-anchor="middle" >Lobby</text>
+					</svg>
 				</div>
 				
 				<div class="col-xs-4">
-					<input type="button" ng-mouseover="mouse_over()" class="modal-btn button" ng-click="mouse_click(); quitToMenu()" value="Main Menu"/>
+					<svg class="button blue bluehover modal-btn" width="170" height="70" viewBox="0 0 170 70" ng-mouseover="mouse_over()" ng-click="mouse_click(); quitToMenu()">
+						<path style="stroke-miEterlimit:4" d="M10 15h40l10-4.99998h100v20.00002l-5 10v20H10z" id="buttonbase" opacity=".64855077"/>
+						<path d="M0 .00002h10V2H2v8.00002H0z" id="buttoncornerone"/>
+						<path d="M170-.00004V10h-2V1.99996h-8v-2z" id="buttoncornertwo"/>
+						<path d="M0 70.00004h10v-2H2v-8H0z" id="buttoncornerthree"/>
+						<path d="M170 70.00004h-10v-2h8v-8h2z" id="buttoncornerfour"/>
+						<text fill="white" x="85" y="40" text-anchor="middle" >Main Menu</text>
+					</svg>
 				</div>
 			</div>
 		</div>
@@ -51,11 +67,25 @@
 			<h3 class="modal-prompt">Your opponent would like to draw. Do you accept?</h3>
 			<div class="row">
 				<div class="col-xs-4 col-xs-offset-2">
-					<input type="button" ng-mouseover="mouse_over()" class="modal-btn button" ng-click="mouse_click(); respondToDraw(true)" value="Accept" />
+					<svg class="button green greenhover modal-btn" width="170" height="70" viewBox="0 0 170 70" ng-mouseover="mouse_over()" ng-click="mouse_click(); respondToDraw(true)">
+						<path style="stroke-miEterlimit:4" d="M10 15h40l10-4.99998h100v20.00002l-5 10v20H10z" id="buttonbase" opacity=".64855077"/>
+						<path d="M0 .00002h10V2H2v8.00002H0z" id="buttoncornerone"/>
+						<path d="M170-.00004V10h-2V1.99996h-8v-2z" id="buttoncornertwo"/>
+						<path d="M0 70.00004h10v-2H2v-8H0z" id="buttoncornerthree"/>
+						<path d="M170 70.00004h-10v-2h8v-8h2z" id="buttoncornerfour"/>
+						<text fill="white" x="85" y="40" text-anchor="middle" >Accept</text>
+					</svg>
 				</div>
 				
 				<div class="col-xs-4">
-					<input type="button" ng-mouseover="mouse_over()" class="modal-btn button" ng-click="mouse_click(); respondToDraw(false)" value="Decline"/>
+					<svg class="button blue bluehover modal-btn" width="170" height="70" viewBox="0 0 170 70" ng-mouseover="mouse_over()" ng-click="mouse_click(); respondToDraw(false)">
+						<path style="stroke-miEterlimit:4" d="M10 15h40l10-4.99998h100v20.00002l-5 10v20H10z" id="buttonbase" opacity=".64855077"/>
+						<path d="M0 .00002h10V2H2v8.00002H0z" id="buttoncornerone"/>
+						<path d="M170-.00004V10h-2V1.99996h-8v-2z" id="buttoncornertwo"/>
+						<path d="M0 70.00004h10v-2H2v-8H0z" id="buttoncornerthree"/>
+						<path d="M170 70.00004h-10v-2h8v-8h2z" id="buttoncornerfour"/>
+						<text fill="white" x="85" y="40" text-anchor="middle" >Decline</text>
+					</svg>
 				</div>
 			</div>
 		</div>
@@ -67,11 +97,25 @@
 			<h3 class="modal-prompt">Your opponent would like to rematch. Do you accept?</h3>
 			<div class="row">
 				<div class="col-xs-4 col-xs-offset-2">
-					<input type="button" ng-mouseover="mouse_over()" class="modal-btn button" ng-click="mouse_click(); respondToRematch(true)" value="Accept" />
+					<svg class="button green greenhover modal-btn" width="170" height="70" viewBox="0 0 170 70" ng-mouseover="mouse_over()" ng-click="mouse_click(); respondToRematch(true)">
+						<path style="stroke-miEterlimit:4" d="M10 15h40l10-4.99998h100v20.00002l-5 10v20H10z" id="buttonbase" opacity=".64855077"/>
+						<path d="M0 .00002h10V2H2v8.00002H0z" id="buttoncornerone"/>
+						<path d="M170-.00004V10h-2V1.99996h-8v-2z" id="buttoncornertwo"/>
+						<path d="M0 70.00004h10v-2H2v-8H0z" id="buttoncornerthree"/>
+						<path d="M170 70.00004h-10v-2h8v-8h2z" id="buttoncornerfour"/>
+						<text fill="white" x="85" y="40" text-anchor="middle" >Accept</text>
+					</svg>
 				</div>
 				
 				<div class="col-xs-4">
-					<input type="button" ng-mouseover="mouse_over()" class="modal-btn button" ng-click="mouse_click(); respondToRematch(false)" value="Decline"/>
+					<svg class="button blue bluehover modal-btn" width="170" height="70" viewBox="0 0 170 70" ng-mouseover="mouse_over()" ng-click="mouse_click(); respondToRematch(false)">
+						<path style="stroke-miEterlimit:4" d="M10 15h40l10-4.99998h100v20.00002l-5 10v20H10z" id="buttonbase" opacity=".64855077"/>
+						<path d="M0 .00002h10V2H2v8.00002H0z" id="buttoncornerone"/>
+						<path d="M170-.00004V10h-2V1.99996h-8v-2z" id="buttoncornertwo"/>
+						<path d="M0 70.00004h10v-2H2v-8H0z" id="buttoncornerthree"/>
+						<path d="M170 70.00004h-10v-2h8v-8h2z" id="buttoncornerfour"/>
+						<text fill="white" x="85" y="40" text-anchor="middle" >Decline</text>
+					</svg>
 				</div>
 			</div>
 		</div>
@@ -83,11 +127,25 @@
 			<h3 class="modal-prompt">You Won!</h3>
 			<div class="row">
 				<div class="col-xs-4 col-xs-offset-2">
-					<input type="button" ng-mouseover="mouse_over()" class="modal-btn button" ng-click="mouse_click(); (isNetworkGame) ? proposeRematch() : startNewGame()" value="{{(isNetworkGame) ? 'Rematch' : 'New Game'}}" />
+					<svg class="button green greenhover modal-btn" width="170" height="70" viewBox="0 0 170 70" ng-mouseover="mouse_over()" ng-click="mouse_click(); (isNetworkGame) ? proposeRematch() : startNewGame()">
+						<path style="stroke-miEterlimit:4" d="M10 15h40l10-4.99998h100v20.00002l-5 10v20H10z" id="buttonbase" opacity=".64855077"/>
+						<path d="M0 .00002h10V2H2v8.00002H0z" id="buttoncornerone"/>
+						<path d="M170-.00004V10h-2V1.99996h-8v-2z" id="buttoncornertwo"/>
+						<path d="M0 70.00004h10v-2H2v-8H0z" id="buttoncornerthree"/>
+						<path d="M170 70.00004h-10v-2h8v-8h2z" id="buttoncornerfour"/>
+						<text fill="white" x="85" y="40" text-anchor="middle" >{{(isNetworkGame) ? 'Rematch' : 'New Game'}}</text>
+					</svg>
 				</div>
 				
 				<div class="col-xs-4">
-					<input type="button" ng-mouseover="mouse_over()" class="modal-btn button" ng-click="mouse_click(); quitToMenu()" value="Main Menu"/>
+					<svg class="button blue bluehover modal-btn" width="170" height="70" viewBox="0 0 170 70" ng-mouseover="mouse_over()" ng-click="mouse_click(); quitToMenu()">
+						<path style="stroke-miEterlimit:4" d="M10 15h40l10-4.99998h100v20.00002l-5 10v20H10z" id="buttonbase" opacity=".64855077"/>
+						<path d="M0 .00002h10V2H2v8.00002H0z" id="buttoncornerone"/>
+						<path d="M170-.00004V10h-2V1.99996h-8v-2z" id="buttoncornertwo"/>
+						<path d="M0 70.00004h10v-2H2v-8H0z" id="buttoncornerthree"/>
+						<path d="M170 70.00004h-10v-2h8v-8h2z" id="buttoncornerfour"/>
+						<text fill="white" x="85" y="40" text-anchor="middle" >Main Menu</text>
+					</svg>
 				</div>
 			</div>
 		</div>
@@ -99,11 +157,25 @@
 			<h3 class="modal-prompt">You Lost!</h3>
 			<div class="row">
 				<div class="col-xs-4 col-xs-offset-2">
-					<input type="button" ng-mouseover="mouse_over()" class="modal-btn button" ng-click="mouse_click(); (isNetworkGame) ? proposeRematch() : startNewGame()" value="{{(isNetworkGame) ? 'Rematch' : 'New Game'}}" />
+					<svg class="button green greenhover modal-btn" width="170" height="70" viewBox="0 0 170 70"  ng-mouseover="mouse_over()" ng-click="mouse_click(); (isNetworkGame) ? proposeRematch() : startNewGame()">
+						<path style="stroke-miEterlimit:4" d="M10 15h40l10-4.99998h100v20.00002l-5 10v20H10z" id="buttonbase" opacity=".64855077"/>
+						<path d="M0 .00002h10V2H2v8.00002H0z" id="buttoncornerone"/>
+						<path d="M170-.00004V10h-2V1.99996h-8v-2z" id="buttoncornertwo"/>
+						<path d="M0 70.00004h10v-2H2v-8H0z" id="buttoncornerthree"/>
+						<path d="M170 70.00004h-10v-2h8v-8h2z" id="buttoncornerfour"/>
+						<text fill="white" x="85" y="40" text-anchor="middle" >{{(isNetworkGame) ? 'Rematch' : 'New Game'}}</text>
+					</svg>
 				</div>
 				
 				<div class="col-xs-4">
-					<input type="button" ng-mouseover="mouse_over()" class="modal-btn button" ng-click="mouse_click(); quitToMenu()" value="Main Menu"/>
+					<svg class="button blue bluehover modal-btn" width="170" height="70" viewBox="0 0 170 70" ng-mouseover="mouse_over()" ng-click="mouse_click(); quitToMenu()">
+						<path style="stroke-miEterlimit:4" d="M10 15h40l10-4.99998h100v20.00002l-5 10v20H10z" id="buttonbase" opacity=".64855077"/>
+						<path d="M0 .00002h10V2H2v8.00002H0z" id="buttoncornerone"/>
+						<path d="M170-.00004V10h-2V1.99996h-8v-2z" id="buttoncornertwo"/>
+						<path d="M0 70.00004h10v-2H2v-8H0z" id="buttoncornerthree"/>
+						<path d="M170 70.00004h-10v-2h8v-8h2z" id="buttoncornerfour"/>
+						<text fill="white" x="85" y="40" text-anchor="middle" >Main Menu</text>
+					</svg>
 				</div>
 			</div>
 		</div>
@@ -115,7 +187,7 @@
 			<h3 class="modal-prompt">It's a Draw!</h3>
 			<div class="row">
 				<div class="col-xs-4 col-xs-offset-2">
-					<svg class="button blue bluehover modal-btn" width="170" height="70" viewBox="0 0 170 70" ng-mouseover="mouse_over()" ng-click="mouse_click(); (isNetworkGame) ? proposeRematch() : startNewGame()">
+					<svg class="button green greenhover modal-btn" width="170" height="70" viewBox="0 0 170 70" ng-mouseover="mouse_over()" ng-click="mouse_click(); (isNetworkGame) ? proposeRematch() : startNewGame()">
 						<path style="stroke-miEterlimit:4" d="M10 15h40l10-4.99998h100v20.00002l-5 10v20H10z" id="buttonbase" opacity=".64855077"/>
 						<path d="M0 .00002h10V2H2v8.00002H0z" id="buttoncornerone"/>
 						<path d="M170-.00004V10h-2V1.99996h-8v-2z" id="buttoncornertwo"/>
