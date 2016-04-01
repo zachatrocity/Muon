@@ -847,8 +847,9 @@ var gameCore = {
 		// history.pushState({foo: 'bar'}, 'Play', 'newgame.html');
 	},
 	endAnimation: function(){
-		gameCore.board.gameOverModal();
+		gameCore.EndGame();
 		document.removeEventListener("click", gameCore.endAnimation);
+		document.getElementById("menu-hide").style.zIndex = 0;
 	}
 };
 

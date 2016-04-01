@@ -250,8 +250,8 @@ var BoardGUI = {
     if(modal != null){
       modal.classList.add("dim-lights");
       modal.children[0].classList.add("show-modal");
-      modal.getElementsByTagName("input")[0].classList.add("show-modal-btn");
-      modal.getElementsByTagName("input")[1].classList.add("show-modal-btn");
+      modal.getElementsByTagName("svg")[0].classList.add("show-modal-btn");
+      modal.getElementsByTagName("svg")[1].classList.add("show-modal-btn");
     }
   },
   hideDrawModal: function(){
@@ -259,8 +259,8 @@ var BoardGUI = {
     if(modal != null){
       modal.classList.remove("dim-lights");
       modal.children[0].classList.remove("show-modal");
-      modal.getElementsByTagName("input")[0].classList.remove("show-modal-btn");
-      modal.getElementsByTagName("input")[1].classList.remove("show-modal-btn");
+      modal.getElementsByTagName("svg")[0].classList.remove("show-modal-btn");
+      modal.getElementsByTagName("svg")[1].classList.remove("show-modal-btn");
     }
   },
   showNetworkDrawModal: function(){
@@ -268,8 +268,8 @@ var BoardGUI = {
     if(modal != null){
       modal.classList.add("dim-lights");
       modal.children[0].classList.add("show-modal");
-      modal.getElementsByTagName("input")[0].classList.add("show-modal-btn");
-      modal.getElementsByTagName("input")[1].classList.add("show-modal-btn");
+      modal.getElementsByTagName("svg")[0].classList.add("show-modal-btn");
+      modal.getElementsByTagName("svg")[1].classList.add("show-modal-btn");
     }
   },
   hideNetworkDrawModal: function(){
