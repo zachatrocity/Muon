@@ -804,7 +804,6 @@ var gameCore = {
 			});
 	 	}
 
-	 	BoardGUI.timer.reset();
 	},
 	//EndGame sets the game board to not be able to be interfered with by the player.
 	EndGame: function() {

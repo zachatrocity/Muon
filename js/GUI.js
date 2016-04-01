@@ -105,16 +105,6 @@ var NetworkGUI = {
 }
 
 var BoardGUI = {
-  timer: {
-    seconds: 0, 
-    minutes: 0, 
-    hours: 0,
-    reset: function() {
-      BoardGUI.timer.seconds = 0;
-      BoardGUI.timer.minutes = 0;
-      BoardGUI.timer.hours = 0;
-    }
-  },
   removeMuonFlag: function(){
 	var flagG = document.getElementById("flagG");
 	flagG.classList.add("fade-out");
