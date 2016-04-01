@@ -1,10 +1,10 @@
 muonApp.controller('OptionsCtrl', function ($scope, $stateParams) {
 	
-	var muteMusicFalseText = 'Mute Music &nbsp<span class="batch" data-icon="&#xf03b"></span>';
-	var muteMusicTrueText = 'Unmute Music &nbsp<span class="batch" data-icon="&#xf038" style="color: #990000"></span>';
+	var muteMusicFalseText = 'Mute Music &nbsp&#xf03b';
+	var muteMusicTrueText = 'Unmute Music &nbsp&#xf038';
 
-	var muteSoundFXFalseText = 'Mute Sound FX &nbsp<span class="batch" data-icon="&#xf03b"></span>';
-	var muteSoundFXTrueText = 'Unmute Sound FX &nbsp<span class="batch" data-icon="&#xf038" style="color: #990000"></span>';
+	var muteSoundFXFalseText = 'Mute Sound FX &nbsp&#xf03b';
+	var muteSoundFXTrueText = 'Unmute Sound FX &nbsp&#xf038';
 
 	db.get('music_enabled').then(function(doc) {
 		if(doc.title){
@@ -33,6 +33,11 @@ muonApp.controller('OptionsCtrl', function ($scope, $stateParams) {
 	})
 
 	$scope.saveUsername = function(username){
+		if(username == '' || username == undefined){
+			username = 'TempPlayer' + _.random(0, 100);
+			$scope.username = username;
+		}
+
 		db.get('network_username').then(function(doc) {
 			return db.put({
 				_id: 'network_username',

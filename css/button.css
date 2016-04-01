@@ -1,30 +1,4 @@
-/*.button {
-  display: inline-block;
-  position: relative;
-  margin: 15px 30px;
-  width: 170px;
-  height: 70px;
-  /*padding: 15px;
-  border-radius: 0.25em;
-  background: #4183D7;
-  box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
-  background-image: url('../images/button_short.svg');
-  background-repeat: no-repeat;
-  -webkit-background-size: cover;
-  -webkit-transition: 0.3s;
-  background-color: rgba(0, 0, 0, 0);
-  transition: 0.3s;
-  border: none;
-  cursor: pointer;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  font-size: 14px;
-  font-weight: 700;
-  outline: none;
-  /*min-width: 100px;
-  -webkit-transition: none;
-  transition: none;
-}*/
+
 span.button{
   position: relative;
   pointer-events: none;
@@ -157,4 +131,109 @@ svg:active #buttoncornerthree {
 
 svg:active #buttoncornerfour {
 	transform: translate(-7px, -7px);
+}
+
+
+/*LONG BUTTONS*/
+#lngbuttonbase{
+  opacity: 0.5;
+}
+
+[id^="lngbuttoncorner"] {
+  transition: 0.5s;
+  opacity:0.5;
+  fill-opacity:1;
+  stroke:none;
+  stroke-width:1;
+  stroke-linecap:butt;
+  stroke-linejoin:miter;
+  stroke-miterlimit:4;
+  stroke-dasharray:none;
+  stroke-opacity:1
+}
+
+svg:hover #lngbuttoncornerone {
+  transform: translate(5px, 5px);
+}
+
+svg:hover #lngbuttoncornertwo {
+  transform: translate(-5px, 5px);
+}
+
+svg:hover #lngbuttoncornerthree {
+  transform: translate(5px, -5px);
+}
+
+svg:hover #lngbuttoncornerfour {
+  transform: translate(-5px, -5px);
+}
+
+svg:active #lngbuttoncornerone {
+  transform: translate(7px, 7px);
+}
+
+svg:active #lngbuttoncornertwo {
+  transform: translate(-7px, 7px);
+}
+
+svg:active #lngbuttoncornerthree {
+  transform: translate(7px, -7px);
+}
+
+svg:active #lngbuttoncornerfour {
+  transform: translate(-7px, -7px);
+}
+
+/*SMALLBUTTONS*/
+.small{
+  margin: 0;
+}
+
+#smlbuttonbase{
+  opacity: 0.5;
+}
+
+[id^="smlbuttoncorner"] {
+  transition: 0.5s;
+  opacity:0.5;
+  fill-opacity:1;
+  stroke:none;
+  stroke-width:1;
+  stroke-linecap:butt;
+  stroke-linejoin:miter;
+  stroke-miterlimit:4;
+  stroke-dasharray:none;
+  stroke-opacity:1
+}
+
+svg:hover #smlbuttoncornerone {
+  transform: translate(2.25px, 2.25px);
+}
+
+svg:hover #smlbuttoncornertwo {
+  transform: translate(-2.25px, 2.25px);
+}
+
+svg:hover #smlbuttoncornerthree {
+  transform: translate(2.25px, -2.25px);
+}
+
+svg:hover #smlbuttoncornerfour {
+  transform: translate(-2.25px, -2.25px);
+}
+
+svg:active #smlbuttoncornerone {
+  transform: translate(3px, 3px);
+}
+
+svg:active #smlbuttoncornertwo {
+  transform: translate(-3px, 3px);
+}
+
+svg:active #smlbuttoncornerthree {
+  transform: translate(3px, -3px);
+}
+
+svg:active #smlbuttoncornerfour {
+  transform: translate(-3px, -3px);
 }

@@ -117,12 +117,12 @@
 }
 
 .join-btn {
-	padding: 18px;
 	float: right;
 	margin: 0;
 	vertical-align: middle;
+	padding-top: 7px;
+	padding-right: 11px;
 }
-
 
 .usernamebox{
 	z-index: 100;

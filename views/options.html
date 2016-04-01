@@ -6,15 +6,29 @@
 <div class="options_child">
 	<h3 class="view-heading">Sound</h3>
 	<div class="row">
-		<div class="col-xs-12">
-			<a class="button optionsbtn" id="mute-musicbtn" ng-click="toggleMusic()">Mute Music
-				&nbsp<span class='batch' data-icon='&#xf03b'></span>
-			</a>
+		<div class="col-xs-12 batch">
+			<svg class="button long" ng-click="toggleMusic()" width="250" height="50" viewBox="0 0 250 50.000001" >
+				<g>
+					<path id="lngbuttonbase" d="M10 15h80l10-5h140v10l-5 10v10H10z"/>
+					<path id="lngbuttoncornerone" d="M0 10h2V2h8V0H0z"/>
+					<path id="lngbuttoncornertwo" d="M250 10h-2V2h-8V0h10z"/>
+					<path id="lngbuttoncornerthree" d="M0 40h2v8h8v2H0z"/>
+					<path id="lngbuttoncornerfour" d="M250 40h-2v8h-8v2h10z"/>
+					<text fill="black" x="125" y="33" text-anchor="middle" id="mute-musicbtn">Mute Music &nbsp &#xf03b</text>
+				</g>
+			</svg>
 		</div>
-		<div class="col-xs-12">
-			<a class="button optionsbtn" id="mute-soundbtn" ng-click="toggleSound()">Mute SoundFX
-				&nbsp<span class='batch' data-icon='&#xf03b'></span>
-			</a>
+		<div class="col-xs-12 batch">
+			<svg class="button long" ng-click="toggleSound()" width="250" height="50" viewBox="0 0 250 50.000001" >
+				<g>
+					<path id="lngbuttonbase" d="M10 15h80l10-5h140v10l-5 10v10H10z"/>
+					<path id="lngbuttoncornerone" d="M0 10h2V2h8V0H0z"/>
+					<path id="lngbuttoncornertwo" d="M250 10h-2V2h-8V0h10z"/>
+					<path id="lngbuttoncornerthree" d="M0 40h2v8h8v2H0z"/>
+					<path id="lngbuttoncornerfour" d="M250 40h-2v8h-8v2h10z"/>
+					<text fill="black" x="125" y="33" text-anchor="middle" id="mute-soundbtn">Mute SoundFX &nbsp &#xf03b</text>
+				</g>
+			</svg>
 		</div>
 	</div>
 	<h3 class="view-heading">Network Username</h3>
@@ -24,7 +38,16 @@
 				id="usernameInput" ng-enter="saveUsername(username)" required/>
 		</div>
 		<div class="col-xs-12">
-			<a class="button optionsbtn" ng-click="saveUsername(username)">Save Username</a>
+			<svg class="button long" ng-click="saveUsername(username)" width="250" height="50" viewBox="0 0 250 50.000001">
+				<g>
+					<path id="lngbuttonbase" d="M10 15h80l10-5h140v10l-5 10v10H10z"/>
+					<path id="lngbuttoncornerone" d="M0 10h2V2h8V0H0z"/>
+					<path id="lngbuttoncornertwo" d="M250 10h-2V2h-8V0h10z"/>
+					<path id="lngbuttoncornerthree" d="M0 40h2v8h8v2H0z"/>
+					<path id="lngbuttoncornerfour" d="M250 40h-2v8h-8v2h10z"/>
+					<text fill="black" x="125" y="33" text-anchor="middle">Save Username</text>
+				</g>
+			</svg>
 		</div>
 	</div>
 </div>

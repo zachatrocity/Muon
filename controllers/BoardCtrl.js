@@ -1,7 +1,7 @@
 muonApp.controller('BoardCtrl', function ($scope, $stateParams, $state) {
 
 	$scope.isNetworkGame = ($stateParams.roomid != '');
-	
+
 	$scope.mouse_over = function(id) {
 		if(Audio.togglesound)
 			Audio.menuOver.play();
@@ -82,8 +82,6 @@ muonApp.controller('BoardCtrl', function ($scope, $stateParams, $state) {
 		if (Network.isConnected){
 			cloak.message('leaveRoom'); 
 		}
-
-		clearInterval(gametimer);
 	}
 	
 	$scope.sendChat = function(){
