@@ -472,7 +472,6 @@ var gameCore = {
 		moveMuonsToWinFoci: function(f1,f2,f3, muon){
 			//f1,f2,f3 are the foci to move from
 			document.addEventListener("click", gameCore.endAnimation);
-			console.log("repeat");
 
 			// Prevent user from clicking any menu buttons during animation
 			document.getElementById("menu-hide").style.zIndex = 2;
@@ -584,6 +583,7 @@ var gameCore = {
 				num = Math.floor(Math.random() * 100) + 1;
 				if (num <= gameCore.drawProb){
 					draw = true;
+					gameCore.winner = "draw";
 				}
 				gameCore.attemptedDraw = true;
 			}
@@ -591,6 +591,7 @@ var gameCore = {
 		else {
 			console.log("You have already attempted a draw this turn");
 		}
+
 		return draw;
 	},
 	// Determines if the selected node belongs to the current player
@@ -844,7 +845,6 @@ var gameCore = {
 		else{
 			console.log("IT'S A DRAW!");
 			gameCore.board.moveMuonsToWinFoci(-1,-1,-1,false);
-			BoardGUI.showDrawModal();
 		}
 	},
 	dec2bin: function(dec) {

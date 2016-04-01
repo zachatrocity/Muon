@@ -17,6 +17,7 @@ muonApp.controller('BoardCtrl', function ($scope, $stateParams, $state) {
 		// Display the flags again
 		document.getElementById("flagB").classList.remove("fade-out");
 		document.getElementById("flagG").classList.remove("fade-out");
+		document.getElementById("moveCount").innerHTML = 0;
 
 		// Display the board again
 		var gameboards = _.filter(d3.selectAll('.gameboard')[0], function(d){ return !d.classList.contains('gamepieces')})
