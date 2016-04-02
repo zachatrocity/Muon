@@ -856,21 +856,24 @@ var gameCore = {
 		// history.pushState({foo: 'bar'}, 'Play', 'newgame.html');
 	},
 	endAnimation: function(){
-		if (gameCore.winner == "local" || gameCore.winner == "human")
+		var player = document.getElementById("winAnim");
+		if (player.currentTime > .1)
 		{
-			BoardGUI.showWinModal();
+			if (gameCore.winner == "local" || gameCore.winner == "human")
+			{
+				BoardGUI.showWinModal();
+			}
+			else if (gameCore.winner == "opponent" || gameCore.winner == "ai")
+			{
+				BoardGUI.showLoseModal();
+			}
+			else
+			{
+				BoardGUI.showDrawModal();
+			}
+			document.removeEventListener("click", gameCore.endAnimation);
+			document.getElementById("menu-hide").style.zIndex = 0;
 		}
-		else if (gameCore.winner == "opponent" || gameCore.winner == "ai")
-		{
-			BoardGUI.showLoseModal();
-		}
-		else
-		{
-			BoardGUI.showDrawModal();
-		}
-		document.removeEventListener("click", gameCore.endAnimation);
-		document.getElementById("menu-hide").style.zIndex = 0;
-		document
 	}
 };
 

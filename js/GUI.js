@@ -240,7 +240,6 @@ var BoardGUI = {
     }
   },
   showDrawModal: function(){
-    debugger;
     BoardGUI.hideAllModals();
     var modal = document.getElementById("draw-modal")
     if(modal != null){
