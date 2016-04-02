@@ -1,24 +1,37 @@
 muonApp.controller('OptionsCtrl', function ($scope, $stateParams) {
 	
-	var muteMusicFalseText = 'Mute Music &nbsp&#xf03b';
-	var muteMusicTrueText = 'Unmute Music &nbsp&#xf038';
+	var muteMusicFalseText = 'Mute Music';
+	var muteMusicTrueText = 'Unmute Music';
 
-	var muteSoundFXFalseText = 'Mute Sound FX &nbsp&#xf03b';
-	var muteSoundFXTrueText = 'Unmute Sound FX &nbsp&#xf038';
+	var muteSoundFXFalseText = 'Mute Sound FX';
+	var muteSoundFXTrueText = 'Unmute Sound FX';
+	
+	var muteTrueIcon = '&#xf038';
+	var muteFalseIcon = '&#xf03b';
 
 	db.get('music_enabled').then(function(doc) {
+		var muteIcon = document.getElementById("mute-icon1");
 		if(doc.title){
 			document.getElementById("mute-musicbtn").innerHTML = muteMusicFalseText;
+			muteIcon.innerHTML = muteFalseIcon;
+			muteIcon.style.fill = "black";
 		} else {
 			document.getElementById("mute-musicbtn").innerHTML = muteMusicTrueText;
+			muteIcon.innerHTML = muteTrueIcon;
+			muteIcon.style.fill = "red";
 		}
 	})
 
 	db.get('sound_enabled').then(function(doc) {
+		var muteIcon = document.getElementById("mute-icon2");
 		if(doc.title){
 			document.getElementById("mute-soundbtn").innerHTML = muteSoundFXFalseText;
+			muteIcon.innerHTML = muteFalseIcon;
+			muteIcon.style.fill = "black";
 		} else {
 			document.getElementById("mute-soundbtn").innerHTML = muteSoundFXTrueText;
+			muteIcon.innerHTML = muteTrueIcon;
+			muteIcon.style.fill = "red";
 		}
 	})
 
@@ -55,6 +68,7 @@ muonApp.controller('OptionsCtrl', function ($scope, $stateParams) {
 	$scope.toggleMusic = function() {
 		
 		var muteText = document.getElementById("mute-musicbtn").innerHTML;
+		muteIcon = document.getElementById("mute-icon1");
 		
 		if (muteText.indexOf("Unmute") == -1)
 		{			
@@ -71,6 +85,8 @@ muonApp.controller('OptionsCtrl', function ($scope, $stateParams) {
 			  console.log(err);
 			});
 			document.getElementById("mute-musicbtn").innerHTML = muteMusicTrueText;
+			muteIcon.innerHTML = muteTrueIcon;
+			muteIcon.style.fill = "red";
 		}
 		else
 		{
@@ -87,12 +103,15 @@ muonApp.controller('OptionsCtrl', function ($scope, $stateParams) {
 			  console.log(err);
 			});
 			document.getElementById("mute-musicbtn").innerHTML = muteMusicFalseText;
+			muteIcon.innerHTML = muteFalseIcon;
+			muteIcon.style.fill = "black";
 		}
 	}
 
 	$scope.toggleSound = function() {
 		
 		var muteText = document.getElementById("mute-soundbtn").innerHTML;
+		var muteIcon = document.getElementById("mute-icon2");
 		
 		if (muteText.indexOf("Unmute") == -1)
 		{			
@@ -109,6 +128,8 @@ muonApp.controller('OptionsCtrl', function ($scope, $stateParams) {
 			  console.log(err);
 			});
 			document.getElementById("mute-soundbtn").innerHTML = muteSoundFXTrueText;
+			muteIcon.innerHTML = muteTrueIcon;
+			muteIcon.style.fill = "red";
 		}
 		else
 		{
@@ -125,6 +146,8 @@ muonApp.controller('OptionsCtrl', function ($scope, $stateParams) {
 			  console.log(err);
 			});
 			document.getElementById("mute-soundbtn").innerHTML = muteSoundFXFalseText;
+			muteIcon.innerHTML = muteFalseIcon;
+			muteIcon.style.fill = "black";
 		}
 	}
 	

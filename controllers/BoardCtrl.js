@@ -108,6 +108,7 @@ muonApp.controller('BoardCtrl', function ($scope, $stateParams, $state) {
 				BoardGUI.appendAIChatMessage(category[randex], false);
 			}
 		}
+		document.getElementById("chat-text").focus();
 	}
 
 	$scope.gameboardLoaded = function(e){
