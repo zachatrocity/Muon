@@ -121,19 +121,18 @@ var evaluation = {
 
 	stateValue:function(bitBoard, bitBoard2, AI_tempFlag, HU_tempFlag, player){
 		var total = 0;
-		var currentBitBoard = (player == 1 ? bitBoard : bitBoard2);
 		total += this.stolenRealEstate(bitBoard, bitBoard2);
-		total += this.isHomeQuadEmpty(bitBoard, AI.AIPlayerNumber) ? 5 : -1;
-		total += this.isHomeQuadEmpty(bitBoard2, AI.HUPlayerNumber) ? -5 : 1;
-		total += AI.maxDepth < 7 ? this.positioning(bitBoard,bitBoard2) : 0;
+		total += this.isHomeQuadEmpty(bitBoard, AI.AIPlayerNumber) ? 3 : 0;
+		total += this.isHomeQuadEmpty(bitBoard2, AI.HUPlayerNumber) ? -3 : 0;
+		total += AI.maxDepth < 7 ? this.positioning(bitBoard,bitBoard2,HU_tempFlag) : 0;
 		return total;
 	},
 
 	stolenRealEstate:function(bitBoard, bitBoard2){
-		var stolenSpace = 0
+		var connections, adjacentOpponentpieces, stolenSpace = 0
 		for(var piece = bitManip.getLSB(bitBoard); bitBoard!=0; piece = bitManip.getLSB(bitBoard)){
-			var connections = this.nodeConnections[convert.bitToQuad(piece)][convert.bitToNode(piece)];
-			var adjacentOpponentpieces = connections&bitBoard2;
+			connections = this.nodeConnections[convert.bitToQuad(piece)][convert.bitToNode(piece)];
+			adjacentOpponentpieces = connections&bitBoard2;
 			stolenSpace += bitManip.BitCount(adjacentOpponentpieces);
 			bitBoard ^= piece;
 		}
@@ -141,8 +140,8 @@ var evaluation = {
 	},
 
 	//Only needed for search depth < 7 layers because of 
-	positioning:function(AIpos, HUpos){
-		var value = 0;
+	positioning:function(AIpos, HUpos, HU_tempFlag){
+		var value = 0; 
 		//AI on top
 		if(AI.AIPlayerNumber == 1){
 			quadValueAIpos = boardAspect.getQuadBits(AIpos, 0);
@@ -164,6 +163,20 @@ var evaluation = {
 			quadValueHUpos = boardAspect.getQuadBits(HUpos, 3);
 			if(quadValueAIpos == 0b00000 && quadValueHUpos == 0b11000)
 				value -= 5
+		}
+		for (var i = 0; i < 4; i++) {
+			quadValueAIpos = boardAspect.getQuadBits(AIpos, i);
+			quadValueHUpos = boardAspect.getQuadBits(HUpos, i);
+			if((quadValueAIpos&0b00100) == (0b00100) && AI.maxDepth < 4){
+				value += 1;
+			}
+			if((quadValueAIpos&0b00001) == 1 && AI.AIPlayerNumber != i){
+				value -= AI.maxDepth*100;
+			}
+			if((bitManip.BitCount(quadValueHUpos) + 1) > bitManip.BitCount(quadValueAIpos)){
+				if(AI.HUPlayerNumber != i)
+					value -= 5;
+			}
 		}
 		return value;
 	},
