@@ -663,7 +663,7 @@ var gameCore = {
 				}
 
 				if (evaluation.isHomeQuadEmpty(2, gameCore.HUPos)) {
-					gameCore.ChangeLocalFlag(false);
+					ChangeLocalFlag(false);
 					if(gameCore.tutorial.index == 0)
 						gameCore.tutorial.quadCleared();
 				}
