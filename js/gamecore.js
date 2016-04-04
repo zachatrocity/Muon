@@ -797,11 +797,13 @@ var gameCore = {
 	 	if(isNetworkGame){
 	 		if(gameCore.network.role == 'host') {
 	 			//then i'm the bottom right pieces
+	 			BoardGUI.setBoardHeader("Yours");
 	 			gameCore.network.localPos = gameCore.network.localStartPos = 0b00000111110000000000;
 	 			//my opponent is up top
 	 			gameCore.network.opponentPos = gameCore.network.opponentStartPos = 0b00000000001111100000;
 	 		} else if(gameCore.network.role =='client') {
 	 			//then i'm the top pieces
+	 			BoardGUI.setBoardHeader("Theirs");
 	 			gameCore.network.localPos = gameCore.network.localStartPos = 0b00000000001111100000;
 	 			//my opponent is below
 	 			gameCore.network.opponentPos = gameCore.network.opponentStartPos = 0b00000111110000000000;
