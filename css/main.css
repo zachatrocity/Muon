@@ -310,6 +310,7 @@ a:hover{
 	width: 0;
 	height: 0;
 	background: url(../images/boardElec.gif);
+	background: url(../images/boardElecTri.gif);
 }
 
 #boardHeaderText {

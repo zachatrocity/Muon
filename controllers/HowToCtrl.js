@@ -1,7 +1,7 @@
 muonApp.controller('HowToCtrl', function ($scope, $stateParams, $state) {
 	
 	$scope.next_slide = function(){
-  		$state.go('helpBoardAndUI', {index:1});
+  		$state.go('helpBoardAndUI', {index:0});
   	}
 
 	var fill = d3.scale.category10();
