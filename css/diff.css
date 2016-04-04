@@ -5,7 +5,7 @@
 .switch {
   background-color: #efefef;
   opacity: 0.8;
-  width: 80%;
+  width: 55%;
   display: inline-block;
   border-radius: 8px;
   margin-top: 50px;
@@ -35,7 +35,7 @@
   display: none;
 }
 .switch input[type="radio"]:checked + label {
-  color: #141241;
+  color: black;
   font-weight: bold;
 }
 .switch span {
@@ -64,12 +64,16 @@
 	display: none;
 }
 
+#one-player div{
+  margin-bottom: -25px;
+}
+
 .diff-container {
-  margin:0;
+  margin-left: 25%;
 	align-items: center;
   display: flex;
   flex-direction: row;
-  justify-content: center;
+  justify-content: left;
 }
 
 .start-container {
@@ -82,169 +86,6 @@ input[type="radio"]{
   margin: 2px;
 }
 
-.toggle-one:checked ~ #one-player,
-.toggle-two:checked ~ #two-player {
-	display: block;
-}
-
-.button-label {
-  display: inline-block;
-  padding-left: 20px;
-  padding-right: 20px;
-  padding-top: 5px;
-  padding-bottom: 5px;
-  margin: 0.5em;
-  cursor: pointer;
-  color: #292929;
-  border-radius: 0.25em;
-  background: #efefef;
-  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2), inset 0 -3px 0 rgba(0, 0, 0, 0.22);
-  -webkit-transition: 0.3s;
-  transition: 0.3s;
-  -webkit-user-select: none;
-     -moz-user-select: none;
-      -ms-user-select: none;
-          user-select: none;
-}
-.button-label h1 {
-  font-size: 1em;
-}
-.button-label:hover {
-  background: #d6d6d6;
-  color: #101010;
-  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2), inset 0 -3px 0 rgba(0, 0, 0, 0.32);
-}
-.button-label:active {
-  -webkit-transform: translateY(2px);
-          transform: translateY(2px);
-  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2), inset 0px -1px 0 rgba(0, 0, 0, 0.22);
-}
-@media (max-width: 40em) {
-  .button-label {
-    padding: 0em 1em 3px;
-    margin: 0.25em;
-  }
-}
-.playerbtn {
-	margin-top: 20px;
-}
-
-#easy-button:checked + .button-label {
-  background: #2ECC71;
-  color: #efefef;
-}
-#easy-button:checked + .button-label:hover {
-  background: #29b765;
-  color: #e2e2e2;
-}
-
-#med-button:checked + .button-label {
-  background: #2ECC71;
-  color: #efefef;
-}
-#med-button:checked + .button-label:hover {
-  background: #29b765;
-  color: #e2e2e2;
-}
-
-#hard-button:checked + .button-label {
-  background: #2ECC71;
-  color: #efefef;
-}
-#hard-button:checked + .button-label:hover {
-  background: #29b765;
-  color: #e2e2e2;
-}
-
-#muon-button:checked + .button-label {
-  background: #2ECC71;
-  color: #efefef;
-}
-#muon-button:checked + .button-label:hover {
-  background: #29b765;
-  color: #e2e2e2;
-}
-
-#antimuon-button:checked + .button-label {
-  background: #4183D7;
-  color: #efefef;
-}
-#antimuon-button:checked + .button-label:hover {
-  background: #2c75d2;
-  color: #e2e2e2;
-}
-
-#one-button:checked + .button-label {
-  background: #2ECC71;
-  color: #efefef;
-}
-#one-button:checked + .button-label:hover {
-  background: #29b765;
-  color: #e2e2e2;
-}
-
-#two-button:checked + .button-label {
-  background: #2ECC71;
-  color: #efefef;
-}
-#two-button:checked + .button-label:hover {
-  background: #29b765;
-  color: #e2e2e2;
-}
-
-#you-button:checked + .button-label {
-  background: #2ECC71;
-  color: #efefef;
-}
-#you-button:checked + .button-label:hover {
-  background: #29b765;
-  color: #e2e2e2;
-}
-
-#ai-button:checked + .button-label {
-  background: #2ECC71;
-  color: #efefef;
-}
-#ai-button:checked + .button-label:hover {
-  background: #29b765;
-  color: #e2e2e2;
-}
-
-#muon-button-2p:checked + .button-label {
-  background: #2ECC71;
-  color: #efefef;
-}
-#muon-button-2p:checked + .button-label:hover {
-  background: #29b765;
-  color: #e2e2e2;
-}
-
-#antimuon-button-2p:checked + .button-label {
-  background: #2ECC71;
-  color: #efefef;
-}
-#antimuon-button-2p:checked + .button-label:hover {
-  background: #29b765;
-  color: #e2e2e2;
-}
-
-#firstP-button:checked + .button-label {
-  background: #2ECC71;
-  color: #efefef;
-}
-#firstP-button:checked + .button-label:hover {
-  background: #29b765;
-  color: #e2e2e2;
-}
-
-#secondP-button:checked + .button-label {
-  background: #2ECC71;
-  color: #efefef;
-}
-#secondP-button:checked + .button-label:hover {
-  background: #29b765;
-  color: #e2e2e2;
-}
 
 .hidden {
   display: none;

@@ -13,7 +13,7 @@
     "title": "Muon",
     "icon": "images/muonIcon.ico",
     "toolbar": false,
-    "fullscreen": true,
+    "fullscreen": false,
     "width": 1360,
     "height": 768
   },

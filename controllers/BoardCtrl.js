@@ -2,21 +2,6 @@ muonApp.controller('BoardCtrl', function ($scope, $stateParams, $state) {
 
 	$scope.isNetworkGame = ($stateParams.roomid != '');
 
-	var gametimer = setInterval(function(){
-		if(gameCore.moveCount != 0){
-			BoardGUI.timer.seconds++;
-		    if (BoardGUI.timer.seconds >= 60) {
-		        BoardGUI.timer.seconds = 0;
-		        BoardGUI.timer.minutes++;
-		        if (BoardGUI.timer.minutes >= 60) {
-		            BoardGUI.timer.minutes = 0;
-		            BoardGUI.timer.hours++;
-		        }
-		    }
-		}
-		document.getElementById("timer").textContent = (BoardGUI.timer.minutes > 0) ? (BoardGUI.timer.minutes > 9 ? BoardGUI.timer.minutes : "0" + BoardGUI.timer.minutes) + ":" + (BoardGUI.timer.seconds > 9 ? BoardGUI.timer.seconds : "0" + BoardGUI.timer.seconds) : (BoardGUI.timer.seconds > 9 ? BoardGUI.timer.seconds : "0" + BoardGUI.timer.seconds);
-	}, 1000);
-
 	$scope.mouse_over = function(id) {
 		if(Audio.togglesound)
 			Audio.menuOver.play();
@@ -32,6 +17,7 @@ muonApp.controller('BoardCtrl', function ($scope, $stateParams, $state) {
 		// Display the flags again
 		document.getElementById("flagB").classList.remove("fade-out");
 		document.getElementById("flagG").classList.remove("fade-out");
+		document.getElementById("moveCount").innerHTML = 0;
 
 		// Display the board again
 		var gameboards = _.filter(d3.selectAll('.gameboard')[0], function(d){ return !d.classList.contains('gamepieces')})
@@ -97,8 +83,6 @@ muonApp.controller('BoardCtrl', function ($scope, $stateParams, $state) {
 		if (Network.isConnected){
 			cloak.message('leaveRoom'); 
 		}
-
-		clearInterval(gametimer);
 	}
 	
 	$scope.sendChat = function(){
@@ -124,6 +108,7 @@ muonApp.controller('BoardCtrl', function ($scope, $stateParams, $state) {
 				BoardGUI.appendAIChatMessage(category[randex], false);
 			}
 		}
+		document.getElementById("chat-text").focus();
 	}
 
 	$scope.gameboardLoaded = function(e){

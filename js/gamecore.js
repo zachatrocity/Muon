@@ -30,14 +30,26 @@ var gameCore = {
 	tutorial:{
 		IS_TUTORIAL: false,
 		index: 0,
+		isFirstMove: true,
+		updateFlagSlide: function(){
+			var stepOne = document.getElementById('step-content');
+			document.getElementById('stepContainer').classList.add('fade-out');
+			setTimeout(function(){
+				stepOne.innerHTML = 'Clear all of the green Muons out of their home quadrant...';
+				document.getElementById('stepContainer').classList.remove('fade-out');
+			},1500);
+		},
 		quadCleared: function(){
-		    var stepTwo = document.getElementById('stepTwo');
-			var playerTwo = Typer(stepTwo, ['Nice work! Hit next to continue']);
-			playerTwo.play();
+			var stepOne = document.getElementById('step-content');
+			document.getElementById('stepContainer').classList.add('fade-out');
+			setTimeout(function(){
+				stepOne.innerHTML = 'Nice work! Hit next to continue';
+				document.getElementById('stepContainer').classList.remove('fade-out');
+			},1000);
 		},
 		tutorialWin: function(){
 			var stepTwo = document.getElementById('stepTwo');
-			var playerTwo = Typer(stepTwo, ['Great job! However, when you play for real, the anti-muons will be fighting back!']);
+			var playerTwo = Typer(stepTwo, ['Great job! However, when you play for real, the anti-muons will be fighting back! You are ready for action, hit play to start a game!']);
 			playerTwo.play();
 		}
 	},
@@ -357,8 +369,8 @@ var gameCore = {
 			// Define the gradient colors
 			muongradient.append("svg:stop")
 			    .attr("offset", "10%")
-			    .attr("stop-color", d3.rgb(95,173,65).darker(1))
-			    .attr("stop-opacity", 0.4);
+			    .attr("stop-color", d3.rgb(95,173,65).darker(2))
+			    .attr("stop-opacity", 0.9);
 
 			muongradient.append("svg:stop")
 			    .attr("offset", "100%")
@@ -376,8 +388,8 @@ var gameCore = {
 			// Define the gradient colors
 			antimugradient.append("svg:stop")
 			    .attr("offset", "10%")
-			    .attr("stop-color", d3.rgb(84,144,204).darker(1))
-			    .attr("stop-opacity", 0.4);
+			    .attr("stop-color", d3.rgb(84,144,204).darker(2))
+			    .attr("stop-opacity", 0.9);
 			antimugradient.append("svg:stop")
 			    .attr("offset", "100%")
 			    .attr("stop-color", "rgb(84,144,204)")
@@ -482,6 +494,10 @@ var gameCore = {
 			{
 				player.src = "./videos/muonWin.mp4";
 			}
+			else if (f1 == -1 && f2 == -1 && f3 == -1) // If all foci are equal to zero, it is a draw
+			{
+				player.src = "./videos/Draw.mp4";
+			}
 			else
 			{
 				player.src = "./videos/antiWin.mp4";
@@ -502,11 +518,14 @@ var gameCore = {
 				d3.select('.id' + o.id).transition().style('opacity', '0');
 			});
 
-			setTimeout(function(){
-				gameCore.board.rotateMuonAtFoci(20);
-				gameCore.board.rotateMuonAtFoci(21);
-				gameCore.board.rotateMuonAtFoci(22);
-			},1750)
+			if (f1 != -1 && f2 != -1 && f3 != -1)
+			{
+				setTimeout(function(){
+					gameCore.board.rotateMuonAtFoci(20);
+					gameCore.board.rotateMuonAtFoci(21);
+					gameCore.board.rotateMuonAtFoci(22);
+				},1750)
+			}
 
 			player.play();
 
@@ -577,6 +596,7 @@ var gameCore = {
 				num = Math.floor(Math.random() * 100) + 1;
 				if (num <= gameCore.drawProb){
 					draw = true;
+					gameCore.winner = "draw";
 				}
 				gameCore.attemptedDraw = true;
 			}
@@ -584,6 +604,7 @@ var gameCore = {
 		else {
 			console.log("You have already attempted a draw this turn");
 		}
+
 		return draw;
 	},
 	// Determines if the selected node belongs to the current player
@@ -636,6 +657,11 @@ var gameCore = {
 			if(gameCore.tutorial.IS_TUTORIAL){
 				gameCore.HUPos ^= bitFrom ^ bitTo;
 				gameCore.board.moveMuonTweenFoci(from, to);
+				if (gameCore.tutorial.isFirstMove){
+					gameCore.tutorial.isFirstMove = false;
+					gameCore.tutorial.updateFlagSlide();
+				}
+
 				if (evaluation.isHomeQuadEmpty(2, gameCore.HUPos)) {
 					gameCore.ChangeLocalFlag(false);
 					if(gameCore.tutorial.index == 0)
@@ -706,6 +732,7 @@ var gameCore = {
 				
 				// Update the users bit board.
 				gameCore.network.localPos ^= bitFrom ^ bitTo;
+				gameCore.AddMoveToHistory(new Move(from, to, "local"));
 				gameCore.board.moveMuonTweenFoci(from, to);
 				//remove my flag if needed
 				if(evaluation.isHomeQuadEmpty((gameCore.network.role == 'host') ? 2 : 1, gameCore.network.localPos)) {
@@ -807,7 +834,6 @@ var gameCore = {
 			});
 	 	}
 
-	 	BoardGUI.timer.reset();
 	},
 	//EndGame sets the game board to not be able to be interfered with by the player.
 	EndGame: function() {
@@ -839,7 +865,7 @@ var gameCore = {
 		}
 		else{
 			console.log("IT'S A DRAW!");
-			BoardGUI.showDrawModal();
+			gameCore.board.moveMuonsToWinFoci(-1,-1,-1,false);
 		}
 	},
 	dec2bin: function(dec) {
@@ -851,8 +877,24 @@ var gameCore = {
 		// history.pushState({foo: 'bar'}, 'Play', 'newgame.html');
 	},
 	endAnimation: function(){
-		gameCore.board.gameOverModal();
-		document.removeEventListener("click", gameCore.endAnimation);
+		var player = document.getElementById("winAnim");
+		if (player.currentTime > .1)
+		{
+			if (gameCore.winner == "local" || gameCore.winner == "human")
+			{
+				BoardGUI.showWinModal();
+			}
+			else if (gameCore.winner == "opponent" || gameCore.winner == "ai")
+			{
+				BoardGUI.showLoseModal();
+			}
+			else
+			{
+				BoardGUI.showDrawModal();
+			}
+			document.removeEventListener("click", gameCore.endAnimation);
+			document.getElementById("menu-hide").style.zIndex = 0;
+		}
 	}
 };
 

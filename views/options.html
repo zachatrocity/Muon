@@ -6,15 +6,31 @@
 <div class="options_child">
 	<h3 class="view-heading">Sound</h3>
 	<div class="row">
-		<div class="col-xs-12">
-			<a class="button optionsbtn" id="mute-musicbtn" ng-click="toggleMusic()">Mute Music
-				&nbsp<span class='batch' data-icon='&#xf03b'></span>
-			</a>
+		<div class="col-xs-12 batch">
+			<svg class="button long" ng-click="toggleMusic()" width="250" height="50" viewBox="0 0 250 50.000001" >
+				<g>
+					<path id="lngbuttonbase" d="M10 15h80l10-5h140v10l-5 10v10H10z"/>
+					<path id="lngbuttoncornerone" d="M0 10h2V2h8V0H0z"/>
+					<path id="lngbuttoncornertwo" d="M250 10h-2V2h-8V0h10z"/>
+					<path id="lngbuttoncornerthree" d="M0 40h2v8h8v2H0z"/>
+					<path id="lngbuttoncornerfour" d="M250 40h-2v8h-8v2h10z"/>
+					<text fill="black" x="125" y="33" text-anchor="middle" id="mute-musicbtn">Mute Music</text>
+					<text fill="black" x="220" y="33" text-anchor="middle" id="mute-icon1">&#xf03b</text>
+				</g>
+			</svg>
 		</div>
-		<div class="col-xs-12">
-			<a class="button optionsbtn" id="mute-soundbtn" ng-click="toggleSound()">Mute SoundFX
-				&nbsp<span class='batch' data-icon='&#xf03b'></span>
-			</a>
+		<div class="col-xs-12 batch">
+			<svg class="button long" ng-click="toggleSound()" width="250" height="50" viewBox="0 0 250 50.000001" >
+				<g>
+					<path id="lngbuttonbase" d="M10 15h80l10-5h140v10l-5 10v10H10z"/>
+					<path id="lngbuttoncornerone" d="M0 10h2V2h8V0H0z"/>
+					<path id="lngbuttoncornertwo" d="M250 10h-2V2h-8V0h10z"/>
+					<path id="lngbuttoncornerthree" d="M0 40h2v8h8v2H0z"/>
+					<path id="lngbuttoncornerfour" d="M250 40h-2v8h-8v2h10z"/>
+					<text fill="black" x="125" y="33" text-anchor="middle" id="mute-soundbtn">Mute SoundFX</text>
+					<text fill="black" x="220" y="33" text-anchor="middle" id="mute-icon2">&#xf03b</text>
+				</g>
+			</svg>
 		</div>
 	</div>
 	<h3 class="view-heading">Network Username</h3>
@@ -24,19 +40,31 @@
 				id="usernameInput" ng-enter="saveUsername(username)" required/>
 		</div>
 		<div class="col-xs-12">
-			<a class="button optionsbtn" ng-click="saveUsername(username)">Save Username</a>
+			<svg class="button long" ng-click="saveUsername(username)" width="250" height="50" viewBox="0 0 250 50.000001">
+				<g>
+					<path id="lngbuttonbase" d="M10 15h80l10-5h140v10l-5 10v10H10z"/>
+					<path id="lngbuttoncornerone" d="M0 10h2V2h8V0H0z"/>
+					<path id="lngbuttoncornertwo" d="M250 10h-2V2h-8V0h10z"/>
+					<path id="lngbuttoncornerthree" d="M0 40h2v8h8v2H0z"/>
+					<path id="lngbuttoncornerfour" d="M250 40h-2v8h-8v2h10z"/>
+					<text fill="black" x="125" y="33" text-anchor="middle">Save Username</text>
+				</g>
+			</svg>
 		</div>
 	</div>
 </div>
 </div>
 
-
-
-
-
-
-<div class="back">
-	<a class="button" ui-sref="menu">
+<div class="back batch">
+	<!-- <button type="button" class="button" ui-sref="menu">
 		<span class='batch' data-icon='&#xf14a'></span> Menu
-	</a>
+	</button> -->
+	<svg class="button blue" ui-sref="menu" width="170" height="70" viewBox="0 0 170 70">
+		<path style="stroke-miEterlimit:4" d="M10 15h40l10-4.99998h100v20.00002l-5 10v20H10z" id="buttonbase" opacity=".64855077"/>
+		<path d="M0 .00002h10V2H2v8.00002H0z" id="buttoncornerone"/>
+		<path d="M170-.00004V10h-2V1.99996h-8v-2z" id="buttoncornertwo"/>
+		<path d="M0 70.00004h10v-2H2v-8H0z" id="buttoncornerthree"/>
+		<path d="M170 70.00004h-10v-2h8v-8h2z" id="buttoncornerfour"/>
+		<text fill="black" x="85" y="40" text-anchor="middle">&#xf14a Menu</text>
+	</svg>
 </div>

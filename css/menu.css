@@ -108,21 +108,21 @@ a:focus .item-pointer.right{
   left: 0%;
   top: 0%;
   -webkit-animation: rotate-one 1s linear infinite;
-  border-bottom: 3px solid #47CFFF;
+  border-bottom: 3px solid white;
 }
 
 .pointer-inner.two {
   right: 0%;
   top: 0%;
   -webkit-animation: rotate-two 1s linear infinite;
-  border-right: 3px solid #47CFFF;
+  border-right: 3px solid white;
 }
 
 .pointer-inner.three {
   right: 0%;
   bottom: 0%;
   -webkit-animation: rotate-three 1s linear infinite;
-  border-top: 3px solid #47CFFF;
+  border-top: 3px solid white;
 }
 
 @-webkit-keyframes rotate-one {

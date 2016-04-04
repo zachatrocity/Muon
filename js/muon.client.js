@@ -80,7 +80,6 @@ var Network = {
             if(gameCore.network.turn == gameCore.network.team){
               BoardGUI.setBoardHeader("Yours");
               BoardGUI.hideWaitingModal(); 
-              BoardGUI.timer.reset(); 
             } else {
               BoardGUI.setBoardHeader("Theirs");
             }
@@ -196,6 +195,7 @@ var Network = {
         },
 
         'roomMemberJoined': function(user) {
+          BoardGUI.hideAllModals();
           console.log('room member joined', user);
           cloak.message('refreshRoom');
         },

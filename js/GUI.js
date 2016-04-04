@@ -66,28 +66,18 @@ var NetworkGUI = {
     var roomListElement = NetworkGUI.getRoomElement();
     if(roomListElement != null){
       roomListElement.innerHTML = '';
-      roomListElement.innerHTML += '<li><span>' + unescape("zach's room") + ' (' + 1 + '/' + 2 + ')</span><a class="button join-btn" href="#/board/' + 123 + '/0">join</a></li>';
-      roomListElement.innerHTML += '<li><span>' + unescape("jacob's room") + ' (' + 1 + '/' + 2 + ')</span><a class="button join-btn" href="#/board/' + 123 + '/0">join</a></li>';
-      roomListElement.innerHTML += '<li><span>' + unescape("jordan's room") + ' (' + 1 + '/' + 2 + ')</span><a class="button join-btn" href="#/board/' + 123 + '/0">join</a></li>';
-      roomListElement.innerHTML += '<li><span>' + unescape("zach's room") + ' (' + 1 + '/' + 2 + ')</span><a class="button join-btn" href="#/board/' + 123 + '/0">join</a></li>';
-      roomListElement.innerHTML += '<li><span>' + unescape("zach's room") + ' (' + 1 + '/' + 2 + ')</span><a class="button join-btn" href="#/board/' + 123 + '/0">join</a></li>';
-      roomListElement.innerHTML += '<li><span>' + unescape("zach's room") + ' (' + 1 + '/' + 2 + ')</span><a class="button join-btn" href="#/board/' + 123 + '/0">join</a></li>';
-      roomListElement.innerHTML += '<li><span>' + unescape("zach's room") + ' (' + 1 + '/' + 2 + ')</span><a class="button join-btn" href="#/board/' + 123 + '/0">join</a></li>';
-      roomListElement.innerHTML += '<li><span>' + unescape("zach's room") + ' (' + 1 + '/' + 2 + ')</span><a class="button join-btn" href="#/board/' + 123 + '/0">join</a></li>';
-      roomListElement.innerHTML += '<li><span>' + unescape("zach's room") + ' (' + 1 + '/' + 2 + ')</span><a class="button join-btn" href="#/board/' + 123 + '/0">join</a></li>';
-      roomListElement.innerHTML += '<li><span>' + unescape("zach's room") + ' (' + 1 + '/' + 2 + ')</span><a class="button join-btn" href="#/board/' + 123 + '/0">join</a></li>';
-      roomListElement.innerHTML += '<li><span>' + unescape("zach's room") + ' (' + 1 + '/' + 2 + ')</span><a class="button join-btn" href="#/board/' + 123 + '/0">join</a></li>';
-      roomListElement.innerHTML += '<li><span>' + unescape("zach's room") + ' (' + 1 + '/' + 2 + ')</span><a class="button join-btn" href="#/board/' + 123 + '/0">join</a></li>';
-      roomListElement.innerHTML += '<li><span>' + unescape("zach's room") + ' (' + 1 + '/' + 2 + ')</span><a class="button join-btn" href="#/board/' + 123 + '/0">join</a></li>';
-      roomListElement.innerHTML += '<li><span>' + unescape("zach's room") + ' (' + 1 + '/' + 2 + ')</span><a class="button join-btn" href="#/board/' + 123 + '/0">join</a></li>';
-      roomListElement.innerHTML += '<li><span>' + unescape("zach's room") + ' (' + 1 + '/' + 2 + ')</span><a class="button join-btn" href="#/board/' + 123 + '/0">join</a></li>';
-      roomListElement.innerHTML += '<li><span>' + unescape("zach's room") + ' (' + 1 + '/' + 2 + ')</span><a class="button join-btn" href="#/board/' + 123 + '/0">join</a></li>';
-      roomListElement.innerHTML += '<li><span>' + unescape("zach's room") + ' (' + 1 + '/' + 2 + ')</span><a class="button join-btn" href="#/board/' + 123 + '/0">join</a></li>';
-      roomListElement.innerHTML += '<li><span>' + unescape("zach's room") + ' (' + 1 + '/' + 2 + ')</span><a class="button join-btn" href="#/board/' + 123 + '/0">join</a></li>';
-      roomListElement.innerHTML += '<li><span>' + unescape("zach's room") + ' (' + 1 + '/' + 2 + ')</span><a class="button join-btn" href="#/board/' + 123 + '/0">join</a></li>';
-      roomListElement.innerHTML += '<li><span>' + unescape("zach's room") + ' (' + 1 + '/' + 2 + ')</span><a class="button join-btn" href="#/board/' + 123 + '/0">join</a></li>';
-      roomListElement.innerHTML += '<li><span>' + unescape("zach's room") + ' (' + 1 + '/' + 2 + ')</span><a class="button join-btn" href="#/board/' + 123 + '/0">join</a></li>';
-      roomListElement.innerHTML += '';
+      rooms = [0,2,3,4,2,35,2,34];
+      _.each(rooms, function(room) {
+        roomListElement.innerHTML += '<li><span>' + unescape("zach's room") + ' (' + 1 + '/' + 2 + ')</span>' 
+          + '<a href="#/board/' + 123 + '/0"><svg class="button small join-btn" width="95" height="35" viewBox="0 0 95 35">'
+            + '<path id="smlbuttonbase" d="M5 10h20l10-5h55v10l-5 10v5H5z"/>'
+            + '<path id="smlbuttoncornerone" d="M5 0H0v5h1V1h4z"/>'
+            + '<path id="smlbuttoncornertwo" d="M90 0h5v5h-1V1h-4z"  />'
+            + '<path id="smlbuttoncornerthree" d="M5 35H0v-5h1v4h4z" />'
+            + '<path id="smlbuttoncornerfour" d="M95 30v5h-5v-1h4v-4z" />'    
+            + '<text fill="white" x="48" y="23" text-anchor="middle" >Join</text>'
+          +'</svg></a></li>';
+        });
     }
   },
   getRoomElement: function() {
@@ -98,23 +88,21 @@ var NetworkGUI = {
     if(roomListElement != null){
       roomListElement.innerHTML = '';
         _.each(rooms, function(room) {
-          roomListElement.innerHTML += '<li><span>' + unescape(room.name) + ' (' + room.users.length + '/' + room.size + ')</span><a class="button join-btn" href="#/board/' + room.id + '/0">join</a></li>';
+          roomListElement.innerHTML += '<li><span>' + unescape(room.name) + ' (' + room.users.length + '/' + room.size + ')</span>' 
+          + '<a href="#/board/' + room.id + '/0"><svg class="button small join-btn" width="95" height="35" viewBox="0 0 95 35">'
+            + '<path id="smlbuttonbase" d="M5 10h20l10-5h55v10l-5 10v5H5z"/>'
+            + '<path id="smlbuttoncornerone" d="M5 0H0v5h1V1h4z"/>'
+            + '<path id="smlbuttoncornertwo" d="M90 0h5v5h-1V1h-4z"  />'
+            + '<path id="smlbuttoncornerthree" d="M5 35H0v-5h1v4h4z" />'
+            + '<path id="smlbuttoncornerfour" d="M95 30v5h-5v-1h4v-4z" />'    
+            + '<text fill="white" x="48" y="23" text-anchor="middle" >Join</text>'
+          +'</svg></a></li>';
         });
     }
   }
 }
 
 var BoardGUI = {
-  timer: {
-    seconds: 0, 
-    minutes: 0, 
-    hours: 0,
-    reset: function() {
-      BoardGUI.timer.seconds = 0;
-      BoardGUI.timer.minutes = 0;
-      BoardGUI.timer.hours = 0;
-    }
-  },
   removeMuonFlag: function(){
 	var flagG = document.getElementById("flagG");
 	flagG.classList.add("fade-out");
@@ -192,6 +180,7 @@ var BoardGUI = {
     BoardGUI.hideNetworkRematchModal();
   },
   showDisconnectModal: function(){
+    BoardGUI.hideAllModals();
     var modal = document.getElementById("disconnect_modal")
     if(modal != null){
       modal.classList.add("dim-lights");
@@ -206,6 +195,7 @@ var BoardGUI = {
     }
   },
   showWaitingModal: function(){
+    BoardGUI.hideAllModals();
     var modal = document.getElementById("waiting_modal")
     if(modal != null){
       modal.classList.add("dim-lights");
@@ -220,12 +210,11 @@ var BoardGUI = {
     }
   },
   showWinModal: function(){
+    BoardGUI.hideAllModals();
     var modal = document.getElementById("win-modal")
     if(modal != null){
       modal.classList.add("dim-lights");
       modal.children[0].classList.add("show-modal");
-      modal.getElementsByTagName("input")[0].classList.add("show-modal-btn");
-      modal.getElementsByTagName("input")[1].classList.add("show-modal-btn");
     }
   },
   hideWinModal: function(){
@@ -233,17 +222,14 @@ var BoardGUI = {
     if(modal != null){
       modal.classList.remove("dim-lights");
       modal.children[0].classList.remove("show-modal");
-      modal.getElementsByTagName("input")[0].classList.remove("show-modal-btn");
-      modal.getElementsByTagName("input")[1].classList.remove("show-modal-btn");
     }
   },
   showLoseModal: function(){
+    BoardGUI.hideAllModals();
     var modal = document.getElementById("lose-modal")
     if(modal != null){
       modal.classList.add("dim-lights");
       modal.children[0].classList.add("show-modal");
-      modal.getElementsByTagName("input")[0].classList.add("show-modal-btn");
-      modal.getElementsByTagName("input")[1].classList.add("show-modal-btn");
     }
   },
   hideLoseModal: function(){
@@ -251,17 +237,14 @@ var BoardGUI = {
     if(modal != null){
       modal.classList.remove("dim-lights");
       modal.children[0].classList.remove("show-modal");
-      modal.getElementsByTagName("input")[0].classList.remove("show-modal-btn");
-      modal.getElementsByTagName("input")[1].classList.remove("show-modal-btn");
     }
   },
   showDrawModal: function(){
+    BoardGUI.hideAllModals();
     var modal = document.getElementById("draw-modal")
     if(modal != null){
       modal.classList.add("dim-lights");
       modal.children[0].classList.add("show-modal");
-      modal.getElementsByTagName("input")[0].classList.add("show-modal-btn");
-      modal.getElementsByTagName("input")[1].classList.add("show-modal-btn");
     }
   },
   hideDrawModal: function(){
@@ -269,17 +252,14 @@ var BoardGUI = {
     if(modal != null){
       modal.classList.remove("dim-lights");
       modal.children[0].classList.remove("show-modal");
-      modal.getElementsByTagName("input")[0].classList.remove("show-modal-btn");
-      modal.getElementsByTagName("input")[1].classList.remove("show-modal-btn");
     }
   },
   showNetworkDrawModal: function(){
+    BoardGUI.hideAllModals();
     var modal = document.getElementById("network_draw_modal")
     if(modal != null){
       modal.classList.add("dim-lights");
       modal.children[0].classList.add("show-modal");
-      modal.getElementsByTagName("input")[0].classList.add("show-modal-btn");
-      modal.getElementsByTagName("input")[1].classList.add("show-modal-btn");
     }
   },
   hideNetworkDrawModal: function(){
@@ -287,17 +267,14 @@ var BoardGUI = {
     if(modal != null){
       modal.classList.remove("dim-lights");
       modal.children[0].classList.remove("show-modal");
-      modal.getElementsByTagName("input")[0].classList.remove("show-modal-btn");
-      modal.getElementsByTagName("input")[1].classList.remove("show-modal-btn");
     }
   },
   showNetworkRematchModal: function(){
+    BoardGUI.hideAllModals();
     var modal = document.getElementById("network_rematch_modal")
     if(modal != null){
       modal.classList.add("dim-lights");
       modal.children[0].classList.add("show-modal");
-      modal.getElementsByTagName("input")[0].classList.add("show-modal-btn");
-      modal.getElementsByTagName("input")[1].classList.add("show-modal-btn");
     }
   },
   hideNetworkRematchModal: function(){
@@ -305,8 +282,6 @@ var BoardGUI = {
     if(modal != null){
       modal.classList.remove("dim-lights");
       modal.children[0].classList.remove("show-modal");
-      modal.getElementsByTagName("input")[0].classList.remove("show-modal-btn");
-      modal.getElementsByTagName("input")[1].classList.remove("show-modal-btn");
     }
   }
 }

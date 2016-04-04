@@ -23,10 +23,7 @@
 	cursor: default;
 	text-align: center;
 	color: rgba(0, 0, 0, 0);
-	background: rgba(174, 174, 174, 0.55);
-  	border-radius: 3px;
-	border: rgb(80, 80, 80) solid 1px;
-  	box-shadow: 0 1px 5px rgba(0, 0, 0, 0.25);
+	background-image: url(../images/modal_background.svg);
 	visibility: hidden;
 	-webkit-transition: width 0.5s, height 0.5s, opacity 0s, color 0s 0.5s;
 	transition: width 0.5s, height 0.5s, opacity 0s, color 0s 0.5s;
@@ -38,7 +35,7 @@
 	visibility: visible;
 	width: 600px;
 	min-height: 200px;
-	color: rgba(0, 0, 0, 1);
+	color: rgba(255, 255, 255, 1);
 }
 
 .help-modal {
@@ -78,14 +75,13 @@
 }
 
 .modal-X:hover {
-	color: #404040;
+	color: #909090;
 }
 
 .show-modal-btn {
 	visibility: visible;
 	opacity: 1;
 }
-
 .modal-prompt {
 	margin-top: 50px;
 }

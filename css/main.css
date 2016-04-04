@@ -30,7 +30,7 @@ https://coolors.co/app/404040-f7f0f0-5490cc-5fad41-067bc2
 /*Batch icons*/
 
 @font-face{
-	font-family:Batch;
+	font-family: Batch;
 	src:url('../font/Batch/batch-icons-webfont.eot');
 	src:url('../font/Batch/batch-icons-webfont.eot?#iefix') format('embedded-opentype'),
 	  url('../font/Batch/batch-icons-webfont.woff') format('woff'),
@@ -51,7 +51,7 @@ html {
 }
 
 .batch {
-	font-family:"Batch"; 
+	font-family:"Batch", "Orbitron"; 
 }
 
 .batch:before {
@@ -112,9 +112,7 @@ img {
 
 
 .move-count-container{
-	background-color: #4183D7;
-	border-radius: 3px;
-  	box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+	background-image: url(../images/stats_background.svg);
 }
 
 #moveCountHeader{
@@ -129,9 +127,7 @@ img {
 }
 
 .timer-container{
-	background-color: #4183D7;
-	border-radius: 3px;
-  	box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+	background-image: url(../images/stats_background.svg);
 }
 
 #timerHeader{
@@ -153,15 +149,18 @@ img {
 
 #chat{
 	font-size: 0.8em;
-	height : 30%;
+	height : 235px;
 	width  : 425px;
 	float  : right;
 	position : absolute;
-	bottom: 50px;
+	bottom: 30px;
 	right: 50px;
-	background: rgba(174, 174, 174, 0.55);
+	background-image: url(../images/chat_background.svg);
+	background-repeat: no-repeat;
+	-webkit-background-size: cover;
+	/*background: rgba(174, 174, 174, 0.55);
 	border-radius: 3px;
-  	box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+  	box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);*/
 	transition: .3s;
 }
 
@@ -181,9 +180,9 @@ img {
 }
 
 #chat-enter{
-	width: 20%;
-	padding: 0;
-	height: 25px !important;
+	margin-left: 5px;
+	margin-right: 5px;
+	margin-bottom: -10px;
 }
 
 #messages { 
@@ -205,7 +204,7 @@ img {
 }
  
 #messages::-webkit-scrollbar-thumb {
-  background: #666;
+  background: white;
   border-radius: 20px;
 }
 
@@ -249,6 +248,7 @@ a:hover{
 	cursor: default;
 	position: relative;
 	width: 50%; 
+	text-align: left;
 	margin: 0 auto;
 	margin-top: 50px;
 	color: #efefef;
@@ -309,7 +309,7 @@ a:hover{
 	display: none;
 	width: 0;
 	height: 0;
-	background: url(./images/boardElec.gif);
+	background: url(../images/boardElec.gif);
 }
 
 #boardHeaderText {
@@ -377,7 +377,7 @@ a:hover{
 	right: 50px;
 	width: 200px;
 	text-align: center;
-	height: 250px;
+	height: 100%;
 }
 
 #menu-hide {
@@ -402,30 +402,22 @@ a:hover{
 .game-menu-container {
 	
 	border-radius: 3px;
-  	box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+  	/*box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);*/
 	padding: 1px;
-	background: rgba(174, 174, 174, 0.55);
+	/*background: rgba(174, 174, 174, 0.55);*/
 }
 
 .game-menu-container span {
 	cursor: pointer;
 	letter-spacing: 2px;
-	box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
 	font-size: 14px;
 	font-weight: 700;
-	margin: 10px;
-	padding: 10px;
+	margin: -15px;
 	display: block;
-	background-color: #4183D7;
-	border-bottom: solid #404040 1px;
-	border-radius: 3px;
-}
-
-.game-menu-container a {
 	text-transform: uppercase;
 }
 
-.game-menu-container span:hover {
+/*.game-menu-container span:hover {
 	background: #2c75d2;
 }
 
@@ -433,5 +425,5 @@ a:hover{
 	-webkit-transform: translateY(2px);
 	transform: translateY(2px);
 	box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
-}
+}*/
 
