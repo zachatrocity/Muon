@@ -139,7 +139,7 @@ muonApp.controller('BoardCtrl', function ($scope, $stateParams, $state) {
 			} else {
 				console.log("attempting to join room");
 				cloak.message('joinRoom', $stateParams.roomid);
-				BoardGUI.setBoardHeader("Theirs");
+				BoardGUI.setBoardHeader(gameCore.network.turn);
 				gameCore.network.role = 'client';
 				gameCore.RestartGame(true);
 				//client is here
