@@ -109,7 +109,11 @@ img {
   }
 }
 
-
+.about-text{
+	text-align: left;
+	margin-left: 10%;
+	
+}
 
 .move-count-container{
 	background-image: url(../images/stats_background.svg);
