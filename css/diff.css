@@ -64,6 +64,10 @@
 	display: none;
 }
 
+#one-player div{
+  margin-bottom: -25px;
+}
+
 .diff-container {
   margin-left: 25%;
 	align-items: center;

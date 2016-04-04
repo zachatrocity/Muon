@@ -30,14 +30,26 @@ var gameCore = {
 	tutorial:{
 		IS_TUTORIAL: false,
 		index: 0,
+		isFirstMove: true,
+		updateFlagSlide: function(){
+			var stepOne = document.getElementById('step-content');
+			document.getElementById('stepContainer').classList.add('fade-out');
+			setTimeout(function(){
+				stepOne.innerHTML = 'Clear all of the green Muons out of their home quadrant...';
+				document.getElementById('stepContainer').classList.remove('fade-out');
+			},1500);
+		},
 		quadCleared: function(){
-		    var stepTwo = document.getElementById('stepTwo');
-			var playerTwo = Typer(stepTwo, ['Nice work! Hit next to continue']);
-			playerTwo.play();
+			var stepOne = document.getElementById('step-content');
+			document.getElementById('stepContainer').classList.add('fade-out');
+			setTimeout(function(){
+				stepOne.innerHTML = 'Nice work! Hit next to continue';
+				document.getElementById('stepContainer').classList.remove('fade-out');
+			},1000);
 		},
 		tutorialWin: function(){
 			var stepTwo = document.getElementById('stepTwo');
-			var playerTwo = Typer(stepTwo, ['Great job! However, when you play for real, the anti-muons will be fighting back!']);
+			var playerTwo = Typer(stepTwo, ['Great job! However, when you play for real, the anti-muons will be fighting back! You are ready for action, hit play to start a game!']);
 			playerTwo.play();
 		}
 	},
@@ -644,6 +656,11 @@ var gameCore = {
 			if(gameCore.tutorial.IS_TUTORIAL){
 				gameCore.HUPos ^= bitFrom ^ bitTo;
 				gameCore.board.moveMuonTweenFoci(from, to);
+				if (gameCore.tutorial.isFirstMove){
+					gameCore.tutorial.isFirstMove = false;
+					gameCore.tutorial.updateFlagSlide();
+				}
+
 				if (evaluation.isHomeQuadEmpty(2, gameCore.HUPos)) {
 					gameCore.ChangePlayer2Flag(false);
 					if(gameCore.tutorial.index == 0)

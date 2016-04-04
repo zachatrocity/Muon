@@ -1,5 +1,9 @@
-muonApp.controller('HowToCtrl', function ($scope, $stateParams) {
+muonApp.controller('HowToCtrl', function ($scope, $stateParams, $state) {
 	
+	$scope.next_slide = function(){
+  		$state.go('helpBoardAndUI', {index:1});
+  	}
+
 	var fill = d3.scale.category10();
 	var width =  window.innerWidth;
 	var frac = (width / 2) / 2;
@@ -83,19 +87,4 @@ muonApp.controller('HowToCtrl', function ($scope, $stateParams) {
 	  .attr("r", 10)
 	  .style("fill", function(d) { return (!d.anti) ? d3.rgb(95,173,65) : d3.rgb(84,144,204); })
 	  .call(force.drag);
-
-	var stepOne = document.getElementById('stepOne');
-    var stepTwo = document.getElementById('stepTwo');
-    var stepThree = document.getElementById('stepThree');
-    var playerOne = Typer(stepOne, ['This is a Muon']);
-    var playerTwo = Typer(stepTwo, ['This is an Anti-muon']);
-    var playerThree = Typer(stepThree, ['Muons and Anti-muons are fighting against each other inside of atoms to form matter, or anti-matter.']);
-    
-    setTimeout(function(){
-	    playerOne.play(function(){
-	    	playerTwo.play(function(){
-	    		playerThree.play();
-	    	})
-	  	});
-	}, 1500);
 });

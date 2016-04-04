@@ -4,10 +4,10 @@
 		<div id="board-componant" class="gameboard">
 		    <img src="./images/boardElec.gif" sb-load="gameboardLoaded($event)">
 		</div>
-		<div id="flagG" class="gameboard flag">
+		<div id="flagG" class="gameboard flag fade-out">
 		    <img src="./images/flagG.svg">
 		</div>
-		<div id="flagB" class="gameboard flag">
+		<div id="flagB" class="gameboard flag fade-out">
 		    <img src="./images/flagB.svg">
 		</div>
 		<div class="gameboard">
@@ -18,22 +18,19 @@
 		</div>
 	</div>
 	<div class="col-xs-5">
-		<div id="stepContainer" class="text-container" style="
-			margin-top: 90%;
-			padding-right: 10%;
-		">
-			<div id="stepOne"></div>
+		<div id="stepContainer" class="text-container">
+			<div id="step-content">
+				This is the inside of an atom. The atom is made up of four sections called quadrants. Muons or Anti-muons will gain control of the atom if they form a triangle in any of the 4 quadrants.
+			</div>
+			<div id="lower-content">
+				
+			</div>
 		</div>
 
 		<div id="stats_slide" class="game-stats fade-out" style="color: black;">
 			<div class="move-count-container">
 				<h3 id="moveCountHeader">Moves</h3>
 				<h1 id="moveCount">0</h1>
-			</div>
-
-			<div class="timer-container">
-				<h3 id="timerHeader">Time</h3>
-				<h1 id="timer">0</h1>
 			</div>
 
 			<div class="move-count-container">
