@@ -115,5 +115,6 @@ var RESTART_PARTICLES = function(){
 }
 
 var REMOVE_PARTICLES = function(){
-	
+  pJSDom[0].pJS.particles.number.value = 0;
+	pJSDom[0].pJS.particles.move.enable = false;
 }
