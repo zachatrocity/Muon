@@ -188,6 +188,7 @@ var BoardGUI = {
     BoardGUI.hideWinModal();
     BoardGUI.hideLoseModal();
     BoardGUI.hideDrawModal();
+    BoardGUI.hideDrawDeniedModal();
     BoardGUI.hideNetworkDrawModal();
     BoardGUI.hideNetworkRematchModal();
   },
@@ -261,6 +262,21 @@ var BoardGUI = {
   },
   hideDrawModal: function(){
     var modal = document.getElementById("draw-modal")
+    if(modal != null){
+      modal.classList.remove("dim-lights");
+      modal.children[0].classList.remove("show-modal");
+    }
+  },
+  showDrawDeniedModal: function(){
+    BoardGUI.hideAllModals();
+    var modal = document.getElementById("draw-denied-modal")
+    if(modal != null){
+      modal.classList.add("dim-lights");
+      modal.children[0].classList.add("show-modal");
+    }
+  },
+  hideDrawDeniedModal: function(){
+    var modal = document.getElementById("draw-denied-modal")
     if(modal != null){
       modal.classList.remove("dim-lights");
       modal.children[0].classList.remove("show-modal");
