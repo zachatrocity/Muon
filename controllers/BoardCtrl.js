@@ -86,6 +86,14 @@ muonApp.controller('BoardCtrl', function ($scope, $stateParams, $state) {
 	}
 	
 	$scope.sendChat = function(){
+		var used = [];
+		if(used[0] === undefined || used[0] === 0){
+			var chatItems = 0;
+			for (var i = 0; i < aichat.length; i++)
+				chatItems += aichat[i].length;
+			var used = [chatItems];
+		}
+
 		if($scope.chatText != '' && $scope.chatText != undefined){
 			if($stateParams.roomid != ''){
 				if((new RegExp('<script>')).test($scope.chatText)){
