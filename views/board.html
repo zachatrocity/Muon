@@ -222,6 +222,26 @@
 		</div>
 	</div>
 
+	<!-- Draw denied modal -->
+	<div class="modal waiting" id="draw-denied-modal">
+		<div class="modal-dialog">
+			<h3 class="modal-prompt">Draw Proposal Denied!</h3>
+			<div class="row">
+				<div class="col-xs-4 col-xs-offset-4">
+					<svg class="button green greenhover modal-btn" width="170" height="70" viewBox="0 0 170 70"  ng-mouseover="mouse_over()" ng-click="mouse_click(); hideDrawDeniedModal()"
+					ng-init="showDrawDeniedModal = false;" ng-class="{'show-modal-btn': showDrawDeniedModal}">
+						<path style="stroke-miEterlimit:4" d="M10 15h40l10-4.99998h100v20.00002l-5 10v20H10z" id="buttonbase" opacity=".64855077"/>
+						<path d="M0 .00002h10V2H2v8.00002H0z" id="buttoncornerone"/>
+						<path d="M170-.00004V10h-2V1.99996h-8v-2z" id="buttoncornertwo"/>
+						<path d="M0 70.00004h10v-2H2v-8H0z" id="buttoncornerthree"/>
+						<path d="M170 70.00004h-10v-2h8v-8h2z" id="buttoncornerfour"/>
+						<text fill="white" x="85" y="40" text-anchor="middle" >Okay</text>
+					</svg>
+				</div>
+			</div>
+		</div>
+	</div>
+
 	<div class="game-stats">
 		<div class="move-count-container">
 			<h3 id="moveCountHeader">Moves</h3>
@@ -425,7 +445,6 @@
 							</svg>
 						</div>
 						<br>
-						<div class="col-xs-12 batch"></div>
 						<br>
 						<div class="col-xs-12 batch">
 							<svg class="button long modal-btn" ng-click="toggleSound()" width="250" height="50" viewBox="0 0 250 50.000001" >
@@ -440,29 +459,21 @@
 								</g>
 							</svg>
 						</div>
+						<br>
+						<br>
+						<div class="col-xs-12 batch">
+							<svg class="button long modal-btn" ng-click="toggleParticles()" width="250" height="50" viewBox="0 0 250 50.000001" >
+								<g>
+									<path id="lngbuttonbase" d="M10 15h80l10-5h140v10l-5 10v10H10z"/>
+									<path id="lngbuttoncornerone" d="M0 10h2V2h8V0H0z"/>
+									<path id="lngbuttoncornertwo" d="M250 10h-2V2h-8V0h10z"/>
+									<path id="lngbuttoncornerthree" d="M0 40h2v8h8v2H0z"/>
+									<path id="lngbuttoncornerfour" d="M250 40h-2v8h-8v2h10z"/>
+									<text fill="black" x="125" y="33" text-anchor="middle" id="pause-particlebtn">Pause Particles</text>
+								</g>
+							</svg>
+						</div>
 					</div>
-				<!-- <svg class="button long modal-btn" ng-click="toggleMusic()" width="250" height="50" viewBox="0 0 250 50.000001">
-					<g>
-						<path id="lngbuttonbase" d="M10 15h80l10-5h140v10l-5 10v10H10z"/>
-						<path id="lngbuttoncornerone" d="M0 10h2V2h8V0H0z"/>
-						<path id="lngbuttoncornertwo" d="M250 10h-2V2h-8V0h10z"/>
-						<path id="lngbuttoncornerthree" d="M0 40h2v8h8v2H0z"/>
-						<path id="lngbuttoncornerfour" d="M250 40h-2v8h-8v2h10z"/>
-						<text fill="black" x="125" y="33" text-anchor="middle" id="mute-musicbtn">Mute Music &nbsp &#xf03b</text>
-					</g>
-				</svg>
-				
-			
-				<svg class="button long modal-btn" ng-click="toggleSound()" width="250" height="50" viewBox="0 0 250 50.000001" >
-					<g>
-						<path id="lngbuttonbase" d="M10 15h80l10-5h140v10l-5 10v10H10z"/>
-						<path id="lngbuttoncornerone" d="M0 10h2V2h8V0H0z"/>
-						<path id="lngbuttoncornertwo" d="M250 10h-2V2h-8V0h10z"/>
-						<path id="lngbuttoncornerthree" d="M0 40h2v8h8v2H0z"/>
-						<path id="lngbuttoncornerfour" d="M250 40h-2v8h-8v2h10z"/>
-						<text fill="black" x="125" y="33" text-anchor="middle" id="mute-soundbtn">Mute SoundFX &nbsp &#xf03b</text>
-					</g>
-				</svg> -->
 			</div>
 		</div>
     </div>

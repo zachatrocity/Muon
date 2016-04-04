@@ -54,6 +54,7 @@ muonApp.controller('BoardCtrl', function ($scope, $stateParams, $state) {
 				gameCore.EndGame();
 			} else {
 				console.log('Proposal was denied');
+				BoardGUI.showDrawDeniedModal();
 			}
 		}
 	}
@@ -83,6 +84,10 @@ muonApp.controller('BoardCtrl', function ($scope, $stateParams, $state) {
 		if (Network.isConnected){
 			cloak.message('leaveRoom'); 
 		}
+	}
+
+	$scope.hideDrawDeniedModal = function(){
+		BoardGUI.hideDrawDeniedModal();
 	}
 	
 	$scope.sendChat = function(){

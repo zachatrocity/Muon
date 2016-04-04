@@ -75,14 +75,15 @@ var gameCore = {
 			gameCore.board.moveMuonTweenFoci(from, to);
 
 			//remove opponent flag if needed
-			if(evaluation.isHomeQuadEmpty((gameCore.network.role == 'host') ? 2 : 1, gameCore.network.opponentPos))
-				opponentFlag = false;
-
+			if(evaluation.isHomeQuadEmpty((gameCore.network.role == 'host') ? 1 : 2, gameCore.network.opponentPos)) {
+				gameCore.network.opponentFlag = false;
+				BoardGUI.removeMuonFlag();
+				console.log("Opponent can now win from their home quad");
+			}
 
 			if (gameCore.network.CheckForOpponentWin()) {
 				gameCore.network.EndNetworkGame();
 			}
-
 		},
 		CheckForOpponentWin: function() {
 			player = (gameCore.network.role == 'host') ? 1 : 2;
@@ -657,12 +658,14 @@ var gameCore = {
 				gameCore.HUPos ^= bitFrom ^ bitTo;
 				gameCore.board.moveMuonTweenFoci(from, to);
 				if (gameCore.tutorial.isFirstMove){
-					gameCore.tutorial.isFirstMove = false;
-					gameCore.tutorial.updateFlagSlide();
+					if(window.location.hash == "#/help3"){
+						gameCore.tutorial.isFirstMove = false;
+						gameCore.tutorial.updateFlagSlide();
+					}
 				}
 
 				if (evaluation.isHomeQuadEmpty(2, gameCore.HUPos)) {
-					gameCore.ChangePlayer2Flag(false);
+					ChangeLocalFlag(false);
 					if(gameCore.tutorial.index == 0)
 						gameCore.tutorial.quadCleared();
 				}
@@ -721,7 +724,7 @@ var gameCore = {
 				}
 				else if (!gameCore.pvp) {
 					// Make ai move
-
+					gameCore.aiStart = Date.now();
 					aiWorker.postMessage({ 'from': bitFrom, 'to': bitTo });
 				}
 			}
@@ -734,8 +737,11 @@ var gameCore = {
 				gameCore.AddMoveToHistory(new Move(from, to, "local"));
 				gameCore.board.moveMuonTweenFoci(from, to);
 				//remove my flag if needed
-				if(evaluation.isHomeQuadEmpty((gameCore.network.role == 'host') ? 2 : 1, gameCore.network.localPos))
-					localFlag = false;
+				if(evaluation.isHomeQuadEmpty((gameCore.network.role == 'host') ? 2 : 1, gameCore.network.localPos)) {
+					gameCore.network.localFlag = false;
+					BoardGUI.removeAntiMuonFlag();
+					console.log("Player can now win from their home quad");
+				}
 
 				cloak.message('turnDone', [from, to]);
 				if (gameCore.network.CheckForLocalWin(gameCore.network.localPos)) {
@@ -791,11 +797,13 @@ var gameCore = {
 	 	if(isNetworkGame){
 	 		if(gameCore.network.role == 'host') {
 	 			//then i'm the bottom right pieces
+	 			BoardGUI.setBoardHeader("Yours");
 	 			gameCore.network.localPos = gameCore.network.localStartPos = 0b00000111110000000000;
 	 			//my opponent is up top
 	 			gameCore.network.opponentPos = gameCore.network.opponentStartPos = 0b00000000001111100000;
 	 		} else if(gameCore.network.role =='client') {
 	 			//then i'm the top pieces
+	 			BoardGUI.setBoardHeader("Theirs");
 	 			gameCore.network.localPos = gameCore.network.localStartPos = 0b00000000001111100000;
 	 			//my opponent is below
 	 			gameCore.network.opponentPos = gameCore.network.opponentStartPos = 0b00000111110000000000;
@@ -910,18 +918,12 @@ aiWorker.onmessage = function(e) {
 		console.log("AI can now win from their home quad");
 	}
 	
-	//gameCore.aiEnd = new Date().getTime();
-	gameCore.AddMoveToHistory(new Move(e.data.from, e.data.to, "ai"));
-
 	// Don't move the AI piece if less than 3 seconds have passed
-	if(gameCore.AITreeDepth <= 7){
-		setTimeout(function(){
-			gameCore.board.moveMuonTweenFoci(e.data.from, e.data.to)
-		}, 1000);
-	} else {
-		gameCore.board.moveMuonTweenFoci(e.data.from, e.data.to)
-	}
+	gameCore.aiEnd = Date.now();
 
+	setTimeout(function(){ gameCore.AddMoveToHistory(new Move(e.data.from, e.data.to, "ai")); }, 2000 - (gameCore.aiEnd - gameCore.aiStart))
+	setTimeout(function(){ gameCore.board.moveMuonTweenFoci(e.data.from, e.data.to); }, 2000 - (gameCore.aiEnd - gameCore.aiStart));
+	
 	if (gameCore.GameOver(gameCore.AIPos)) {
 		gameCore.EndGame();
 	}
