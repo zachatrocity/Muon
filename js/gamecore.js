@@ -63,14 +63,15 @@ var gameCore = {
 			gameCore.board.moveMuonTweenFoci(from, to);
 
 			//remove opponent flag if needed
-			if(evaluation.isHomeQuadEmpty((gameCore.network.role == 'host') ? 2 : 1, gameCore.network.opponentPos))
-				opponentFlag = false;
-
+			if(evaluation.isHomeQuadEmpty((gameCore.network.role == 'host') ? 1 : 2, gameCore.network.opponentPos)) {
+				gameCore.network.opponentFlag = false;
+				BoardGUI.removeMuonFlag();
+				console.log("Opponent can now win from their home quad");
+			}
 
 			if (gameCore.network.CheckForOpponentWin()) {
 				gameCore.network.EndNetworkGame();
 			}
-
 		},
 		CheckForOpponentWin: function() {
 			player = (gameCore.network.role == 'host') ? 1 : 2;
@@ -636,7 +637,7 @@ var gameCore = {
 				gameCore.HUPos ^= bitFrom ^ bitTo;
 				gameCore.board.moveMuonTweenFoci(from, to);
 				if (evaluation.isHomeQuadEmpty(2, gameCore.HUPos)) {
-					gameCore.ChangePlayer2Flag(false);
+					gameCore.ChangeLocalFlag(false);
 					if(gameCore.tutorial.index == 0)
 						gameCore.tutorial.quadCleared();
 				}
@@ -707,8 +708,11 @@ var gameCore = {
 				gameCore.network.localPos ^= bitFrom ^ bitTo;
 				gameCore.board.moveMuonTweenFoci(from, to);
 				//remove my flag if needed
-				if(evaluation.isHomeQuadEmpty((gameCore.network.role == 'host') ? 2 : 1, gameCore.network.localPos))
-					localFlag = false;
+				if(evaluation.isHomeQuadEmpty((gameCore.network.role == 'host') ? 2 : 1, gameCore.network.localPos)) {
+					gameCore.network.localFlag = false;
+					BoardGUI.removeAntiMuonFlag();
+					console.log("Player can now win from their home quad");
+				}
 
 				cloak.message('turnDone', [from, to]);
 				if (gameCore.network.CheckForLocalWin(gameCore.network.localPos)) {
