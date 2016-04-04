@@ -722,7 +722,7 @@ var gameCore = {
 				}
 				else if (!gameCore.pvp) {
 					// Make ai move
-
+					gameCore.aiStart = Date.now();
 					aiWorker.postMessage({ 'from': bitFrom, 'to': bitTo });
 				}
 			}
@@ -914,18 +914,12 @@ aiWorker.onmessage = function(e) {
 		console.log("AI can now win from their home quad");
 	}
 	
-	//gameCore.aiEnd = new Date().getTime();
-	gameCore.AddMoveToHistory(new Move(e.data.from, e.data.to, "ai"));
-
 	// Don't move the AI piece if less than 3 seconds have passed
-	if(gameCore.AITreeDepth <= 7){
-		setTimeout(function(){
-			gameCore.board.moveMuonTweenFoci(e.data.from, e.data.to)
-		}, 1000);
-	} else {
-		gameCore.board.moveMuonTweenFoci(e.data.from, e.data.to)
-	}
+	gameCore.aiEnd = Date.now();
 
+	setTimeout(function(){ gameCore.AddMoveToHistory(new Move(e.data.from, e.data.to, "ai")); }, 2000 - (gameCore.aiEnd - gameCore.aiStart))
+	setTimeout(function(){ gameCore.board.moveMuonTweenFoci(e.data.from, e.data.to); }, 2000 - (gameCore.aiEnd - gameCore.aiStart));
+	
 	if (gameCore.GameOver(gameCore.AIPos)) {
 		gameCore.EndGame();
 	}
