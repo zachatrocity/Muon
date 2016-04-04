@@ -88,15 +88,27 @@ var NetworkGUI = {
     if(roomListElement != null){
       roomListElement.innerHTML = '';
         _.each(rooms, function(room) {
-          roomListElement.innerHTML += '<li><span>' + unescape(room.name) + ' (' + room.users.length + '/' + room.size + ')</span>' 
-          + '<a href="#/board/' + room.id + '/0"><svg class="button small join-btn" width="95" height="35" viewBox="0 0 95 35">'
-            + '<path id="smlbuttonbase" d="M5 10h20l10-5h55v10l-5 10v5H5z"/>'
-            + '<path id="smlbuttoncornerone" d="M5 0H0v5h1V1h4z"/>'
-            + '<path id="smlbuttoncornertwo" d="M90 0h5v5h-1V1h-4z"  />'
-            + '<path id="smlbuttoncornerthree" d="M5 35H0v-5h1v4h4z" />'
-            + '<path id="smlbuttoncornerfour" d="M95 30v5h-5v-1h4v-4z" />'    
-            + '<text fill="white" x="48" y="23" text-anchor="middle" >Join</text>'
-          +'</svg></a></li>';
+          if(room.users.length >= 2){
+            roomListElement.innerHTML += '<li><span>' + unescape(room.name) + ' (' + room.users.length + '/' + room.size + ')</span>' 
+            + '<svg class="button small disabled join-btn" width="95" height="35" viewBox="0 0 95 35">'
+              + '<path id="" d="M5 10h20l10-5h55v10l-5 10v5H5z"/>'
+              + '<path id="" d="M5 0H0v5h1V1h4z"/>'
+              + '<path id="" d="M90 0h5v5h-1V1h-4z"  />'
+              + '<path id="" d="M5 35H0v-5h1v4h4z" />'
+              + '<path id="" d="M95 30v5h-5v-1h4v-4z" />'    
+              + '<text fill="black" x="48" y="23" text-anchor="middle" >Full</text>'
+            +'</svg></a></li>';
+          } else {
+            roomListElement.innerHTML += '<li><span>' + unescape(room.name) + ' (' + room.users.length + '/' + room.size + ')</span>' 
+            + '<a href="#/board/' + room.id + '/0"><svg class="button small join-btn" width="95" height="35" viewBox="0 0 95 35">'
+              + '<path id="smlbuttonbase" d="M5 10h20l10-5h55v10l-5 10v5H5z"/>'
+              + '<path id="smlbuttoncornerone" d="M5 0H0v5h1V1h4z"/>'
+              + '<path id="smlbuttoncornertwo" d="M90 0h5v5h-1V1h-4z"  />'
+              + '<path id="smlbuttoncornerthree" d="M5 35H0v-5h1v4h4z" />'
+              + '<path id="smlbuttoncornerfour" d="M95 30v5h-5v-1h4v-4z" />'    
+              + '<text fill="black" x="48" y="23" text-anchor="middle" >Join</text>'
+            +'</svg></a></li>';
+          }
         });
     }
   }

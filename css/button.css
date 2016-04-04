@@ -40,6 +40,15 @@ span.button{
   fill: #bf3518;
 }
 
+.disabled{
+  fill: #2f2f2f;
+  cursor: none;
+}
+
+.disabled [id^="buttoncorner"] {
+  fill: #2f2f2f;
+}
+
 .gray {
   fill: #aaa;
 }

@@ -5,6 +5,9 @@ muonApp.controller('OptionsCtrl', function ($scope, $stateParams) {
 
 	var muteSoundFXFalseText = 'Mute Sound FX';
 	var muteSoundFXTrueText = 'Unmute Sound FX';
+
+	var particleFalseText = 'Pause Particles';
+	var particleTrueText = 'Resume Particles';
 	
 	var muteTrueIcon = '&#xf038';
 	var muteFalseIcon = '&#xf03b';
@@ -63,6 +66,19 @@ muonApp.controller('OptionsCtrl', function ($scope, $stateParams) {
 		}).catch(function (err) {
 		  console.log(err);
 		});
+	}
+
+	$scope.toggleParticles = function(){
+		var particlebtn = document.getElementById('pause-particlebtn');
+
+		if(PARTICLES_GOING){
+			REMOVE_PARTICLES();
+			particlebtn.innerHTML = "Resume Particles";
+		}
+		else{
+			RESTART_PARTICLES();
+			particlebtn.innerHTML = "Pause Particles";
+		}
 	}
 
 	$scope.toggleMusic = function() {
