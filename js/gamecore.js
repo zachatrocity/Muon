@@ -368,8 +368,8 @@ var gameCore = {
 			// Define the gradient colors
 			muongradient.append("svg:stop")
 			    .attr("offset", "10%")
-			    .attr("stop-color", d3.rgb(95,173,65).darker(1))
-			    .attr("stop-opacity", 0.4);
+			    .attr("stop-color", d3.rgb(95,173,65).darker(2))
+			    .attr("stop-opacity", 0.9);
 
 			muongradient.append("svg:stop")
 			    .attr("offset", "100%")
@@ -387,8 +387,8 @@ var gameCore = {
 			// Define the gradient colors
 			antimugradient.append("svg:stop")
 			    .attr("offset", "10%")
-			    .attr("stop-color", d3.rgb(84,144,204).darker(1))
-			    .attr("stop-opacity", 0.4);
+			    .attr("stop-color", d3.rgb(84,144,204).darker(2))
+			    .attr("stop-opacity", 0.9);
 			antimugradient.append("svg:stop")
 			    .attr("offset", "100%")
 			    .attr("stop-color", "rgb(84,144,204)")
