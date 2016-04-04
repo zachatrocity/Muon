@@ -105,16 +105,20 @@ var particleOptions =
   "retina_detect": true
 };
 
+var PARTICLES_GOING = false;
+
 var START_PARTICLES = function(){
   particlesJS("particles-js", particleOptions);
+  PARTICLES_GOING = true;
 }
 
 var RESTART_PARTICLES = function(){
+  PARTICLES_GOING = true;
 	pJSDom[0].pJS.particles.move.enable = true;
 	pJSDom[0].pJS.fn.particlesRefresh();
 }
 
 var REMOVE_PARTICLES = function(){
-  pJSDom[0].pJS.particles.number.value = 0;
+  PARTICLES_GOING = false;
 	pJSDom[0].pJS.particles.move.enable = false;
 }

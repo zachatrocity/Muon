@@ -658,8 +658,10 @@ var gameCore = {
 				gameCore.HUPos ^= bitFrom ^ bitTo;
 				gameCore.board.moveMuonTweenFoci(from, to);
 				if (gameCore.tutorial.isFirstMove){
-					gameCore.tutorial.isFirstMove = false;
-					gameCore.tutorial.updateFlagSlide();
+					if(window.location.hash == "#/help3"){
+						gameCore.tutorial.isFirstMove = false;
+						gameCore.tutorial.updateFlagSlide();
+					}
 				}
 
 				if (evaluation.isHomeQuadEmpty(2, gameCore.HUPos)) {

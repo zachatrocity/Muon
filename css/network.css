@@ -1,10 +1,10 @@
 #lobbyDiv{
 	margin-bottom: 50px;
-  	min-height: 400px;
-  	max-height: 350px;
-  	background: rgba(174, 174, 174, 0.55);
+  	height: 400px;
+  	/*background: rgba(174, 174, 174, 0.55);
   	border-radius: 3px;
-  	box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+  	box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);*/
+  	background-image: url(../images/network_background.svg);
 	color: black;
 	letter-spacing: 2px;
 	z-index: 100;
@@ -12,11 +12,11 @@
 
 #roomDiv{
 	margin-bottom: 50px;
-	min-height: 400px;
-  	max-height: 350px;
-  	background: rgba(174, 174, 174, 0.55);
+	height: 400px;
+  	/*background: rgba(174, 174, 174, 0.55);
   	border-radius: 3px;
-  	box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+  	box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);*/
+  	background-image: url(../images/network_background.svg);
 	color: black;
 	letter-spacing: 2px;
 	z-index: 100;

@@ -8,5 +8,4 @@ muonApp.controller('HowTo3Ctrl', function ($scope, $stateParams, $state) {
     $scope.prev_slide = function(){
         $state.go('helpBoardAndUI', {index:5});
     }
-
 });
