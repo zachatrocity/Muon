@@ -69,6 +69,7 @@ var gameCore = {
 		p1Flag: true,
 		p2Flag: true,
 		first: 'muon',
+		winner: '',
 	},
 	network: {
 		team: '',
@@ -567,7 +568,7 @@ var gameCore = {
 					gameCore.board.rotateMuonAtFoci(20);
 					gameCore.board.rotateMuonAtFoci(21);
 					gameCore.board.rotateMuonAtFoci(22);
-				},1750)
+				},2500)
 			}
 
 			player.play();
@@ -764,7 +765,12 @@ var gameCore = {
 				gameCore.board.moveMuonTweenFoci(from, to);
 
 				// Check for win
-				if ((gameCore.pvp.turn == 1 && gameCore.GameOver(gameCore.pvp.p1Pos)) || (gameCore.pvp.turn == 2 && gameCore.GameOver(gameCore.pvp.p2Pos))) {
+				if (gameCore.pvp.turn == 1 && gameCore.GameOver(gameCore.pvp.p1Pos)) {
+					gameCore.pvp.winner = gameCore.pvp.p1Team;
+					gameCore.EndGame();
+				}
+				else if (gameCore.pvp.turn == 2 && gameCore.GameOver(gameCore.pvp.p2Pos)) {
+					gameCore.pvp.winner = gameCore.pvp.p2Team;
 					gameCore.EndGame();
 				}
 				else
@@ -832,6 +838,7 @@ var gameCore = {
 				console.log("it is not your turn idiot.");
 			}
 		} else {
+			gameCore.board.selectedMuon = null;
 			console.log("Player attempted an invalid move, from " + convert.bitToStandard(bitFrom) + " to " + convert.bitToStandard(bitTo));
 		}
 	},
@@ -959,7 +966,7 @@ var gameCore = {
 			setTimeout(function(){
 				var foci = gameCore.board.winningFoci;
 				if(foci){
-					if(gameCore.pvp.turn == 'antimuon')
+					if(gameCore.pvp.winner == 'muon')
 						gameCore.board.moveMuonsToWinFoci(foci[0],foci[1],foci[2],true);
 					else
 						gameCore.board.moveMuonsToWinFoci(foci[0],foci[1],foci[2],false);
@@ -1034,15 +1041,6 @@ aiWorker.onmessage = function(e) {
 	gameCore.attemptedDraw = false;
 	
 	gameCore.AIPos ^= (convert.intToBit(e.data.from)) ^ (convert.intToBit(e.data.to));
-
-	// Remove the flag if they have abandoned their home quad
-	if (evaluation.isHomeQuadEmpty(gameCore.AIPlayerNumber, gameCore.AIPos)) {
-		if(gameCore.AIPlayerNumber == 2)
-			gameCore.ChangePlayer2Flag(false);
-		else
-			gameCore.ChangePlayer1Flag(false);
-		console.log("AI can now win from their home quad");
-	}
 	
 	// Don't move the AI piece if less than 3 seconds have passed
 	gameCore.aiEnd = Date.now();
@@ -1051,6 +1049,16 @@ aiWorker.onmessage = function(e) {
 	setTimeout(function(){
 		gameCore.AddMoveToHistory(new Move(e.data.from, e.data.to, "ai"));
 		gameCore.board.moveMuonTweenFoci(e.data.from, e.data.to);
+		
+		// Remove the flag if they have abandoned their home quad
+		if (evaluation.isHomeQuadEmpty(gameCore.AIPlayerNumber, gameCore.AIPos)) {
+			if(gameCore.AIPlayerNumber == 2)
+				gameCore.ChangePlayer2Flag(false);
+			else
+				gameCore.ChangePlayer1Flag(false);
+			console.log("AI can now win from their home quad");
+		}
+		
 		gameCore.AITurn = false;
 
 		if (gameCore.GameOver(gameCore.AIPos)) {
