@@ -927,6 +927,7 @@ var gameCore = {
 				gameCore.AIPlayerNumber = 2;
 			}
 			
+			gameCore.aiStart = Date.now();
 	 		aiWorker.postMessage({ 
 				'restart': true,
 				'AIStarts': gameCore.AIGoesFirst,
@@ -1014,7 +1015,7 @@ var gameCore = {
 
 aiWorker.onmessage = function(e) {
 	console.log('Message received from worker');
-	console.log("Opponent moved from " + convert.bitToStandard(convert.intToBit(e.data.from)) + " to " + convert.bitToStandard(convert.intToBit(e.data.to)));
+	console.log("AI moved from " + convert.bitToStandard(convert.intToBit(e.data.from)) + " to " + convert.bitToStandard(convert.intToBit(e.data.to)));
 	gameCore.attemptedDraw = false;
 	
 	gameCore.AIPos ^= (convert.intToBit(e.data.from)) ^ (convert.intToBit(e.data.to));
