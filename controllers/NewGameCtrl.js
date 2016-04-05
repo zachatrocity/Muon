@@ -47,7 +47,7 @@ muonApp.controller('NewGameCtrl', function ($scope, $stateParams) {
 			pvpmovesettings[1].classList.remove('gray');
 			pvpmovesettings[1].classList.add('blue');
 		}
-		gameCore.pvp.turn = choice ? 1 : 2;
+		gameCore.pvp.first = choice;
 	}
 
 	$scope.setAIGoesFirst = function(choice){

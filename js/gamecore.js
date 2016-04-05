@@ -67,6 +67,7 @@ var gameCore = {
 		turn: 1,
 		p1Flag: true,
 		p2Flag: true,
+		first: 'muon',
 	},
 	network: {
 		team: '',
@@ -914,7 +915,7 @@ var gameCore = {
 	 			gameCore.pvp.p1Pos = 0b00000000001111100000;
 	 			gameCore.pvp.p2Pos = 0b00000111110000000000;
 	 		}
-	 		gameCore.pvp.turn = 1;
+	 		gameCore.pvp.turn = (gameCore.pvp.p1Team == gameCore.pvp.first) ? 1 : 2;
 	 	} else {
 	 		gameCore.AITurn = gameCore.AIGoesFirst;
 
