@@ -108,7 +108,7 @@ var gameCore = {
 			if (gameCore.winner == "local") {
 				console.log("YOU WON!");
 				var foci = evaluation.Win(gameCore.network.localPos, player, gameCore.network.opponentFlag, gameCore.network.localFlag);
-				if(gameCore.network.team == 'muon')
+				if(gameCore.network.team = 'muon')
 					gameCore.board.moveMuonsToWinFoci(foci[0],foci[1],foci[2],true);
 				else
 					gameCore.board.moveMuonsToWinFoci(foci[0],foci[1],foci[2],false);
@@ -117,17 +117,17 @@ var gameCore = {
 			else if (gameCore.winner == "opponent"){
 				console.log("YOU LOST!");
 				var foci = evaluation.Win(gameCore.network.opponentPos, player, gameCore.network.opponentFlag, gameCore.network.localFlag);
-				if(gameCore.network.team == 'muon')
+				if(gameCore.network.team = 'muon')
 					gameCore.board.moveMuonsToWinFoci(foci[0],foci[1],foci[2],false);
 				else
 					gameCore.board.moveMuonsToWinFoci(foci[0],foci[1],foci[2],true);
 				gameCore.board.gameOverModal = BoardGUI.showLoseModal;
 			}
-			else{
+			else
 				console.log("IT'S A DRAW!");
-				gameCore.board.moveMuonsToWinFoci(-1,-1,-1,false);
-			}
-		},
+			
+		}
+	},
 	board: {
 		nodes: [],
 		links: [],
