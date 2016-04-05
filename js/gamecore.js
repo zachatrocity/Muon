@@ -342,6 +342,8 @@ var gameCore = {
             	}
             // Human vs AI game
             } else if (closestNode && gameCore.BelongsToPlayer(gameCore.HUPos, closestNode.foci)) {
+				if (gameCore.AITurn)
+					return;
 				//select all the nodes around the node we clicked
 				if(closestNode.foci == gameCore.board.selectedMuon) { 
 					//its already spinning so unselect it
