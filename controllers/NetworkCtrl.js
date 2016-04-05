@@ -5,8 +5,9 @@ muonApp.controller('NetworkCtrl', function ($scope, $stateParams) {
 		//cloak.run(packjson.serverurl);
 
 	$scope.$on('$viewContentLoaded', function(){
+
 		setTimeout(function(){ 
-			cloak.message('registerUsername', {'username' : $stateParams.username})
+			cloak.message('registerUsername', {'username' : $stateParams.username, 'userid' : Network.userId})
 			cloak.message('listRooms');
 		}, 500);
 	});

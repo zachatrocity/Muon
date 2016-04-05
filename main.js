@@ -191,6 +191,27 @@ var muonApp = angular.module('muonApp', ["ui.router", "ngAnimate"])
     }
   });
 
+  db.get('network_GUID', function(err, resp) {
+    if (err) {
+       //does not exists so create
+      db.put({
+        _id: 'network_GUID',
+        title: uuid.v4()
+      }).then(function (response) {
+        db.get('network_GUID', function(er, res){
+          if(!er){
+            Network.userId = res.title;
+          }
+        })
+      }).catch(function (err) {
+        console.log(err);
+      });
+     } else {
+      console.log("network_GUID: " + resp.title);
+      Network.userId = resp.title
+    }
+  });
+
 })
 
 muonApp.directive('ngEnter', function () {
