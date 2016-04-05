@@ -69,6 +69,7 @@ var gameCore = {
 		p1Flag: true,
 		p2Flag: true,
 		first: 'muon',
+		winner: '',
 	},
 	network: {
 		team: '',
@@ -764,7 +765,12 @@ var gameCore = {
 				gameCore.board.moveMuonTweenFoci(from, to);
 
 				// Check for win
-				if ((gameCore.pvp.turn == 1 && gameCore.GameOver(gameCore.pvp.p1Pos)) || (gameCore.pvp.turn == 2 && gameCore.GameOver(gameCore.pvp.p2Pos))) {
+				if (gameCore.pvp.turn == 1 && gameCore.GameOver(gameCore.pvp.p1Pos)) {
+					gameCore.pvp.winner = gameCore.pvp.p1Team;
+					gameCore.EndGame();
+				}
+				else if (gameCore.pvp.turn == 2 && gameCore.GameOver(gameCore.pvp.p2Pos)) {
+					gameCore.pvp.winner = gameCore.pvp.p2Team;
 					gameCore.EndGame();
 				}
 				else
@@ -960,7 +966,7 @@ var gameCore = {
 			setTimeout(function(){
 				var foci = gameCore.board.winningFoci;
 				if(foci){
-					if(gameCore.pvp.turn == 'antimuon')
+					if(gameCore.pvp.winner == 'muon')
 						gameCore.board.moveMuonsToWinFoci(foci[0],foci[1],foci[2],true);
 					else
 						gameCore.board.moveMuonsToWinFoci(foci[0],foci[1],foci[2],false);
