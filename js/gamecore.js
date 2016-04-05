@@ -6,6 +6,12 @@ var Move = function(f, t, p) {
 	this.player = p;
 };
 
+var Player = {
+	team: '',
+	pos: '',
+	homeFlag: true,
+}
+
 var gameCore = {
 	AIPos: 0b00000000001111100000, //Top left pieces
 	HUPos: 0b00000111110000000000, //Bottom right pieces
@@ -14,7 +20,6 @@ var gameCore = {
 	humanteam: 'muon',
 	finalWinner:'',
 	opponentTeam: '',
-	pvp: false,
 	aiStart: 0,
 	aiEnd: 0,
 	AITurn: true,	// Flag for the current player's turn
@@ -53,6 +58,17 @@ var gameCore = {
 			var playerTwo = Typer(stepTwo, ['Great job! However, when you play for real, the anti-muons will be fighting back! You are ready for action, hit play to start a game!']);
 			playerTwo.play();
 		}
+	},
+	pvp: {
+		enabled: false,
+		p1Team: '',
+		p2Team: '',
+		p1Pos: '',
+		p2Pos: '',
+		turn: 1,
+		p1Flag: true,
+		p2Flag: true,
+		first: 'muon',
 	},
 	network: {
 		team: '',
@@ -109,7 +125,7 @@ var gameCore = {
 			if (gameCore.winner == "local") {
 				console.log("YOU WON!");
 				var foci = evaluation.Win(gameCore.network.localPos, player, gameCore.network.opponentFlag, gameCore.network.localFlag);
-				if(gameCore.network.team = 'muon')
+				if(gameCore.network.team == 'muon')
 					gameCore.board.moveMuonsToWinFoci(foci[0],foci[1],foci[2],true);
 				else
 					gameCore.board.moveMuonsToWinFoci(foci[0],foci[1],foci[2],false);
@@ -118,7 +134,7 @@ var gameCore = {
 			else if (gameCore.winner == "opponent"){
 				console.log("YOU LOST!");
 				var foci = evaluation.Win(gameCore.network.opponentPos, player, gameCore.network.opponentFlag, gameCore.network.localFlag);
-				if(gameCore.network.team = 'muon')
+				if(gameCore.network.team == 'muon')
 					gameCore.board.moveMuonsToWinFoci(foci[0],foci[1],foci[2],false);
 				else
 					gameCore.board.moveMuonsToWinFoci(foci[0],foci[1],foci[2],true);
@@ -247,6 +263,7 @@ var gameCore = {
 			var point = d3.mouse(this);
 			var maxdist = 30
 			var maxFociDist = 90;
+			var	exit = false; // Used to exit if a move has been attempted
 
 			if (gameCore.gameOver)
 				return
@@ -262,6 +279,7 @@ var gameCore = {
 					if (distance < maxFociDist) {
 						//move gameCore.board.selectedMuon toward this target (foci)
 						gameCore.AttemptMove(gameCore.board.selectedMuon,index);
+						exit = true;
 					} 
 				});
 			}
@@ -303,10 +321,30 @@ var gameCore = {
 						gameCore.board.beginRotatingSelectedMuon(nodesRoundFoci, closestNode.foci, point)		                
                 	}
                 }
-            // If the node belongs to the player, or we're doing pass and play and it's the other guy's turn and it belongs to them
-            } else if (closestNode && (!gameCore.pvp && !gameCore.AITurn && gameCore.BelongsToPlayer(gameCore.HUPos, closestNode.foci)
-             || gameCore.pvp && !gameCore.AITurn && gameCore.BelongsToPlayer(gameCore.HUPos, closestNode.foci)
-             || gameCore.pvp && gameCore.AITurn && gameCore.BelongsToPlayer(gameCore.AIPos, closestNode.foci))) {
+            // PVP game (pass and play)
+            } else if (gameCore.pvp.enabled && closestNode) {
+            	// Player 1 turn and belongs to them or p2 and belongs to them
+            	if ((gameCore.pvp.turn == 1 && gameCore.BelongsToPlayer(gameCore.pvp.p1Pos, closestNode.foci)) || (gameCore.pvp.turn == 2 && gameCore.BelongsToPlayer(gameCore.pvp.p2Pos, closestNode.foci))) {
+            		//select all the nodes around the node we clicked
+					if(closestNode.foci == gameCore.board.selectedMuon) { 
+						//its already spinning so unselect it
+						gameCore.board.selectedMuon = null;
+					} else {
+						var startIndex = closestNode.index - (closestNode.index % 3);
+						gameCore.board.selectedMuon = closestNode.foci;
+						var nodesRoundFoci = d3.selectAll(".id" + startIndex + ",.id" + (startIndex + 1) + ",.id" + (startIndex + 2))[0];
+						var point = {
+							x: (nodesRoundFoci[0].cx.baseVal.value + nodesRoundFoci[1].cx.baseVal.value + nodesRoundFoci[2].cx.baseVal.value) / 3,
+							y: (nodesRoundFoci[0].cy.baseVal.value + nodesRoundFoci[1].cy.baseVal.value + nodesRoundFoci[2].cy.baseVal.value) / 3
+						};
+						var nodesRoundFoci = d3.selectAll(".id" + startIndex + ",.id" + (startIndex + 1) + ",.id" + (startIndex + 2));
+						gameCore.board.beginRotatingSelectedMuon(nodesRoundFoci, closestNode.foci, point)
+					}
+            	}
+            // Human vs AI game
+            } else if (closestNode && gameCore.BelongsToPlayer(gameCore.HUPos, closestNode.foci)) {
+				if (gameCore.AITurn)
+					return;
 				//select all the nodes around the node we clicked
 				if(closestNode.foci == gameCore.board.selectedMuon) { 
 					//its already spinning so unselect it
@@ -487,6 +525,7 @@ var gameCore = {
 		moveMuonsToWinFoci: function(f1,f2,f3, muon){
 			//f1,f2,f3 are the foci to move from
 			document.addEventListener("click", gameCore.endAnimation);
+			BoardGUI.hideAllModals();
 
 			// Prevent user from clicking any menu buttons during animation
 			document.getElementById("menu-hide").style.zIndex = 2;
@@ -626,6 +665,8 @@ var gameCore = {
 		var openPositions = '';
 		if(gameCore.network.roomid != null){
 			openPositions = gameCore.GetAvailableMoves(from, gameCore.network.opponentPos ^ gameCore.network.localPos ^ 0xFFFFF);
+		} else if (gameCore.pvp.enabled) {
+			openPositions = gameCore.GetAvailableMoves(from, gameCore.pvp.p1Pos ^ gameCore.pvp.p2Pos ^ 0xFFFFF);
 		} else {
 			openPositions = gameCore.GetAvailableMoves(from, gameCore.HUPos ^ gameCore.AIPos ^ 0xFFFFF);
 		}
@@ -682,51 +723,87 @@ var gameCore = {
 				return;
 			}
 			
-			// If there is no room ID then you are playing against the AI.
-			if(gameCore.network.roomid == null) {
-				//(gameCore.pvp && gameCore.AITurn) || (!gameCore.pvp && !gameCore.AITurn)) { //if it is human turn
-				console.log("Player moved from " + convert.bitToStandard(bitFrom) + " to " + convert.bitToStandard(bitTo));
-				gameCore.attemptedDraw = false;
+			// PVP pass n play
+			if (gameCore.pvp.enabled) {
+				console.log("Player " + gameCore.pvp.turn + " moved from " + convert.bitToStandard(bitFrom) + " to " + convert.bitToStandard(bitTo));
 
-				// Update the users bit board.
-				if (gameCore.BelongsToPlayer(gameCore.AIPos, from)) {
-					gameCore.AIPos ^= bitFrom ^ bitTo;
-					gameCore.AddMoveToHistory(new Move(from, to, "opponent"));
+				// Player 1 just moved
+				if (gameCore.pvp.turn == 1) {
+					// Update the user's bit board
+					gameCore.pvp.p1Pos ^= bitFrom ^ bitTo;
+					gameCore.AddMoveToHistory(new Move(from, to, "player 1"));
 
-					// Remove the flag if they have abandoned their home quad
-					if (evaluation.isHomeQuadEmpty(gameCore.AIPlayerNumber, gameCore.AIPos)) {
-						if(gameCore.AIPlayerNumber == 2)
-							gameCore.ChangePlayer2Flag(false);
+					// Remove player flag if home quad abandoned
+					if (evaluation.isHomeQuadEmpty(gameCore.pvp.p1Team == 'muon' ? 2 : 1, gameCore.pvp.p1Pos)) {
+						gameCore.pvp.p1Flag = false;
+						if(gameCore.pvp.p1Team == 'muon')
+							BoardGUI.removeMuonFlag();
 						else
-							gameCore.ChangePlayer1Flag(false);
+							BoardGUI.removeAntiMuonFlag();
 						console.log("Player 1 can now win from their home quad");
 					}
 				}
+				// Player 2 just moved
 				else {
-					gameCore.HUPos ^= bitFrom ^ bitTo;
-					gameCore.AddMoveToHistory(new Move(from, to, "player"));
+					// Update the user's bit board
+					gameCore.pvp.p2Pos ^= bitFrom ^ bitTo;
+					gameCore.AddMoveToHistory(new Move(from, to, "player 2"));
 
-					// Remove the flag if they have abandoned their home quad
-					if (evaluation.isHomeQuadEmpty(gameCore.HUPlayerNumber, gameCore.HUPos)) {
-						if(gameCore.HUPlayerNumber == 2)
-							gameCore.ChangePlayer2Flag(false);
+					// Remove player flag if home quad abandoned
+					if (evaluation.isHomeQuadEmpty(gameCore.pvp.p2Team == 'muon' ? 2 : 1, gameCore.pvp.p2Pos)) {
+						gameCore.pvp.p2Flag = false;
+						if(gameCore.pvp.p2Team == 'muon')
+							BoardGUI.removeMuonFlag();
 						else
-							gameCore.ChangePlayer1Flag(false);
-						console.log("Player can now win from their home quad");
+							BoardGUI.removeAntiMuonFlag();
+						console.log("Player 2 can now win from their home quad");
 					}
 				}
 
+				// Move piece
+				gameCore.board.moveMuonTweenFoci(from, to);
+
+				// Check for win
+				if ((gameCore.pvp.turn == 1 && gameCore.GameOver(gameCore.pvp.p1Pos)) || (gameCore.pvp.turn == 2 && gameCore.GameOver(gameCore.pvp.p2Pos))) {
+					gameCore.EndGame();
+				}
+				else
+					gameCore.pvp.turn = gameCore.pvp.turn == 1 ? 2 : 1;
+
+				return;
+			}
+			// If there is no room ID then you are playing against the AI.
+			else if(gameCore.network.roomid == null) {
+				console.log("Player moved from " + convert.bitToStandard(bitFrom) + " to " + convert.bitToStandard(bitTo));
+				gameCore.attemptedDraw = false;
+
+				// Update the human board
+				gameCore.HUPos ^= bitFrom ^ bitTo;
+				gameCore.AddMoveToHistory(new Move(from, to, "player"));
+
+				// Remove the human flag if they have abandoned their home quad
+				if (evaluation.isHomeQuadEmpty(gameCore.HUPlayerNumber, gameCore.HUPos)) {
+					if(gameCore.HUPlayerNumber == 2)
+						gameCore.ChangePlayer2Flag(false);
+					else
+						gameCore.ChangePlayer1Flag(false);
+					console.log("Player can now win from their home quad");
+				}
+
+				// Increase probability of draw acceptance
 				if (gameCore.moveCount >= gameCore.MAX_HIST) {
 					gameCore.drawProb++;
 				}
 
+				// Update current turn and move piece
 				gameCore.AITurn = !gameCore.AITurn; //AIs turn is set to true
 				gameCore.board.moveMuonTweenFoci(from, to);
 				
+				// Check for win and retrieve AI move
 				if (gameCore.GameOver(gameCore.HUPos)) {
 					gameCore.EndGame();
 				}
-				else if (!gameCore.pvp) {
+				else {
 					// Make ai move
 					gameCore.aiStart = Date.now();
 					aiWorker.postMessage({ 'from': bitFrom, 'to': bitTo });
@@ -773,14 +850,37 @@ var gameCore = {
 		}
 	},
 
-	// Returns 'P' for player won, 'O' for opponent won, and 'N' for no winner
+	// Determines if the player won
 	GameOver: function(position) {
 		var player;
-		if(position == gameCore.AIPos)
-			player = gameCore.AIPlayerNumber;
-		else
-			player = gameCore.HUPlayerNumber;
-		gameCore.board.winningFoci = evaluation.Win(position, player, gameCore.playerOneFlag, gameCore.playerTwoFlag);
+		var p1Flag;
+		var p2Flag;
+
+		if (gameCore.pvp.enabled) {
+			if (position == gameCore.pvp.p1Pos){
+				if (gameCore.pvp.p1Team == 'muon')
+					player = 2;
+				else
+					player = 1;
+			}
+			else {
+				if (gameCore.pvp.p2Team == 'muon')
+					player = 2;
+				else
+					player = 1;
+			}
+			p1Flag = gameCore.pvp.p1Flag;
+			p2Flag = gameCore.pvp.p2Flag;
+		}
+		else {
+			if(position == gameCore.AIPos)
+				player = gameCore.AIPlayerNumber;
+			else
+				player = gameCore.HUPlayerNumber;
+			p1Flag = gameCore.playerOneFlag;
+			p2Flag = gameCore.playerTwoFlag;
+		}
+		gameCore.board.winningFoci = evaluation.Win(position, player, p1Flag, p2Flag);
 		if (gameCore.board.winningFoci) {
 			if(gameCore.network.roomid != null)
 				gameCore.winner = player == 1 ? "opponent" : "local";
@@ -797,7 +897,6 @@ var gameCore = {
 		gameCore.board.clearBoard();
 	 	gameCore.board.createBoard();
 
-
 	 	if(isNetworkGame){
 	 		if(gameCore.network.role == 'host') {
 	 			//then i'm the bottom right pieces
@@ -810,7 +909,18 @@ var gameCore = {
 	 			//my opponent is below
 	 			gameCore.network.opponentPos = gameCore.network.opponentStartPos = 0b00000111110000000000;
 	 		}
-	 		BoardGUI.setBoardHeader(gameCore.network.turn);
+	 	} else if (gameCore.pvp.enabled) {
+	 		if (gameCore.pvp.p1Team == 'muon') {
+	 			gameCore.pvp.p2Team = 'antimuon';
+	 			gameCore.pvp.p1Pos = 0b00000111110000000000;
+	 			gameCore.pvp.p2Pos = 0b00000000001111100000;
+	 		}
+	 		else {
+	 			gameCore.pvp.p2Team = 'muon';
+	 			gameCore.pvp.p1Pos = 0b00000000001111100000;
+	 			gameCore.pvp.p2Pos = 0b00000111110000000000;
+	 		}
+	 		gameCore.pvp.turn = (gameCore.pvp.p1Team == gameCore.pvp.first) ? 1 : 2;
 	 	} else {
 	 		gameCore.AITurn = gameCore.AIGoesFirst;
 
@@ -845,7 +955,20 @@ var gameCore = {
 	//EndGame sets the game board to not be able to be interfered with by the player.
 	EndGame: function() {
 		gameCore.gameOver = true;	// Lock the board from player input
-		if (gameCore.winner == "local" || gameCore.winner == "human") {
+		if (gameCore.pvp.enabled) {
+			setTimeout(function(){
+				var foci = gameCore.board.winningFoci;
+				if(foci){
+					if(gameCore.pvp.turn == 'antimuon')
+						gameCore.board.moveMuonsToWinFoci(foci[0],foci[1],foci[2],true);
+					else
+						gameCore.board.moveMuonsToWinFoci(foci[0],foci[1],foci[2],false);
+				}
+
+				gameCore.board.gameOverModal = BoardGUI.showWinModal;
+			}, 2000);
+		}
+		else if (gameCore.winner == "local" || gameCore.winner == "human") {
 			setTimeout(function(){
 				var foci = gameCore.board.winningFoci;
 				if(foci){
@@ -924,15 +1047,18 @@ aiWorker.onmessage = function(e) {
 	// Don't move the AI piece if less than 3 seconds have passed
 	gameCore.aiEnd = Date.now();
 
-	setTimeout(function(){ gameCore.AddMoveToHistory(new Move(e.data.from, e.data.to, "ai")); }, 2000 - (gameCore.aiEnd - gameCore.aiStart))
-	setTimeout(function(){ gameCore.board.moveMuonTweenFoci(e.data.from, e.data.to); }, 2000 - (gameCore.aiEnd - gameCore.aiStart));
-	
-	if (gameCore.GameOver(gameCore.AIPos)) {
-		gameCore.EndGame();
-	}
+	// Delay so the AI stuff doesn't happen immediately and make the player feel weird
+	setTimeout(function(){
+		gameCore.AddMoveToHistory(new Move(e.data.from, e.data.to, "ai"));
+		gameCore.board.moveMuonTweenFoci(e.data.from, e.data.to);
+		gameCore.AITurn = false;
+
+		if (gameCore.GameOver(gameCore.AIPos)) {
+			gameCore.EndGame();
+		}
+	}, 2000 - (gameCore.aiEnd - gameCore.aiStart))
 
 	if (gameCore.moveCount >= gameCore.MAX_HIST) {
 		gameCore.drawProb++;
 	}
-	gameCore.AITurn = false; //human turn
 };
