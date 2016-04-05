@@ -12,6 +12,7 @@ var gameCore = {
 	playerOneFlag: true, // The AI/Opponent
 	playerTwoFlag: true, // The human/local
 	humanteam: 'muon',
+	finalWinner:'',
 	opponentTeam: '',
 	pvp: false,
 	aiStart: 0,
@@ -493,6 +494,7 @@ var gameCore = {
 			var player = document.getElementById("winAnim");
 			if (muon)
 			{
+				gameCore.finalWinner = 'Muon';
 				player.src = "./videos/muonWin.mp4";
 			}
 			else if (f1 == -1 && f2 == -1 && f3 == -1) // If all foci are equal to zero, it is a draw
@@ -501,6 +503,7 @@ var gameCore = {
 			}
 			else
 			{
+				gameCore.finalWinner = 'Anti-muon';
 				player.src = "./videos/antiWin.mp4";
 			}
 
@@ -886,11 +889,11 @@ var gameCore = {
 		{
 			if (gameCore.winner == "local" || gameCore.winner == "human")
 			{
-				BoardGUI.showWinModal();
+				BoardGUI.showWinModal(gameCore.finalWinner + "s Win.");
 			}
 			else if (gameCore.winner == "opponent" || gameCore.winner == "ai")
 			{
-				BoardGUI.showLoseModal();
+				BoardGUI.showLoseModal(gameCore.finalWinner + "s Win.");
 			}
 			else
 			{
