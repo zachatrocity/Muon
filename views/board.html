@@ -129,7 +129,7 @@
 	<!-- Win modal -->
 	<div class="modal waiting" id="win-modal">
 		<div class="modal-dialog">
-			<h3 class="modal-prompt">You Won!</h3>
+			<h3 class="modal-prompt" id="winModalText"></h3>
 			<div class="row">
 				<div class="col-xs-4 col-xs-offset-2">
 					<svg class="button blue bluehover modal-btn" width="170" height="70" viewBox="0 0 170 70"  ng-mouseover="mouse_over()" ng-click="mouse_click(); (isNetworkGame) ? proposeRematch() : startNewGame()"
@@ -161,7 +161,7 @@
 	<!-- Lose modal -->
 	<div class="modal waiting" id="lose-modal">
 		<div class="modal-dialog">
-			<h3 class="modal-prompt">You Lost!</h3>
+			<h3 class="modal-prompt" id="loseModalText"></h3>
 			<div class="row">
 				<div class="col-xs-4 col-xs-offset-2">
 					<svg class="button blue bluehover modal-btn" width="170" height="70" viewBox="0 0 170 70"  ng-mouseover="mouse_over()" ng-click="mouse_click(); (isNetworkGame) ? proposeRematch() : startNewGame()"
@@ -490,7 +490,11 @@
 			
 			<h3 class="modal-prompt">How To Play</h3>
 			<p class="help-modal-text"> 
-				Move your muons (or anti-muons) from your initial quadrant to form a triangle in any one of the other three pyramid quadrants. The first player to create a triangle of 3 muons inside one of the quadrants, wins the game. Once you have cleared all 5 of your muons out of your initial quadrant, you can win by forming a triangle in your home quadrant as well.
+				Move your muons (or anti-muons) from your initial quadrant to form a triangle in any one of the other three pyramid quadrants.
+				<br><br>
+				The first player to create a triangle of 3 muons inside one of the quadrants, wins the game.
+				<br><br>
+				Once you have cleared all 5 of your muons out of your initial quadrant, you can win by forming a triangle in your home quadrant as well.
 			</p>
 			
 			<div class="row">

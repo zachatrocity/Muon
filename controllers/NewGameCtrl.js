@@ -2,7 +2,8 @@ muonApp.controller('NewGameCtrl', function ($scope, $stateParams) {
 	gameCore.AIGoesFirst = false;
 	gameCore.humanteam = 'muon';
 	gameCore.AITreeDepth = 5;
-	gameCore.pvp = false;
+	gameCore.pvp.enabled = false;
+	gameCore.pvp.p1Team = 'muon';
 
 	$scope.setAILevel = function(depth){
 		var difset = document.getElementById('diffsettings').children;
@@ -46,7 +47,7 @@ muonApp.controller('NewGameCtrl', function ($scope, $stateParams) {
 			pvpmovesettings[1].classList.remove('gray');
 			pvpmovesettings[1].classList.add('blue');
 		}
-		gameCore.AIGoesFirst = choice;
+		gameCore.pvp.first = choice;
 	}
 
 	$scope.setAIGoesFirst = function(choice){
@@ -95,15 +96,15 @@ muonApp.controller('NewGameCtrl', function ($scope, $stateParams) {
 			pvpteamset[1].classList.add('blue');
 			pvpteamset[1].classList.remove('gray');
 		}
-		gameCore.humanteam = team;
+		gameCore.pvp.p1Team = team;
 	}
 
 	$scope.setSinglePlayer = function(){
-		gameCore.pvp = false;
+		gameCore.pvp.enabled = false;
 	}
 
 	$scope.setPvp = function(){
-		gameCore.pvp = true;
+		gameCore.pvp.enabled = true;
 	}
 	
 	document.getElementById('one-player').style.display="block";
