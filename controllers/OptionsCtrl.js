@@ -7,7 +7,8 @@ muonApp.controller('OptionsCtrl', function ($scope, $stateParams) {
 	var muteSoundFXTrueText = 'Unmute Sound FX';
 
 	var usernameIcon = document.getElementById("username-icon");
-  	usernameIcon.style.fill = "black";
+	if(usernameIcon != null)
+  		usernameIcon.style.fill = "black";
 
 	var particleFalseText = 'Pause Particles';
 	var particleTrueText = 'Resume Particles';
