@@ -94,6 +94,8 @@ var gameCore = {
 				gameCore.AddMoveToHistory(new Move(from, to, "opponent"));
 			}
 
+			gameCore.board.moveMuonTweenFoci(from, to);
+
 			//remove my flag if needed
 			if(evaluation.isHomeQuadEmpty((gameCore.network.role == 'host') ? 2 : 1, gameCore.network.localPos)) {
 				gameCore.network.localFlag = false;
