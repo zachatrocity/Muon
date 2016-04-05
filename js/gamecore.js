@@ -1,17 +1,5 @@
 var aiWorker = new Worker('./js/aiworker.js');
 
-var Move = function(f, t, p) {
-	this.from = f;
-	this.to = t;
-	this.player = p;
-};
-
-var Player = {
-	team: '',
-	pos: '',
-	homeFlag: true,
-}
-
 var gameCore = {
 	AIPos: 0b00000000001111100000, //Top left pieces
 	HUPos: 0b00000111110000000000, //Bottom right pieces
@@ -30,35 +18,8 @@ var gameCore = {
 	winner: "none",		// To display if the local player won or lost
 	gameOver: false,	// Stop allowing the selection of muons if true
 	attemptedDraw: false,
-
 	AIGoesFirst:false,
 	AITreeDepth: 7,
-	tutorial:{
-		IS_TUTORIAL: false,
-		index: 0,
-		isFirstMove: true,
-		updateFlagSlide: function(){
-			var stepOne = document.getElementById('step-content');
-			document.getElementById('stepContainer').classList.add('fade-out');
-			setTimeout(function(){
-				stepOne.innerHTML = 'Clear all of the green Muons out of their home quadrant...';
-				document.getElementById('stepContainer').classList.remove('fade-out');
-			},1500);
-		},
-		quadCleared: function(){
-			var stepOne = document.getElementById('step-content');
-			document.getElementById('stepContainer').classList.add('fade-out');
-			setTimeout(function(){
-				stepOne.innerHTML = 'Nice work! Hit next to continue';
-				document.getElementById('stepContainer').classList.remove('fade-out');
-			},1000);
-		},
-		tutorialWin: function(){
-			var stepTwo = document.getElementById('stepTwo');
-			var playerTwo = Typer(stepTwo, ['Great job! However, when you play for real, the anti-muons will be fighting back! You are ready for action, hit play to start a game!']);
-			playerTwo.play();
-		}
-	},
 	pvp: {
 		enabled: false,
 		p1Team: '',
@@ -473,7 +434,7 @@ var gameCore = {
 			gameCore.AITurn = true;
 			gameCore.moveHistory = [];
 			gameCore.moveCount = 0;
-			gameCore.tutorial.IS_TUTORIAL = false;
+			tutorial.IS_TUTORIAL = false;
 			gameCore.gameOver = false;
 		},
 		addNodeAtFoci: function(f,anti){
@@ -700,25 +661,25 @@ var gameCore = {
 
 		if (gameCore.ValidMove(bitFrom, bitTo)) {
 			//is tutoral
-			if(gameCore.tutorial.IS_TUTORIAL){
+			if(tutorial.IS_TUTORIAL){
 				gameCore.HUPos ^= bitFrom ^ bitTo;
 				gameCore.board.moveMuonTweenFoci(from, to);
-				if (gameCore.tutorial.isFirstMove){
+				if (tutorial.isFirstMove){
 					if(window.location.hash == "#/help3"){
-						gameCore.tutorial.isFirstMove = false;
-						gameCore.tutorial.updateFlagSlide();
+						tutorial.isFirstMove = false;
+						tutorial.updateFlagSlide();
 					}
 				}
 
 				if (evaluation.isHomeQuadEmpty(2, gameCore.HUPos)) {
-					ChangeLocalFlag(false);
-					if(gameCore.tutorial.index == 0)
-						gameCore.tutorial.quadCleared();
+					BoardGUI.removeMuonFlag();
+					if(tutorial.index == 0)
+						tutorial.quadCleared();
 				}
 
 				if (gameCore.GameOver(gameCore.HUPos)) {
-					if(gameCore.tutorial.index == 1)
-						gameCore.tutorial.tutorialWin();
+					if(tutorial.index == 1)
+						tutorial.tutorialWin();
 				}
 				
 				return;

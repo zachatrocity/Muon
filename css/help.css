@@ -18,7 +18,13 @@
 	padding-right: 20%
 }
 
+#step-content{
+	transition: opacity 1s ease-in-out;
+}
+
 #lower-content{
+	transition: opacity 1s ease-in-out;
+	padding-right: 5%;
 	position: absolute;
   	bottom: 175px;
 }
