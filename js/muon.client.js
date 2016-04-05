@@ -89,9 +89,19 @@ var Network = {
         //game
         'assignTeam': function(data) {
           console.log('my team is', data.team);
-          gameCore.network.team = data.team;
-          gameCore.network.otherTeam = (gameCore.network.team === 'muon') ? 'antimuon' : 'muon';
-          gameCore.network.turn = data.turn;
+
+            gameCore.network.team = data.team;
+            gameCore.network.otherTeam = (gameCore.network.team === 'muon') ? 'antimuon' : 'muon';
+            gameCore.network.turn = data.turn;
+
+            if(data.moveHist.length > 0){
+              //resume a game, play through the history
+              BoardGUI.showResumingModal();
+              _.each(data.moveHist, function(move){
+                console.log(move);
+              })
+              BoardGUI.hideResumingModal();
+            }
         },
 
         'turn': function(msg) {
@@ -202,7 +212,7 @@ var Network = {
 
         'roomMemberLeft': function(user) {
           console.log('room member left', user);
-          cloak.message('leaveRoom');
+          //cloak.message('leaveRoom');
           console.log('other player disconnected.');
           BoardGUI.showDisconnectModal()
         },
