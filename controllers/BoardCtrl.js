@@ -89,6 +89,8 @@ muonApp.controller('BoardCtrl', function ($scope, $stateParams, $state) {
 	$scope.hideDrawDeniedModal = function(){
 		BoardGUI.hideDrawDeniedModal();
 	}
+
+	$scope.usedChat = aichat.slice();
 	
 	$scope.sendChat = function(){
 		if($scope.chatText != '' && $scope.chatText != undefined){
@@ -108,9 +110,14 @@ muonApp.controller('BoardCtrl', function ($scope, $stateParams, $state) {
 				//chat against the AI
 				BoardGUI.appendAIChatMessage($scope.chatText, true);
 				$scope.chatText = '';
-				var category = aichat[_.shuffle(_.keys(aichat))[0]];
-				var randex = Math.floor(Math.random() * category.length) + 0;
-				BoardGUI.appendAIChatMessage(category[randex], false);
+				if($scope.usedChat.length == 0)
+					$scope.usedChat = aichat;
+				else if(aichat.length == 0)
+					aichat = $scope.usedChat;
+				var randex = Math.floor(Math.random() * $scope.usedChat.length) + 0;
+				var zachIsAPizza = $scope.usedChat[randex];
+				$scope.usedChat.splice(randex, 1);
+				BoardGUI.appendAIChatMessage(zachIsAPizza, false);
 			}
 		}
 		document.getElementById("chat-text").focus();
@@ -131,7 +138,7 @@ muonApp.controller('BoardCtrl', function ($scope, $stateParams, $state) {
 			} else {
 				console.log("attempting to join room");
 				cloak.message('joinRoom', $stateParams.roomid);
-				BoardGUI.setBoardHeader("Theirs");
+				BoardGUI.setBoardHeader(gameCore.network.turn);
 				gameCore.network.role = 'client';
 				gameCore.RestartGame(true);
 				//client is here

@@ -371,15 +371,19 @@ var makeMoveAgainstAI = function(start, end){
 		console.log("MAXIMUM TIME TAKEN: " + SPECmaxTime);
 
 		var indexOfBestMove;
-		var bestMoves = [];
+		var randChoices = [];
 		var bestScore = -Infinity;
-		for (var i = 0; i < AI.currentMoveOptions.length; i++)
-			if(AI.currentMoveOptions[i].value > bestScore)
+		for (var i = 0; i < AI.currentMoveOptions.length; i++){
+			if(AI.currentMoveOptions[i].value > bestScore){
 				bestScore = AI.currentMoveOptions[i].value;
-		for (var i = 0; i < AI.currentMoveOptions.length; i++)
-			if(AI.currentMoveOptions[i].value == bestScore)
-				bestMoves[bestMoves.length] = i;
-		indexOfBestMove = bestMoves[Date.now() % bestMoves.length];
+				randChoices = [i]
+			}
+			else if(AI.currentMoveOptions[i].value == bestScore){
+				randChoices.push(i);
+			}
+		}
+
+		var indexOfBestMove = randChoices[Date.now() % randChoices.length]
 
 
 		var s = convert.bitToInt(AI.currentMoveOptions[indexOfBestMove].start);
@@ -391,39 +395,27 @@ var makeMoveAgainstAI = function(start, end){
 }
 
 var makeAIMove = function(){
-	var changeInTime = 0;
-	var averagetime = 0;
-	var t1 = Date.now();
 	AI.pvs(-10000, 10000, AI.maxDepth, AI_position, HU_position);
-	
-	changeInTime = Date.now() - t1;
-	if(changeInTime > SPECmaxTime)
-		SPECmaxTime = changeInTime;
-
-	SPECtotalTime += changeInTime;
-	averagetime = SPECtotalTime/++SPECcounter;
-
-	console.log("AVERAGE TIME TAKEN: " + averagetime);
-	console.log("MAXIMUM TIME TAKEN: " + SPECmaxTime);
 
 	var indexOfBestMove;
-	var bestMoves = [];
+
+	var randChoices = [];
 	var bestScore = -Infinity;
-	for (var i = 0; i < AI.currentMoveOptions.length; i++)
-		if(AI.currentMoveOptions[i].value > bestScore)
+	for (var i = 0; i < AI.currentMoveOptions.length; i++){
+		if(AI.currentMoveOptions[i].value > bestScore){
 			bestScore = AI.currentMoveOptions[i].value;
-	for (var i = 0; i < AI.currentMoveOptions.length; i++)
-		if(AI.currentMoveOptions[i].value == bestScore)
-			bestMoves[bestMoves.length] = i;
-	indexOfBestMove = bestMoves[Date.now() % bestMoves.length];
+			randChoices = [i]
+		}
+		else if(AI.currentMoveOptions[i].value == bestScore){
+			randChoices.push(i);
+		}
+	}
+
+	var indexOfBestMove = randChoices[Date.now() % randChoices.length]
 
 	var s = convert.bitToInt(AI.currentMoveOptions[indexOfBestMove].start);
 	var e = convert.bitToInt(AI.currentMoveOptions[indexOfBestMove].end);
 	updateAIBoard(AI.currentMoveOptions[indexOfBestMove].start, AI.currentMoveOptions[indexOfBestMove].end);
-
-	console.log('nodesVisited ' + evaluation.nodesVisited);
-	evaluation.totalVisited += evaluation.nodesVisited;
-	evaluation.nodesVisited = 0;
 	return({'from': s, 'to': e});
 }
 

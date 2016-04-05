@@ -78,11 +78,9 @@ var Network = {
 
           if (members.length > 1) {
             if(gameCore.network.turn == gameCore.network.team){
-              BoardGUI.setBoardHeader("Yours");
               BoardGUI.hideWaitingModal(); 
-            } else {
-              BoardGUI.setBoardHeader("Theirs");
-            }
+            } 
+            BoardGUI.setBoardHeader(gameCore.network.turn);
           }
         },
 
@@ -97,6 +95,7 @@ var Network = {
         'turn': function(msg) {
           gameCore.network.turn = msg;
           console.log('Turn: ' + gameCore.network.turn);
+          BoardGUI.setBoardHeader(gameCore.network.turn);
           cloak.message('refreshRoom');
         },
 
@@ -119,8 +118,7 @@ var Network = {
         'respondToDrawResponse':function(data){
           if(data[0]){
             //draw was accepted
-            BoardGUI.hideAllModals();
-            BoardGUI.showDrawModal();
+            gameCore.board.moveMuonsToWinFoci(-1,-1,-1,false);
           } else {
             //draw was declined
             BoardGUI.hideAllModals();
@@ -166,6 +164,7 @@ var Network = {
 
         'resume': function() {
           console.log('RESUMING!!');
+          cloak.message('joinLobby');
         },
 
         'error': function() {
