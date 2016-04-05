@@ -125,8 +125,9 @@ var gameCore = {
 			}
 			else
 				console.log("IT'S A DRAW!");
-			}
-		},
+			
+		}
+	},
 	board: {
 		nodes: [],
 		links: [],

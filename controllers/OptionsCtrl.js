@@ -6,6 +6,10 @@ muonApp.controller('OptionsCtrl', function ($scope, $stateParams) {
 	var muteSoundFXFalseText = 'Mute Sound FX';
 	var muteSoundFXTrueText = 'Unmute Sound FX';
 
+	var usernameIcon = document.getElementById("username-icon");
+	if(usernameIcon != null)
+  		usernameIcon.style.fill = "black";
+
 	var particleFalseText = 'Pause Particles';
 	var particleTrueText = 'Resume Particles';
 	
@@ -41,12 +45,17 @@ muonApp.controller('OptionsCtrl', function ($scope, $stateParams) {
 	db.get('network_username').then(function(doc) {
 		if(document.getElementById("usernameInput") != null){
 			if(doc.title){
+				$scope.username = doc.title;
 				document.getElementById("usernameInput").value = doc.title;
 			} else {
 				document.getElementById("usernameInput").value = '';
 			}
 		}
 	})
+
+	$scope.usernameChanged = function(){
+		usernameIcon.style.fill = "black";
+	}
 
 	$scope.saveUsername = function(username){
 		if(username == '' || username == undefined){
@@ -63,6 +72,7 @@ muonApp.controller('OptionsCtrl', function ($scope, $stateParams) {
 		}).then(function(response) {
 		  // handle response
 		  console.log('username updated');
+		  usernameIcon.style.fill = "rgb(95,173,65)";
 		}).catch(function (err) {
 		  console.log(err);
 		});

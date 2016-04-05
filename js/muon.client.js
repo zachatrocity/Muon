@@ -118,8 +118,7 @@ var Network = {
         'respondToDrawResponse':function(data){
           if(data[0]){
             //draw was accepted
-            BoardGUI.hideAllModals();
-            BoardGUI.showDrawModal();
+            gameCore.board.moveMuonsToWinFoci(-1,-1,-1,false);
           } else {
             //draw was declined
             BoardGUI.hideAllModals();

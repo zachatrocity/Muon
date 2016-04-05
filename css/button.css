@@ -85,7 +85,8 @@ span.button{
   fill: #44a6bf;
 }
 
-.bluehover:hover #buttonbase{
+.bluehover:hover #buttonbase,
+.bluehover:hover #lngbuttonbase{
   fill: #44a6bf;
 }
 
