@@ -133,13 +133,9 @@ var evaluation = {
 
 	stateValue:function(bitBoard, bitBoard2, AI_tempFlag, HU_tempFlag, player){
 		var total = 0;
-		// total += this.stolenRealEstate(bitBoard, bitBoard2) + (HU_tempFlag << 2)
-		// if(AI.maxDepth < 5)
-		// 	total += this.positioning(bitBoard,bitBoard2,HU_tempFlag);
-		total += this.stolenRealEstate(bitBoard, bitBoard2);
-        total += this.isHomeQuadEmpty(bitBoard, AI.AIPlayerNumber) ? 3 : 0;
-        total += this.isHomeQuadEmpty(bitBoard2, AI.HUPlayerNumber) ? -3 : 0;
-        total += AI.maxDepth < 7 ? this.positioning(bitBoard,bitBoard2,HU_tempFlag) : 0;
+		total += this.stolenRealEstate(bitBoard, bitBoard2) + (HU_tempFlag << 2)
+		if(AI.maxDepth < 7)
+			total += this.positioning(bitBoard,bitBoard2,HU_tempFlag);
 		return total;
 	},
 
@@ -355,50 +351,54 @@ var updateAIBoard = function(start, end){
 	AI.currentMoveOptions = [];
 }
 
-var moves = 0;
-var totalTime = 0;
 var makeMoveAgainstAI = function(start, end, HumanMovesFirst){
 	updateHumanBoard(start, end); // Human move
 	if(!evaluation.Win(HU_position, AI.HUPlayerNumber, AI_flag, HU_flag)){
 		AI.pvs(-10000, 10000, AI.maxDepth, AI_position, HU_position);
-		moves++;
 
 		var indexOfBestMove;
+		var bestMoves = [];
 		var bestScore = -Infinity;
-		for (var i = 0; i < AI.currentMoveOptions.length; i++){
-			if(AI.currentMoveOptions[i].value > bestScore){
+		for (var i = 0; i < AI.currentMoveOptions.length; i++)
+			if(AI.currentMoveOptions[i].value > bestScore)
 				bestScore = AI.currentMoveOptions[i].value;
-				indexOfBestMove = i;
-			}
-			//else if == then pick random value
-		}
+		for (var i = 0; i < AI.currentMoveOptions.length; i++)
+			if(AI.currentMoveOptions[i].value == bestScore)
+				bestMoves[bestMoves.length] = i;
+		indexOfBestMove = bestMoves[Date.now() % bestMoves.length];
 
 		var s = convert.bitToInt(AI.currentMoveOptions[indexOfBestMove].start);
 		var e = convert.bitToInt(AI.currentMoveOptions[indexOfBestMove].end);
 		updateAIBoard(AI.currentMoveOptions[indexOfBestMove].start, AI.currentMoveOptions[indexOfBestMove].end);
 		var w = evaluation.Win(AI_position, AI.AIPlayerNumber, AI_flag, HU_flag);
 	}
-
+	
+	console.log('nodesVisited ' + evaluation.nodesVisited);
+	evaluation.nodesVisited = 0;
 	return({'from': s, 'to': e, 'AiWin': w});
 }
 
 var makeAIMove = function(){
 	AI.pvs(-10000, 10000, AI.maxDepth, AI_position, HU_position);
-	moves++;
 
 	var indexOfBestMove;
-	var bestScore = -Infinity;
-	for (var i = 0; i < AI.currentMoveOptions.length; i++){
-		if(AI.currentMoveOptions[i].value > bestScore){
-			bestScore = AI.currentMoveOptions[i].value;
-			indexOfBestMove = i;
-		}
-		//else if == then pick random value
-	}
+		var bestMoves = [];
+		var bestScore = -Infinity;
+		for (var i = 0; i < AI.currentMoveOptions.length; i++)
+			if(AI.currentMoveOptions[i].value > bestScore)
+				bestScore = AI.currentMoveOptions[i].value;
+		for (var i = 0; i < AI.currentMoveOptions.length; i++)
+			if(AI.currentMoveOptions[i].value == bestScore)
+				bestMoves[bestMoves.length] = i;
+		indexOfBestMove = bestMoves[Date.now() % bestMoves.length];
 
 	var s = convert.bitToInt(AI.currentMoveOptions[indexOfBestMove].start);
 	var e = convert.bitToInt(AI.currentMoveOptions[indexOfBestMove].end);
 	updateAIBoard(AI.currentMoveOptions[indexOfBestMove].start, AI.currentMoveOptions[indexOfBestMove].end);
+
+	console.log('nodesVisited ' + evaluation.nodesVisited);
+	evaluation.totalVisited += evaluation.nodesVisited;
+	evaluation.nodesVisited = 0;
 	return({'from': s, 'to': e});
 }
 
