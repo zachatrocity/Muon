@@ -271,8 +271,8 @@ var AI = {
 		//Check for a win condition. If the win is close to the top of the tree it's worth more.
 		if(evaluation.Win(AI_position, AI.AIPlayerNumber, AIFlag, HUFlag))
 			return ~(100 * (depth + 1)) + 1;
-		if(evaluation.quickReturn(AI_position))
-			return 10;
+		// if(evaluation.quickReturn(AI_position))
+		// 	return 10;
 		if(depth == 0)
 			return ~(evaluation.stateValue(AI_position, HU_position, AIFlag, HUFlag, AI.AIPlayerNumber)) + 1
 
