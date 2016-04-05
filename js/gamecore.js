@@ -83,6 +83,7 @@ var gameCore = {
 		opponentStartPos: '',
 		opponentFlag: true,
 		MakeOpponentMove: function(from, to){
+			debugger;
 			var bitFrom = convert.intToBit(from);
 			var bitTo = convert.intToBit(to);
 			console.log("opponent moved from " + convert.bitToStandard(bitFrom) + " to " + convert.bitToStandard(bitTo));
@@ -907,14 +908,18 @@ var gameCore = {
 	 	if(isNetworkGame){
 	 		if(gameCore.network.role == 'host') {
 	 			//then i'm the bottom right pieces
-	 			gameCore.network.localPos = gameCore.network.localStartPos = 0b00000111110000000000;
+	 			gameCore.network.localPos = 0b00000111110000000000;
+	 			gameCore.network.localStartPos = 0b00000111110000000000;
 	 			//my opponent is up top
-	 			gameCore.network.opponentPos = gameCore.network.opponentStartPos = 0b00000000001111100000;
+	 			gameCore.network.opponentPos = 0b00000000001111100000;
+	 			gameCore.network.opponentStartPos = 0b00000000001111100000;
 	 		} else if(gameCore.network.role =='client') {
 	 			//then i'm the top pieces
-	 			gameCore.network.localPos = gameCore.network.localStartPos = 0b00000000001111100000;
+	 			gameCore.network.localPos = 0b00000000001111100000;
+	 			gameCore.network.localStartPos = 0b00000000001111100000;
 	 			//my opponent is below
-	 			gameCore.network.opponentPos = gameCore.network.opponentStartPos = 0b00000111110000000000;
+	 			gameCore.network.opponentPos = 0b00000111110000000000;
+	 			gameCore.network.opponentStartPos = 0b00000111110000000000;
 	 		}
 	 	} else if (gameCore.pvp.enabled) {
 	 		if (gameCore.pvp.p1Team == 'muon') {

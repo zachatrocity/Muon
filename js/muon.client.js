@@ -11,6 +11,8 @@ var Network = {
             // get the lobby
             cloak.username = data[1];
             cloak.message('joinLobby');
+          } else {
+            //resume
           }
         },
 
@@ -142,7 +144,6 @@ var Network = {
           if(data[0]){
             //Rematch was accepted
             BoardGUI.hideAllModals();
-            BoardGUI.timer.reset();
           } else {
             //Rematch was declined
             BoardGUI.hideAllModals();
@@ -201,7 +202,7 @@ var Network = {
 
         'roomMemberLeft': function(user) {
           console.log('room member left', user);
-          //cloak.message('leaveRoom');
+          cloak.message('leaveRoom');
           console.log('other player disconnected.');
           BoardGUI.showDisconnectModal()
         },
