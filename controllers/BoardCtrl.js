@@ -15,8 +15,11 @@ muonApp.controller('BoardCtrl', function ($scope, $stateParams, $state) {
 	$scope.handleDraw = function(){
 		if(gameCore.pvp.enabled) {
 			gameCore.board.moveMuonsToWinFoci(-1,-1,-1,false);
-		} else {
-			proposeDraw();
+		} 
+		else {
+			if (!gameCore.ProposeDrawToAI()) {
+				BoardGUI.showDrawDeniedModal();
+			}
 		}
 	}
 

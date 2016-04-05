@@ -15,7 +15,7 @@
    id="svg4329"
    version="1.1"
    inkscape:version="0.91 r13725"
-   inkscape:export-filename="C:\Users\zrussell1\Desktop\muon.png"
+   inkscape:export-filename="C:\Users\softdev\Documents\Muon\images\muon.png"
    inkscape:export-xdpi="69.562729"
    inkscape:export-ydpi="69.562729"
    sodipodi:docname="muon.svg">
@@ -56,7 +56,7 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="1.4"
-     inkscape:cx="203.25646"
+     inkscape:cx="96.470746"
      inkscape:cy="147.34534"
      inkscape:document-units="px"
      inkscape:current-layer="layer2"
@@ -67,7 +67,7 @@
      fit-margin-right="5"
      inkscape:window-width="1440"
      inkscape:window-height="837"
-     inkscape:window-x="1432"
+     inkscape:window-x="-8"
      inkscape:window-y="-8"
      inkscape:window-maximized="1" />
   <metadata
@@ -78,7 +78,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
