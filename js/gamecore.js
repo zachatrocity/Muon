@@ -526,7 +526,7 @@ var gameCore = {
 					gameCore.board.rotateMuonAtFoci(20);
 					gameCore.board.rotateMuonAtFoci(21);
 					gameCore.board.rotateMuonAtFoci(22);
-				},1750)
+				},2500)
 			}
 
 			player.play();
