@@ -184,6 +184,7 @@ var BoardGUI = {
   },
   hideAllModals: function(){
     BoardGUI.hideWaitingModal();
+    BoardGUI.hideResumingModal();
     BoardGUI.hideDisconnectModal();
     BoardGUI.hideWinModal();
     BoardGUI.hideLoseModal();

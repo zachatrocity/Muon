@@ -11,7 +11,11 @@ if(gui != null){
   win.showDevTools();
   win.on('close', function(){
     this.hide();
-    gui.App.quit();
+    if(Network.isConnected){
+      cloak.message('leaveRoom');
+    }
+    //give it 3 seconds then quit
+    setTimeout(function(){gui.App.quit();}, 2000);
   })
 }
 

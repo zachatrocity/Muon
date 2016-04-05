@@ -82,8 +82,21 @@ var gameCore = {
 		opponentPos: '',
 		opponentStartPos: '',
 		opponentFlag: true,
+		MakeResumingMoves: function(from, to){
+			var bitFrom = convert.intToBit(from);
+			var bitTo = convert.intToBit(to);
+			// Update the users bit board.
+			gameCore.network.localPos ^= bitFrom ^ bitTo;
+			gameCore.AddMoveToHistory(new Move(from, to, "resume"));
+			gameCore.board.moveMuonTweenFoci(from, to);
+			//remove my flag if needed
+			if(evaluation.isHomeQuadEmpty((gameCore.network.role == 'host') ? 2 : 1, gameCore.network.localPos)) {
+				gameCore.network.localFlag = false;
+				BoardGUI.removeAntiMuonFlag();
+				console.log("Player can now win from their home quad");
+			}
+		},
 		MakeOpponentMove: function(from, to){
-			debugger;
 			var bitFrom = convert.intToBit(from);
 			var bitTo = convert.intToBit(to);
 			console.log("opponent moved from " + convert.bitToStandard(bitFrom) + " to " + convert.bitToStandard(bitTo));

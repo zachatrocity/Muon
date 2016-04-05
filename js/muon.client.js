@@ -94,13 +94,15 @@ var Network = {
             gameCore.network.otherTeam = (gameCore.network.team === 'muon') ? 'antimuon' : 'muon';
             gameCore.network.turn = data.turn;
 
-            if(data.moveHist.length > 0){
+            if(data.hist.length > 0){
               //resume a game, play through the history
               BoardGUI.showResumingModal();
-              _.each(data.moveHist, function(move){
-                console.log(move);
+              _.each(data.hist, function(move){
+                gameCore.network.MakeResumingMoves(move.from, move.to);
               })
-              BoardGUI.hideResumingModal();
+
+              setTimeout(function(){BoardGUI.hideResumingModal()},2000);
+              
             }
         },
 
