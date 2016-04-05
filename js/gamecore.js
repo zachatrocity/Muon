@@ -123,7 +123,7 @@ var gameCore = {
 					gameCore.board.moveMuonsToWinFoci(foci[0],foci[1],foci[2],true);
 				gameCore.board.gameOverModal = BoardGUI.showLoseModal;
 			}
-			else
+			else{
 				console.log("IT'S A DRAW!");
 				gameCore.board.moveMuonsToWinFoci(-1,-1,-1,false);
 			}
