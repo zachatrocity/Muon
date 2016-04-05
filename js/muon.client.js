@@ -89,7 +89,6 @@ var Network = {
         //game
         'assignTeam': function(data) {
           console.log('my team is', data.team);
-            debugger;
             gameCore.network.team = data.team;
             gameCore.network.otherTeam = (gameCore.network.team === 'muon') ? 'antimuon' : 'muon';
             gameCore.network.turn = data.turn;
@@ -145,7 +144,7 @@ var Network = {
           } else {
             //draw was declined
             BoardGUI.hideAllModals();
-            BoardGUI.appendSystemMessage("Opponant declined to draw.");
+            BoardGUI.appendSystemMessage("Opponent declined to draw.");
           }
         },
 
@@ -168,7 +167,7 @@ var Network = {
           } else {
             //Rematch was declined
             BoardGUI.hideAllModals();
-            BoardGUI.appendSystemMessage("Opponant declined to Rematch.");
+            BoardGUI.appendSystemMessage("Rematch declined.");
           }
         }
 

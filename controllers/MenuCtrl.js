@@ -1,9 +1,9 @@
 muonApp.controller('MenuCtrl', function ($scope, $stateParams, $state) {
 
 	//close the network
-	// if(Network.isConnected){
-	// 	cloak.end();
-	// }
+	if(Network.isConnected){
+		//cloak.end();
+	}
 	
 	var allLinks = document.getElementsByTagName('a');
 	if(LISTENERSET == false)
@@ -55,6 +55,7 @@ muonApp.controller('MenuCtrl', function ($scope, $stateParams, $state) {
 		}).then(function(response) {
 		  // handle response
 		  console.log('username updated');
+		  Network.username = username;
 		}).catch(function (err) {
 		  console.log(err);
 		});
@@ -67,7 +68,7 @@ muonApp.controller('MenuCtrl', function ($scope, $stateParams, $state) {
 
 		db.get('network_username').then(function(doc) {
 			if(doc.title && doc.title != ''){ //if there is a username then go to networking
-				$state.go('network', {'username':doc.title});
+				$state.go('network', {});
 			} else { //else create a new one
 				$scope.showNetworkingModal = true;
 				setTimeout(function(){

@@ -192,6 +192,7 @@ var muonApp = angular.module('muonApp', ["ui.router", "ngAnimate"])
       });
      } else {
       console.log("network_username: " + resp.title);
+      Network.username = resp.title;
     }
   });
 

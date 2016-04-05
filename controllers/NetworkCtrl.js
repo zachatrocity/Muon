@@ -7,8 +7,7 @@ muonApp.controller('NetworkCtrl', function ($scope, $stateParams) {
 	$scope.$on('$viewContentLoaded', function(){
 
 		setTimeout(function(){ 
-			cloak.message('registerUsername', {'username' : $stateParams.username, 'userid' : Network.userId})
-			cloak.message('listRooms');
+			cloak.message('registerUsername', {'username' : Network.username, 'userid' : Network.userId})
 		}, 500);
 	});
 	
@@ -19,7 +18,7 @@ muonApp.controller('NetworkCtrl', function ($scope, $stateParams) {
 
 	$scope.createRoom = function(){
 		cloak.message('createRoom', {
-	      name: escape($stateParams.username + "'s Game")
+	      name: escape(Network.username + "'s Game")
 	    });
 	}
 
