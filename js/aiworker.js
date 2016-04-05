@@ -133,9 +133,13 @@ var evaluation = {
 
 	stateValue:function(bitBoard, bitBoard2, AI_tempFlag, HU_tempFlag, player){
 		var total = 0;
-		total += this.stolenRealEstate(bitBoard, bitBoard2) + (HU_tempFlag << 2) //- (AI_tempFlag << 2)
-		if(AI.maxDepth < 7)
-			total += this.positioning(bitBoard,bitBoard2,HU_tempFlag);
+		// total += this.stolenRealEstate(bitBoard, bitBoard2) + (HU_tempFlag << 2)
+		// if(AI.maxDepth < 5)
+		// 	total += this.positioning(bitBoard,bitBoard2,HU_tempFlag);
+		total += this.stolenRealEstate(bitBoard, bitBoard2);
+        total += this.isHomeQuadEmpty(bitBoard, AI.AIPlayerNumber) ? 3 : 0;
+        total += this.isHomeQuadEmpty(bitBoard2, AI.HUPlayerNumber) ? -3 : 0;
+        total += AI.maxDepth < 7 ? this.positioning(bitBoard,bitBoard2,HU_tempFlag) : 0;
 		return total;
 	},
 
@@ -156,22 +160,22 @@ var evaluation = {
 		if(AI.AIPlayerNumber == 1){
 			quadValueAIpos = boardAspect.getQuadBits(AIpos, 0);
 			quadValueHUpos = boardAspect.getQuadBits(HUpos, 0);
-			if(quadValueAIpos == 0b00000 && quadValueHUpos == 0b00011)
+			if(quadValueAIpos == 0 && bitManip.BitCount(quadValueHUpos) >= 2)
 				value -= 5
 			quadValueAIpos = boardAspect.getQuadBits(AIpos, 3);
 			quadValueHUpos = boardAspect.getQuadBits(HUpos, 3);
-			if(quadValueAIpos == 0b00000 && quadValueHUpos == 0b01001)
+			if(quadValueAIpos == 0 && bitManip.BitCount(quadValueHUpos) >= 2)
 				value -= 5
 		}
 		//AI on bottom
 		else {
 			quadValueAIpos = boardAspect.getQuadBits(AIpos, 0);
 			quadValueHUpos = boardAspect.getQuadBits(HUpos, 0);
-			if(quadValueAIpos == 0b00000 && quadValueHUpos == 0b10010)
+			if(quadValueAIpos == 0 && bitManip.BitCount(quadValueHUpos) >= 2)
 				value -= 5
 			quadValueAIpos = boardAspect.getQuadBits(AIpos, 3);
 			quadValueHUpos = boardAspect.getQuadBits(HUpos, 3);
-			if(quadValueAIpos == 0b00000 && quadValueHUpos == 0b11000)
+			if(quadValueAIpos == 0 && bitManip.BitCount(quadValueHUpos) >= 2)
 				value -= 5
 		}
 		for (var i = 0; i < 4; i++) {
@@ -204,16 +208,16 @@ var evaluation = {
 	Win:function(bitBoard, player, AI_tempFlag, HU_tempFlag){
 		var homeFlag = player == 1  ? AI_tempFlag : HU_tempFlag;
 		var quad = boardAspect.getQuadBits(bitBoard, 0);
-		if(!(quad == 14 || quad == 21) && bitManip.BitCount(quad) > 2)
-			return true;
-		quad = boardAspect.getQuadBits(bitBoard, 3);
-		if(!(quad == 14 || quad == 21) && bitManip.BitCount(quad) > 2)
+		if(!(quad == 14 || quad == 21) && bitManip.BitCount(quad) >= 3)
 			return true;
 		quad = boardAspect.getQuadBits(bitBoard, 1);
-		if(!(homeFlag && player == 1) && !(quad == 14 || quad == 21) && bitManip.BitCount(quad) > 2)
+		if(!(homeFlag && player == 1) && !(quad == 14 || quad == 21) && bitManip.BitCount(quad) >= 3)
 			return true;
 		quad = boardAspect.getQuadBits(bitBoard, 2);
-		if(!(homeFlag && player == 2) && !(quad == 14 || quad == 21) && bitManip.BitCount(quad) > 2)
+		if(!(homeFlag && player == 2) && !(quad == 14 || quad == 21) && bitManip.BitCount(quad) >= 3)
+			return true;
+		quad = boardAspect.getQuadBits(bitBoard, 3);
+		if(!(quad == 14 || quad == 21) && bitManip.BitCount(quad) >= 3)
 			return true;
 		return false;
 	},
@@ -268,7 +272,7 @@ var AI = {
 		if(evaluation.Win(AI_position, AI.AIPlayerNumber, AIFlag, HUFlag))
 			return ~(100 * (depth + 1)) + 1;
 		if(evaluation.quickReturn(AI_position))
-			return 25;
+			return 10;
 		if(depth == 0)
 			return ~(evaluation.stateValue(AI_position, HU_position, AIFlag, HUFlag, AI.AIPlayerNumber)) + 1
 
@@ -351,67 +355,46 @@ var updateAIBoard = function(start, end){
 	AI.currentMoveOptions = [];
 }
 
-var makeMoveAgainstAI = function(start, end){
+var moves = 0;
+var totalTime = 0;
+var makeMoveAgainstAI = function(start, end, HumanMovesFirst){
 	updateHumanBoard(start, end); // Human move
 	if(!evaluation.Win(HU_position, AI.HUPlayerNumber, AI_flag, HU_flag)){
-		var changeInTime = 0;
-		var averagetime = 0;
-		var t1 = Date.now();
-
 		AI.pvs(-10000, 10000, AI.maxDepth, AI_position, HU_position);
-
-		changeInTime = Date.now() - t1;
-		if(changeInTime > SPECmaxTime)
-			SPECmaxTime = changeInTime;
-
-		SPECtotalTime += changeInTime;
-		averagetime = SPECtotalTime/++SPECcounter;
-
-		console.log("AVERAGE TIME TAKEN: " + averagetime);
-		console.log("MAXIMUM TIME TAKEN: " + SPECmaxTime);
+		moves++;
 
 		var indexOfBestMove;
-		var randChoices = [];
 		var bestScore = -Infinity;
 		for (var i = 0; i < AI.currentMoveOptions.length; i++){
 			if(AI.currentMoveOptions[i].value > bestScore){
 				bestScore = AI.currentMoveOptions[i].value;
-				randChoices = [i]
+				indexOfBestMove = i;
 			}
-			else if(AI.currentMoveOptions[i].value == bestScore){
-				randChoices.push(i);
-			}
+			//else if == then pick random value
 		}
-
-		var indexOfBestMove = randChoices[Date.now() % randChoices.length]
-
 
 		var s = convert.bitToInt(AI.currentMoveOptions[indexOfBestMove].start);
 		var e = convert.bitToInt(AI.currentMoveOptions[indexOfBestMove].end);
 		updateAIBoard(AI.currentMoveOptions[indexOfBestMove].start, AI.currentMoveOptions[indexOfBestMove].end);
 		var w = evaluation.Win(AI_position, AI.AIPlayerNumber, AI_flag, HU_flag);
 	}
+
 	return({'from': s, 'to': e, 'AiWin': w});
 }
 
 var makeAIMove = function(){
 	AI.pvs(-10000, 10000, AI.maxDepth, AI_position, HU_position);
+	moves++;
 
 	var indexOfBestMove;
-
-	var randChoices = [];
 	var bestScore = -Infinity;
 	for (var i = 0; i < AI.currentMoveOptions.length; i++){
 		if(AI.currentMoveOptions[i].value > bestScore){
 			bestScore = AI.currentMoveOptions[i].value;
-			randChoices = [i]
+			indexOfBestMove = i;
 		}
-		else if(AI.currentMoveOptions[i].value == bestScore){
-			randChoices.push(i);
-		}
+		//else if == then pick random value
 	}
-
-	var indexOfBestMove = randChoices[Date.now() % randChoices.length]
 
 	var s = convert.bitToInt(AI.currentMoveOptions[indexOfBestMove].start);
 	var e = convert.bitToInt(AI.currentMoveOptions[indexOfBestMove].end);
