@@ -129,7 +129,7 @@
 	<!-- Win modal -->
 	<div class="modal waiting" id="win-modal">
 		<div class="modal-dialog">
-			<h3 class="modal-prompt">You Won!</h3>
+			<h3 class="modal-prompt" id="winModalText"></h3>
 			<div class="row">
 				<div class="col-xs-4 col-xs-offset-2">
 					<svg class="button blue bluehover modal-btn" width="170" height="70" viewBox="0 0 170 70"  ng-mouseover="mouse_over()" ng-click="mouse_click(); (isNetworkGame) ? proposeRematch() : startNewGame()"
@@ -161,7 +161,7 @@
 	<!-- Lose modal -->
 	<div class="modal waiting" id="lose-modal">
 		<div class="modal-dialog">
-			<h3 class="modal-prompt">You Lost!</h3>
+			<h3 class="modal-prompt" id="loseModalText"></h3>
 			<div class="row">
 				<div class="col-xs-4 col-xs-offset-2">
 					<svg class="button blue bluehover modal-btn" width="170" height="70" viewBox="0 0 170 70"  ng-mouseover="mouse_over()" ng-click="mouse_click(); (isNetworkGame) ? proposeRematch() : startNewGame()"

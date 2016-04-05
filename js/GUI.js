@@ -230,9 +230,10 @@ var BoardGUI = {
       modal.children[0].classList.remove("show-modal");
     }
   },
-  showWinModal: function(){
+  showWinModal: function(str){
     BoardGUI.hideAllModals();
     var modal = document.getElementById("win-modal")
+    document.getElementById('winModalText').innerHTML = str;
     if(modal != null){
       modal.classList.add("dim-lights");
       modal.children[0].classList.add("show-modal");
@@ -245,9 +246,10 @@ var BoardGUI = {
       modal.children[0].classList.remove("show-modal");
     }
   },
-  showLoseModal: function(){
+  showLoseModal: function(str){
     BoardGUI.hideAllModals();
-    var modal = document.getElementById("lose-modal")
+    var modal = document.getElementById("lose-modal");
+    document.getElementById('loseModalText').innerHTML = str;
     if(modal != null){
       modal.classList.add("dim-lights");
       modal.children[0].classList.add("show-modal");
