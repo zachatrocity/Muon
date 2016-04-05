@@ -12,6 +12,14 @@ muonApp.controller('BoardCtrl', function ($scope, $stateParams, $state) {
 			Audio.menuSelect.play();
 	}
 
+	$scope.handleDraw = function(){
+		if(gameCore.pvp.enabled) {
+			gameCore.board.moveMuonsToWinFoci(-1,-1,-1,false);
+		} else {
+			proposeDraw();
+		}
+	}
+
 	$scope.startNewGame = function(){
 		BoardGUI.hideAllModals();
 		// Display the flags again
