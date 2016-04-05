@@ -17,9 +17,7 @@ muonApp.controller('BoardCtrl', function ($scope, $stateParams, $state) {
 			gameCore.board.moveMuonsToWinFoci(-1,-1,-1,false);
 		} 
 		else {
-			if (!gameCore.ProposeDrawToAI()) {
-				BoardGUI.showDrawDeniedModal();
-			}
+			$scope.proposeDraw();
 		}
 	}
 

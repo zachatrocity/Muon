@@ -67,7 +67,14 @@ var gameCore = {
 			//remove opponent flag if needed
 			if(evaluation.isHomeQuadEmpty((gameCore.network.role == 'host') ? 1 : 2, gameCore.network.opponentPos)) {
 				gameCore.network.opponentFlag = false;
-				BoardGUI.removeMuonFlag();
+				if (gameCore.network.role == "host")
+				{
+					BoardGUI.removeAntiMuonFlag();
+				}
+				else
+				{
+					BoardGUI.removeMuonFlag();
+				}
 				console.log("Opponent can now win from their home quad");
 			}
 
@@ -798,7 +805,14 @@ var gameCore = {
 				//remove my flag if needed
 				if(evaluation.isHomeQuadEmpty((gameCore.network.role == 'host') ? 2 : 1, gameCore.network.localPos)) {
 					gameCore.network.localFlag = false;
-					BoardGUI.removeAntiMuonFlag();
+					if (gameCore.network.role == "host")
+					{
+						BoardGUI.removeMuonFlag();
+					}
+					else
+					{
+						BoardGUI.removeAntiMuonFlag();
+					}
 					console.log("Player can now win from their home quad");
 				}
 
