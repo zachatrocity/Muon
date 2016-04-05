@@ -1,4 +1,9 @@
 muonApp.controller('MenuCtrl', function ($scope, $stateParams, $state) {
+
+	//close the network
+	if(Network.isConnected){
+		cloak.end();
+	}
 	
 	var allLinks = document.getElementsByTagName('a');
 	if(LISTENERSET == false)

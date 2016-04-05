@@ -20,7 +20,34 @@
    inkscape:export-ydpi="69.562729"
    sodipodi:docname="muon.svg">
   <defs
-     id="defs4331" />
+     id="defs4331">
+    <filter
+       inkscape:collect="always"
+       style="color-interpolation-filters:sRGB"
+       id="filter4560"
+       x="-0.071380051"
+       width="1.1427601"
+       y="-0.14997091"
+       height="1.2999418">
+      <feGaussianBlur
+         inkscape:collect="always"
+         stdDeviation="8.4844337"
+         id="feGaussianBlur4562" />
+    </filter>
+    <filter
+       inkscape:collect="always"
+       style="color-interpolation-filters:sRGB"
+       id="filter4584"
+       x="-0.095423437"
+       width="1.1908469"
+       y="-0.096739622"
+       height="1.1934792">
+      <feGaussianBlur
+         inkscape:collect="always"
+         stdDeviation="4.4059329"
+         id="feGaussianBlur4586" />
+    </filter>
+  </defs>
   <sodipodi:namedview
      id="base"
      pagecolor="#ffffff"
@@ -29,18 +56,18 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="1.4"
-     inkscape:cx="282.42959"
-     inkscape:cy="261.63105"
+     inkscape:cx="203.25646"
+     inkscape:cy="147.34534"
      inkscape:document-units="px"
-     inkscape:current-layer="layer1"
+     inkscape:current-layer="layer2"
      showgrid="false"
      fit-margin-top="5"
      fit-margin-left="5"
      fit-margin-bottom="5"
      fit-margin-right="5"
-     inkscape:window-width="1920"
-     inkscape:window-height="1058"
-     inkscape:window-x="1912"
+     inkscape:window-width="1440"
+     inkscape:window-height="837"
+     inkscape:window-x="1432"
      inkscape:window-y="-8"
      inkscape:window-maximized="1" />
   <metadata
@@ -114,6 +141,19 @@
      style="display:inline"
      transform="translate(-29.163843,-347.77882)">
     <text
+       transform="scale(1.0208429,0.97958265)"
+       sodipodi:linespacing="125%"
+       id="text4516"
+       y="806.67993"
+       x="35.362751"
+       style="font-style:normal;font-variant:normal;font-weight:500;font-stretch:normal;font-size:188.57954407px;line-height:125%;font-family:Orbitron;-inkscape-font-specification:'Orbitron, Medium';text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;filter:url(#filter4560);"
+       xml:space="preserve"><tspan
+         style="fill:#ffffff;fill-opacity:1;"
+         y="806.67993"
+         x="35.362751"
+         id="tspan4518"
+         sodipodi:role="line">Mu</tspan></text>
+    <text
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:500;font-stretch:normal;font-size:188.57954407px;line-height:125%;font-family:Orbitron;-inkscape-font-specification:'Orbitron, Medium';text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        x="35.362751"
@@ -124,7 +164,21 @@
          sodipodi:role="line"
          id="tspan5009"
          x="35.362751"
-         y="806.67993">Mu</tspan></text>
+         y="806.67993"
+         style="fill:#000000;fill-opacity:1">Mu</tspan></text>
+    <text
+       transform="scale(1.0343646,0.96677708)"
+       sodipodi:linespacing="125%"
+       id="text4564"
+       y="817.36487"
+       x="449.29663"
+       style="font-style:normal;font-variant:normal;font-weight:500;font-stretch:normal;font-size:188.4589386px;line-height:125%;font-family:Orbitron;-inkscape-font-specification:'Orbitron, Medium';text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;filter:url(#filter4584)"
+       xml:space="preserve"><tspan
+         style="fill:#ffffff;fill-opacity:1;"
+         y="817.36487"
+         x="449.29663"
+         id="tspan4566"
+         sodipodi:role="line">n</tspan></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:500;font-stretch:normal;font-size:188.4589386px;line-height:125%;font-family:Orbitron;-inkscape-font-specification:'Orbitron, Medium';text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
@@ -136,6 +190,7 @@
          sodipodi:role="line"
          id="tspan34"
          x="449.29663"
-         y="817.36487">n</tspan></text>
+         y="817.36487"
+         style="fill:#000000;fill-opacity:1">n</tspan></text>
   </g>
 </svg>

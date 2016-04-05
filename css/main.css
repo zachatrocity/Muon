@@ -27,6 +27,11 @@ https://coolors.co/app/404040-f7f0f0-5490cc-5fad41-067bc2
 	/*src: url("../font/maven-pro-v7-latin-700.ttf") */
 }
 
+@font-face {
+	font-family: Dalek;
+	src: url("../font/DALEK___.otf") format("opentype"));
+}
+
 /*Batch icons*/
 
 @font-face{
@@ -301,6 +306,25 @@ a:hover{
 	position: absolute;
 	right: 160px;
 	bottom: 0;
+}
+
+/*ABOUT CSS*/
+#muon-logo {
+	width: 150%;
+}
+
+#colossity-logo {
+	width: 350%;
+	margin-top: 20px;
+}
+
+.about-text {
+	margin: 50px;
+	color: rgb(95,173,65);
+}
+
+.about-text ul {
+	text-align: right;
 }
 
 /*BOARD CSS*/
