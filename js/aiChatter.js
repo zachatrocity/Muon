@@ -14,7 +14,8 @@ var aichat = {
 		"What was that all about?",
 		"Are you feeling alright?",
 		"So, how is your day going?",
-		"What kind of shampoo do you use?"
+		"What kind of shampoo do you use?",
+		"How does one grow fingers?"
 	],
 	"diss": [
 		"I think you might want to try the tutorial again.",
@@ -26,7 +27,8 @@ var aichat = {
 		"I just calculated the next 45 thousand moves and things arent looking so good for you.",
 		"Well that wasn't the best move but we'll work with it.",
 		"BAHAHA you must be a comedian.",
-		"I'm getting a little bored."
+		"I'm getting a little bored.",
+		"Who in the world is your programmer?"
 	],
 	"emoticon": [
 		"o_O",
