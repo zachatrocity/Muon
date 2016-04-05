@@ -90,7 +90,7 @@ muonApp.controller('BoardCtrl', function ($scope, $stateParams, $state) {
 		BoardGUI.hideDrawDeniedModal();
 	}
 
-	$scope.usedChat = []
+	$scope.usedChat = aichat.slice();
 	
 	$scope.sendChat = function(){
 		if($scope.chatText != '' && $scope.chatText != undefined){
@@ -110,26 +110,14 @@ muonApp.controller('BoardCtrl', function ($scope, $stateParams, $state) {
 				//chat against the AI
 				BoardGUI.appendAIChatMessage($scope.chatText, true);
 				$scope.chatText = '';
-				var catName = _.shuffle(_.keys(aichat))[0]
-				var category = aichat[catName];
-				var randex = Math.floor(Math.random() * category.length) + 0;
-				// var reply = false
-				// while(!reply){
-				// 	if($scope.usedChat[catName] !== undefined && $scope.usedChat[catName].indexOf(randex) != -1){
-				// 		randex = Math.floor(Math.random() * category.length) + 0;
-				// 	}
-				// 	else if($scope.usedChat[catName] !== undefined && $scope.usedChat[catName].indexOf(randex) == -1){
-				// 		$scope.usedChat[catName].push(randex);
-				// 		$scope.usedChat[0]--;
-				// 		reply = true;
-				// 	}
-				// 	else if($scope.usedChat[catName] === undefined){
-				// 		$scope.usedChat[catName] = [randex];
-				// 		$scope.usedChat[0]--;
-				// 		reply = true;
-				// 	}
-				// }
-				BoardGUI.appendAIChatMessage(category[randex], false);
+				if($scope.usedChat.length == 0)
+					$scope.usedChat = aichat;
+				else if(aichat.length == 0)
+					aichat = $scope.usedChat;
+				var randex = Math.floor(Math.random() * $scope.usedChat.length) + 0;
+				var zachIsAPizza = $scope.usedChat[randex];
+				$scope.usedChat.splice(randex, 1);
+				BoardGUI.appendAIChatMessage(zachIsAPizza, false);
 			}
 		}
 		document.getElementById("chat-text").focus();
