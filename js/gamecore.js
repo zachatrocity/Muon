@@ -1,4 +1,15 @@
 var aiWorker = new Worker('./js/aiworker.js');
+var Move = function(f, t, p) {
+    this.from = f;
+    this.to = t;
+    this.player = p;
+};
+
+var Player = {
+    team: '',
+    pos: '',
+    homeFlag: true,
+}
 
 var gameCore = {
 	AIPos: 0b00000000001111100000, //Top left pieces
@@ -866,6 +877,7 @@ var gameCore = {
 	 	gameCore.board.createBoard();
 
 	 	if(isNetworkGame){
+	 		BoardGUI.setBoardHeader(gameCore.network.team);
 	 		if(gameCore.network.role == 'host') {
 	 			//then i'm the bottom right pieces
 	 			gameCore.network.localPos = 0b00000111110000000000;
