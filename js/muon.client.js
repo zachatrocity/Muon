@@ -93,13 +93,21 @@ var Network = {
             gameCore.network.team = data.team;
             gameCore.network.otherTeam = (gameCore.network.team === 'muon') ? 'antimuon' : 'muon';
             gameCore.network.turn = data.turn;
-
+            debugger;
             if(data.hist.length > 0){
               //resume a game, play through the history
               BoardGUI.showResumingModal();
               _.each(data.hist, function(move){
-                gameCore.network.MakeResumingMoves(move.from, move.to);
+                gameCore.network.MakeResumingMoves(move.from, move.to, move.team);
               })
+
+              if (gameCore.network.team == 'muon'){
+                gameCore.network.localPos = data.muonboard;
+                gameCore.network.opponentPos = data.antimuonboard;
+              } else {
+                gameCore.network.localPos = data.antimuonboard;
+                gameCore.network.opponentPos = data.muonboard;
+              }
 
               setTimeout(function(){BoardGUI.hideResumingModal()},2000);
               

@@ -82,13 +82,18 @@ var gameCore = {
 		opponentPos: '',
 		opponentStartPos: '',
 		opponentFlag: true,
-		MakeResumingMoves: function(from, to){
+		MakeResumingMoves: function(from, to, character){
 			var bitFrom = convert.intToBit(from);
 			var bitTo = convert.intToBit(to);
-			// Update the users bit board.
-			gameCore.network.localPos ^= bitFrom ^ bitTo;
-			gameCore.AddMoveToHistory(new Move(from, to, "resume"));
-			gameCore.board.moveMuonTweenFoci(from, to);
+			// Update the bit board.
+			if(character == gameCore.network.team){
+				gameCore.network.localPos ^= bitFrom ^ bitTo;
+				gameCore.AddMoveToHistory(new Move(from, to, "local"));
+			} else {
+				gameCore.network.opponentPos ^= bitFrom ^ bitTo;
+				gameCore.AddMoveToHistory(new Move(from, to, "opponent"));
+			}
+
 			//remove my flag if needed
 			if(evaluation.isHomeQuadEmpty((gameCore.network.role == 'host') ? 2 : 1, gameCore.network.localPos)) {
 				gameCore.network.localFlag = false;
@@ -844,7 +849,7 @@ var gameCore = {
 					console.log("Player can now win from their home quad");
 				}
 
-				cloak.message('turnDone', [from, to]);
+				cloak.message('turnDone', [from, to, gameCore.network.localPos]);
 				if (gameCore.network.CheckForLocalWin(gameCore.network.localPos)) {
 					gameCore.network.EndNetworkGame();
 				}

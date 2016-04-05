@@ -20,6 +20,7 @@
 	color: black;
 	letter-spacing: 2px;
 	z-index: 100;
+	max-width: 800px;
 }
 
 #lobby-list {
