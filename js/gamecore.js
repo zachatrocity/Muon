@@ -486,6 +486,7 @@ var gameCore = {
 		moveMuonsToWinFoci: function(f1,f2,f3, muon){
 			//f1,f2,f3 are the foci to move from
 			document.addEventListener("click", gameCore.endAnimation);
+			BoardGUI.hideAllModals();
 
 			// Prevent user from clicking any menu buttons during animation
 			document.getElementById("menu-hide").style.zIndex = 2;
