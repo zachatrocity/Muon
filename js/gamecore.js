@@ -909,6 +909,7 @@ var gameCore = {
 	 		}
 	 		gameCore.network.localFlag = true;
 	 		gameCore.network.opponentFlag = true;
+	 		BoardGUI.setBoardHeader(gameCore.network.turn);
 	 	} else if (gameCore.pvp.enabled) {
 	 		if (gameCore.pvp.p1Team == 'muon') {
 	 			gameCore.pvp.p2Team = 'antimuon';
