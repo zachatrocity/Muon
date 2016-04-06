@@ -8,7 +8,6 @@ if(typeof require == 'function'){
 if(gui != null){
   // Get the current window
   var win = gui.Window.get();
-  win.showDevTools();
   win.on('close', function(){
     this.hide();
     if(Network.isConnected){
@@ -26,7 +25,11 @@ var db = new PouchDB('optionsdb', {adapter: 'websql'});
 var LISTENERSET = false;
 
 var HACKER_MODE_ENABLED = false;
-var easter_egg = new Konami(function() { alert('Hacker mode enabled.'); HACKER_MODE_ENABLED = true;});
+var easter_egg = new Konami(function() { 
+  if(gui != null){
+    win.showDevTools();
+  }
+});
 
 window.addEventListener("click", hideSplash);
 window.addEventListener("keydown", hideSplash);
