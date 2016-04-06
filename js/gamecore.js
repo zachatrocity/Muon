@@ -523,11 +523,13 @@ var gameCore = {
 			var gameboards = _.filter(d3.selectAll('.gameboard')[0], function(d){ return !d.classList.contains('gamepieces')})
 			_.each(gameboards, function(g){g.classList.add('fade-out')})
 
+			var finalThree = [];
+
 			//move f1,f2,f3 and fade out other mouns
 			gameCore.board.nodes.forEach(function(o, i) {
-				if (o.foci == f1) {o.foci = 20; return;}
-				if (o.foci == f2) {o.foci = 21; return;}
-				if (o.foci == f3) {o.foci = 22; return;}
+				if (o.foci == f1) {o.foci = 20; finalThree.push(o.id); return;}
+				if (o.foci == f2) {o.foci = 21; finalThree.push(o.id); return;}
+				if (o.foci == f3) {o.foci = 22; finalThree.push(o.id); return;}
 
 				//fade out all the other muons
 				d3.selectAll('.linkid' + o.id).transition().style('opacity', '0');
@@ -536,11 +538,12 @@ var gameCore = {
 
 			if (f1 != -1 && f2 != -1 && f3 != -1)
 			{
-				// setTimeout(function(){
-				// 	gameCore.board.rotateMuonAtFoci(20);
-				// 	gameCore.board.rotateMuonAtFoci(21);
-				// 	gameCore.board.rotateMuonAtFoci(22);
-				// },2500)
+				setTimeout(function(){
+					_.each(finalThree, function(id){
+						d3.selectAll('.linkid' + id).transition().duration(1000).style('opacity', '0');
+						d3.select('.id' + id).transition().duration(1000).style('opacity', '0');
+					})
+				},7000)
 			}
 
 			player.play();
@@ -706,6 +709,8 @@ var gameCore = {
 					gameCore.pvp.p1Pos ^= bitFrom ^ bitTo;
 					gameCore.AddMoveToHistory(new Move(from, to, "player 1"));
 
+					debugger;
+
 					// Remove player flag if home quad abandoned
 					if (evaluation.isHomeQuadEmpty(gameCore.pvp.p1Team == 'muon' ? 2 : 1, gameCore.pvp.p1Pos)) {
 						gameCore.pvp.p1Flag = false;
@@ -722,6 +727,8 @@ var gameCore = {
 					gameCore.pvp.p2Pos ^= bitFrom ^ bitTo;
 					gameCore.AddMoveToHistory(new Move(from, to, "player 2"));
 
+
+					debugger;
 					// Remove player flag if home quad abandoned
 					if (evaluation.isHomeQuadEmpty(gameCore.pvp.p2Team == 'muon' ? 2 : 1, gameCore.pvp.p2Pos)) {
 						gameCore.pvp.p2Flag = false;
@@ -855,8 +862,8 @@ var gameCore = {
 				else
 					player = 1;
 			}
-			p1Flag = gameCore.pvp.p1Flag;
-			p2Flag = gameCore.pvp.p2Flag;
+			p2Flag = gameCore.pvp.p1Flag;
+			p1Flag = gameCore.pvp.p2Flag;
 		}
 		else {
 			if(position == gameCore.AIPos)
@@ -914,7 +921,13 @@ var gameCore = {
 	 			gameCore.pvp.p1Pos = 0b00000000001111100000;
 	 			gameCore.pvp.p2Pos = 0b00000111110000000000;
 	 		}
-	 		gameCore.pvp.turn = (gameCore.pvp.p1Team == gameCore.pvp.first) ? 1 : 2;
+
+	 		gameCore.pvp.first = gameCore.pvp.p1Team;
+
+	 		gameCore.pvp.p1Flag = true;
+	 		gameCore.pvp.p2Flag = true;
+
+	 		//gameCore.pvp.turn = (gameCore.pvp.p1Team == gameCore.pvp.first) ? 1 : 2;
 	 		BoardGUI.setBoardHeader((gameCore.pvp.turn == 1) ? gameCore.pvp.p1Team : gameCore.pvp.p2Team);
 	 	} else {
 	 		gameCore.AITurn = gameCore.AIGoesFirst;
