@@ -10,8 +10,8 @@
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    width="600"
-   height="325"
-   viewBox="0 0 600.00001 325.00001"
+   height="395"
+   viewBox="0 0 600.00001 395.00002"
    id="svg2"
    version="1.1"
    inkscape:version="0.91 r13725"
@@ -25,9 +25,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="5.6"
-     inkscape:cx="577.7664"
-     inkscape:cy="295.41305"
+     inkscape:zoom="1.4"
+     inkscape:cx="226.29376"
+     inkscape:cy="181.65377"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -45,7 +45,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title />
+        <dc:title></dc:title>
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -53,19 +53,19 @@
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      id="layer1"
-     transform="translate(0,-727.36212)">
+     transform="translate(0,-657.36213)">
     <path
        style="opacity:0.64855077;fill:#2a437c;fill-opacity:1;stroke:none;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       d="m 10,737.36212 140,0 20,-10 390,0 0,45 40,0 0,160 -10,20 0,89.99998 -140,0 -20,10 -430,0 0,-204.99998 10,-20 z"
+       d="m 9.9999695,667.36217 140.0000005,0 20,-10 390,0 0,45 40,0 0,160 -10,20 0,89.99998 -140,0 -20,10 -14.99995,0 -25,35.00005 0,35 -180.00003,0 0,-35 -25,-35.00005 -185.000020517582,0 0,-204.99998 10.000000017582,-20 z"
        id="rect4136"
        inkscape:connector-curvature="0"
-       sodipodi:nodetypes="ccccccccccccccc" />
+       sodipodi:nodetypes="ccccccccccccccccccccc" />
     <rect
        style="opacity:0.65;fill:#404040;fill-opacity:1;stroke:none;stroke-width:5.66074753;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        id="rect4134"
        width="37"
        height="40"
-       x="560"
-       y="732.36212" />
+       x="559.99994"
+       y="662.36218" />
   </g>
 </svg>

@@ -24,6 +24,7 @@
 	text-align: center;
 	color: rgba(0, 0, 0, 0);
 	background-image: url(../images/modal_background.svg);
+	background-repeat: no-repeat;
 	visibility: hidden;
 	-webkit-transition: width 0.5s, height 0.5s, opacity 0s, color 0s 0.5s;
 	transition: width 0.5s, height 0.5s, opacity 0s, color 0s 0.5s;
@@ -39,7 +40,7 @@
 }
 
 .help-modal {
-	min-height: 325px;
+	height: 395px;
 }
 
 .options-modal {
