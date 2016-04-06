@@ -907,6 +907,8 @@ var gameCore = {
 	 			gameCore.network.opponentPos = 0b00000111110000000000;
 	 			gameCore.network.opponentStartPos = 0b00000111110000000000;
 	 		}
+	 		gameCore.network.localFlag = true;
+	 		gameCore.network.opponentFlag = true;
 	 	} else if (gameCore.pvp.enabled) {
 	 		if (gameCore.pvp.p1Team == 'muon') {
 	 			gameCore.pvp.p2Team = 'antimuon';

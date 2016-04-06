@@ -164,6 +164,7 @@ var Network = {
           if(data[0]){
             //Rematch was accepted
             BoardGUI.hideAllModals();
+            gameCore.RestartGame(true)
           } else {
             //Rematch was declined
             BoardGUI.hideAllModals();
