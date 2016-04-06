@@ -1,4 +1,4 @@
-var aiWorker = new Worker('./js/aiworker.js');
+var aiWorker = new Worker('./libs/aiworker.js');
 var Move = function(f, t, p) {
     this.from = f;
     this.to = t;
@@ -148,7 +148,7 @@ var gameCore = {
          				{x: 140, y: 560},				// Quad C
 				{x: 0, y: 700},		{x: 285, y: 700},   //
 						
-						{x: 345, y: 225},			//
+						{x: 350, y: 225},			//
 				{x: 200, y: 480},{x: 500, y: 480}],	//WIN ANIMATION POSITIONS
         boardSVG: null,
         d3force: null,
@@ -358,16 +358,6 @@ var gameCore = {
 		      .attr('fill', function(d){ return (!d.antimuon) ? 'url(#muongradient)' : 'url(#antigradient)';})
 		      .call(gameCore.board.d3force.drag)
 
-		  //   gameCore.board.activeNodes = gameCore.board.activeNodes.data(gameCore.board.nodes);
-		  //   gameCore.board.activeNodes.enter().append("svg:image")
-			 //    .attr("class", "circle")
-			 //    .attr("xlink:href", "./images/blackfootball.svg")
-			 //    .attr("x", function(d) { return d.x; })
-				// .attr("y", function(d) { return d.y; })
-			 //    .attr("width", "24px")
-			 //    .attr("height", "24px")
-		  //   	.attr("class", function(d) { return "id" + d.id + " node" })
-				// .call(gameCore.board.d3force.drag)
 
 		    gameCore.board.d3force.start()
 		},
@@ -494,10 +484,11 @@ var gameCore = {
 			Audio.playRandomMove();
 			
 			if(gameCore.network.roomid == null){
-				if(!gameCore.AITurn)
-					BoardGUI.setBoardHeader("Yours");
-				else 
-					BoardGUI.setBoardHeader("Theirs");
+				if(BoardGUI.getBoardHeaderText() == 'muon'){
+					BoardGUI.setBoardHeader('antimuon');
+				} else {
+					BoardGUI.setBoardHeader('muon');
+				}
 			}
 
 			gameCore.board.refresh();
@@ -543,11 +534,11 @@ var gameCore = {
 
 			if (f1 != -1 && f2 != -1 && f3 != -1)
 			{
-				setTimeout(function(){
-					gameCore.board.rotateMuonAtFoci(20);
-					gameCore.board.rotateMuonAtFoci(21);
-					gameCore.board.rotateMuonAtFoci(22);
-				},2500)
+				// setTimeout(function(){
+				// 	gameCore.board.rotateMuonAtFoci(20);
+				// 	gameCore.board.rotateMuonAtFoci(21);
+				// 	gameCore.board.rotateMuonAtFoci(22);
+				// },2500)
 			}
 
 			player.play();
@@ -922,27 +913,30 @@ var gameCore = {
 	 			gameCore.pvp.p2Pos = 0b00000111110000000000;
 	 		}
 	 		gameCore.pvp.turn = (gameCore.pvp.p1Team == gameCore.pvp.first) ? 1 : 2;
+	 		BoardGUI.setBoardHeader((gameCore.pvp.turn == 1) ? gameCore.pvp.p1Team : gameCore.pvp.p2Team);
 	 	} else {
 	 		gameCore.AITurn = gameCore.AIGoesFirst;
-
-	 		if(gameCore.AITurn){
-	 			BoardGUI.setBoardHeader("Theirs");
-	 		} else {
-	 			BoardGUI.setBoardHeader("Yours");
-	 		}
 
 	 		if(gameCore.humanteam == 'muon'){
 				gameCore.AIPos = 0b00000000001111100000; //top left pieces AI
 				gameCore.AIPlayerNumber = 1;
 				gameCore.HUPos = 0b00000111110000000000; //bottom right pieces HUMAN
 				gameCore.HUPlayerNumber = 2;
+				gameCore.opponentTeam = 'antimuon';
 			}
 			else{
+				gameCore.opponentTeam = 'muon';
 				gameCore.HUPos = 0b00000000001111100000; //top left pieces
 				gameCore.HUPlayerNumber = 1;
 				gameCore.AIPos = 0b00000111110000000000; //bottom right pieces
 				gameCore.AIPlayerNumber = 2;
 			}
+
+			if(gameCore.AITurn){
+	 			BoardGUI.setBoardHeader(gameCore.opponentTeam);
+	 		} else {
+	 			BoardGUI.setBoardHeader(gameCore.humanteam);
+	 		}
 			
 			gameCore.aiStart = Date.now();
 	 		aiWorker.postMessage({ 

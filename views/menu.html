@@ -103,27 +103,49 @@
 		ng-click="showNetworkingModal = false;" 
 		ng-class="{'show-modal-btn': showNetworkingModal}"></span>
 		
-		<h3 class="modal-prompt">Please enter a username</h3>
+		<h3 class="modal-prompt" style="margin-top: 25px;">Please enter a username</h3>
 		<p class="username-tip">You can change it later from in the options.</p>
 
 		<form name="usernameForm">
 		<div class="row">
 			<div class="col-xs-12">
 			<input type="text" ng-model="username" 
-			id="usernameInput" maxlength="13"
+			id="usernameInput" maxlength="13" ng-change="usernameInputChanged(username)"
 			class="modal-txt-box" ng-enter="saveNetworkingUsername(username)"
 			ng-class="{'show-modal-txt-box': showNetworkingModal}" required/></div>
 		</div>
-		<div class="row">
+		<div class="row" style="margin-top: 15px;">
 				<div class="col-xs-4 col-xs-offset-2">
-					<input type="button" class="modal-btn button" value="Connect" 
+					<!-- <input type="button" class="modal-btn button" value="Connect" 
 					ng-class="{'show-modal-btn': showNetworkingModal}" 
 					ng-click="saveNetworkingUsername(username)"
-					ng-disabled="usernameForm.$invalid"/>
+					ng-disabled="usernameForm.$invalid"/> -->
+					<svg id="connectButton" class="button disabled modal-btn" width="170" height="70" viewBox="0 0 170 70"  
+					ng-class="{'show-modal-btn': showNetworkingModal}"
+					ng-mouseover="mouse_over()" ng-click="mouse_click(); saveNetworkingUsername(username);" 
+					ng-init="showNewGameModal = false;" ng-class="{'show-modal-btn': showNewGameModal}">
+						<path style="stroke-miEterlimit:4" d="M10 15h40l10-4.99998h100v20.00002l-5 10v20H10z" id="buttonbase" opacity=".64855077"/>
+						<path d="M0 .00002h10V2H2v8.00002H0z" id="buttoncornerone" class="disabled"/>
+						<path d="M170-.00004V10h-2V1.99996h-8v-2z" id="buttoncornertwo" class="disabled"/>
+						<path d="M0 70.00004h10v-2H2v-8H0z" id="buttoncornerthree" class="disabled"/>
+						<path d="M170 70.00004h-10v-2h8v-8h2z" id="buttoncornerfour" class="disabled"/>
+						<text fill="white" x="85" y="40" text-anchor="middle" >Connect</text>
+					</svg>
 				</div>
 				<div class="col-xs-4">
-					<input type="button" class="modal-btn button" ng-click="showNetworkingModal = false;" 
-					value="Cancel" ng-class="{'show-modal-btn': showNetworkingModal}" />
+					<!-- <input type="button" class="modal-btn button" ng-click="showNetworkingModal = false;" 
+					value="Cancel" ng-class="{'show-modal-btn': showNetworkingModal}" /> -->
+					<svg class="button blue bluehover modal-btn" width="170" height="70" viewBox="0 0 170 70"  
+					ng-mouseover="mouse_over()" ng-click="mouse_click(); showNetworkingModal = false;" 
+					ng-class="{'show-modal-btn': showNetworkingModal}"
+					ng-init="showNewGameModal = false;" ng-class="{'show-modal-btn': showNewGameModal}">
+						<path style="stroke-miEterlimit:4" d="M10 15h40l10-4.99998h100v20.00002l-5 10v20H10z" id="buttonbase" opacity=".64855077"/>
+						<path d="M0 .00002h10V2H2v8.00002H0z" id="buttoncornerone"/>
+						<path d="M170-.00004V10h-2V1.99996h-8v-2z" id="buttoncornertwo"/>
+						<path d="M0 70.00004h10v-2H2v-8H0z" id="buttoncornerthree"/>
+						<path d="M170 70.00004h-10v-2h8v-8h2z" id="buttoncornerfour"/>
+						<text fill="white" x="85" y="40" text-anchor="middle" >Cancel</text>
+					</svg>
 				</div>
 		</div>
 		</form>

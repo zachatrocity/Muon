@@ -1,9 +1,5 @@
 muonApp.controller('MenuCtrl', function ($scope, $stateParams, $state) {
 
-	//close the network
-	if(Network.isConnected){
-		//cloak.end();
-	}
 	
 	var allLinks = document.getElementsByTagName('a');
 	if(LISTENERSET == false)
@@ -42,47 +38,72 @@ muonApp.controller('MenuCtrl', function ($scope, $stateParams, $state) {
 			}
 		});
 	}
+
+	$scope.usernameInputChanged = function(username){
+		if(username != undefined){
+			if(username.trim() != ''){
+				//enable connect button
+				document.getElementById('connectButton').classList.remove('disabled');
+				document.getElementById('connectButton').classList.add('green');
+				document.getElementById('connectButton').classList.add('greenhover');
+			}
+		} else {
+			document.getElementById('connectButton').classList.remove('green');
+			document.getElementById('connectButton').classList.remove('greenhover');
+			document.getElementById('connectButton').classList.add('disabled');
+		}
+	}
 	
 	$scope.saveNetworkingUsername = function(username){
-		$scope.showNetworkingModal = false;
-		//save username
-		db.get('network_username').then(function(doc) {
-			return db.put({
-				_id: 'network_username',
-				_rev: doc._rev,
-				title: username
+		if(username != undefined){
+			$scope.showNetworkingModal = false;
+			//save username
+			db.get('network_username').then(function(doc) {
+				return db.put({
+					_id: 'network_username',
+					_rev: doc._rev,
+					title: username
+				});
+			}).then(function(response) {
+			  // handle response
+			  console.log('username updated');
+			  Network.username = username;
+			}).catch(function (err) {
+			  console.log(err);
 			});
-		}).then(function(response) {
-		  // handle response
-		  console.log('username updated');
-		  Network.username = username;
-		}).catch(function (err) {
-		  console.log(err);
-		});
 
-		//go to network
-		$state.go('network', {'username':username});
+			//go to network
+			$state.go('network', {'username':username});
+		}
 	}
 
 	$scope.showNetworkModal = function(){
 
-		db.get('network_username').then(function(doc) {
-			if(doc.title && doc.title != ''){ //if there is a username then go to networking
-				$state.go('network', {});
-			} else { //else create a new one
-				$scope.showNetworkingModal = true;
-				setTimeout(function(){
-					document.getElementById('usernameInput').focus();
-				},1000);		
-			}
-		})
+		// db.get('network_username').then(function(doc) {
+		// 	if(doc.title && doc.title != ''){ //if there is a username then go to networking
+				
+		// 	} else { //else create a new one
+		// 		$scope.showNetworkingModal = true;
+		// 		setTimeout(function(){
+		// 			document.getElementById('usernameInput').focus();
+		// 		},1000);		
+		// 	}
+		// })
+
+		if(Network.username == '' || Network.username == undefined){
+			$scope.showNetworkingModal = true;
+			setTimeout(function(){
+				document.getElementById('usernameInput').focus();
+			},1000);
+		} else {
+			$state.go('network', {});
+		}
 	}
 
 	$scope.mouse_over = function(id) {
 		if(Audio.togglesound)
 			Audio.menuOver.play();
 		
-		document.getElementById('item' + id).focus();
 		
  	}
 	

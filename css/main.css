@@ -131,29 +131,15 @@ img {
 
 #moveCount{
 	text-align: right;
-	margin-right: 25px;
-	margin-top: -15px;
+	margin-right: 5px;
+	margin-top: -25px;
 }
 
-.timer-container{
-	background-image: url(../images/stats_background.svg);
-}
-
-#timerHeader{
-	text-align: left;
-	margin-left: 25px;
-}
-
-#timer{
-	text-align: right;
-	margin-right: 25px;
-	margin-top: -15px;
-}
 
 #moveIndicatorHeader{
 	text-align: right;
-	margin-right: 25px;
-	margin-top: -15px;
+	margin-right: 5px;
+  	margin-top: -25px;
 }
 
 #chat{

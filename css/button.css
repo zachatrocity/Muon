@@ -42,7 +42,7 @@ span.button{
 
 .disabled{
   fill: #2f2f2f;
-  cursor: none;
+  cursor: default;
 }
 
 .disabled [id^="buttoncorner"] {

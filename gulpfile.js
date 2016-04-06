@@ -11,6 +11,7 @@ gulp.task('package', function () {
             "index.html", 
             "./views/*", 
             "./js/*",
+            "./libs/*",
             "./images/*",
             "./audio/*",
             "./videos/*",

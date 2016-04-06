@@ -95,9 +95,13 @@ var Network = {
             if(data.hist.length > 0){
               //resume a game, play through the history
               BoardGUI.showResumingModal();
+              var moveCount = 0;
               _.each(data.hist, function(move){
                 gameCore.board.moveMuonTweenFoci(move.from, move.to);
+                moveCount++;
               })
+
+              gameCore.moveCount = moveCount;
 
               if (gameCore.network.team == 'muon'){
                 gameCore.network.role = 'host';

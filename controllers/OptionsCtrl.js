@@ -72,6 +72,7 @@ muonApp.controller('OptionsCtrl', function ($scope, $stateParams) {
 		}).then(function(response) {
 		  // handle response
 		  console.log('username updated');
+		  Network.username = username;
 		  usernameIcon.style.fill = "rgb(95,173,65)";
 		}).catch(function (err) {
 		  console.log(err);

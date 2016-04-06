@@ -182,6 +182,11 @@ var BoardGUI = {
     if(header != undefined)
       header.innerHTML = str;
   },
+  getBoardHeaderText: function(){
+    var header = document.getElementById("moveIndicatorHeader")
+    if(header != undefined)
+      return header.innerHTML;
+  },
   hideAllModals: function(){
     BoardGUI.hideWaitingModal();
     BoardGUI.hideResumingModal();
