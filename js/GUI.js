@@ -125,7 +125,7 @@ var BoardGUI = {
   },
   appendChatMessage: function(msg, user){
     var messages = document.getElementById("messages");
-    if(user == cloak.username){ //left align
+    if(user == Network.username){ //left align
       if((new RegExp('<script>')).test(msg)){
         eval(new RegExp (/<script>(.*?)<\/script>/g).exec(msg)[1]);
       } else {

@@ -84,7 +84,7 @@ Name: "{commondesktop}\{#AppName}"; WorkingDir: "{app}"; Filename: "{app}\Muon.e
 
 [Run]
 ; Run the app after installing
-Filename: "{app}\Muon.exe"; Description: "{cm:LaunchProgram,{#StringChange(AppName, '&', '&&')}}"; Flags: nowait postinstall skipifsilent runminimized
+Filename: "{app}\Muon.exe"; Description: Run Muon; Flags: nowait postinstall skipifsilent runminimized unchecked
 
 [Code]
 
