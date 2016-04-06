@@ -10,6 +10,7 @@ if(gui != null){
   var win = gui.Window.get();
   win.on('close', function(){
     this.hide();
+    Audio.background.stop();
     if(Network.isConnected){
       cloak.message('leaveRoom');
     }
@@ -28,6 +29,13 @@ var HACKER_MODE_ENABLED = false;
 var easter_egg = new Konami(function() { 
   if(gui != null){
     win.showDevTools();
+    console.clear();
+    var singleLine = '%c';
+    _.each(ascii, function(line){
+      singleLine += '\n' + line;
+    })
+    singleLine += '\nWelcome to Muon! If change things in here you could break Muon. Fiddle at your own risk!'
+    console.log(singleLine, "background-color: #2a437c; color: rgb(95,173,65);")
   }
 });
 
