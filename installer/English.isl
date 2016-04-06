@@ -104,7 +104,7 @@ NewFolderName=New Folder
 
 ; *** "Welcome" wizard page
 WelcomeLabel1=You're about to get your Muon!
-WelcomeLabel2=This will install [name/ver] on your computer.%n%nKeep in mind that Muon is in Alpha and we make no guarantees, so use it at your own risk.
+WelcomeLabel2=This will install [name/ver] on your computer.%n%nWe hope that you will find much enjoyment from playing Muon.
 
 ; *** "Password" wizard page
 WizardPassword=Password

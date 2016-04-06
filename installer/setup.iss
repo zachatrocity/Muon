@@ -1,6 +1,6 @@
 ; Installer Variables
 #define AppName "Muon"
-#define AppVersion "Beta 0.0.0.5"
+#define AppVersion "0.0.1.0"
 #define AppPublisher "Colossity"
 #define AppURL "https://github.com/zachatrocity/Muon"
 #define AppExeName "Muon.exe"
