@@ -19,7 +19,7 @@ AppSupportURL={#AppURL}
 AppUpdatesURL={#AppURL}
 
 ; Make the Installer nicer and Minimalistic
-WizardImageFile=.\muon.bmp
+WizardImageFile=.\muoninstall.bmp
 WizardSmallImageFile=.\smallmuon.bmp
 WindowResizable=no
 
@@ -84,7 +84,7 @@ Name: "{commondesktop}\{#AppName}"; WorkingDir: "{app}"; Filename: "{app}\Muon.e
 
 [Run]
 ; Run the app after installing
-Filename: "{app}\Muon.exe"; Description: Run Muon; Flags: nowait postinstall skipifsilent runminimized unchecked
+Filename: "{app}\Muon.exe"; Description: Run Muon; Flags: nowait postinstall skipifsilent
 
 [Code]
 

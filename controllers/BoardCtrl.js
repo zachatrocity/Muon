@@ -134,6 +134,8 @@ muonApp.controller('BoardCtrl', function ($scope, $stateParams, $state) {
 				//start game
 			}
 		}
+
+		BoardGUI.appendSystemMessage('Your team is ' + gameCore.network.team);
 	}
 	
 });

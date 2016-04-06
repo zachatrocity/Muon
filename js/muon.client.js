@@ -89,33 +89,33 @@ var Network = {
         //game
         'assignTeam': function(data) {
           console.log('my team is', data.team);
-            gameCore.network.team = data.team;
-            gameCore.network.otherTeam = (gameCore.network.team === 'muon') ? 'antimuon' : 'muon';
-            gameCore.network.turn = data.turn;
-            if(data.hist.length > 0){
-              //resume a game, play through the history
-              BoardGUI.showResumingModal();
-              var moveCount = 0;
-              _.each(data.hist, function(move){
-                gameCore.board.moveMuonTweenFoci(move.from, move.to);
-                moveCount++;
-              })
+          gameCore.network.team = data.team;
+          gameCore.network.otherTeam = (gameCore.network.team === 'muon') ? 'antimuon' : 'muon';
+          gameCore.network.turn = data.turn;
+          if(data.hist.length > 0){
+            //resume a game, play through the history
+            BoardGUI.showResumingModal();
+            var moveCount = 0;
+            _.each(data.hist, function(move){
+              gameCore.board.moveMuonTweenFoci(move.from, move.to);
+              moveCount++;
+            })
 
-              gameCore.moveCount = moveCount;
+            gameCore.moveCount = moveCount;
 
-              if (gameCore.network.team == 'muon'){
-                gameCore.network.role = 'host';
-                gameCore.network.localPos = data.muonBoard;
-                gameCore.network.opponentPos = data.antimuonBoard;
-              } else {
-                gameCore.network.role = 'client';
-                gameCore.network.localPos = data.antimuonBoard;
-                gameCore.network.opponentPos = data.muonBoard;
-              }
-
-              setTimeout(function(){BoardGUI.hideResumingModal()},2000);
-              
+            if (gameCore.network.team == 'muon'){
+              gameCore.network.role = 'host';
+              gameCore.network.localPos = data.muonBoard;
+              gameCore.network.opponentPos = data.antimuonBoard;
+            } else {
+              gameCore.network.role = 'client';
+              gameCore.network.localPos = data.antimuonBoard;
+              gameCore.network.opponentPos = data.muonBoard;
             }
+
+            setTimeout(function(){BoardGUI.hideResumingModal()},2000);
+            
+          }
         },
 
         'turn': function(msg) {
