@@ -16,7 +16,9 @@ muonApp.controller('MenuCtrl', function ($scope, $stateParams, $state) {
 					{
 						currentIndex = 0;
 					}
-					allLinks[currentIndex].focus();
+
+					if(allLinks[currentIndex] != undefined)
+						allLinks[currentIndex].focus();
 					
 					if(Audio.togglesound)
 						Audio.menuOver.play();
@@ -28,7 +30,9 @@ muonApp.controller('MenuCtrl', function ($scope, $stateParams, $state) {
 					{
 						currentIndex = 7;
 					}
-					allLinks[currentIndex - 2].focus();	
+					
+					if(allLinks[currentIndex - 2] != undefined)
+						allLinks[currentIndex - 2].focus();
 					
 					if(Audio.togglesound)	
 						Audio.menuOver.play();

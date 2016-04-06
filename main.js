@@ -29,7 +29,7 @@ var HACKER_MODE_ENABLED = false;
 var easter_egg = new Konami(function() { 
   if(gui != null){
     win.showDevTools();
-    console.clear();
+    //console.clear();
     var singleLine = '%c';
     _.each(ascii, function(line){
       singleLine += '\n' + line;
