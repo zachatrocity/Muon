@@ -103,8 +103,8 @@ muonApp.controller('MenuCtrl', function ($scope, $stateParams, $state) {
 	$scope.mouse_over = function(id) {
 		if(Audio.togglesound)
 			Audio.menuOver.play();
-		
-		
+		var itemID = "item" + id;
+		document.getElementById(itemID).focus();
  	}
 	
 	$scope.mouse_click = function() {
