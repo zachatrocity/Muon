@@ -79,7 +79,9 @@ var gameCore = {
 			}
 
 			if (gameCore.network.CheckForOpponentWin()) {
-				gameCore.network.EndNetworkGame();
+				setTimeout(function(){
+					gameCore.network.EndNetworkGame();
+				}, 2000);
 			}
 		},
 		CheckForOpponentWin: function() {
@@ -1006,6 +1008,10 @@ var gameCore = {
 		var player = document.getElementById("winAnim");
 		if (player.currentTime > .1)
 		{
+			debugger;
+			var gameboards = _.filter(d3.selectAll('.gameboard')[0], function(d){ return !d.classList.contains('gamepieces')})
+				_.each(gameboards, function(g){g.classList.remove('fade-out')})
+
 			if (gameCore.winner == "local" || gameCore.winner == "human")
 			{
 				BoardGUI.showWinModal(gameCore.finalWinner + "s Win.");

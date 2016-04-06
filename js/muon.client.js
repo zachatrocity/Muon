@@ -144,6 +144,7 @@ var Network = {
         'respondToDrawResponse':function(data){
           if(data[0]){
             //draw was accepted
+            gameCore.winner = 'none';
             gameCore.board.moveMuonsToWinFoci(-1,-1,-1,false);
           } else {
             //draw was declined
