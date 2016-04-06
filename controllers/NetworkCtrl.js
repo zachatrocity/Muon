@@ -10,6 +10,12 @@ muonApp.controller('NetworkCtrl', function ($scope, $stateParams) {
 			cloak.message('registerUsername', {'username' : Network.username, 'userid' : Network.userId})
 		}, 500);
 	});
+
+	$scope.mouse_click = function() {
+		if(Audio.togglesound)
+			Audio.menuSelect.play();
+	}
+
 	
 	$scope.refresh = function(){
 		cloak.message('listUsers');

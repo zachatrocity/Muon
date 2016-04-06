@@ -1,6 +1,6 @@
 <!-- views/help2.html -->
 <div class="row help-container" >
-	<div class="col-xs-7">
+	<div >
 		<div id="board-componant" class="gameboard">
 		    <img src="./images/boardElec.gif" sb-load="gameboardLoaded($event)">
 		</div>
@@ -23,7 +23,7 @@
 		  
 		</div>
 	</div>
-	<div class="col-xs-5">
+	<div class="instructionsContainer">
 		<div id="stepContainer" class="text-container">
 			<div id="step-content">
 				This is the inside of an atom. The atom is made up of four sections called quadrants. Muons or Anti-muons will gain control of the atom if they form a triangle in any of the 4 quadrants.
@@ -32,8 +32,8 @@
 				
 			</div>
 		</div>
-
-		<div id="stats_slide" class="game-stats fade-out" style="color: black;">
+	</div>
+	<div id="stats_slide" class="game-stats fade-out" style="color: black;">
 			<div class="move-count-container">
 				<h3 id="moveCountHeader">Moves</h3>
 				<h1 id="moveCount">0</h1>
@@ -100,7 +100,6 @@
 			<!-- <a ng-click="showQuitMuonModal = true"><span data-balloon-length="medium" data-balloon-pos="left" data-balloon="Quit game and close">Quit</span></a> -->
 		</div>
 		</div>
-	</div>
 </div>
 <div class="help-back batch">
 	<!-- <a class="button" ng-click="prev_slide()">

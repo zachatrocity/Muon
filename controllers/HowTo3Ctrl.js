@@ -6,6 +6,6 @@ muonApp.controller('HowTo3Ctrl', function ($scope, $stateParams, $state) {
     tutorial.isFirstMove = true;
 
     $scope.prev_slide = function(){
-        $state.go('helpBoardAndUI', {index:5});
+        $state.go('helpBoardAndUI', {index:4});
     }
 });

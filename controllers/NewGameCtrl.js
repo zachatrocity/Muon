@@ -5,6 +5,11 @@ muonApp.controller('NewGameCtrl', function ($scope, $stateParams) {
 	gameCore.pvp.enabled = false;
 	gameCore.pvp.p1Team = 'muon';
 
+	$scope.mouse_click = function() {
+		if(Audio.togglesound)
+			Audio.menuSelect.play();
+	}
+
 	$scope.setAILevel = function(depth){
 		var difset = document.getElementById('diffsettings').children;
 

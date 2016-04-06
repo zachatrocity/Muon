@@ -37,7 +37,7 @@ muonApp.controller('MenuCtrl', function ($scope, $stateParams, $state) {
 			
 			}
 		});
-	}
+	} 
 
 	$scope.usernameInputChanged = function(username){
 		if(username != undefined){
@@ -104,7 +104,10 @@ muonApp.controller('MenuCtrl', function ($scope, $stateParams, $state) {
 		if(Audio.togglesound)
 			Audio.menuOver.play();
 		
-		
+		var item = document.getElementById('item' + id);
+		if(item != undefined){
+			item.focus();		
+		}
  	}
 	
 	$scope.mouse_click = function() {
