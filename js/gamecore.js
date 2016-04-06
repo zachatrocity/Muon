@@ -134,21 +134,21 @@ var gameCore = {
     	height: 700,
     	noderadius: 30,
     	winningFoci: null,
-		foci: 	[{x: 0, y: 10},		{x: 285, y: 10},		//
-        				{x: 140, y: 140},				// Quad A
-				{x: 0, y: 285},		{x: 285, y: 285},	//
+		foci: 	[{x: 63, y: 63},		{x: 295, y: 60},		//
+        				{x: 177, y: 178},				// Quad A
+				{x: 63, y: 294},		{x: 295, y: 295},	//
 
-				{x: 415, y: 415},	{x: 700, y: 415},	//
-        				{x: 560, y: 560},				// Quad D
-				{x: 415, y: 700},	{x: 700, y: 700},	//
+				{x: 405, y: 405},	{x: 640, y: 405},	//
+        				{x: 520, y: 520},				// Quad D
+				{x: 405, y: 637},	{x: 640, y: 640},	//
                 
-				{x: 415, y: 10},		{x: 700, y: 10},		//
-      					{x: 560, y: 140},				// Quad B
-				{x: 415, y: 285},	{x: 700, y: 285},	//
+				{x: 405, y: 60},		{x: 640, y: 60},		//
+      					{x: 522, y: 180},				// Quad B
+				{x: 405, y: 300},	{x: 640, y: 295},	//
                 
-				{x: 0, y: 415},		{x: 285, y: 415},	//
-         				{x: 140, y: 560},				// Quad C
-				{x: 0, y: 700},		{x: 285, y: 700},   //
+				{x: 65, y: 400},		{x: 295, y: 405},	//
+         				{x: 180, y: 520},				// Quad C
+				{x: 65, y: 637},		{x: 295, y: 637},   //
 						
 						{x: 350, y: 225},			//
 				{x: 200, y: 480},{x: 500, y: 480}],	//WIN ANIMATION POSITIONS
@@ -244,7 +244,7 @@ var gameCore = {
 
 			var point = d3.mouse(this);
 			var maxdist = 30
-			var maxFociDist = 90;
+			var maxFociDist = 45;
 			var	exit = false; // Used to exit if a move has been attempted
 
 			if (gameCore.gameOver)
@@ -412,7 +412,7 @@ var gameCore = {
 			    .links(gameCore.board.links)
 			    .linkDistance(50)
 			    .linkStrength(1)
-			    .gravity(0.02)
+			    .gravity(0.0)
 			    .charge(function(d, i) { 
 			      return d.id % 3 == 0 ? -30 : 0; 
 			    })
