@@ -127,7 +127,7 @@ var Network = {
         },
 
         'proposeDrawResponse': function(data){
-          if(cloak.username == data[0]){
+          if(Network.username == data[0]){
             console.log("you proposed a draw");
             BoardGUI.showWaitingModal();
           } else {
@@ -149,7 +149,7 @@ var Network = {
         },
 
         'proposeRematchResponse': function(data){
-          if(cloak.username == data[0]){
+          if(Network.username == data[0]){
             console.log("you proposed a Rematch");
             BoardGUI.hideAllModals();
             BoardGUI.showWaitingModal();
