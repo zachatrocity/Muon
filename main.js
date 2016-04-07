@@ -19,6 +19,15 @@ if(gui != null){
   })
 }
 
+//fix ghost users on the browser
+if(gui == null){
+  window.onbeforeunload = function(){
+    if(Network.isConnected){
+      cloak.message('leaveRoom');
+    }
+  }
+}
+
 var db = new PouchDB('optionsdb', {adapter: 'websql'});
 
 

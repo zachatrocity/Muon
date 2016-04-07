@@ -1,5 +1,4 @@
 muonApp.controller('MenuCtrl', function ($scope, $stateParams, $state) {
-
 	
 	var allLinks = document.getElementsByTagName('a');
 	if(LISTENERSET == false)
