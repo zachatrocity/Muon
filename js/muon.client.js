@@ -59,7 +59,6 @@ var Network = {
           if (result.success) {
             console.log("room joined");
             gameCore.network.roomid = result.id;
-            BoardGUI.clearChatMessages();
             cloak.message('refreshRoom');
           } else {
             console.log("room is full");
