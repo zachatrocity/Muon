@@ -216,7 +216,7 @@ InstallingLabel=Please wait while Setup installs [name] on your computer.
 ; *** "Setup Completed" wizard page
 FinishedHeadingLabel=Completing the [name] Setup Wizard
 FinishedLabelNoIcons=Setup has finished installing [name] on your computer.
-FinishedLabel=Setup has finished installing [name] on your computer. The application may be launched by selecting the installed icons.
+FinishedLabel=Setup has finished installing [name] on your computer. The application may be launched by clicking the shortcut on your Desktop.
 ClickFinish=Click Finish to exit Setup.
 FinishedRestartLabel=To complete the installation of [name], Setup must restart your computer. Would you like to restart now?
 FinishedRestartMessage=To complete the installation of [name], Setup must restart your computer.%n%nWould you like to restart now?
