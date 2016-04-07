@@ -8,7 +8,7 @@ muonApp.controller('NetworkCtrl', function ($scope, $stateParams) {
 
 		setTimeout(function(){ 
 			cloak.message('registerUsername', {'username' : Network.username, 'userid' : Network.userId})
-		}, 2000);
+		}, 1000);
 	});
 
 	$scope.mouse_click = function() {
