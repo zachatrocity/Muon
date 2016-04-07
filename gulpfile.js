@@ -1,6 +1,7 @@
 var NwBuilder = require('nw-builder');
 var innoSetup = require("innosetup-compiler")
 var gulp = require('gulp');
+var fs = require('fs');
 
 gulp.task('package', function () {
     var nw = new NwBuilder({
@@ -30,6 +31,9 @@ gulp.task('package', function () {
 
     // Build returns a promise
     nw.build().then(function () {
+       console.log('copy ffmpegsumo.so for osx') ;
+       fs.createReadStream('./installer/ffmpegsumo.so').pipe(fs.createWriteStream('./build/Muon/osx64/Muon.app/Contents/Frameworks/nwjs Framework.framework/Libraries/ffmpegsumo.so'));
+
        console.log('packaging done, creating installer');
        var inno = new innoSetup("./installer/setup.iss", {
             gui: false,

@@ -120,6 +120,7 @@ muonApp.controller('BoardCtrl', function ($scope, $stateParams, $state) {
 			if($stateParams.waiting == '1'){
 			//angular.element(boardHeaderText)[0].innerHTML = "Waiting for opponent";
 			BoardGUI.appendSystemMessage("Waiting for opponent");
+			BoardGUI.appendSystemMessage('Your team is ' + gameCore.network.team);
 			BoardGUI.showWaitingModal();
 			gameCore.network.role = 'host';
 			gameCore.RestartGame(true);
