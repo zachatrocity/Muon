@@ -117,10 +117,6 @@ muonApp.controller('BoardCtrl', function ($scope, $stateParams, $state) {
 			//local game against AI
 			gameCore.RestartGame(false);
 		} else {
-
-			BoardGUI.clearChatMessages();
-			BoardGUI.appendSystemMessage('Your team is ' + gameCore.network.team);
-
 			if($stateParams.waiting == '1'){
 			//angular.element(boardHeaderText)[0].innerHTML = "Waiting for opponent";
 			BoardGUI.appendSystemMessage("Waiting for opponent");
