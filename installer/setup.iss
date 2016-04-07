@@ -84,7 +84,7 @@ Name: "{commondesktop}\{#AppName}"; WorkingDir: "{app}"; Filename: "{app}\Muon.e
 
 [Run]
 ; Run the app after installing
-Filename: "{app}\Muon.exe"; Description: Run Muon; Flags: nowait postinstall skipifsilent
+Filename: "{app}\Muon.exe"; Description: Run Muon; Flags: postinstall skipifsilent
 
 [Code]
 
