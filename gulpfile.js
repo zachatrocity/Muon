@@ -22,7 +22,8 @@ gulp.task('package', function () {
         ], // use the glob format
         platforms: ['win','osx'],
         version: '0.12.3',
-        winIco: "./images/muonIcon.ico"
+        winIco: "./images/muonIcon.ico",
+        macIcns: "./images/muonicon.icns"
     });
 
     //Log stuff you want
