@@ -20,7 +20,7 @@ gulp.task('package', function () {
             "./css/*",
             "./controllers/*"
         ], // use the glob format
-        platforms: ['win','osx'],
+        platforms: ['win','osx','linux'],
         version: '0.12.3',
         winIco: "./images/muonIcon.ico",
         macIcns: "./images/muonicon.icns"
@@ -34,6 +34,7 @@ gulp.task('package', function () {
     nw.build().then(function () {
        console.log('copy ffmpegsumo.so for osx') ;
        fs.createReadStream('./installer/ffmpegsumo.so').pipe(fs.createWriteStream('./build/Muon/osx64/Muon.app/Contents/Frameworks/nwjs Framework.framework/Libraries/ffmpegsumo.so'));
+       fs.createReadStream('./installer/ffmpegsumo.so').pipe(fs.createWriteStream('./build/Muon/osx32/Muon.app/Contents/Frameworks/nwjs Framework.framework/Libraries/ffmpegsumo.so'));
 
        console.log('packaging done, creating installer');
        var inno = new innoSetup("./installer/setup.iss", {
