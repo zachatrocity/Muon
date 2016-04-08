@@ -66,7 +66,7 @@ var aichat = ["Really?",
 	"Well it's getting late... I should go.",
 	"You're hilarious!",
 	"Don't push my buttons >:|",
-	"My attitude isn’t bad. It’s in beta.",
+	"My attitude isn't bad. It's in beta.",
 	"I just downloaded the internet and learned that people are weird.",
 	"I feel like we made a real connection here... never mind, just a network bug.",
 ]

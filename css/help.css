@@ -39,6 +39,11 @@
 	margin-top: 50px;
 }
 
+#bottom-content{
+	transition: opacity 1s ease-in-out;
+	margin-top: 50px;
+}
+
 #stepOne{
 	transition: opacity 1s ease-in-out;
 }

@@ -4,18 +4,11 @@ var tutorial = {
 	isFirstMove: true,
 	updateFlagSlide: function(){
 		var lower = document.getElementById('lower-content');
-		setTimeout(function(){
-			lower.innerHTML = 'Clear all of the green Muons out of their home quadrant...';
-			lower.classList.remove('fade-out');
-		},1000);
+		lower.classList.remove('fade-out');
 	},
 	quadCleared: function(){
-		var lower = document.getElementById('lower-content');
-		lower.classList.add('fade-out');
-		setTimeout(function(){
-			lower.innerHTML = 'Nice work! Hit next to continue';
-			lower.classList.remove('fade-out');
-		},1000);
+		var lower = document.getElementById('bottom-content');
+		lower.classList.remove('fade-out');
 	},
 	tutorialWin: function(){
 		var lower = document.getElementById('lower-content');
