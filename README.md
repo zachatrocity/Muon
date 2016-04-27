@@ -1,5 +1,5 @@
 # Muon
-Senior Capstone Project - A simple fairly simple game built with nw.js and angular.
+Senior Capstone Project - A simple fairly simple game built with nw.js and angular. The minimum supported resolution is 1360x768
 
 #Installer/Demo
 You can find the installer and the demo [here](http://www.zachatrocity.com/muon)
