@@ -33,8 +33,8 @@ NOTE: Expect long load times in the web version, this game is built as a desktop
 - [node-innosetup-compiler](https://github.com/felicienfrancois/node-innosetup-compiler) for compiling the inno setup script in a gulp process
 
 #Created By:
-- [Zach Russell](https://github.com/zachatrocity)
-- [Jacob Maurier](https://github.com/jmaurier)
-- [Jordan Merrick](https://github.com/jmerrick94)
-- [Tyler Apgar](https://github.com/trapgar)
+- [Zach Russell](https://github.com/zachatrocity) - Architecture/Networking/Team Lead
+- [Jacob Maurier](https://github.com/jmaurier) - AI/Design
+- [Jordan Merrick](https://github.com/jmerrick94) - UI/UX/Design
+- [Tyler Apgar](https://github.com/trapgar) - GameCore
 
