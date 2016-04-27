@@ -1,11 +1,10 @@
 # Muon
 Senior Capstone Project - A simple fairly simple game built with nw.js and angular.
 
-#Installer
-You can find the installer [here](http://www.zachatrocity.com/muon)
+#Installer/Demo
+You can find the installer and the demo [here](http://www.zachatrocity.com/muon)
 
-#Demo
-Check out the [demo](http://www.zachatrocity.com/muon) NOTE: Expect long load times in the web version, this game is built as a desktop app not a web game.
+NOTE: Expect long load times in the web version, this game is built as a desktop app not a web game.
 
 #Screenshots
 <img src="https://raw.githubusercontent.com/zachatrocity/Muon/master/images/board.PNG" width="500">
@@ -28,8 +27,10 @@ Check out the [demo](http://www.zachatrocity.com/muon) NOTE: Expect long load ti
 - [Angular](https://angularjs.org/) 
 - [cloak.js](https://incompl.github.io/cloak/) for the networking layer
 - [d3.js](https://d3js.org/) for a pseudo-physics engine
-- [howler.js]() for playing audio
-
+- [howler.js](https://github.com/goldfire/howler.js/) for playing audio
+- [nw-builder](https://github.com/nwjs/nw-builder) for deploying the game
+- [InnoSetup](http://www.jrsoftware.org/isinfo.php) for the windows installer
+- [node-innosetup-compiler](https://github.com/felicienfrancois/node-innosetup-compiler) for compiling the inno setup script in a gulp process
 
 #Created By:
 - [Zach Russell](https://github.com/zachatrocity)
